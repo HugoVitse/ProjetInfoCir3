@@ -20,11 +20,11 @@ const NavBar = () => {
           Login
         </MDBListGroupItem>
         <MDBListGroupItem tag="a" action href="/Register" className="d-flex align-items-center">
-          <MDBIcon fas icon="home me-3" />
+          <MDBIcon fas icon="far fa-file-lines me-3" />
           Register
         </MDBListGroupItem>
         <MDBListGroupItem tag="a" action href="/Account" className="d-flex align-items-center">
-          <MDBIcon fas icon="cog me-3" />
+          <MDBIcon fas icon="far fa-address-card me-3" />
           Account
         </MDBListGroupItem>
       </MDBListGroup>
