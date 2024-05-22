@@ -1,60 +1,94 @@
 .login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-image: url("fondecran.jpg");
+  /*background: linear-gradient(to right, #d2e4a9, #e1e1e1); /* Background linear gradient */
+}
+
+.login-form {
+  width: 370px; /* Increased width to 400px */
+  margin: 0 20px 0 20px;  
+   /* Added left margin: auto, right margin: auto, and bottom margin: 20px */
+  padding: 20px;
+  background: linear-gradient(to bottom, #c46e6e, #f8f9fa); /* Form linear gradient */
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  animation: form-appear 0.5s ease-in-out forwards;
+}
+
+ .login-form input {
+
+  width: 100%;  
+  padding: 10px 0px; 
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
   
-  .login-form {
-    width: 300px;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes form-appear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .login-form h1 {
-    margin-bottom: 20px;
-    text-align: center;
-    color: #333;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .login-form label {
-    display: block;
-    margin-bottom: 10px;
-    color: #555;
-  }
-  
-  .login-form input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .login-form button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .login-form button:hover {
-    background-color: #0056b3;
-  }
-  
-  .login-form a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .login-form a:hover {
-    text-decoration: underline;
-  }
-  
+}
+
+.login-title {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+  font-family: 'Roboto', sans-serif; /* Optional font change */
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+
+
+.login-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-form button:hover {
+  background-color: #0056b3;
+}
+
+.login-form a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.login-form a:hover {
+  text-decoration: underline;
+}
+
+/* Optional: Add a logo  */
+.login-form:before {
+  content: "";
+  display: block;
+  margin: 0 auto 20px;
+  width: 100px;
+  height: 100px;
+  background-image: url("./fondecran.jpg"); /* Replace with your logo path */
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+}
