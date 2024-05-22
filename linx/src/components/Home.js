@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Home = () => {
   return (
     <div className="home-container">
-      <h1>Bienvenue sur notre site</h1>
+      <h1 class="display-1">Bienvenue sur notre site</h1>
       <p>Nous sommes ravis de vous voir ici.</p>
       <nav>
         <ul>
@@ -15,6 +15,7 @@ const Home = () => {
           <li><Link to="/Account">Account</Link></li>
         </ul>
       </nav>
+      <i class="far fa-address-book"></i>
     </div>
   );
 }
