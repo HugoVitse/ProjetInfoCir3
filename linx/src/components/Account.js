@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Home = () => {
+const Account = () => {
   return (
     <div className="home-container">
       <h1>Bienvenue sur notre site</h1>
@@ -19,4 +19,4 @@ const Home = () => {
   );
 }
 
-export default Home;
+export default Account;
