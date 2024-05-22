@@ -4,7 +4,9 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-image: url("fondecran.jpg");
+  /* background-size: cover; /* Cover the entire container 
+  background-repeat: no-repeat; /* Prevent repeating the image 
+  background-image: url("fondencore.avif"); */
   /*background: linear-gradient(to right, #d2e4a9, #e1e1e1); /* Background linear gradient */
 }
 
@@ -87,7 +89,7 @@
   margin: 0 auto 20px;
   width: 100px;
   height: 100px;
-  background-image: url("./fondecran.jpg"); /* Replace with your logo path */
+ /* background-image: url("./fondecran.jpg"); /* Replace with your logo path */
   background-size: cover;
   background-position: center;
   border-radius: 50%;
