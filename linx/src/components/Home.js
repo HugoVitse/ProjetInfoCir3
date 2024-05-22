@@ -16,6 +16,7 @@ const Home = () => {
         </ul>
       </nav>
       <i class="far fa-address-book"></i>
+      <img src="https://mdbcdn.b-cdn.net/img/new/slides/041.webp" class="img-fluid" alt="Wild Landscape" />
     </div>
   );
 }
