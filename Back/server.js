@@ -1,21 +1,44 @@
 const express = require('express')
+const cookieParser = require('cookie-parser')
 const https = require('https');
 const fs = require('fs')
+const cors = require('cors')
+
 const app = express()
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors())
+const connect_db = require('./connect_db');
+
 const port = 443
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+
+const login = require('./login')
 
 
-https.createServer(
-    {
-        key: fs.readFileSync("ssl/key.pem"),
-        cert: fs.readFileSync("ssl/cert.pem"),
-    },
-    app
-).listen(port, () => {
-    console.log(`serever is runing at port ${port}`);
-})
+async function serv(){
 
+
+
+
+    await connect_db.ConnectDB();
+
+
+    app.post('/login', login)
+
+
+
+
+    https.createServer(
+        {
+            key: fs.readFileSync("ssl/key.pem"),
+            cert: fs.readFileSync("ssl/cert.pem"),
+        },
+        app
+    ).listen(port, () => {
+        console.log(`serever is runing at port ${port}`);
+    })
+    
+}
+
+serv();
