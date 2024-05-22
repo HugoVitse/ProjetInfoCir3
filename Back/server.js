@@ -14,6 +14,9 @@ const port = 443
 
 
 const login = require('./login')
+const register = require('./register')
+
+
 
 
 async function serv(){
@@ -26,7 +29,7 @@ async function serv(){
 
     app.post('/login', login)
 
-
+    app.post('/register',register);
 
 
     https.createServer(
