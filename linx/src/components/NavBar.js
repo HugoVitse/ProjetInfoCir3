@@ -15,35 +15,17 @@ const NavBar = () => {
           <MDBIcon fas icon="home me-3" />
           Home
         </MDBListGroupItem>
-        <MDBListGroupItem tag="a" action href="/category-1" className="d-flex align-items-center">
-          <MDBIcon fas icon="chart-area me-3" />
-          Category 1
-          <MDBIcon fas icon="angle-down ms-auto" />
+        <MDBListGroupItem tag="a" action href="/Login" className="d-flex align-items-center">
+          <MDBIcon fas icon="address-book me-3" />
+          Login
         </MDBListGroupItem>
-        <MDBCollapse show>
-          <MDBListGroupItem tag="a" action href="/category-1/link-2" className="ms-4">
-            Link 2
-          </MDBListGroupItem>
-          <MDBListGroupItem tag="a" action href="/category-1/link-3" className="ms-4">
-            Link 3
-          </MDBListGroupItem>
-        </MDBCollapse>
-        <MDBListGroupItem tag="a" action href="/category-2" className="d-flex align-items-center">
-          <MDBIcon fas icon="cog me-3" />
-          Category 2
-          <MDBIcon fas icon="angle-down ms-auto" />
+        <MDBListGroupItem tag="a" action href="/Register" className="d-flex align-items-center">
+          <MDBIcon fas icon="home me-3" />
+          Register
         </MDBListGroupItem>
-        <MDBCollapse show>
-          <MDBListGroupItem tag="a" action href="/category-2/link-4" className="ms-4">
-            Link 4
-          </MDBListGroupItem>
-          <MDBListGroupItem tag="a" action href="/category-2/link-5" className="ms-4">
-            Link 5
-          </MDBListGroupItem>
-        </MDBCollapse>
-        <MDBListGroupItem tag="a" action href="/settings" className="d-flex align-items-center">
+        <MDBListGroupItem tag="a" action href="/Account" className="d-flex align-items-center">
           <MDBIcon fas icon="cog me-3" />
-          Settings
+          Account
         </MDBListGroupItem>
       </MDBListGroup>
       <hr />
