@@ -10,33 +10,56 @@ const Register = () => {
         <MDBCol md="10" lg="8" className="mx-auto">
           <MDBCard className="shadow-3" style={{ borderRadius: '15px' }}>
             <MDBCardBody className="p-5" style={{ backgroundColor: '#f8f9fa' }}>
+
               <h2 className="text-center mb-4" style={{ color: '#343a40' }}>Sign Up</h2>
+
               <form>
                 <div className="mb-4">
-                  <MDBInput label="First Name" type="text" id="firstName" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} />
+                  <MDBInput label="Nom" type="text" id="nom" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} />
                 </div>
+
                 <div className="mb-4">
-                  <MDBInput label="Last Name" type="text" id="lastName" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} />
+                  <MDBInput label="Prénom" type="text" id="prenom" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} />
                 </div>
+
                 <div className="mb-4">
-                  <MDBInput label="Date of Birth" type="date" id="dateOfBirth" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} />
+                  <MDBInput label="Date de naissance" type="date" id="datenaissance" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} />
                 </div>
+
                 <div className="mb-4">
-                  <MDBInput label="Email" type="email" id="email" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} />
+                  <MDBInput label="Adresse électronique" type="email" id="email" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} />
                 </div>
+
                 <div className="mb-4">
-                  <MDBInput label="Password" type="password" id="password" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} />
+                  <MDBInput label="Mot de passe" type="password" id="password" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} />
                 </div>
+
                 <div className="mb-4">
-                  <MDBInput label="Confirm Password" type="password" id="confirmPassword" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} />
+                  <MDBInput label="Confirmer le mot de passe" type="password" id="confirmPassword" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} />
                 </div>
 
                 <h3 className="text-center mb-4" style={{ color: '#343a40' }}>Questionnaire</h3>
 
                 <div className="mb-4">
-                  <label className="form-label" style={{ color: '#343a40' }}>Question 1: Do you like sports?</label>
-                  <MDBCheckbox label="Yes" id="q1_yes" style={{ color: '#343a40' }} />
-                  <MDBCheckbox label="No" id="q1_no" style={{ color: '#343a40' }} />
+                  <label className="form-label" style={{ color: '#343a40' }}>Quelles activités aimez-vous ?</label>
+                  <MDBCheckbox label="Cinéma" id="cinema" style={{ color: '#343a40' }} />
+                  <MDBCheckbox label="Animaux" id="animaux" style={{ color: '#343a40' }} />
+                  <MDBCheckbox label="Théâtre" id="theatre" style={{ color: '#343a40' }} />
+                  <MDBCheckbox label="Danse" id="danse" style={{ color: '#343a40' }} />
+                  <MDBCheckbox label="Manga/Anime" id="manga" style={{ color: '#343a40' }} />
+                  <MDBCheckbox label="Séries" id="series" style={{ color: '#343a40' }} />
+                  <MDBCheckbox label="Échecs" id="echecs" style={{ color: '#343a40' }} />
+                  <MDBCheckbox label="Moto" id="moto" style={{ color: '#343a40' }} />
+                  <MDBCheckbox label="Lecture" id="lecture" style={{ color: '#343a40' }} />
+                  <MDBCheckbox label="Jeux vidéos" id="jeuxvideos" style={{ color: '#343a40' }} />
+                  <MDBCheckbox label="Musique" id="musique" style={{ color: '#343a40' }} />
+                  <MDBCheckbox label="BD/Comics" id="bdcomics" style={{ color: '#343a40' }} />
+                  <MDBCheckbox label="Voyager" id="voyager" style={{ color: '#343a40' }} />
+                  <MDBCheckbox label="Musées" id="" style={{ color: '#343a40' }} />
+                  <MDBCheckbox label="Sortir entre amis" id="sorties" style={{ color: '#343a40' }} />
+                  <MDBCheckbox label="Sport" id="" style={{ color: '#343a40' }} />
+                  <MDBCheckbox label="Nourriture" id="nourriture" style={{ color: '#343a40' }} />
+                  <MDBCheckbox label="La mode" id="mode" style={{ color: '#343a40' }} />
                 </div>
 
                 <div className="mb-4">
