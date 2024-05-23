@@ -68,7 +68,7 @@ const Login = () => {
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-        <a href="/signup">Don't have an account? Sign Up</a>
+        <a href="/Register">Don't have an account? Sign Up</a>
       </div>
     </div>
             </MDBCardBody>
