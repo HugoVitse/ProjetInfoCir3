@@ -1,6 +1,7 @@
 // components/Catalogue.js
-import React from 'react';
 import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import axios from 'axios';
 import {
   MDBCard,
   MDBCardImage,
@@ -11,7 +12,7 @@ import {
   MDBCol
 } from 'mdb-react-ui-kit';
 
-const Admin = () => {
+const Catalogue = () => {
   return (
     <MDBRow className='row-cols-1 row-cols-md-3 g-4'>
       <MDBCol>
@@ -107,4 +108,4 @@ const Admin = () => {
   );
 }
 
-export default Admin;
+export default Catalogue;
