@@ -1,7 +1,7 @@
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn, MDBCard, MDBCardBody, MDBCheckbox, MDBRadio } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import React, { useState } from 'react';
 import axios from 'axios';
 
 const Register = () => {
@@ -11,7 +11,8 @@ const Register = () => {
       dateOfBirth: '',
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      note: null // Ajout de la note dans le state
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -47,29 +48,29 @@ const Register = () => {
 
               <h2 className="text-center mb-4" style={{ color: '#343a40' }}>Sign Up</h2>
 
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-4">
-                  <MDBInput label="Nom" type="text" id="firstName" value={formData.firstName} required style={{ borderRadius: '10px', borderColor: '#ced4da' }} onChange={handleChange} />
+                  <MDBInput label="Nom" type="text" id="firstName" value={formData.firstName} name="firstName" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} onChange={handleChange} />
                 </div>
 
                 <div className="mb-4">
-                  <MDBInput label="Prénom" type="text" id="lastName" value={formData.lastName} required style={{ borderRadius: '10px', borderColor: '#ced4da' }} onChange={handleChange} />
+                  <MDBInput label="Prénom" type="text" id="lastName" value={formData.lastName} name="lastName" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} onChange={handleChange} />
                 </div>
 
                 <div className="mb-4">
-                  <MDBInput label="Date de naissance" type="date" id="datenaissance" value={formData.dateOfBirth} required style={{ borderRadius: '10px', borderColor: '#ced4da' }} onChange={handleChange} />
+                  <MDBInput label="Date de naissance" type="date" id="datenaissance" value={formData.dateOfBirth} name="dateOfBirth" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} onChange={handleChange} />
                 </div>
 
                 <div className="mb-4">
-                  <MDBInput label="Adresse électronique" type="email" id="email" value={formData.email} required style={{ borderRadius: '10px', borderColor: '#ced4da' }} onChange={handleChange} />
+                  <MDBInput label="Adresse électronique" type="email" id="email" value={formData.email} name="email" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} onChange={handleChange} />
                 </div>
 
                 <div className="mb-4">
-                  <MDBInput label="Mot de passe" type="password" id="password" value={formData.password} required style={{ borderRadius: '10px', borderColor: '#ced4da' }} onChange={handleChange} />
+                  <MDBInput label="Mot de passe" type="password" id="password" value={formData.password} name="password" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} onChange={handleChange} />
                 </div>
 
                 <div className="mb-4">
-                  <MDBInput label="Confirmer le mot de passe" type="password" value={formData.confirmpassword}id="confirmPassword" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} onChange={handleChange} />
+                  <MDBInput label="Confirmer le mot de passe" type="password" value={formData.confirmpassword}id="confirmPassword" name="confirmPassword" required style={{ borderRadius: '10px', borderColor: '#ced4da' }} onChange={handleChange} />
                 </div>
 
                 <h3 className="text-center mb-4" style={{ color: '#343a40' }}>Questionnaire</h3>
@@ -97,22 +98,32 @@ const Register = () => {
                 </div>
 
                 <div className="mb-4">
-                  <label className="form-label" style={{ color: '#343a40' }}>Question 2: What is your preferred mode of transportation?</label>
-                  <MDBRadio name="q2" id="q2_car" label="Car" style={{ color: '#343a40' }} />
-                  <MDBRadio name="q2" id="q2_bike" label="Bike" style={{ color: '#343a40' }} />
-                  <MDBRadio name="q2" id="q2_public" label="Public Transport" style={{ color: '#343a40' }} />
-                  <MDBRadio name="q2" id="q2_walk" label="Walking" style={{ color: '#343a40' }} />
+                  <label className="form-label" style={{ color: '#343a40' }}>Question 2: jqslnc,eqsfc ?</label>
+                  <MDBRadio name="q2" id="q2_car" label="zksdfj" style={{ color: '#343a40' }} />
+                  <MDBRadio name="q2" id="q2_bike" label="ksfdsvx" style={{ color: '#343a40' }} />
+                  <MDBRadio name="q2" id="q2_public" label="rsmdkgjv" style={{ color: '#343a40' }} />
+                  <MDBRadio name="q2" id="q2_walk" label="rpsmjdgk" style={{ color: '#343a40' }} />
                 </div>
 
                 <div className="mb-4">
-                  <label className="form-label" htmlFor="q3" style={{ color: '#343a40' }}>Notez votre état actuel :</label>
-                  <MDBInput type="textarea" id="q3" rows="4" style={{ borderRadius: '10px', borderColor: '#ced4da' }} />
+                  <label className="form-label" style={{ color: '#343a40' }}>Notez votre état actuel :</label>
+                  <div>
+                    {[...Array(10)].map((_, index) => (
+                      <MDBRadio
+                        key={index}
+                        name="note"
+                        label={`${index + 1}`}
+                        style={{ color: '#343a40' }}
+                        onClick={() => setFormData({ ...formData, note: index + 1 })}
+                      />
+                    ))}
+                  </div>
                 </div>
 
                 <MDBBtn type="submit" color="dark" className="w-100" style={{ backgroundColor: '#343a40' }}>Sign Up</MDBBtn>
               </form>
               <div className="text-center mt-3">
-              <a href="/Login">Already have an account? Login</a>
+                <Link to="/login" className="text-decoration-none">Already have an account? Login</Link>
               </div>
             </MDBCardBody>
           </MDBCard>
@@ -123,3 +134,4 @@ const Register = () => {
 }
 
 export default Register;
+
