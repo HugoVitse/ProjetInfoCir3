@@ -105,7 +105,7 @@ const Register = () => {
                 </div>
 
                 <div className="mb-4">
-                  <label className="form-label" htmlFor="q3" style={{ color: '#343a40' }}>Notez votre état actuel /10</label>
+                  <label className="form-label" htmlFor="q3" style={{ color: '#343a40' }}>Notez votre état actuel :</label>
                   <MDBInput type="textarea" id="q3" rows="4" style={{ borderRadius: '10px', borderColor: '#ced4da' }} />
                 </div>
 
