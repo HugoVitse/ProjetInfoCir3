@@ -45,18 +45,32 @@ const Login = () => {
           <MDBCard className="shadow-3">
             <MDBCardBody className="p-5">
               <h2 className="text-center mb-4">Login</h2>
-              <form onSubmit={(e) => e.preventDefault()}>
-                <div className="mb-4">
-                  <MDBInput label="Email" type="email" id="email" required />
-                </div>
-                <div className="mb-4">
-                  <MDBInput label="Password" type="password" id="password" required />
-                </div>
-                <MDBBtn type="submit" color="primary" className="w-100">Login</MDBBtn>
-              </form>
-              <div className="text-center mt-3">
-                <Link to="/signup" className="text-decoration-none">Don't have an account? Sign Up</Link>
-              </div>
+              <div className="login-container">
+      <div className="login-form">
+        <h1>Login</h1>
+        <form onSubmit={handleSubmit}>
+          {error && <div className="error">{error}</div>}
+          <label>Email:</label>
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <label>Password:</label>
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit" disabled={loading}>
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
+        </form>
+        <a href="/signup">Don't have an account? Sign Up</a>
+      </div>
+    </div>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
