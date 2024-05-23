@@ -6,6 +6,7 @@ import Account from './components/Account';
 import Login from './components/Login';
 import Register from './components/Register';
 import NavBar from './components/NavBar';
+import Catalogue from './components/Catalogue';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Route path="/Register" element={<Register />} />
             <Route path="/Admin" element={<Admin />} />
             <Route path="/Account" element={<Account />} />
+            <Route path="/Catalogue" element={<Catalogue />} />
           </Routes>
         </div>
       </div>
