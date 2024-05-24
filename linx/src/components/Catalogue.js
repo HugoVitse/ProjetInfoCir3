@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import axios from 'axios';
 import {
     MDBCard,
     MDBCardImage,
@@ -15,6 +14,7 @@ import {
 const Catalogue = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [selectedCard, setSelectedCard] = useState(null);
+    const navigate = useNavigate();
 
     const openPopup = (title, description) => {
         setSelectedCard({ title, description });
@@ -23,6 +23,10 @@ const Catalogue = () => {
 
     const closePopup = () => {
         setShowPopup(false);
+    };
+
+    const Activite = (title,) => {
+        navigate('/Activite', { state: { cardTitle: selectedCard.title } });
     };
 
     const a = "this card";
@@ -139,7 +143,7 @@ const Catalogue = () => {
                     </MDBCard>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
                         <MDBBtn color='secondary' onClick={closePopup}>Fermer</MDBBtn>
-                        <MDBBtn color='primary'>S'inscrire à l'activité</MDBBtn>
+                        <MDBBtn color='primary' onClick={Activite}>S'inscrire à l'activité</MDBBtn>
                     </div>
                 </div>
             )}
