@@ -18,9 +18,9 @@ const NavBar = () => {
           <MDBIcon fas icon="address-book me-3" />
           Login
         </MDBListGroupItem>
-        <MDBListGroupItem tag={Link} action to="/Register" className="d-flex align-items-center">
+        <MDBListGroupItem tag={Link} action to="/Questionnaire" className="d-flex align-items-center">
           <MDBIcon fas icon="far fa-file-lines me-3" />
-          Register
+          Questionnaire
         </MDBListGroupItem>
         <MDBListGroupItem tag={Link} action to="/Catalogue" className="d-flex align-items-center">
           <MDBIcon fas icon="fas fa-book me-3" />
