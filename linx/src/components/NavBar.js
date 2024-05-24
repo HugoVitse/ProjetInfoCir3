@@ -22,10 +22,6 @@ const NavBar = () => {
           <MDBIcon fas icon="far fa-file-lines me-3" />
           Register
         </MDBListGroupItem>
-        <MDBListGroupItem tag={Link} action to="/Catalogue" className="d-flex align-items-center">
-          <MDBIcon fas icon="book-open me-3" />
-          Catalogue
-        </MDBListGroupItem>
         <MDBListGroupItem tag={Link} action to="/Account" className="d-flex align-items-center">
           <MDBIcon fas icon="far fa-address-card me-3" />
           Account
