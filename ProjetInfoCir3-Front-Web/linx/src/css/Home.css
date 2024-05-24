@@ -1,0 +1,45 @@
+home-container {
+    display: flex; /* Enable horizontal layout for image and navbar */
+  }
+  
+  .navbar {
+    width: 200px; /* Adjust navbar width as needed */
+    background-color: #f0f0f0; /* Set background color for navbar */
+    padding: 20px; /* Add padding for better spacing */
+    display: flex; /* Allow vertical stacking of list items */
+    flex-direction: column; /* Make navigation items stack vertically */
+    position: relative; /* Enable image positioning */
+  }
+  
+  .navbar ul {
+    list-style: none; /* Remove default bullet points */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+  }
+  
+  .navbar li {
+    margin-bottom: 10px; /* Add spacing between navigation items */
+  }
+  
+  .navbar a {
+    color: #333; /* Set link color */
+    text-decoration: none; /* Remove default underlining */
+    font-size: 16px; /* Adjust link font size */
+  }
+  
+  .navbar a:hover {
+    color: #007bff; /* Change link color on hover */
+  }
+  
+  .img-container {
+    position: relative; /* Allow image positioning */
+    flex: 1; /* Stretch image to fill remaining space */
+  }
+  
+  .img-fluid {
+    width: 100%; /* Ensure image fills container width */
+    height: auto; /* Maintain image aspect ratio */
+    position: absolute; /* Position image over navbar (optional) */
+    top: 0; /* Align image top with navbar */
+    left: 0; /* Align image left with navbar */
+  }
