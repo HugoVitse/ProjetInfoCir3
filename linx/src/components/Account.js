@@ -5,7 +5,7 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 
 const Account = () => {
   return (
-    <MDBContainer fluid className="py-5" style={{ backgroundColor: '#f8f9fa' }}>
+    <MDBContainer fluid className="py-5">
       <MDBRow className="justify-content-center">
         <MDBCol md="10" lg="8">
           <MDBCard className="mb-4 shadow-3">

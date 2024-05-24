@@ -6,16 +6,20 @@ import Account from './components/Account';
 import Login from './components/Login';
 import Register from './components/Register';
 import NavBar from './components/NavBar';
+import Header from './components/Header';
 import Catalogue from './components/Catalogue';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 
 function App() {
   return (
-    <html lang="en" style={{height: '100%'}}>
+    <html>
     <Router>
       
-      <div style={{height: "100%"}}>
+      <div>
+        <Header />
+      <div>
         <NavBar />
+      </div>
         <div style={{ height: '100%', marginLeft: '220px'}}>
           <Routes>
             <Route path="/" element={<Home />} />
