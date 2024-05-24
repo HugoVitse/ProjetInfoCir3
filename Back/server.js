@@ -12,9 +12,10 @@ const connect_db = require('./connect_db');
 
 const port = 443
 
-
+const activities = require('./activities')
 const login = require('./login')
 const register = require('./register')
+
 
 
 
@@ -31,6 +32,7 @@ async function serv(){
 
     app.post('/register',register);
 
+    app.post('/activities',activities);
 
     https.createServer(
         {
