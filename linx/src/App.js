@@ -9,6 +9,7 @@ import NavBar from './components/NavBar';
 import Header from './components/Header';
 import Catalogue from './components/Catalogue';
 import Activite from './components/Activite';
+import Questionnaire from './components/Questionnaire';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 
 function App() {
@@ -30,6 +31,8 @@ function App() {
             <Route path="/Account" element={<Account />} />
             <Route path="/Catalogue" element={<Catalogue />} />
             <Route path="/Activite" element={<Activite />} />
+            <Route path="/Questionnaire" element={<Questionnaire />} />
+            
           </Routes>
         </div>
       </div>
