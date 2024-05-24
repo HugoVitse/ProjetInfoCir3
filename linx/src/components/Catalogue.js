@@ -16,8 +16,8 @@ const Catalogue = () => {
     const [selectedCard, setSelectedCard] = useState(null);
     const navigate = useNavigate();
 
-    const openPopup = (title, description) => {
-        setSelectedCard({ title, description });
+    const openPopup = (title, description, img) => {
+        setSelectedCard({ title, description, img});
         setShowPopup(true);
     };
 
@@ -25,8 +25,8 @@ const Catalogue = () => {
         setShowPopup(false);
     };
 
-    const Activite = (title,) => {
-        navigate('/Activite', { state: { cardTitle: selectedCard.title } });
+    const Activite = () => {
+        navigate('/Activite', { state: { cardTitle: selectedCard.title, cardDescription: selectedCard.description, cardImg: selectedCard.img } });
     };
 
     const a = "this card";
@@ -35,7 +35,7 @@ const Catalogue = () => {
         <>
             <MDBRow className='row-cols-1 row-cols-md-3 g-4'>
                 <MDBCol>
-                    <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }} onClick={() => openPopup('Card title', 'This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.')}>
+                    <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }} onClick={() => openPopup('Card title', 'This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.', 'https://mdbootstrap.com/img/new/standard/city/041.webp')}>
                         <MDBCardImage
                             src='https://mdbootstrap.com/img/new/standard/city/041.webp'
                             alt='...'
@@ -124,14 +124,13 @@ const Catalogue = () => {
                     </MDBCol>
             </MDBRow>
 
-
             {/* Popup */}
             {showPopup && (
-                <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', maxWidth: '60%', maxHeight: '90%', overflow: 'auto', backgroundColor: 'white', padding: '20px', borderRadius: '5px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)', maxHeight: 'calc(100% - 40px)', width: 'calc(100% - 40px)' }}>
+                <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', maxWidth: '60%', maxHeight: '90%', overflow: 'auto', backgroundColor: 'white', padding: '20px', borderRadius: '5px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)', width: 'calc(100% - 40px)' }}>
                     <MDBCard style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <MDBCardImage
                             className='h-10'
-                            src='https://mdbootstrap.com/img/new/standard/city/041.webp'
+                            src={selectedCard.img}
                             alt='...'
                             position='top'
                             style={{ maxWidth: '100%' }}
@@ -147,7 +146,6 @@ const Catalogue = () => {
                     </div>
                 </div>
             )}
-
         </>
     );
 }
