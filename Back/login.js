@@ -5,10 +5,10 @@ const jwt = require('jsonwebtoken');
 const connect_db = require('./connect_db')
 
 async function login(req,res){
-    const { username , password } = req.body;
+    const { email , password } = req.body;
     const hashedpassword = hash_password(password);
     const user = {
-        "username":username,
+        "email":email,
         "password":hashedpassword
     }
 
@@ -18,7 +18,7 @@ async function login(req,res){
     const collection = database.collection(config.users);
 
 
-    const findOneQuery = { username: user.username };
+    const findOneQuery = { email: user.email };
     const findOneResult = await collection.findOne(findOneQuery);
 
     if(findOneResult === null){
@@ -28,7 +28,7 @@ async function login(req,res){
 
     else{
         if( hashedpassword === findOneResult.password) {
-            const token = `jwt=${jwt.sign({ username: user.username }, config_serv.secretJWT)}`;
+            const token = `jwt=${jwt.sign({ email: user.email }, config_serv.secretJWT)}`;
             res.set("Set-Cookie",token)
             res.status(200).send("COnnexion réussie")
         }

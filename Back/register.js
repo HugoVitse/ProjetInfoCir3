@@ -4,9 +4,9 @@ const filter_user_entry = require('./filter_user_entry');
 const connect_db = require('./connect_db')
 
 async function register(req,res){
-    const { username , password } = req.body;
+    const { firstName , password ,lastName, dateOfBirth, email,confirmPassword  } = req.body;
 
-    const verificationUser= filter_user_entry(username)
+    const verificationUser= filter_user_entry(email)
     const verificationPass = filter_user_entry(password)
 
     if(verificationUser || verificationPass){
@@ -17,8 +17,12 @@ async function register(req,res){
     const hashedpassword = hash_password(password)
 
     const user = {
-        "username":username,
-        "password":hashedpassword
+        "email":email,
+        "password":hashedpassword,
+        "firstName":firstName,
+        "lastName":lastName,
+        "dateOfBirth":dateOfBirth,
+        "confirmPassword":confirmPassword,
     }
 
     const isExist = await add_user(connect_db.client,user);

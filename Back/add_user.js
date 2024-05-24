@@ -5,7 +5,7 @@ async function add_user(client,user){
     const database = client.db(config.dbName);
     const collection = database.collection(config.users);
 
-    const findOneQuery = { username: user.username };
+    const findOneQuery = { email: user.email };
     const findOneResult = await collection.findOne(findOneQuery);
 
     if(findOneResult === null){
