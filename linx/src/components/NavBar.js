@@ -26,6 +26,10 @@ const NavBar = () => {
           <MDBIcon fas icon="fas fa-book me-3" />
             Catalogue
         </MDBListGroupItem>
+        <MDBListGroupItem tag={Link} action to="/MoodTracker" className="d-flex align-items-center">
+          <MDBIcon fas icon="calendar-alt me-3" />
+            Mood Tracker
+        </MDBListGroupItem>
       </MDBListGroup>
       <hr />
       <div className="text-center">
