@@ -23,7 +23,8 @@ const NavBar = () => {
           Questionnaire
         </MDBListGroupItem>
         <MDBListGroupItem tag={Link} action to="/Catalogue" className="d-flex align-items-center">
-          <MDBIcon fas icon="book" className="me-3" />            Catalogue
+          <MDBIcon fas icon="book" className="me-3" /> 
+          Catalogue
         </MDBListGroupItem>
       </MDBListGroup>
       <hr />
