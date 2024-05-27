@@ -14,15 +14,11 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 
 function App() {
   return (
-    <html>
     <Router>
-      
       <div>
         <Header />
-      <div>
         <NavBar />
-      </div>
-        <div style={{ height: '100%', marginLeft: '220px'}}>
+        <div style={{ height: '100%', marginLeft: '220px' }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/Login" element={<Login />} />
@@ -32,13 +28,10 @@ function App() {
             <Route path="/Catalogue" element={<Catalogue />} />
             <Route path="/Activite" element={<Activite />} />
             <Route path="/Questionnaire" element={<Questionnaire />} />
-            
           </Routes>
         </div>
       </div>
-      
     </Router>
-    </html>
   );
 }
 

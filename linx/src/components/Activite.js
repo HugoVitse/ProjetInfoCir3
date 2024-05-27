@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 import { MDBContainer, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBInput, MDBBtn, MDBCardImage } from 'mdb-react-ui-kit';
 import ReactStars from 'react-rating-stars-component';
 
@@ -9,10 +10,14 @@ const Activite = () => {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
     const [rating, setRating] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    
 
     const handleCommentChange = (e) => setComment(e.target.value);
     const handleRatingChange = (newRating) => setRating(newRating);
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (comment && rating) {
             const now = new Date();
@@ -26,12 +31,12 @@ const Activite = () => {
             setComment('');
             setRating(0);
         }
+
     };
 
     return (
         <MDBContainer>
             <h1>Activité</h1>
-            
             <MDBCard className='mb-4'>
                 <MDBCardBody style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <MDBCardImage
@@ -41,7 +46,9 @@ const Activite = () => {
                         style={{ maxWidth: '50%', maxHeight: '50%', objectFit: 'cover' }}
                     />
                     <MDBCardTitle>{cardTitle}</MDBCardTitle>
-                    <MDBCardText style={{ overflowWrap: 'break-word', wordWrap: 'break-word', wordBreak: 'break-word' }}>{cardDescription}</MDBCardText>
+                    <MDBCardText style={{ overflowWrap: 'break-word', wordWrap: 'break-word', wordBreak: 'break-word' }}>
+                        {cardDescription}
+                    </MDBCardText>
                 </MDBCardBody>
             </MDBCard>
 
@@ -72,7 +79,7 @@ const Activite = () => {
                     </form>
                 </MDBCardBody>
             </MDBCard>
-            
+
             <MDBCard>
                 <MDBCardBody>
                     <MDBCardTitle>Avis des utilisateurs</MDBCardTitle>
@@ -82,7 +89,7 @@ const Activite = () => {
                         comments.map((comment, index) => (
                             <div key={index}>
                                 <MDBCardText><span style={{ textDecoration: 'underline' }}>Commentaire:</span> {comment.text}</MDBCardText>
-                                <MDBCardText>Note: 
+                                <MDBCardText>Note:
                                     <ReactStars
                                         count={5}
                                         size={24}

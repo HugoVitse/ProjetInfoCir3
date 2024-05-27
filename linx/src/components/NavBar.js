@@ -4,27 +4,24 @@ import { Link } from 'react-router-dom';
 
 const NavBar = () => {
   return (
-    //Column
-    <div className="d-flex flex-column flex-shrink-0 p-3 bg-light" style={{height: '100%', position: 'fixed' }}>
-     
-
+    <div className="d-flex flex-column flex-shrink-0 p-3 bg-light" style={{ height: '100%', position: 'fixed' }}>
       <hr />
       <MDBListGroup>
-        <MDBListGroupItem tag={Link} action to="/" className="d-flex align-items-center">
-          <MDBIcon fas icon="home me-3" />
+        <MDBListGroupItem as={Link} to="/" className="d-flex align-items-center" action>
+          <MDBIcon fas icon="home" className="me-3" />
           Home
         </MDBListGroupItem>
-        <MDBListGroupItem tag={Link} action to="/Login" className="d-flex align-items-center">
-          <MDBIcon fas icon="address-book me-3" />
+        <MDBListGroupItem as={Link} to="/Login" className="d-flex align-items-center" action>
+          <MDBIcon fas icon="address-book" className="me-3" />
           Login
         </MDBListGroupItem>
-        <MDBListGroupItem tag={Link} action to="/Questionnaire" className="d-flex align-items-center">
-          <MDBIcon fas icon="far fa-file-lines me-3" />
+        <MDBListGroupItem as={Link} to="/Questionnaire" className="d-flex align-items-center" action>
+          <MDBIcon fas icon="file-lines" className="me-3" />
           Questionnaire
         </MDBListGroupItem>
-        <MDBListGroupItem tag={Link} action to="/Catalogue" className="d-flex align-items-center">
-          <MDBIcon fas icon="fas fa-book me-3" />
-            Catalogue
+        <MDBListGroupItem as={Link} to="/Catalogue" className="d-flex align-items-center" action>
+          <MDBIcon fas icon="book" className="me-3" />
+          Catalogue
         </MDBListGroupItem>
       </MDBListGroup>
       <hr />
