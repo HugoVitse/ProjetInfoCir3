@@ -10,6 +10,9 @@ import Header from './components/Header';
 import Catalogue from './components/Catalogue';
 import Activite from './components/Activite';
 import Questionnaire from './components/Questionnaire';
+import MoodTracker from './components/MoodTracker';
+import MoodTrackerQuestionnaire from './components/MoodTrackerQuestionnaire';
+
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 
 function App() {
@@ -28,6 +31,9 @@ function App() {
             <Route path="/Catalogue" element={<Catalogue />} />
             <Route path="/Activite" element={<Activite />} />
             <Route path="/Questionnaire" element={<Questionnaire />} />
+            <Route path="/MoodTracker" element={<MoodTracker />} />
+            <Route path="/MoodTrackerQuestionnaire" element={<MoodTrackerQuestionnaire />} />
+
           </Routes>
         </div>
       </div>
