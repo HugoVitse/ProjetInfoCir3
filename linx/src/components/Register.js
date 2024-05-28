@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn, MDBCard, MDBCardBody, MDBCheckbox, MDBRadio } from 'mdb-react-ui-kit';
-import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import { MDBContainer, MDBCol, MDBCardBody, MDBInput, MDBBtn, MDBCard } from 'mdb-react-ui-kit';
 import axios from 'axios';
 
 const Register = () => {
@@ -40,45 +39,47 @@ const Register = () => {
   };
 
   return (
-    <div style={{height:'100%'}}>
-    <MDBContainer fluid className="align-items-center" style={{height:'100%', background: 'linear-gradient(#2e006c, #003399)'}}>
-      <MDBCardBody style={{ height:'100%', borderRadius: '15px' }}>
-              <h2 className="text-center mb-4" style={{ color: '#FFFFFF' }}>Sign Up</h2>
+      <MDBContainer fluid className="vm100 d-flex align-items-center justify-content-center">
+        <MDBCol md="8" lg="8" className=" mx-auto">
+          <MDBCard className="m-5" shadow="3">
+            <MDBCardBody>
+              <h2 className="text-center mb-4">Sign Up</h2>
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
-                  <MDBInput label="Nom" type="text" id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} required style={{ borderRadius: '10px', backgroundColor: '#ffffff', color: '#8458B3' }} labelClass="text-dark" />
+                  <MDBInput label="Nom" type="text" id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} required />
                 </div>
 
                 <div className="mb-4">
-                  <MDBInput label="Prénom" type="text" id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} required style={{ borderRadius: '10px', backgroundColor: '#ffffff', color: '#8458B3' }} labelClass="text-dark" />
+                  <MDBInput label="Prénom" type="text" id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} required />
                 </div>
 
                 <div className="mb-4">
-                  <MDBInput label="Date de naissance" type="date" id="dateOfBirth" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} required style={{ borderRadius: '10px', backgroundColor: '#ffffff', color: '#8458B3' }} labelClass="text-dark" />
+                  <MDBInput label="Date de naissance" type="date" id="dateOfBirth" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} required />
                 </div>
 
                 <div className="mb-4">
-                  <MDBInput label="Adresse électronique" type="email" id="email" name="email" value={formData.email} onChange={handleChange} required style={{ borderRadius: '10px', backgroundColor: '#ffffff', color: '#8458B3' }} labelClass="text-dark" />
+                  <MDBInput label="Adresse électronique" type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
                 </div>
 
                 <div className="mb-4">
-                  <MDBInput label="Mot de passe" type="password" id="password" name="password" value={formData.password} onChange={handleChange} required style={{ borderRadius: '10px', backgroundColor: '#ffffff', color: '#8458B3' }} labelClass="text-dark" />
+                  <MDBInput label="Mot de passe" type="password" id="password" name="password" value={formData.password} onChange={handleChange} required />
                 </div>
 
                 <div className="mb-4">
-                  <MDBInput label="Confirmer le mot de passe" type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required style={{ borderRadius: '10px', backgroundColor: '#ffffff', color: '#8458B3' }} labelClass="text-dark" />
+                  <MDBInput label="Confirmer le mot de passe" type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required />
                 </div>
-
-                
-                <MDBBtn type="submit" color="light" className="w-100" disabled={loading} style={{ backgroundColor: '#8458B3' }}>Sign Up</MDBBtn>
+                <div className="text-center mb-2">
+                  <MDBBtn type="submit" color="primary" disabled={loading}>Sign Up</MDBBtn>
+                </div>
               </form>
               {error && <div className="text-danger text-center mt-3">{error}</div>}
               <div className="text-center mt-3">
                 <Link to="/login" className="text-decoration-none" style={{ color: '#8458B3' }}>Already have an account? Login</Link>
               </div>
-      </MDBCardBody>
-    </MDBContainer>
-    </div>
+            </MDBCardBody>
+          </MDBCard>
+        </MDBCol>
+      </MDBContainer>
   );
 }
 

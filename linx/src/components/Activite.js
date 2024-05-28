@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
 import { MDBContainer, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBInput, MDBBtn, MDBCardImage } from 'mdb-react-ui-kit';
 import ReactStars from 'react-rating-stars-component';
 
@@ -10,8 +9,7 @@ const Activite = () => {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
     const [rating, setRating] = useState(0);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+  
     
 
     const handleCommentChange = (e) => setComment(e.target.value);

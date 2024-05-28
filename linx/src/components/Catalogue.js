@@ -10,13 +10,10 @@ import {
     MDBCol,
     MDBBtn
 } from 'mdb-react-ui-kit';
-import axios from 'axios';
 
 const Catalogue = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [selectedCard, setSelectedCard] = useState(null);
-    const [loading, setLoading] = useState(false); // Add loading state
-    const [error, setError] = useState(null); // Add error state
     const navigate = useNavigate();
 
     const openPopup = (title, description, img) => {
@@ -39,20 +36,6 @@ const Catalogue = () => {
     };
 
     const a = "this card";
-    const url = 'https://www.lilletourism.com/api/render/website_v2/lille-tourisme/playlist/48080/fr_FR/json?page=17&randomSeed=5e0ec7ac-791f-4329-946f-42f86c093f5a&confId=48080';
-
-    const login = async () => {
-        try {
-            setLoading(true);
-            const response = await axios.post(url);
-            console.log(response.data);
-        } catch (error) {
-            console.error('There was an error logging in!', error);
-            setError('An error occurred. Please try again later.');
-        } finally {
-            setLoading(false);
-        }
-    };
 
     return (
         <>
