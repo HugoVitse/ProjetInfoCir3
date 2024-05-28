@@ -16,6 +16,7 @@ const port = 443
 const activities = require('./activities')
 const login = require('./login')
 const register = require('./register')
+const questionnaire= require('./questionnaire')
 
 
 
@@ -32,8 +33,7 @@ async function serv(){
     app.post('/login', login)
     app.post('/register', register)
     app.post('/activities', activities)
-
- 
+    app.post('/questionnaire', questionnaire)
 
 
     https.createServer(
@@ -43,7 +43,7 @@ async function serv(){
         },
         app
     ).listen(port, () => {
-        console.log(`serever is runing at port ${port}`);
+        console.log(`server is runing at port ${port}`);
     })
     
 }
