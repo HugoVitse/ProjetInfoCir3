@@ -100,12 +100,13 @@ const Register = () => {
             <MDBInput label="Email" type="email" name="email" value={formData.email} onChange={handleChange} required className="mb-4" />
             <MDBInput label="Password" type="password" name="password" value={formData.password} onChange={handleChange} required className="mb-4" />
             <MDBInput label="Confirm Password" type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required className="mb-4" />
-
-            {/* Pop-up Questionnaire !!! */}
+</form>
+            
             <button type="button" className="btn btn-primary w-100" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#exampleModal" disabled={loading}>
               Valider
             </button>
-
+            
+            {/* Pop-up Questionnaire !!! */}
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
@@ -223,7 +224,7 @@ const Register = () => {
 </div>
             {/* Fin Pop-up */}
 
-          </form>
+          
           {error && <div className="text-danger text-center mt-3">{error}</div>}
           <div className="text-center mt-3">
             <Link to="/login">Already have an account? Login</Link>

@@ -40,15 +40,15 @@ const MoodTrackerQuestionnaire = () => {
               <h3 className="text-center mb-4">Suivi quotidien de l'humeur</h3>
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label htmlFor="sleepQuality" className="form-label">Qualité du sommeil (note sur 10)</label>
+                  <label htmlFor="sleepQuality" className="form-label">Avez-vous bien dormi ? (note sur 10)</label>
                   <MDBRange id="sleepQuality" name="sleepQuality" min="0" max="10" value={formData.sleepQuality} onChange={(e) => handleSliderChange(e.target.value, 'sleepQuality')} />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="stressLevel" className="form-label">Niveau de stress (note sur 10)</label>
+                  <label htmlFor="stressLevel" className="form-label">Avez-vous fait du sport aujourd'hui ? (note sur 10)</label>
                   <MDBRange id="stressLevel" name="stressLevel" min="0" max="10" value={formData.stressLevel} onChange={(e) => handleSliderChange(e.target.value, 'stressLevel')} />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="energyLevel" className="form-label">Niveau d'énergie (note sur 10)</label>
+                  <label htmlFor="energyLevel" className="form-label"> Notez vos intéractions avec des personnes. (note sur 10)</label>
                   <MDBRange id="energyLevel" name="energyLevel" min="0" max="10" value={formData.energyLevel} onChange={(e) => handleSliderChange(e.target.value, 'energyLevel')} />
                 </div>
                 <div className="mb-3">
@@ -56,8 +56,8 @@ const MoodTrackerQuestionnaire = () => {
                   <textarea className="form-control" id="socialInteraction" name="socialInteraction" rows="3" value={formData.socialInteraction} onChange={handleInputChange}></textarea>
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="additionalActivity" className="form-label">Activité(s) supplémentaire(s) réalisée(s) aujourd'hui</label>
-                  <input type="text" className="form-control" id="additionalActivity" name="additionalActivity" value={formData.additionalActivity} onChange={handleInputChange} />
+                  <label htmlFor="additionalActivity" className="form-label"> Avez-vous bien manger aujourd'hui ? </label>
+                  <MDBRange id="stressLevel" name="stressLevel" min="0" max="10" value={formData.stressLevel} onChange={(e) => handleSliderChange(e.target.value, 'stressLevel')} />
                 </div>
                 <MDBBtn type="submit" color="primary" className="w-100">Soumettre</MDBBtn>
               </form>
