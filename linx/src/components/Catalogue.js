@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
+import axios from 'axios';
 import {
     MDBCard,
     MDBCardImage,
@@ -15,6 +16,7 @@ const Catalogue = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [selectedCard, setSelectedCard] = useState(null);
     const navigate = useNavigate();
+    const [activities, setActivities] = useState([]);
 
     const openPopup = (title, description) => {
         setSelectedCard({ title, description });
@@ -29,6 +31,29 @@ const Catalogue = () => {
         navigate('/Activite', { state: { cardTitle: selectedCard.title } });
     };
 
+    const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    };
+
+    useEffect(() => {
+        const fetchActivities = async () => {
+            try {
+                const token = getCookie('jwt');
+                console.log(token);
+                const tokenString = "jwt=" + token;
+                console.log(tokenString);
+
+                const response = await axios.get('http://localhost/activities',{ withCredentials: true });
+                console.log('Fetched activities:', response.data);
+                setActivities(response.data);
+            } catch (error) {
+                console.error('Error fetching activities:', error);
+            }
+        };
+        fetchActivities();
+    }, []);
     const a = "this card";
 
     return (

@@ -25,6 +25,7 @@ async function activities(req,res){
             res.status(200).send(response.data.items)
         }
         catch(err){
+
             res.status(502).send()
             return
         }
@@ -34,3 +35,7 @@ async function activities(req,res){
 }
 
 module.exports = activities;
+
+
+https://www.lilletourism.com/api/render/website_v2/lille-tourisme/playlist/48080/fr_FR/json?page=17&randomSeed=5e0ec7ac-791f-4329-946f-42f86c093f5a&confId=48080
+https://www.lilletourism.com/api/render/website_v2/lille-tourisme/playlist/48080/fr_FR/json?page=17&randomSeed=a3b74108-a2e3-4c87-8095-eae8a309c646&confId=48080

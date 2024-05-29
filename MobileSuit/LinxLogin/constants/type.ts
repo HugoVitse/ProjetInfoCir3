@@ -1,5 +1,6 @@
 export type RootStackParamList = {
     index: undefined;
     accueil:undefined;
-    register:undefined
+    register:undefined;
+    home:undefined;
 };

@@ -1,5 +1,5 @@
 import React , {useState,useEffect} from 'react';
-import {Link} from 'expo-router'
+import {Link, useRouter} from 'expo-router'
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { ActivityIndicator, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
 import { Input,Icon,Button } from 'react-native-elements';
@@ -15,8 +15,8 @@ const TextInputExample = () => {
   const [isjwt,setisjwt] = useState(-1)
 
   const [islogin,setLogin] = useState(-1)
-
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  
+  const router = useRouter();
 
   const _storeData = async (key:string,data:string) => {
     try {
@@ -56,7 +56,7 @@ const TextInputExample = () => {
   useEffect(()=>{
     if(jwt != ''){
       setLogin(1)
-      navigation.navigate("accueil")
+      router.push("(tabs)/home")
     }
 
   },[jwt])

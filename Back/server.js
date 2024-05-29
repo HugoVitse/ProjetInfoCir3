@@ -36,7 +36,7 @@ async function serv(){
 
     app.post('/login', login)
     app.post('/register', register)
-    app.post('/activities', activities)
+    app.get('/activities', activities)
     app.get('/infos', getInfos)
 
  
