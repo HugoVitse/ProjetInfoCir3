@@ -6,12 +6,9 @@ import Account from './components/Account';
 import Login from './components/Login';
 import Register from './components/Register';
 import NavBar from './components/NavBar';
-import Header from './components/Header';
 import Catalogue from './components/Catalogue';
 import Activite from './components/Activite';
-import Questionnaire from './components/Questionnaire';
 import MoodTracker from './components/MoodTracker';
-import MoodTrackerQuestionnaire from './components/MoodTrackerQuestionnaire';
 
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 
@@ -19,7 +16,6 @@ function App() {
   return (
     <Router>
       <div>
-        <Header />
         <NavBar />
         <div style={{ height: '100%', marginLeft: '220px' }}>
           <Routes>
@@ -30,9 +26,7 @@ function App() {
             <Route path="/Account" element={<Account />} />
             <Route path="/Catalogue" element={<Catalogue />} />
             <Route path="/Activite" element={<Activite />} />
-            <Route path="/Questionnaire" element={<Questionnaire />} />
             <Route path="/MoodTracker" element={<MoodTracker />} />
-            <Route path="/MoodTrackerQuestionnaire" element={<MoodTrackerQuestionnaire />} />
 
           </Routes>
         </div>

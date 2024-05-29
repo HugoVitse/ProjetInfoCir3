@@ -7,7 +7,14 @@ const NavBar = () => {
     //Column
     <div className="d-flex flex-column flex-shrink-0 p-3 bg-light" style={{height: '100%', position: 'fixed' }}>
      
-
+     <Link to='/' style={{width:'5%'}}>
+                        <img
+                            src="https://brand.riotgames.com/static/a91000434ed683358004b85c95d43ce0/8a20a/lol-logo.png"
+                            height="15"
+                            alt="MDB Logo"
+                            loading="lazy"
+                            style={{width:'70%', height:'70%'}}/>
+                    </Link>
       <hr />
       <MDBListGroup>
         <MDBListGroupItem tag={Link} action to="/" className="d-flex align-items-center">
