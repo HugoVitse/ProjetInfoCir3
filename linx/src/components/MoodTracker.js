@@ -57,7 +57,7 @@ const MoodTracker = () => {
     chartInstance.current = new Chart(ctx, {
       type: 'radar',
       data: {
-        labels: ['Sommeil', 'Sport', 'Alimentation', 'Social', 'On sait pas encore'],
+        labels: ['Sommeil', 'Sport', 'Alimentation', 'Social', 'Moral'],
         datasets: [
           {
             label: 'Daily Mood Tracker',

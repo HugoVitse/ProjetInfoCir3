@@ -22,9 +22,9 @@ const NavBar = () => {
           <MDBIcon fas icon="question-circle" className="me-3" />
           Questionnaire
         </MDBListGroupItem>
-        <MDBListGroupItem tag={Link} action to="/Catalogue" className="d-flex align-items-center">
+        <MDBListGroupItem tag={Link} action to="/MoodTracker" className="d-flex align-items-center">
           <MDBIcon fas icon="book" className="me-3" /> 
-          Catalogue
+          MoodTracker
         </MDBListGroupItem>
       </MDBListGroup>
       <hr />
