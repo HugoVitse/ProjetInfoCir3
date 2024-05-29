@@ -16,7 +16,7 @@ async function activities(req,res){
             const decoded = jwt.verify(token, config_serv.secretJWT);
             console.log(decoded)
 
-            const url = 'https://www.lilletourism.com/api/render/website_v2/lille-tourisme/playlist/48080/fr_FR/json?page=17&randomSeed=5e0ec7ac-791f-4329-946f-42f86c093f5a&confId=48080';
+            const url = 'https://events.statsigapi.net/v1/log_event_beacon?k=client-eQuZOzz7D7TWsrZtXEXGjLrsvFEvt7IJ3yQHf66gW3B'
     
             // Await the response from the GET request
             const response = await axios.get(url);
