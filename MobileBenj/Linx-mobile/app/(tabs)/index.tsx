@@ -4,6 +4,7 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
+import { Link } from 'expo-router';
 // import { View } from 'react-native-reanimated/lib/typescript/Animated';
 
 export default function HomeScreen() {
@@ -18,7 +19,7 @@ export default function HomeScreen() {
           />
         }
         headerIcone={
-          <TabBarIcon name={'notifications-outline'} color={'#ECEDEE'} style={styles.notif}/>
+          <Link href="/notifications"><TabBarIcon name={'notifications-outline'} color={'#ECEDEE'} style={styles.notif}/></Link>
         }>
         <ThemedView style={styles.titleContainer}>
           <ThemedText type="title">Welcome!</ThemedText>
