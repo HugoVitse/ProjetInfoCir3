@@ -2,7 +2,6 @@ import React, { useState, useRef,useEffect } from 'react';
 import axios from 'axios';
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBBtn, MDBListGroup, MDBListGroupItem, MDBInput } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import { jwtDecode } from "jwt-decode";
 
 
 const Account = () => {
