@@ -16,6 +16,7 @@ const port = 443
 const activities = require('./activities')
 const login = require('./login')
 const register = require('./register')
+const getInfos = require('./getInfos')
 
 
 
@@ -36,6 +37,7 @@ async function serv(){
     app.post('/login', login)
     app.post('/register', register)
     app.post('/activities', activities)
+    app.get('/infos', getInfos)
 
  
 

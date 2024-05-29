@@ -22,7 +22,7 @@ const Login = () => {
     setLoading(true); // Set loading state
 
     try {
-      const response = await axios.post('https://localhost/login', {email: email,password: password});
+      const response = await axios.post('http://localhost/login', {email: email,password: password});
       console.log(response.data);
       if (response.status == 200) {
         alert('Login successful!');
