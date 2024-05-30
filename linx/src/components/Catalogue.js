@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect,useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import {
     MDBCard,
     MDBCardImage,
@@ -11,15 +10,17 @@ import {
     MDBCol,
     MDBBtn
 } from 'mdb-react-ui-kit';
+import axios from 'axios';
 
 const Catalogue = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [selectedCard, setSelectedCard] = useState(null);
+    const [loading, setLoading] = useState(false); // Add loading state
+    const [error, setError] = useState(null); // Add error state
     const navigate = useNavigate();
-    const [activities, setActivities] = useState([]);
 
-    const openPopup = (title, description) => {
-        setSelectedCard({ title, description });
+    const openPopup = (title, description, img) => {
+        setSelectedCard({ title, description, img });
         setShowPopup(true);
     };
 
@@ -27,40 +28,37 @@ const Catalogue = () => {
         setShowPopup(false);
     };
 
-    const Activite = (title,) => {
-        navigate('/Activite', { state: { cardTitle: selectedCard.title } });
-    };
-
-    const getCookie = (name) => {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-    };
-
-    useEffect(() => {
-        const fetchActivities = async () => {
-            try {
-                const token = getCookie('jwt');
-                console.log(token);
-                const tokenString = "jwt=" + token;
-                console.log(tokenString);
-
-                const response = await axios.get('http://localhost/activities',{ withCredentials: true });
-                console.log('Fetched activities:', response.data);
-                setActivities(response.data);
-            } catch (error) {
-                console.error('Error fetching activities:', error);
+    const Activite = () => {
+        navigate('/Activite', {
+            state: {
+                cardTitle: selectedCard.title,
+                cardDescription: selectedCard.description,
+                cardImg: selectedCard.img
             }
-        };
-        fetchActivities();
-    }, []);
+        });
+    };
+
     const a = "this card";
+    const url = 'https://www.lilletourism.com/api/render/website_v2/lille-tourisme/playlist/48080/fr_FR/json?page=17&randomSeed=5e0ec7ac-791f-4329-946f-42f86c093f5a&confId=48080';
+
+    const login = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.post(url);
+            console.log(response.data);
+        } catch (error) {
+            console.error('There was an error logging in!', error);
+            setError('An error occurred. Please try again later.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <>
             <MDBRow className='row-cols-1 row-cols-md-3 g-4'>
                 <MDBCol>
-                    <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }} onClick={() => openPopup('Card title', 'This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.')}>
+                    <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }} onClick={() => openPopup('Card title', 'This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.', 'https://mdbootstrap.com/img/new/standard/city/041.webp')}>
                         <MDBCardImage
                             src='https://mdbootstrap.com/img/new/standard/city/041.webp'
                             alt='...'
@@ -75,7 +73,7 @@ const Catalogue = () => {
                     </MDBCard>
                 </MDBCol>
                 <MDBCol>
-                    <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }} onClick={() => openPopup('Card title', a)}>
+                    <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }} onClick={() => openPopup('Card title', a, 'https://mdbootstrap.com/img/new/standard/city/042.webp')}>
                         <MDBCardImage
                             src='https://mdbootstrap.com/img/new/standard/city/042.webp'
                             alt='...'
@@ -101,8 +99,8 @@ const Catalogue = () => {
                         </MDBCardText>
                         </MDBCardBody>
                     </MDBCard>
-                    </MDBCol>
-                    <MDBCol>
+                </MDBCol>
+                <MDBCol>
                     <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }}>
                         <MDBCardImage
                         src='https://mdbootstrap.com/img/new/standard/city/044.webp'
@@ -117,8 +115,8 @@ const Catalogue = () => {
                         </MDBCardText>
                         </MDBCardBody>
                     </MDBCard>
-                    </MDBCol>
-                    <MDBCol>
+                </MDBCol>
+                <MDBCol>
                     <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }}>
                         <MDBCardImage
                         src='https://mdbootstrap.com/img/new/standard/city/041.webp'
@@ -133,8 +131,8 @@ const Catalogue = () => {
                         </MDBCardText>
                         </MDBCardBody>
                     </MDBCard>
-                    </MDBCol>
-                    <MDBCol>
+                </MDBCol>
+                <MDBCol>
                     <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }}>
                         <MDBCardImage
                         src='https://mdbootstrap.com/img/new/standard/city/042.webp'
@@ -146,24 +144,25 @@ const Catalogue = () => {
                         <MDBCardText>This is a short card.</MDBCardText>
                         </MDBCardBody>
                     </MDBCard>
-                    </MDBCol>
+                </MDBCol>
             </MDBRow>
 
-
             {/* Popup */}
-            {showPopup && (
-                <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', maxWidth: '60%', maxHeight: '90%', overflow: 'auto', backgroundColor: 'white', padding: '20px', borderRadius: '5px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)', maxHeight: 'calc(100% - 40px)', width: 'calc(100% - 40px)' }}>
+            {showPopup && selectedCard && (
+                <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', maxWidth: '60%', maxHeight: '90%', overflow: 'auto', backgroundColor: 'white', padding: '20px', borderRadius: '5px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)', width: 'calc(100% - 40px)' }}>
                     <MDBCard style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <MDBCardImage
                             className='h-10'
-                            src='https://mdbootstrap.com/img/new/standard/city/041.webp'
+                            src={selectedCard.img}
                             alt='...'
                             position='top'
                             style={{ maxWidth: '100%' }}
                         />
                         <MDBCardBody>
                             <MDBCardTitle>{selectedCard.title}</MDBCardTitle>
-                            <MDBCardText style={{ overflowWrap: 'break-word', wordWrap: 'break-word', wordBreak: 'break-word' }}>{selectedCard.description}</MDBCardText>
+                            <MDBCardText style={{ overflowWrap: 'break-word', wordWrap: 'break-word', wordBreak: 'break-word' }}>
+                                {selectedCard.description}
+                            </MDBCardText>
                         </MDBCardBody>
                     </MDBCard>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
@@ -172,9 +171,8 @@ const Catalogue = () => {
                     </div>
                 </div>
             )}
-
         </>
     );
-}
+};
 
 export default Catalogue;

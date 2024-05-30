@@ -2,11 +2,12 @@ import React , {useState,useEffect} from 'react';
 import {Link, useRouter} from 'expo-router'
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { ActivityIndicator, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
-import { Input,Icon,Button } from 'react-native-elements';
+import { Input,Icon } from 'react-native-elements';
 import {Image,Text} from 'react-native'
 import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RootStackParamList } from '@/constants/type';
+import { Button } from 'react-native-paper';
 
 const TextInputExample = () => {
   const [password, onChangepPassword] = useState('');
@@ -144,6 +145,7 @@ const TextInputExample = () => {
 
       <Input
         placeholder='Mot de passe'
+        secureTextEntry={true} 
         onChangeText={onChangepPassword}
         leftIconContainerStyle={{
           marginRight:5
@@ -158,14 +160,10 @@ const TextInputExample = () => {
         }
       />
 
-    <Button
-      buttonStyle={{
-        width:350
-      }}
-      title="Connexion"
-      type="solid"
-      onPress={login}
-    />
+    <Button icon="login" mode="contained" onPress={login}>
+      Connexion
+    </Button>
+    
     <View style={styles.horizontal}>
       <Text>Pas encore membre ?</Text>
       <Link style={styles.link}  href="register"> Inscrivez-vous </Link>

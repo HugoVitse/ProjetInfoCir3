@@ -2,7 +2,8 @@ import { Link, useRouter } from "expo-router";
 import { Image, Text, View, StyleSheet, Modal, Pressable, Dimensions } from "react-native";
 import { Icon } from '@rneui/themed';
 import { Avatar } from '@rneui/themed';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Input,Button } from 'react-native-elements';
 
 const HEADER_HEIGHT = 200;
@@ -14,9 +15,48 @@ export default function ProfileScreen() {
   const [buttonPressed1, setButtonPressed1] = useState(false);
   const [buttonPressed2, setButtonPressed2] = useState(false);
 
-  const logout = () =>{
+  const [jwt,setJwt] = useState('');
+  const [isjwt,setisjwt] = useState(-1)
 
-  }
+  const [islogin,setLogin] = useState(-1)
+
+
+  const _storeData = async (key:string,data:string) => {
+    try {
+      await AsyncStorage.setItem(
+        key,
+        data,
+      );
+    } catch (error) {
+      // Error saving data
+      console.log(error)
+    }
+  };
+
+  const _retrieveData = async (key:string) => {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if(value == null){
+        return ""
+      }
+      return value
+
+    } catch (error) {
+      return ""
+      // Error retrieving data
+    }
+  };
+
+
+  const logout = () =>{
+    _storeData("jwt","")
+    router.push("/")
+  } 
+
+
+
+  
+
 
   return (
     <View style={styles.container}>

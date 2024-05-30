@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import Admin from './components/Admin';
@@ -10,19 +10,24 @@ import Header from './components/Header';
 import Catalogue from './components/Catalogue';
 import Activite from './components/Activite';
 import Questionnaire from './components/Questionnaire';
+import MoodTracker from './components/MoodTracker';
+import MoodTrackerQuestionnaire from './components/MoodTrackerQuestionnaire';
+
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
 
 function App() {
+
+ 
+
+  
+
   return (
-    <html>
     <Router>
-      
-      <div>
-        <Header />
       <div>
         <NavBar />
-      </div>
-        <div style={{ height: '100%', marginLeft: '220px'}}>
+        <div style={{ height: '100%', marginLeft: '220px' }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/Login" element={<Login />} />
@@ -32,13 +37,13 @@ function App() {
             <Route path="/Catalogue" element={<Catalogue />} />
             <Route path="/Activite" element={<Activite />} />
             <Route path="/Questionnaire" element={<Questionnaire />} />
-            
+            <Route path="/MoodTracker" element={<MoodTracker />} />
+            <Route path="/MoodTrackerQuestionnaire" element={<MoodTrackerQuestionnaire />} />
+
           </Routes>
         </div>
       </div>
-      
     </Router>
-    </html>
   );
 }
 
