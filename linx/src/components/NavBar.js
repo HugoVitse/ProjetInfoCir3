@@ -4,39 +4,38 @@ import { Link } from 'react-router-dom';
 
 const NavBar = () => {
   return (
-    //Column
-    <div className="d-flex flex-column flex-shrink-0 p-3 bg-light" style={{height: '100%', position: 'fixed' }}>
-     
-     <Link to='/' style={{width:'5%'}}>
-                        <img
-                            src="https://brand.riotgames.com/static/a91000434ed683358004b85c95d43ce0/8a20a/lol-logo.png"
-                            height="15"
-                            alt="MDB Logo"
-                            loading="lazy"
-                            style={{width:'70%', height:'70%'}}/>
-                    </Link>
-      <hr />
-      <MDBListGroup>
-        <MDBListGroupItem tag={Link} action to="/" className="d-flex align-items-center">
-          <MDBIcon fas icon="home" className="me-3"/>
+    <div className="d-flex flex-column align-items-start text-white p-3 bg-dark h-100">
+      <Link to='/' className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <img
+          src="https://brand.riotgames.com/static/a91000434ed683358004b85c95d43ce0/8a20a/lol-logo.png"
+          alt="Logo"
+          loading="lazy"
+          style={{ width: '50px', height: '50px' }}
+        />
+        <span className="fs-4 ms-2">Linx</span>
+      </Link>
+      <hr className="border-secondary w-100" />
+      <MDBListGroup className="mb-auto w-100">
+        <MDBListGroupItem tag={Link} action to="/" className="d-flex align-items-center bg-dark text-white border-0">
+          <MDBIcon fas icon="home" className="me-3" />
           Home
         </MDBListGroupItem>
-        <MDBListGroupItem tag={Link} action to="/Login" className="d-flex align-items-center">
-          <MDBIcon fas icon="address-book" className="me-3"/>
+        <MDBListGroupItem tag={Link} action to="/Login" className="d-flex align-items-center bg-dark text-white border-0">
+          <MDBIcon fas icon="address-book" className="me-3" />
           Login
         </MDBListGroupItem>
-        <MDBListGroupItem tag={Link} action to="/Questionnaire" className="d-flex align-items-center">
+        <MDBListGroupItem tag={Link} action to="/Questionnaire" className="d-flex align-items-center bg-dark text-white border-0">
           <MDBIcon fas icon="question-circle" className="me-3" />
           Questionnaire
         </MDBListGroupItem>
-        <MDBListGroupItem tag={Link} action to="/MoodTracker" className="d-flex align-items-center">
-          <MDBIcon fas icon="book" className="me-3" /> 
-          MoodTracker
+        <MDBListGroupItem tag={Link} action to="/Catalogue" className="d-flex align-items-center bg-dark text-white border-0">
+          <MDBIcon fas icon="book" className="me-3" />
+          Catalogue
         </MDBListGroupItem>
       </MDBListGroup>
-      <hr />
-      <div className="text-center">
-        <p>&copy; 2024 Linx</p>
+      <hr className="border-secondary w-100" />
+      <div className="text-center mt-auto w-100">
+        <p className="text-white">&copy; 2024 Linx</p>
       </div>
     </div>
   );

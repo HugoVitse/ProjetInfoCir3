@@ -45,8 +45,8 @@ const Login = () => {
   };
 
   return (
-    <MDBContainer fluid className="d-flex align-items-center justify-content-center h-100 mt-5">
-      <MDBCol md="7" lg="7" className="mx-auto">
+    <MDBContainer fluid  className="d-flex align-items-center justify-content-center h-100">
+      <MDBCol md="7" lg="7" className="mx-auto ">
         <MDBCard className={`shadow ${error ? 'w-100' : ''}`}>
           <MDBCardBody className="p-5">
             <h2 className="text-center mb-4">Login</h2>
