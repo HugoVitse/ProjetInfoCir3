@@ -118,13 +118,13 @@ const Account = () => {
   }
 
   return (
-    <MDBContainer fluid className="py-5">
-      <MDBRow className="justify-content-center">
+    <MDBContainer fluid className="bg-gradient vh-100" style={{backgroundColor:'#E1BEE7'}}>
         <MDBCol md="10" lg="8">
           <MDBCard className="mb-4 shadow-3">
-            <MDBCardBody>
+            <MDBCardBody className='bg-gradient' style={{backgroundColor:'#E1F5FE'}}>
               <h2 className="text-center mb-4">Mon Compte</h2>
               <MDBRow>
+
                 <MDBCol md="4" className="text-center">
                   <label htmlFor="profile-image">
                     <img
@@ -153,20 +153,26 @@ const Account = () => {
                     <MDBBtn color="primary" className="mb-2" onClick={handleEditProfile}>Edit Profile</MDBBtn>
                   )}
                 </MDBCol>
-                <MDBCol md="8">
+
+                <MDBCol md="">
                   <MDBListGroup flush>
+
                     <MDBListGroupItem>
                       <strong>Nom : </strong>{isEditing ? <MDBInput type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} /> : lastName}
                     </MDBListGroupItem>
+
                     <MDBListGroupItem>
                       <strong>Prénom : </strong>{isEditing ? <MDBInput type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} /> : firstName}
                     </MDBListGroupItem>
+
                     <MDBListGroupItem>
                       <strong>Âge : </strong>{isEditing ? <MDBInput type="number" value={age} onChange={(e) => setAge(e.target.value)} /> : age}
                     </MDBListGroupItem>
+
                     <MDBListGroupItem>
                       <strong>Description : </strong>{isEditing ? <MDBInput type="textarea" value={description} onChange={handleDescriptionChange} /> : description}
                     </MDBListGroupItem>
+
                     <MDBListGroupItem>
                       <strong>Gouts : </strong>
                       <ul>
@@ -189,13 +195,13 @@ const Account = () => {
                         <MDBBtn color="success" size="sm" onClick={handleAddInterest}>Ajouter un goût</MDBBtn>
                       )}
                     </MDBListGroupItem>
+
                   </MDBListGroup>
                 </MDBCol>
               </MDBRow>
             </MDBCardBody>
           </MDBCard>
-        </MDBCol>
-      </MDBRow>
+        </MDBCol>   
     </MDBContainer>
   );
 }
