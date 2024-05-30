@@ -21,16 +21,16 @@ const NavBar = () => {
           Home
         </MDBListGroupItem>
         <MDBListGroupItem tag={Link} action to="/Login" className="d-flex align-items-center bg-dark text-white border-0">
-          <MDBIcon fas icon="address-book" className="me-3" />
+          <MDBIcon fas icon="question-circle" className="me-3" />
           Login
         </MDBListGroupItem>
-        <MDBListGroupItem tag={Link} action to="/Questionnaire" className="d-flex align-items-center bg-dark text-white border-0">
-          <MDBIcon fas icon="question-circle" className="me-3" />
-          Questionnaire
+        <MDBListGroupItem tag={Link} action to="/Account" className="d-flex align-items-center bg-dark text-white border-0">
+        <MDBIcon fas icon="address-book" className="me-3" />
+          Profil
         </MDBListGroupItem>
-        <MDBListGroupItem tag={Link} action to="/Catalogue" className="d-flex align-items-center bg-dark text-white border-0">
+        <MDBListGroupItem tag={Link} action to="/MoodTracker" className="d-flex align-items-center bg-dark text-white border-0">
           <MDBIcon fas icon="book" className="me-3" />
-          Catalogue
+          Moodtracker
         </MDBListGroupItem>
       </MDBListGroup>
       <hr className="border-secondary w-100" />
