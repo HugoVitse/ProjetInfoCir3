@@ -88,16 +88,16 @@ const Register = () => {
         <MDBModalDialog>
           <MDBModalContent>
             <MDBModalHeader>
-              <MDBModalTitle>Modal title</MDBModalTitle>
+              <MDBModalTitle>Message</MDBModalTitle>
               <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
             </MDBModalHeader>
-            <MDBModalBody>...</MDBModalBody>
+            <MDBModalBody>Enregistrement réalisé avec succès !</MDBModalBody>
 
             <MDBModalFooter>
               <MDBBtn color='secondary' onClick={toggleOpen}>
                 Close
               </MDBBtn>
-              <MDBBtn>Save changes</MDBBtn>
+              <MDBBtn>Continuer</MDBBtn>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>
