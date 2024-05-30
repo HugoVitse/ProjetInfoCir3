@@ -1,0 +1,12 @@
+.carousel-control-next, .carousel-control-prev {
+    color: black;
+}
+
+.carousel-control-next:hover, .carousel-control-prev:hover {
+    color: black; 
+}
+
+.carousel-control-next:hover::before, .carousel-control-prev:hover::before {
+    color: black; 
+    font-size: 24px;
+}

@@ -17,10 +17,10 @@ function App() {
     <Router>
       <MDBContainer fluid className="vh-100">
         <MDBRow className="h-100">
-          <MDBCol md="3" className="bg-dark p-0" style={{width:'15%'}}>
+          <MDBCol md="2" className="bg-dark p-0" style={{ minWidth: '200px' }}>
             <NavBar />
           </MDBCol>
-          <MDBCol md="9" className="p-4">
+          <MDBCol className="p-4">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/Login" element={<Login />} />

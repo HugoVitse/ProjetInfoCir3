@@ -1,10 +1,8 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState} from 'react';
 import axios from 'axios';
 import { Link,useNavigate } from 'react-router-dom';
 import { MDBContainer, MDBCol, MDBInput, MDBBtn, MDBCard, MDBCardBody } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import Cookies from 'js-cookie';
-import { jwtDecode } from "jwt-decode";
 
 
 const Login = () => {
@@ -15,25 +13,6 @@ const Login = () => {
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
-
-  const retrieveCookie = ()=>{
-    const token = Cookies.get("jwt")
-    console.log(token)
-    try{
-      const decodedToken = jwtDecode(token);
-      navigate("/")
-      console.log(decodedToken)
-    }
-    catch{
-      
-    }
-
-
-  }
-
-  useEffect(()=>{
-    retrieveCookie()
-  },[])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -50,8 +29,7 @@ const Login = () => {
       console.log(response.data);
       console.log(response.status)
       if (response.status === 200) {
-        // Redirection vers la page d'accueil
-        window.location.href = '/'; // Redirection vers la page d'accueil
+        navigate("/")
       } else {
         console.log(response.status)
         setError('Invalid email or password');
@@ -65,7 +43,7 @@ const Login = () => {
   };
 
   return (
-    <MDBContainer fluid className="d-flex align-items-center justify-content-center h-100 mt-5">
+    <MDBContainer fluid className="d-flex align-items-center justify-content-center h-100" >
       <MDBCol md="7" lg="7" className="mx-auto">
         <MDBCard className={`shadow ${error ? 'w-100' : ''}`}>
           <MDBCardBody className="p-5">

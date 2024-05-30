@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode";
 import {
-  MDBContainer,MDBCarousel, MDBCarouselItem, MDBCard, MDBCardBody, MDBRange, MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter
+  MDBContainer,MDBCarousel,   MDBCardImage, MDBCarouselItem, MDBCard, MDBCardBody, MDBRange, MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter
 } from 'mdb-react-ui-kit';
 import { Modal, Ripple, initMDB } from 'mdb-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-//import axios from 'axios';
+import '../css/MoodTracker.css';
+import Cookies from 'js-cookie';
 import { Chart, RadarController, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
 
 Chart.register(RadarController, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
@@ -18,7 +21,7 @@ const MoodTracker = () => {
     moral: '',
     additionalActivity: '',
   });
-
+  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const toggleModal = () => setModalOpen(!modalOpen);
 
@@ -32,13 +35,19 @@ const MoodTracker = () => {
     }));
   };
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  useEffect(() => {
+    const retrieveCookie = () => {
+      const token = Cookies.get("jwt")
+      console.log(token)
+      try {
+        jwtDecode(token);
+      } catch {
+        navigate("/")
+      }
+    }
+  
+    retrieveCookie();
+  }, [navigate]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -95,11 +104,11 @@ const MoodTracker = () => {
   }, [formData]);
 
   return (
-    <MDBContainer fluid className="d-flex align-items-center justify-content-center vh-100" style={{ background: 'linear-gradient(#2e006c, #003399)' }}>
-      <MDBCard className="w-50">
+    <MDBContainer fluid className="d-flex align-items-center justify-content-center vh-800">
+      <MDBCard className="w-50 h-10">
         <MDBCardBody>
           <form>
-            <button type="button" className="btn btn-primary w-100" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#exampleModal">
+            <button type="button" className="btn btn-primary w-100 mb-3" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#exampleModal">
               Questionnaire Quotidien
             </button>
             
@@ -108,10 +117,18 @@ const MoodTracker = () => {
             <MDBCarousel showIndicators showControls fade>
               {/* Première Caroussel */}
               <MDBCarouselItem
-                className="w-100 d-block"
+                className="w-100 d-block "
                 itemId={1}>
 
                 <h5>Première Slide</h5>
+
+                <MDBCardImage
+                            src='https://mdbootstrap.com/img/new/standard/city/041.webp'
+                            alt='...'
+                            style={{ height: '80%' }}
+                            
+                    
+                />
                 
                 
               </MDBCarouselItem>
@@ -119,7 +136,7 @@ const MoodTracker = () => {
               
               {/* Caroussel du MoodBoard Quotidien */}
               <MDBCarouselItem
-                className="w-100 d-block"
+                className="w-100 d-block vh-80"
                 itemId={2}>
 
                 <h5>MoodBoard Quotidien</h5>
@@ -130,12 +147,17 @@ const MoodTracker = () => {
 
               {/* Troisième Caroussel */}
               <MDBCarouselItem
-                className="w-100 d-block"
+                className="w-100 d-block vh-80"
                 itemId={3}>
 
                 <h5>Troisième Slide</h5>
 
-                
+                <MDBCardImage
+                            src='https://mdbootstrap.com/img/new/standard/city/042.webp'
+                            alt='...'
+                            style={{ height: '80%' }}
+                    
+                />
               </MDBCarouselItem>
               {/* Fin */}
 

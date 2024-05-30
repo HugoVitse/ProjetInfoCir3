@@ -1,22 +1,22 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
 import {
     MDBCard,
     MDBCardImage,
     MDBCardBody,
+    MDBContainer,
     MDBCardTitle,
     MDBCardText,
     MDBRow,
     MDBCol,
     MDBBtn
 } from 'mdb-react-ui-kit';
-import axios from 'axios';
 
 const Catalogue = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [selectedCard, setSelectedCard] = useState(null);
-    const [loading, setLoading] = useState(false); // Add loading state
-    const [error, setError] = useState(null); // Add error state
     const navigate = useNavigate();
 
     const openPopup = (title, description, img) => {
@@ -27,6 +27,22 @@ const Catalogue = () => {
     const closePopup = () => {
         setShowPopup(false);
     };
+
+    const retrieveCookie = useCallback(() => {
+        const token = Cookies.get("jwt");
+        try {
+          jwtDecode(token);
+        } catch {
+          navigate("/Login");
+        }
+      }, [navigate]);
+      
+
+      useEffect(() => {
+        retrieveCookie();
+      }, [retrieveCookie]);
+      
+      
 
     const Activite = () => {
         navigate('/Activite', {
@@ -39,23 +55,8 @@ const Catalogue = () => {
     };
 
     const a = "this card";
-    const url = 'https://www.lilletourism.com/api/render/website_v2/lille-tourisme/playlist/48080/fr_FR/json?page=17&randomSeed=5e0ec7ac-791f-4329-946f-42f86c093f5a&confId=48080';
-
-    const login = async () => {
-        try {
-            setLoading(true);
-            const response = await axios.post(url);
-            console.log(response.data);
-        } catch (error) {
-            console.error('There was an error logging in!', error);
-            setError('An error occurred. Please try again later.');
-        } finally {
-            setLoading(false);
-        }
-    };
-
     return (
-        <>
+        <MDBContainer fluid className="py-5">
             <MDBRow className='row-cols-1 row-cols-md-3 g-4'>
                 <MDBCol>
                     <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }} onClick={() => openPopup('Card title', 'This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.', 'https://mdbootstrap.com/img/new/standard/city/041.webp')}>
@@ -171,7 +172,7 @@ const Catalogue = () => {
                     </div>
                 </div>
             )}
-        </>
+        </MDBContainer>
     );
 };
 

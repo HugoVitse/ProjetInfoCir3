@@ -1,23 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { jwtDecode } from "jwt-decode";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  MDBRow, MDBCheckbox, MDBRadio, MDBRange, MDBContainer, MDBCol, MDBInput, MDBBtn, MDBCard, MDBCardBody, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter
+  MDBRow, MDBCheckbox, MDBRadio, MDBRange, MDBCol, MDBBtn, MDBCard, MDBCardBody, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter
 } from 'mdb-react-ui-kit';
-import { Modal, Ripple, initMDB } from 'mdb-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import axios from 'axios';
+
+
 const Home = () => {
 
   const navigate = useNavigate();
   const [basicModal, setBasicModal] = useState(false);
-  const toggleOpen = () => setBasicModal(!basicModal);
-
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [comptModal,setComptModal] = useState(0)
+  const toggleOpen = useCallback(() => setBasicModal(prevState => !prevState), [setBasicModal]);
+  const [setError] = useState('');
+  const [setLoading] = useState(false);
+  const [comptModal, setComptModal] = useState(0);
   const [formData, setFormData] = useState({
     activities: [],
     note: 10,
@@ -46,7 +46,7 @@ const Home = () => {
     try {
       const response = await axios.post('http://localhost/register', formData);
       console.log(response.data);
-      toggleOpen(); // Ouvrir la fenêtre modale après l'inscription
+      toggleOpen(); 
     } catch (error) {
       console.error('Error:', error);
       setError('An error occurred. Please try again later.');
@@ -70,50 +70,34 @@ const Home = () => {
     }));
   };
 
-  const retrieveCookie = ()=>{
-    const token = Cookies.get("jwt")
-    try{
-      const decodedToken = jwtDecode(token);
-      console.log(decodedToken)
+  const retrieveCookie = useCallback(() => {
+    const token = Cookies.get("jwt");
+    try {
+      jwtDecode(token);
+    } catch {
+      navigate("/Login");
     }
-    catch{
-      navigate("/Login")
-    }
-
-
-  }
-
-  useEffect(()=>{
-    const fnc = async ()=>{
-      retrieveCookie()
-      try{
-        const response = await axios.get('http://localhost/infos',{withCredentials:true});
-        console.log(response.data.firstLogin);
-        if(response.data.firstLogin){
-          toggleOpen()
-        }
-      }
-      catch{
+  }, [navigate]);
   
-      }
-    }
-    fnc()
-    
-  },[])
 
-  useEffect(()=>{
-    const wrap = async()=>{
-      setComptModal(comptModal+1);
-      if(comptModal >= 2){
-        const response = await axios.get('http://localhost/firstlogin',{withCredentials:true});
+  useEffect(() => {
+    retrieveCookie();
+  }, [retrieveCookie]);
+  
+
+  useEffect(() => {
+    const wrap = async () => {
+      setComptModal((prevComptModal) => prevComptModal + 1);
+      if (comptModal >= 2) {
+        await axios.get('http://localhost/firstlogin', { withCredentials: true });
       }
     }
-    wrap()
-    
-  },[basicModal])
+    wrap();
+  }, [basicModal, comptModal, setComptModal, retrieveCookie, toggleOpen]);
+  
 
   return (
-    <div className="home-container">
+    <div className="home-container" >
       <div className="jumbotron jumbotron-fluid bg-dark text-light">
         <div className="container">
           <h1 className="display-4">Découvrez les événements à venir !</h1>

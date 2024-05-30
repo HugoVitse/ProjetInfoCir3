@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  MDBRow, MDBCheckbox, MDBRadio, MDBRange, MDBContainer, MDBCol, MDBInput, MDBBtn, MDBCard, MDBCardBody, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter
+  MDBRow, MDBContainer, MDBCol, MDBInput, MDBBtn, MDBCard, MDBCardBody, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter
 } from 'mdb-react-ui-kit';
 import { Modal, Ripple, initMDB } from 'mdb-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
@@ -51,7 +51,7 @@ const Register = () => {
   }, []);
 
   return (
-    <MDBContainer fluid className="d-flex align-items-center justify-content-center vh-100" style={{ background: 'linear-gradient(#2e006c, #003399)' }}>
+    <MDBContainer fluid className="d-flex align-items-center justify-content-center vh-100">
       <MDBCard className="w-50">
         <MDBCardBody>
           <h2 className="text-center mb-4">Inscription</h2>
@@ -73,10 +73,6 @@ const Register = () => {
             <button type="button" className="btn btn-primary w-100"  onClick={handleSubmit} disabled={loading}>
               Valider
             </button>
-            
-        
-
-          
           {error && <div className="text-danger text-center mt-3">{error}</div>}
           <div className="text-center mt-3">
             <Link to="/login">Already have an account? Login</Link>
