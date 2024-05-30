@@ -24,8 +24,8 @@ const connect_db = require('./connect_db');
 const port = 443
 
 const fillQuestionnaire = require("./fillQuestionnaire")
-const setFirstLogin = require('./setFirstLogin')
-const activities = require('./activities')
+const setDaily = require("./setDaily")
+const scrapActivities = require('./scrapActivities')
 const login = require('./login')
 const register = require('./register')
 const getInfos = require('./getInfos')
@@ -45,38 +45,39 @@ async function serv(){
 
     
 
-    await connect_db.ConnectDB();
+  await connect_db.ConnectDB();
 
-    app.get("/",(req,res)=>{
-        console.log("ok")
-        res.send("ta gueule")
-    })
+  app.get("/",(req,res)=>{
+      console.log("ok")
+      res.send("ta gueule")
+  })
 
-    app.get("/test", (req,res)=>{
-        res.cookie("test","hein")
-        res.send("ok")
-    })
-    app.post('/login', login)
-    app.post('/register', register)
-    app.get('/activities', activities)
-    app.get('/infos', getInfos)
-    app.post('/fillquestionnaire',fillQuestionnaire)
+  app.get("/test", (req,res)=>{
+      res.cookie("test","hein")
+      res.send("ok")
+  })
+  app.post('/login', login)
+  app.post('/register', register)
+  app.get('/activities', scrapActivities)
+  app.get('/infos', getInfos)
+  app.post('/fillquestionnaire',fillQuestionnaire)
+  app.post('/setDaily',setDaily)
 
- 
 
-    app.listen(80,()=>{
-        console.log(`serever is runing at port 80`);
-    })
 
-    // https.createServer(
-    //     {
-    //         key: fs.readFileSync("ssl/key.pem"),
-    //         cert: fs.readFileSync("ssl/cert.pem"),
-    //     },
-    //     app
-    // ).listen(port, () => {
-    //     console.log(`serever is runing at port ${port}`);
-    // })
+  app.listen(80,()=>{
+      console.log(`serever is runing at port 80`);
+  })
+
+  // https.createServer(
+  //     {
+  //         key: fs.readFileSync("ssl/key.pem"),
+  //         cert: fs.readFileSync("ssl/cert.pem"),
+  //     },
+  //     app
+  // ).listen(port, () => {
+  //     console.log(`serever is runing at port ${port}`);
+  // })
     
 }
 

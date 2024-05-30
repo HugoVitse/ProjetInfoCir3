@@ -4,23 +4,26 @@ import {
 } from 'mdb-react-ui-kit';
 import { Modal, Ripple, initMDB } from 'mdb-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-//import axios from 'axios';
 import { Chart, RadarController, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
+import axios from 'axios'
 
 Chart.register(RadarController, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 initMDB({ Modal, Ripple });
 
 const MoodTracker = () => {
   const [formData, setFormData] = useState({
-    sleepQuality: null,
-    stressLevel: null,
-    energyLevel: null,
-    moral: '',
-    additionalActivity: '',
+    sleepQuality: 0,
+    stressLevel: 0,
+    energyLevel: 0,
+    moral: 0,
+    additionalActivity: 0,
   });
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const toggleModal = () => setModalOpen(!modalOpen);
+
+
+  const [basicModal, setBasicModal] = useState(false);
+
+  const toggleOpen = () => setBasicModal(!basicModal);
 
   const radarChartRef = useRef(null);
   const chartInstance = useRef(null);
@@ -40,9 +43,18 @@ const MoodTracker = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
-    console.log(formData); // Just for testing purposes, replace with your submission logic
+    console.log(formData);
+    const today = new Date(Date.now())
+    const data = {
+      ...formData,
+      day:today.getDate(),
+      month:today.getMonth()+1,
+      year:today.getFullYear()
+    }
+    console.log(data)
+    const response = await axios.post("http://localhost/setDaily",data,{withCredentials:true})
   };
 
   useEffect(() => {
@@ -98,10 +110,9 @@ const MoodTracker = () => {
     <MDBContainer fluid className="d-flex align-items-center justify-content-center vh-100" style={{ background: 'linear-gradient(#2e006c, #003399)' }}>
       <MDBCard className="w-50">
         <MDBCardBody>
-          <form>
-            <button type="button" className="btn btn-primary w-100" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#exampleModal">
+            <MDBBtn onClick={toggleOpen}>
               Questionnaire Quotidien
-            </button>
+            </MDBBtn>
             
             {/* Caroussel  */}
 
@@ -146,14 +157,16 @@ const MoodTracker = () => {
 
 
             {/* Pop-up Questionnaire */}
-            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div className="modal-dialog modal-dialog-centered" style={{ maxWidth: '800px' }}>
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">Le rendez-vous quotidien !</h5>
-                    <button type="button" className="btn-close" data-mdb-ripple-init data-mdb-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div className="modal-body">
+            <MDBModal open={basicModal} onClose={() => setBasicModal(false)} tabIndex='-1'>
+              <MDBModalDialog style={{maxWidth:"800px"}}>
+                <MDBModalContent>
+
+                  <MDBModalHeader>
+                    <MDBModalTitle>Le rendez-vous quotidien !</MDBModalTitle>
+                    <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
+                  </MDBModalHeader>
+
+                  <MDBModalBody>
                     <div style={{ padding: '20px' }}>
                       <h3 className="text-center mb-4">Suivi quotidien de l'humeur</h3>
                       <form onSubmit={handleSubmit}>
@@ -179,15 +192,17 @@ const MoodTracker = () => {
                         </div>
                       </form>
                     </div>
-                  </div>
-                  <div className="modal-footer">
-                    <button type="button" className="btn btn-primary" data-mdb-ripple-init>Envoyez vos réponses</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+                  </MDBModalBody>
+                  
+                  <MDBModalFooter>
+                    <MDBBtn onClick={handleSubmit}>Envoyez vos réponses</MDBBtn>
+                  </MDBModalFooter>
+
+                </MDBModalContent>
+              </MDBModalDialog>
+            </MDBModal>
             {/* Fin Pop-up */}
-          </form>
+          
 
           
           
@@ -196,22 +211,7 @@ const MoodTracker = () => {
         </MDBCardBody>
       </MDBCard>
 
-      <MDBModal show={modalOpen} getOpenState={(e) => setModalOpen(e)} tabIndex="-1">
-        <MDBModalDialog centered className="modal-lg">
-          <MDBModalContent>
-            <MDBModalHeader>
-              <MDBModalTitle>Registration Successful</MDBModalTitle>
-              <MDBBtn className="btn-close" color="none" onClick={toggleModal}></MDBBtn>
-            </MDBModalHeader>
-            <MDBModalBody>
-              <p>Your registration was successful!</p>
-            </MDBModalBody>
-            <MDBModalFooter>
-              <MDBBtn color="secondary" onClick={toggleModal}>Close</MDBBtn>
-            </MDBModalFooter>
-          </MDBModalContent>
-        </MDBModalDialog>
-      </MDBModal>
+      
     </MDBContainer>
   );
 };

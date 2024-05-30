@@ -2,11 +2,14 @@ import { Link, useRouter } from "expo-router";
 import { Text, View, StyleSheet } from "react-native";
 import { Icon } from '@rneui/themed';
 import { Avatar } from '@rneui/themed';
+import { useState,useRef } from "react";
 
 const HEADER_HEIGHT = 100;
 
 export default function HomeScreen() {
   const router = useRouter();
+  
+    
   
   return (
     <View style={styles.container}>
@@ -24,7 +27,6 @@ export default function HomeScreen() {
         />
       </View>
       <View style={styles.body}>
-        <Text>Edit app/index.tsx to edit this screen.</Text>
         <Link href="@/settings">?</Link>
       </View>
     </View>
