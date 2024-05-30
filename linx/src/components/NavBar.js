@@ -1,8 +1,15 @@
 import React from 'react';
-import { MDBIcon, MDBListGroup, MDBListGroupItem } from 'mdb-react-ui-kit';
+import { MDBIcon, MDBListGroup, MDBListGroupItem, MDBBtn } from 'mdb-react-ui-kit';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const NavBar = () => {
+
+  const logout = ()=>{
+    Cookies.set("jwt","")
+    window.location.reload()
+  }
+
   return (
     <div className="d-flex flex-column align-items-start text-white p-3 bg-dark h-100">
       <Link to='/' className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -32,6 +39,7 @@ const NavBar = () => {
           <MDBIcon fas icon="book" className="me-3" />
           Moodtracker
         </MDBListGroupItem>
+        <MDBBtn onClick={logout}>Logout</MDBBtn>
       </MDBListGroup>
       <hr className="border-secondary w-100" />
       <div className="text-center mt-auto w-100">

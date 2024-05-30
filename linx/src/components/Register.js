@@ -15,51 +15,19 @@ const Register = () => {
     dateOfBirth: '',
     email: '',
     password: '',
-    confirmPassword: '',
-    // Partie questionnaire en dessous
-    activities: [],
-    note: 10,
-    preferredTime: '',
-    groupSize: '',
-    placeType: '',
-    budget: '',
-    favoriteCuisine: '',
-    travelDistance: 25,
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [basicModal, setBasicModal] = useState(false);
 
-  const toggleModal = () => setModalOpen(!modalOpen);
+  const toggleOpen = () => setBasicModal(!basicModal);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Partie handle du questionnaire :
-  const handleCheckboxChange = (activity) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      activities: prevData.activities.includes(activity)
-        ? prevData.activities.filter((a) => a !== activity)
-        : [...prevData.activities, activity],
-    }));
-  };
 
-  const handleRadioChange = (name, value) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleInputChange = (name, value) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,9 +35,9 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('https://localhost/register', formData);
+      const response = await axios.post('http://localhost/register', formData);
       console.log(response.data);
-      toggleModal(); // Ouvrir la fenêtre modale après l'inscription
+      toggleOpen(); // Ouvrir la fenêtre modale après l'inscription
     } catch (error) {
       console.error('Error:', error);
       setError('An error occurred. Please try again later.');
@@ -102,127 +70,11 @@ const Register = () => {
             <MDBInput label="Confirm Password" type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required className="mb-4" />
 </form>
             
-            <button type="button" className="btn btn-primary w-100" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#exampleModal" disabled={loading}>
+            <button type="button" className="btn btn-primary w-100"  onClick={handleSubmit} disabled={loading}>
               Valider
             </button>
             
-            {/* Pop-up Questionnaire !!! */}
-            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">Questionnaire</h5>
-                    <button type="button" className="btn-close" data-mdb-ripple-init data-mdb-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div className="modal-body">
-                    <div className="container">
-                      <div className="row">
-                        <div className="col-md-10 mx-auto">
-                          <div className="mb-4">
-                    <MDBRow className="w-100">
-                      <MDBCol md="10" lg="8" className="mx-auto">
-                        <MDBCard>
-                          <MDBCardBody className="p-5">
-                            <h3 className="text-center mb-4">Questionnaire</h3>
-                            <div className="mb-4">
-                              <label className="form-label">Quelles activités aimez-vous ?</label>
-                              {['Cinéma', 'Attractions', 'Animaux', 'Théâtre', 'Danse', 'Manga/Anime', 'Séries', 'Échecs', 'Moto', 'Lecture', 'Jeux vidéos', 'Musique', 'BD/Comics', 'Voyager', 'Musées', 'Sortir entre amis', 'Sport', 'Nourriture', 'La mode'].map((activity) => (
-                                <MDBCheckbox
-                                  key={activity}
-                                  label={activity}
-                                  id={activity.toLowerCase()}
-                                  onChange={() => handleCheckboxChange(activity)}
-                                />
-                              ))}
-                            </div>
-
-                            <div className="mb-4">
-                              <label className="form-label">Notez votre état actuel :</label>
-                              <MDBRange
-                                defaultValue={10}
-                                min="1"
-                                max="20"
-                                step="1"
-                                id="note"
-                                value={formData.note}
-                                onChange={(e) => handleInputChange('note', e.target.value)}
-                              />
-                            </div>
-
-                            <div className="mb-4">
-                              <label className="form-label">Préférez-vous les activités en petit ou en grand groupe ?</label>
-                              <MDBRadio name="groupSize" label="Petit groupe" id="petitcomite" value="petitcomite" onChange={(e) => handleRadioChange('groupSize', e.target.value)} />
-                              <MDBRadio name="groupSize" label="Grand groupe" id="grandcomite" value="grandcomite" onChange={(e) => handleRadioChange('groupSize', e.target.value)} />
-                            </div>
-
-                            <div className="mb-4">
-                              <label className="form-label">Quel moment de la journée préférez-vous pour les sorties ?</label>
-                              <MDBRadio name="preferredTime" label="Matin" id="morning" value="morning" onChange={(e) => handleRadioChange('preferredTime', e.target.value)} />
-                              <MDBRadio name="preferredTime" label="Après-midi" id="afternoon" value="afternoon" onChange={(e) => handleRadioChange('preferredTime', e.target.value)} />
-                              <MDBRadio name="preferredTime" label="Soir" id="evening" value="evening" onChange={(e) => handleRadioChange('preferredTime', e.target.value)} />
-                            </div>
-
-                            <div className="mb-4">
-                              <label className="form-label">Préférez-vous les activités en intérieur ou en extérieur ?</label>
-                              <MDBRadio name="placeType" label="Intérieur" id="indoor" value="indoor" onChange={(e) => handleRadioChange('placeType', e.target.value)} />
-                              <MDBRadio name="placeType" label="Extérieur" id="outdoor" value="outdoor" onChange={(e) => handleRadioChange('placeType', e.target.value)} />
-                            </div>
-
-                            <div className="mb-4">
-                              <label className="form-label">Quel est votre budget pour les sorties ?</label>
-                              <MDBRadio name="budget" label="Bas" id="low" value="low" onChange={(e) => handleRadioChange('budget', e.target.value)} />
-                              <MDBRadio name="budget" label="Moyen" id="medium" value="medium" onChange={(e) => handleRadioChange('budget', e.target.value)} />
-                              <MDBRadio name="budget" label="Élevé" id="high" value="high" onChange={(e) => handleRadioChange('budget', e.target.value)} />
-                            </div>
-
-                            <div className="mb-4">
-                              <label className="form-label">Quelle est votre cuisine préférée ?</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="favoriteCuisine"
-                                value={formData.favoriteCuisine}
-                                onChange={(e) => handleInputChange('favoriteCuisine', e.target.value)}
-                              />
-                            </div>
-
-                            <div className="mb-4">
-                              <label className="form-label">Quelle est la distance maximale que vous êtes prêt(e) à parcourir pour une sortie ? (en km)</label>
-                              <MDBRange
-                                defaultValue={25}
-                                min="0"
-                                max="100"
-                                step="25"
-                                id="travelDistance"
-                                value={formData.travelDistance}
-                                onChange={(e) => handleInputChange('travelDistance', e.target.value)}
-                              />
-
-                              <div className="d-flex justify-content-between">
-                                <span>0km</span>
-                                <span>25km</span>
-                                <span>50km</span>
-                                <span>75km</span>
-                                <span>100km</span>
-                              </div>
-                            </div>
-
-                          </MDBCardBody>
-                        </MDBCard>
-                      </MDBCol>
-                    </MDBRow>
-                 </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="modal-footer">
-        <button type="button" className="btn btn-primary" data-mdb-ripple-init onClick={handleSubmit}>Finaliser</button>
-      </div>
-    </div>
-  </div>
-</div>
-            {/* Fin Pop-up */}
+        
 
           
           {error && <div className="text-danger text-center mt-3">{error}</div>}
@@ -232,18 +84,20 @@ const Register = () => {
         </MDBCardBody>
       </MDBCard>
 
-      <MDBModal show={modalOpen} getOpenState={(e) => setModalOpen(e)} tabIndex="-1">
-        <MDBModalDialog centered>
+      <MDBModal open={basicModal} onClose={() => setBasicModal(false)} tabIndex='-1'>
+        <MDBModalDialog>
           <MDBModalContent>
             <MDBModalHeader>
-              <MDBModalTitle>Registration Successful</MDBModalTitle>
-              <MDBBtn className="btn-close" color="none" onClick={toggleModal}></MDBBtn>
+              <MDBModalTitle>Modal title</MDBModalTitle>
+              <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
             </MDBModalHeader>
-            <MDBModalBody>
-              <p>Your registration was successful!</p>
-            </MDBModalBody>
+            <MDBModalBody>...</MDBModalBody>
+
             <MDBModalFooter>
-              <MDBBtn color="secondary" onClick={toggleModal}>Close</MDBBtn>
+              <MDBBtn color='secondary' onClick={toggleOpen}>
+                Close
+              </MDBBtn>
+              <MDBBtn>Save changes</MDBBtn>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>

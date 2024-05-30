@@ -25,6 +25,7 @@ async function activities(req,res){
             res.status(200).send(response.data.items)
         }
         catch(err){
+
             res.status(502).send()
             return
         }

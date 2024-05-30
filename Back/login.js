@@ -28,8 +28,9 @@ async function login(req,res){
 
     else{
         if( hashedpassword === findOneResult.password) {
-            const token = `jwt=${jwt.sign({ email: user.email }, config_serv.secretJWT)}`;
-            res.set("Set-Cookie",token)
+            // const token = `jwt=${jwt.sign({ email: user.email }, config_serv.secretJWT)}; HttpOnly`;
+            // res.set("Set-Cookie",token)
+            res.cookie('jwt',jwt.sign({ email: user.email }, config_serv.secretJWT), { expires: new Date(Date.now() + 864000000)});
             res.status(200).send("COnnexion réussie")
         }
         else{
