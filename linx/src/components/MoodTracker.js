@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  MDBContainer, MDBCard, MDBCardBody, MDBRange, MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter
+  MDBContainer,MDBCarousel, MDBCarouselItem, MDBCard, MDBCardBody, MDBRange, MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter
 } from 'mdb-react-ui-kit';
 import { Modal, Ripple, initMDB } from 'mdb-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import axios from 'axios';
+//import axios from 'axios';
 import { Chart, RadarController, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
 
 Chart.register(RadarController, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
@@ -15,7 +15,7 @@ const MoodTracker = () => {
     sleepQuality: null,
     stressLevel: null,
     energyLevel: null,
-    socialInteraction: '',
+    moral: '',
     additionalActivity: '',
   });
 
@@ -60,12 +60,12 @@ const MoodTracker = () => {
         labels: ['Sommeil', 'Sport', 'Alimentation', 'Social', 'Moral'],
         datasets: [
           {
-            label: 'Daily Mood Tracker',
+            label: 'Mood Actuel',
             data: [
               formData.sleepQuality || 5,
               formData.stressLevel || 5,
               formData.energyLevel || 5,
-              formData.socialInteraction || 5,
+              formData.moral || 5,
               formData.additionalActivity || 5,
             ],
             backgroundColor: 'rgba(54, 245, 39, 0.37)',
@@ -103,6 +103,48 @@ const MoodTracker = () => {
               Questionnaire Quotidien
             </button>
             
+            {/* Caroussel  */}
+
+            <MDBCarousel showIndicators showControls fade>
+              {/* Première Caroussel */}
+              <MDBCarouselItem
+                className="w-100 d-block"
+                itemId={1}>
+
+                <h5>Première Slide</h5>
+                
+                
+              </MDBCarouselItem>
+              {/* Fin Caroussel 1 */}
+              
+              {/* Caroussel du MoodBoard Quotidien */}
+              <MDBCarouselItem
+                className="w-100 d-block"
+                itemId={2}>
+
+                <h5>MoodBoard Quotidien</h5>
+
+                <canvas ref={radarChartRef} id="radarChart" style={{ marginTop: '20px', width: '100%', height: '400px' }}></canvas>
+              </MDBCarouselItem>
+              {/* Fin MoodBoard Quotidien */}
+
+              {/* Troisième Caroussel */}
+              <MDBCarouselItem
+                className="w-100 d-block"
+                itemId={3}>
+
+                <h5>Troisième Slide</h5>
+
+                
+              </MDBCarouselItem>
+              {/* Fin */}
+
+
+            </MDBCarousel>
+            {/* Fin Caroussel  */}
+
+
+
             {/* Pop-up Questionnaire */}
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div className="modal-dialog modal-dialog-centered" style={{ maxWidth: '800px' }}>
@@ -128,8 +170,8 @@ const MoodTracker = () => {
                           <MDBRange id="energyLevel" name="energyLevel" min="0" max="10" value={formData.energyLevel} onChange={(e) => handleSliderChange(e.target.value, 'energyLevel')} />
                         </div>
                         <div className="mb-3">
-                          <label htmlFor="socialInteraction" className="form-label">Avez-vous eu des interactions sociales aujourd'hui ? Si oui, décrivez brièvement.</label>
-                          <textarea className="form-control" id="socialInteraction" name="socialInteraction" rows="3" value={formData.socialInteraction} onChange={handleInputChange}></textarea>
+                          <label htmlFor="moral" className="form-label">Vous êtes-vous senti anxieux, heureux, ou autre ? (note sur 10)</label>
+                          <MDBRange id="moral" name="moral" min="0" max="10" value={formData.moral} onChange={(e) => handleSliderChange(e.target.value, 'moral')} />
                         </div>
                         <div className="mb-3">
                           <label htmlFor="additionalActivity" className="form-label">Avez-vous bien manger aujourd'hui ?</label>
@@ -146,7 +188,11 @@ const MoodTracker = () => {
             </div>
             {/* Fin Pop-up */}
           </form>
-          <canvas ref={radarChartRef} id="radarChart" style={{ marginTop: '20px', width: '100%', height: '400px' }}></canvas>
+
+          
+          
+         
+        
         </MDBCardBody>
       </MDBCard>
 

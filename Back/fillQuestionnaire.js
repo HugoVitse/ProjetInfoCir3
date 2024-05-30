@@ -3,7 +3,7 @@ const config_serv = require('./configServ')
 const config = require('./configDB')
 const jwt = require('jsonwebtoken');
 
-async function setFirstLogin(req,res){
+async function fillQuestionnaire(req,res){
     const cookies = req.cookies
     if(!('jwt' in cookies)){
         res.status(500).send()
@@ -18,9 +18,15 @@ async function setFirstLogin(req,res){
             const email = decoded.email     
             const database = connect_db.client.db(config.dbName);
             const collection = database.collection(config.users);
+
+            const questionnaire = req.body
+            console.log(questionnaire)
         
         
-            const findOneResult = await collection.findOneAndUpdate({'email': email},{$set:{'firstLogin':false}});
+            const findOneResult = await collection.findOneAndUpdate({'email': email},{$set:questionnaire});
+
+
+            const findSOneResult = await collection.findOneAndUpdate({'email': email},{$set:{"firstLogin":false}});
 
             res.send("ok")
         }
@@ -33,4 +39,4 @@ async function setFirstLogin(req,res){
   
 }
 
-module.exports = setFirstLogin
+module.exports = fillQuestionnaire

@@ -23,12 +23,13 @@ const connect_db = require('./connect_db');
 
 const port = 443
 
-
+const fillQuestionnaire = require("./fillQuestionnaire")
 const setFirstLogin = require('./setFirstLogin')
 const activities = require('./activities')
 const login = require('./login')
 const register = require('./register')
 const getInfos = require('./getInfos')
+
 
 
 
@@ -59,7 +60,7 @@ async function serv(){
     app.post('/register', register)
     app.get('/activities', activities)
     app.get('/infos', getInfos)
-    app.get('/firstlogin', setFirstLogin)
+    app.post('/fillquestionnaire',fillQuestionnaire)
 
  
 

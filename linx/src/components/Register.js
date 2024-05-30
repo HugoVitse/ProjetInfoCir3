@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import {
   MDBRow, MDBCheckbox, MDBRadio, MDBRange, MDBContainer, MDBCol, MDBInput, MDBBtn, MDBCard, MDBCardBody, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter
@@ -8,7 +9,9 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import axios from 'axios';
 initMDB({ Modal, Ripple });
 
+
 const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -30,6 +33,11 @@ const Register = () => {
 
 
 
+  const wrapper = () =>{
+    toggleOpen();
+    navigate("/")
+
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -89,16 +97,15 @@ const Register = () => {
         <MDBModalDialog>
           <MDBModalContent>
             <MDBModalHeader>
-              <MDBModalTitle>Modal title</MDBModalTitle>
+              <MDBModalTitle></MDBModalTitle>
               <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
             </MDBModalHeader>
-            <MDBModalBody>...</MDBModalBody>
+            <MDBModalBody>Inscription réussie !</MDBModalBody>
 
             <MDBModalFooter>
-              <MDBBtn color='secondary' onClick={toggleOpen}>
-                Close
+              <MDBBtn color='secondary' onClick={wrapper}>
+                Continuer
               </MDBBtn>
-              <MDBBtn>Save changes</MDBBtn>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>

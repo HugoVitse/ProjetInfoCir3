@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import Admin from './components/Admin';
@@ -6,43 +6,34 @@ import Account from './components/Account';
 import Login from './components/Login';
 import Register from './components/Register';
 import NavBar from './components/NavBar';
-import Header from './components/Header';
 import Catalogue from './components/Catalogue';
 import Activite from './components/Activite';
-import Questionnaire from './components/Questionnaire';
 import MoodTracker from './components/MoodTracker';
-import MoodTrackerQuestionnaire from './components/MoodTrackerQuestionnaire';
-
+import { MDBRow, MDBCol, MDBContainer } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import Cookies from 'js-cookie';
-import { jwtDecode } from "jwt-decode";
 
 function App() {
-
- 
-
-  
-
   return (
     <Router>
-      <div>
-        <NavBar />
-        <div style={{ height: '100%', marginLeft: '220px' }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/Login" element={<Login />} />
-            <Route path="/Register" element={<Register />} />
-            <Route path="/Admin" element={<Admin />} />
-            <Route path="/Account" element={<Account />} />
-            <Route path="/Catalogue" element={<Catalogue />} />
-            <Route path="/Activite" element={<Activite />} />
-            <Route path="/Questionnaire" element={<Questionnaire />} />
-            <Route path="/MoodTracker" element={<MoodTracker />} />
-            <Route path="/MoodTrackerQuestionnaire" element={<MoodTrackerQuestionnaire />} />
-
-          </Routes>
-        </div>
-      </div>
+      <MDBContainer fluid className="vh-100">
+        <MDBRow className="h-100">
+          <MDBCol md="3" className="bg-dark p-0" style={{width:'15%'}}>
+            <NavBar />
+          </MDBCol>
+          <MDBCol md="9" className="p-4">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/Login" element={<Login />} />
+              <Route path="/Register" element={<Register />} />
+              <Route path="/Admin" element={<Admin />} />
+              <Route path="/Account" element={<Account />} />
+              <Route path="/Catalogue" element={<Catalogue />} />
+              <Route path="/Activite" element={<Activite />} />
+              <Route path="/MoodTracker" element={<MoodTracker />} />
+            </Routes>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
     </Router>
   );
 }

@@ -1,17 +1,67 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBBtn, MDBListGroup, MDBListGroupItem, MDBInput } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import { jwtDecode } from "jwt-decode";
+import Cookies from 'js-cookie';
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 const Account = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [showAddImageBtn, setShowAddImageBtn] = useState(false);
-  const [lastName, setLastName] = useState('Doe');
-  const [firstName, setFirstName] = useState('John');
-  const [age, setAge] = useState(34);
-  const [description, setDescription] = useState('Passionné par la technologie et les voyages. Toujours curieux d\'apprendre de nouvelles choses et de rencontrer de nouvelles personnes.');
-  const [interests, setInterests] = useState(['Lecture', 'Voyages', 'Musique', 'Sport']);
+  const [lastName, setLastName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [age, setAge] = useState(0);
+  const [description, setDescription] = useState('');
+  const [interests, setInterests] = useState([]);
   const [profileImage, setProfileImage] = useState(null);
+  const [email, setEmail] = useState('');
   const inputRef = useRef(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fnc = async () => {
+      retrieveCookie();
+      try {
+        const response = await axios.get('http://localhost/infos', { withCredentials: true });
+        setEmail(response.data.email || '');
+        setFirstName(response.data.firstName || '');
+        setLastName(response.data.lastName || '');
+        setDescription(response.data.description || '');
+        setInterests(response.data.activities || []);
+        setProfileImage(response.data.profileImage || null);
+
+        // Calculate and set age
+        if (response.data.dateOfBirth) {
+          const calculatedAge = calculateAge(new Date(response.data.dateOfBirth));
+          setAge(calculatedAge);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fnc();
+  }, []);
+
+  const retrieveCookie = () => {
+    const token = Cookies.get("jwt");
+    try {
+      const decodedToken = jwtDecode(token);
+    } catch {
+      navigate("/Login");
+    }
+  }
+
+  const calculateAge = (dateOfBirth) => {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  }
 
   const handleEditProfile = () => {
     setIsEditing(true);
@@ -26,24 +76,24 @@ const Account = () => {
 
   const [errorMessage, setErrorMessage] = useState('');
 
-const handleImageChange = (e) => {
-  const file = e.target.files[0];
-  const reader = new FileReader();
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
 
-  if (file && file.type === 'image/png') {
-    reader.onloadend = () => {
-      setProfileImage(reader.result);
-      setErrorMessage('');
-    };
-    reader.readAsDataURL(file);
-  } else {
-    setErrorMessage('Veuillez sélectionner un fichier PNG.');
+    if (file && file.type === 'image/png') {
+      reader.onloadend = () => {
+        setProfileImage(reader.result);
+        setErrorMessage('');
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setErrorMessage('Veuillez sélectionner un fichier PNG.');
+    }
   }
-}
 
-const handleSelectImage = () => {
-  inputRef.current.click();
-}
+  const handleSelectImage = () => {
+    inputRef.current.click();
+  }
 
   const handleAddInterest = () => {
     setInterests([...interests, '']);
@@ -96,7 +146,7 @@ const handleSelectImage = () => {
                   )}
                   {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                   <h4>{firstName} {lastName}</h4>
-                  <p className="text-muted">johndoe@example.com</p>
+                  <p className="text-muted">{email}</p>
                   {isEditing ? (
                     <MDBBtn color="primary" className="mb-2" onClick={handleSaveProfile}>Save</MDBBtn>
                   ) : (

@@ -42,11 +42,9 @@ const Home = () => {
     e.preventDefault();
     setError('');
     setLoading(true);
-
     try {
-      const response = await axios.post('http://localhost/register', formData);
-      console.log(response.data);
-      toggleOpen(); // Ouvrir la fenêtre modale après l'inscription
+      const response = await axios.post('http://localhost/fillquestionnaire', formData,{withCredentials:true});
+      toggleOpen()
     } catch (error) {
       console.error('Error:', error);
       setError('An error occurred. Please try again later.');
@@ -101,16 +99,7 @@ const Home = () => {
     
   },[])
 
-  useEffect(()=>{
-    const wrap = async()=>{
-      setComptModal(comptModal+1);
-      if(comptModal >= 2){
-        const response = await axios.get('http://localhost/firstlogin',{withCredentials:true});
-      }
-    }
-    wrap()
-    
-  },[basicModal])
+ 
 
   return (
     <div className="home-container">
@@ -135,7 +124,7 @@ const Home = () => {
       </div>
           {/* Pop-up Questionnaire !!! */}
           <MDBModal open={basicModal} onClose={() => setBasicModal(false)} tabIndex='-1'>
-            <MDBModalDialog>
+            <MDBModalDialog size="xl" className="vh-80">
               <MDBModalContent>
                 <MDBModalHeader>
                   <MDBModalTitle>Questionnaire</MDBModalTitle>
