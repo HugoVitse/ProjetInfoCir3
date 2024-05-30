@@ -23,7 +23,11 @@ const connect_db = require('./connect_db');
 
 const port = 443
 
+<<<<<<< HEAD
 
+=======
+const fillQuestionnaire = require("./fillQuestionnaire")
+>>>>>>> origin/front-mobile
 const setFirstLogin = require('./setFirstLogin')
 const activities = require('./activities')
 const login = require('./login')
@@ -35,6 +39,10 @@ const getInfos = require('./getInfos')
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/front-mobile
 async function serv(){
 
 
@@ -59,7 +67,11 @@ async function serv(){
     app.post('/register', register)
     app.get('/activities', activities)
     app.get('/infos', getInfos)
+<<<<<<< HEAD
     app.get('/firstlogin', setFirstLogin)
+=======
+    app.post('/fillquestionnaire',fillQuestionnaire)
+>>>>>>> origin/front-mobile
 
  
 
