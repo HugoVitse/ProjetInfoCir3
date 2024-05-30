@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import {
     MDBCard,
     MDBCardImage,
@@ -11,12 +10,14 @@ import {
     MDBCol,
     MDBBtn
 } from 'mdb-react-ui-kit';
+import axios from 'axios';
 
 const Catalogue = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [selectedCard, setSelectedCard] = useState(null);
+    const [loading, setLoading] = useState(false); // Add loading state
+    const [error, setError] = useState(null); // Add error state
     const navigate = useNavigate();
-    const [activities, setActivities] = useState([]);
 
     const openPopup = (title, description, img) => {
         setSelectedCard({ title, description, img });
@@ -25,12 +26,6 @@ const Catalogue = () => {
 
     const closePopup = () => {
         setShowPopup(false);
-    };
-
-    const getCookie = (name) => {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
     };
 
     const Activite = () => {
@@ -43,26 +38,21 @@ const Catalogue = () => {
         });
     };
 
-    useEffect(() => {
-        const fetchActivities = async () => {
-            try {
-                const token = getCookie('jwt');
-                console.log(token);
-                const tokenString = "jwt=" + token;
-                console.log(tokenString);
-
-                const response = await axios.get('https://localhost/activities',{withCredentials: true}, {
-                });
-                console.log('Fetched activities:', response.data);
-                setActivities(response.data);
-            } catch (error) {
-                console.error('Error fetching activities:', error);
-            }
-        };
-        fetchActivities();
-    }, []);
-
     const a = "this card";
+    const url = 'https://www.lilletourism.com/api/render/website_v2/lille-tourisme/playlist/48080/fr_FR/json?page=17&randomSeed=5e0ec7ac-791f-4329-946f-42f86c093f5a&confId=48080';
+
+    const login = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.post(url);
+            console.log(response.data);
+        } catch (error) {
+            console.error('There was an error logging in!', error);
+            setError('An error occurred. Please try again later.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <>

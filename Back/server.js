@@ -7,16 +7,29 @@ const cors = require('cors')
 const app = express()
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors())
+var whitelist = ['http://localhost:3000',undefined /** other domains if any */ ]
+var corsOptions = {
+  credentials: true,
+  origin: function(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+app.use(cors(corsOptions));
 const connect_db = require('./connect_db');
 
 const port = 443
 
 
+const setFirstLogin = require('./setFirstLogin')
 const activities = require('./activities')
 const login = require('./login')
 const register = require('./register')
 const getInfos = require('./getInfos')
+
 
 
 
@@ -27,6 +40,10 @@ async function serv(){
 
 
 
+    
+
+    
+
     await connect_db.ConnectDB();
 
     app.get("/",(req,res)=>{
@@ -34,10 +51,15 @@ async function serv(){
         res.send("ta gueule")
     })
 
+    app.get("/test", (req,res)=>{
+        res.cookie("test","hein")
+        res.send("ok")
+    })
     app.post('/login', login)
     app.post('/register', register)
     app.get('/activities', activities)
     app.get('/infos', getInfos)
+    app.get('/firstlogin', setFirstLogin)
 
  
 

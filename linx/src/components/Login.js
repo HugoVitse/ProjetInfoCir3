@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { MDBContainer, MDBCol, MDBInput, MDBBtn, MDBCard, MDBCardBody } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
+
 
 const Login = () => {
 
@@ -11,6 +14,27 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const navigate = useNavigate();
+
+  const retrieveCookie = ()=>{
+    const token = Cookies.get("jwt")
+    console.log(token)
+    try{
+      const decodedToken = jwtDecode(token);
+      navigate("/")
+      console.log(decodedToken)
+    }
+    catch{
+      
+    }
+
+
+  }
+
+  useEffect(()=>{
+    retrieveCookie()
+  },[])
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError(''); // Clear previous errors
@@ -18,16 +42,18 @@ const Login = () => {
       setError('Please fill in both fields');
       return;
     }
-
+  
     setLoading(true); // Set loading state
-
+  
     try {
-      const response = await axios.post('https://localhost/login', {email: email, password: password});
+      const response = await axios.post('http://localhost/login',{ email: email, password: password },{withCredentials:true});
       console.log(response.data);
+      console.log(response.status)
       if (response.status === 200) {
-        alert('Login successful!');
-        // Redirect to another page or perform other actions on successful login
+        // Redirection vers la page d'accueil
+        window.location.href = '/'; // Redirection vers la page d'accueil
       } else {
+        console.log(response.status)
         setError('Invalid email or password');
       }
     } catch (error) {

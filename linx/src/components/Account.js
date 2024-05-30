@@ -1,8 +1,6 @@
-import React, { useState, useRef,useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useRef } from 'react';
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBBtn, MDBListGroup, MDBListGroupItem, MDBInput } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-
 
 const Account = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -19,32 +17,6 @@ const Account = () => {
     setIsEditing(true);
     setShowAddImageBtn(true);
   }
-
-  useEffect(() => {
-    const fetchCompte = async () => {
-        try {
-          const token = getCookie('jwt');
-          const tokenString = "jwt=" + token;
-
-          const response = await axios.get('https://localhost/getInfos',{nfk:""}, {
-              headers: {
-                  Cookie: tokenString
-              }
-          });
-
-          console.log(response)
-        } catch (error) {
-            console.error('Error fetching activities:', error);
-        }
-    };
-    fetchCompte();
-}, []);
-
-  const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-};
 
   const handleDescriptionChange = (e) => {
     if (e.target.value.length <= 200) {
