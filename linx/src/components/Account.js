@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBBtn, MDBListGroup, MDBListGroupItem, MDBInput } from 'mdb-react-ui-kit';
+import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBBtn, MDBListGroup, MDBListGroupItem, MDBInput, MDBCardText, MDBCardImage, MDBTypography } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import { jwtDecode } from "jwt-decode";
 import Cookies from 'js-cookie';
@@ -80,16 +80,16 @@ const Account = () => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
-    if (file && file.type === 'image/png') {
-      reader.onloadend = () => {
-        setProfileImage(reader.result);
-        setErrorMessage('');
-      };
-      reader.readAsDataURL(file);
+    if (file && (file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/gif')) {
+        reader.onloadend = () => {
+            setProfileImage(reader.result);
+            setErrorMessage('');
+        };
+        reader.readAsDataURL(file);
     } else {
-      setErrorMessage('Veuillez sélectionner un fichier PNG.');
+        setErrorMessage('Veuillez sélectionner un fichier PNG, JPEG, JPG ou GIF.');
     }
-  }
+}
 
   const handleSelectImage = () => {
     inputRef.current.click();
@@ -118,64 +118,81 @@ const Account = () => {
   }
 
   return (
-    <MDBContainer fluid className="d-flex flex-column align-items-center vh-100" style={{background:'linear-gradient(#7C4DFF, #6200EA)'}}>
-        <MDBCard className="shadow-3 vh-100" style={{borderRadius:'15px', width: '80%', maxWidth: '600px'}}>
-            <MDBCardBody style={{background:'linear-gradient(#7C4DFF, #6200EA)'}}>
-                <MDBRow className="d-flex justify-content-center align-items-center">
-                    {/* Photo de profil */}
-                    <MDBCol md="4" className="text-center">
-                        <label htmlFor="profile-image">
-                            <img
-                                src={profileImage || "https://via.placeholder.com/150"}
-                                alt="Profile"
-                                className="img-fluid rounded-circle mb-3"
-                                style={{ width: '150px', height: '150px' }}
-                            />
-                        </label>
-                        <input
-                            id="profile-image"
-                            ref={inputRef}
-                            type="file"
-                            accept="image/png"
-                            style={{ display: 'none' }}
-                            onChange={handleImageChange}
-                        />
-                        {showAddImageBtn && (
-                            <MDBBtn color="black" size="sm" onClick={handleSelectImage}>Modifier Image</MDBBtn>
-                        )}
-                        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                    </MDBCol>
-
-                    <MDBCol md="8" className="d-flex flex-column align-items-center">
-                        <h4 className='text-light'>{firstName} {lastName}</h4>
-                        <p className="text-white-50">{email}</p>
-                        {isEditing ? (
-                            <MDBBtn color="black" onClick={handleSaveProfile}>Save</MDBBtn>
+    <div className="gradient-custom-2" style={{ background: 'linear-gradient(#7C4DFF, #6200EA)' }}>
+      <MDBContainer className="py-5 h-100">
+        <MDBRow className="justify-content-center align-items-center h-100">
+          <MDBCol lg="9" xl="7">
+            <MDBCard>
+              <div className="rounded-top text-white d-flex flex-row" style={{ backgroundColor: '#000', height: '200px' }}>
+                <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
+                <label htmlFor="profile-image">
+                    <MDBCardImage src={profileImage || "https://via.placeholder.com/150"}
+                    alt="Generic placeholder image" className="mt-4 mb-2 img-thumbnail" fluid style={{ width: '150px', zIndex: '1' }} />
+                         </label>
+                         <input
+                             id="profile-image"
+                             ref={inputRef}
+                             type="file"
+                             accept="image/png, image/jpeg, image/jpg, image/gif"
+                             style={{ display: 'none' }}
+                             onChange={handleImageChange}
+                         />
+                         {showAddImageBtn && (
+                             <MDBBtn color="black" size="sm" onClick={handleSelectImage}>Modifier Image</MDBBtn>
+                         )}
+                         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                         {isEditing ? (
+                            <MDBBtn color="black" onClick={handleSaveProfile} style={{height: '36px', overflow: 'visible'}}>Save</MDBBtn>
                         ) : (
-                            <MDBBtn color="black" onClick={handleEditProfile}>Edit Profile</MDBBtn>
+                            <MDBBtn color="black" onClick={handleEditProfile} style={{height: '36px', overflow: 'visible'}}>Edit Profile</MDBBtn>
                         )}
-                    </MDBCol>
-                </MDBRow>
+                 
+                  
+                </div>
 
-                <MDBListGroup flush className="text-center mt-4">
-                    <MDBListGroupItem className="bg-transparent text-light">
-                        <table className="w-100">
-                            <tbody>
-                                <tr>
-                                    <td><strong>Nom : </strong>{isEditing ? <MDBInput type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} /> : lastName}</td>
-                                    <td><strong>Prénom : </strong>{isEditing ? <MDBInput type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} /> : firstName}</td>
-                                    <td><strong>Âge : </strong>{isEditing ? <MDBInput type="number" value={age} onChange={(e) => setAge(e.target.value)} /> : age}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </MDBListGroupItem>
+              {/* Partie Nom/Prénom/Âge */}
+                <div className="ms-3" style={{ marginTop: '130px' }}>
+                  <MDBTypography tag="h5">
+                    {isEditing ? <MDBInput type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} /> : lastName} {isEditing ? <MDBInput type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)}/> : firstName}
+                  </MDBTypography>
 
-                    <MDBListGroupItem className="bg-transparent text-light">
-                        <strong>Description : </strong>{isEditing ? <MDBInput type="textarea" value={description} onChange={handleDescriptionChange} /> : description}
-                    </MDBListGroupItem>
+                  <MDBCardText>
+                    {isEditing ? <MDBInput type="number" value={age} onChange={(e) => setAge(e.target.value)} /> : age} ans
+                  </MDBCardText>
+                </div>
+              {/* Fin */}
+              </div>
+              <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
+                <div className="d-flex justify-content-end text-center py-1">
+                  <div>
+                    <MDBCardText className="mb-1 h5">253</MDBCardText>
+                    <MDBCardText className="small text-muted mb-0">Photos</MDBCardText>
+                  </div>
+                  <div className="px-3">
+                    <MDBCardText className="mb-1 h5">1026</MDBCardText>
+                    <MDBCardText className="small text-muted mb-0">Followers</MDBCardText>
+                  </div>
+                  <div>
+                    <MDBCardText className="mb-1 h5">478</MDBCardText>
+                    <MDBCardText className="small text-muted mb-0">Following</MDBCardText>
+                  </div>
+                </div>
+              </div>
 
-                    <MDBListGroupItem className="bg-transparent text-light">
-                        <strong>Gouts : </strong>
+              <MDBCardBody className="text-black p-4">
+                {/* Case à propos de moi */}
+                <div className="mb-5">
+                  <p className="lead fw-normal mb-1">À propos de moi</p>
+                  <div className="p-4" style={{ backgroundColor: '#f8f9fa' }}>
+
+                    <MDBCardText className="font-italic mb-1">
+                      <strong>Description :</strong><br></br>
+                      {isEditing ? <MDBInput type="textarea" value={description} onChange={handleDescriptionChange} /> : description}
+                    </MDBCardText>
+
+                    {/* Centres d'intérêts */}
+                    <MDBListGroupItem className="font-italic mb-0">
+                        <strong>Centres d'intérêts : </strong> <br></br>
                         <ul>
                             {isEditing ? (
                                 interests.map((interest, index) => (
@@ -190,17 +207,59 @@ const Account = () => {
                                     </li>
                                 ))
                             ) : (
-                                interests.map((interest, index) => interest.trim() !== '' && <li key={index} className="text-light">{interest}</li>)
+                                interests.map((interest, index) => interest.trim() !== '' && <li key={index} className="text-dark">{interest}</li>)
                             )}
                         </ul>
                         {isEditing && (
                             <MDBBtn color="success" size="sm" onClick={handleAddInterest}>Ajouter un goût</MDBBtn>
                         )}
+                        
                     </MDBListGroupItem>
-                </MDBListGroup>
-            </MDBCardBody>
-        </MDBCard>
-    </MDBContainer>
+                    {/* Fin centres d'intérêts */}
+                    {/* Fin à propos de moi */}
+
+                  </div>
+                </div>
+                <div className="d-flex justify-content-between align-items-center mb-4">
+                  <MDBCardText className="lead fw-normal mb-0">Historique des événements</MDBCardText>
+                  <MDBCardText className="mb-0"><a href="#!" className="text-muted">Show all</a></MDBCardText>
+                </div>
+                <MDBRow>
+                  <MDBCol className="mb-2">
+                    <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp"
+                      alt="image 1" className="w-100 rounded-3" />
+                  </MDBCol>
+                  <MDBCol className="mb-2">
+                    <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(107).webp"
+                      alt="image 1" className="w-100 rounded-3" />
+                  </MDBCol>
+                </MDBRow>
+                <MDBRow className="g-2">
+                  <MDBCol className="mb-2">
+                    <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(108).webp"
+                      alt="image 1" className="w-100 rounded-3" />
+                  </MDBCol>
+                  <MDBCol className="mb-2">
+                    <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(114).webp"
+                      alt="image 1" className="w-100 rounded-3" />
+                  </MDBCol>
+                </MDBRow>
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+    </div>
+    
+    // ----------
+    // <MDBContainer fluid className="d-flex flex-column align-items-center vh-100" style={{background:'linear-gradient(#7C4DFF, #6200EA)'}}>
+    //     <MDBCard className="shadow-3 vh-100" style={{borderRadius:'15px', width: '80%', maxWidth: '600px'}}>
+    //         <MDBCardBody style={{background:'linear-gradient(#7C4DFF, #6200EA)'}}>
+    //             <MDBRow className="d-flex justify-content-center align-items-center">
+
+
+                        
+
   );
 }
 
