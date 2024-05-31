@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { MDBContainer, MDBCol, MDBInput, MDBBtn, MDBCard, MDBCardBody } from 'mdb-react-ui-kit';
+import { MDBContainer, MDBCol, MDBInput, MDBBtn, MDBCard, MDBCardBody, MDBRow, MDBCarousel, MDBCarouselItem, MDBCarouselCaption } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import Cookies from 'js-cookie';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -60,47 +60,108 @@ const Login = () => {
   };
 
   return (
-    <MDBContainer fluid className="d-flex align-items-center justify-content-center vh-100" style={{ background: 'linear-gradient(#7C4DFF, #6200EA)' }}>
-      <MDBCol md="7" lg="5" className="mx-auto">
-        <MDBCard className="shadow-3">
-          <MDBCardBody className="p-5" style={{ background: 'linear-gradient(#E8EAF6, #E8EAF6)' }}>
-            <h2 className="text-center mb-4 text-light bg-dark">Connexion</h2>
-            {error && <div style={{ color: 'red' }}>{error}</div>}
-            <form onSubmit={handleSubmit}>
-              <div className="form-group mb-4 mt-4">
-                <MDBInput
-                  label="Email"
-                  type="email"
-                  name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="text-dark"
+    <MDBContainer fluid className="d-flex align-items-center justify-content-center vh-100" style={{ backgroundColor: '#6200EA' }}>
+      <MDBCard className="w-100 w-md-75" style={{ maxHeight: '90%' }}>
+        <MDBRow className="g-0 h-100">
+          <MDBCol md="6" className="d-none d-md-flex align-items-center justify-content-center p-0 h-100">
+            {/* Caroussel */}
+            <MDBCarousel showControls showIndicators className="w-100 h-100">
+              <MDBCarouselItem itemId={1}>
+                <img
+                  src='https://img.freepik.com/photos-gratuite/reve-nenuphar-pourpre-genere-par-ia_268835-8270.jpg?size=626&ext=jpg&ga=GA1.1.632798143.1713312000&semt=ais'
+                  className='d-block w-100'
+                  alt='First slide'
+                  style={{ height: '100%', objectFit: 'cover' }}
                 />
-              </div>
-              <div className="form-group mb-4">
-                <MDBInput
-                  label="Password"
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="text-dark"
+                <MDBCarouselCaption>
+                  <h5>Bienvenue sur Linx</h5>
+                  <p>Connectez vous pour vivre une expérience unique !</p>
+                </MDBCarouselCaption>
+              </MDBCarouselItem>
+              <MDBCarouselItem itemId={2}>
+                <img
+                  src='https://img.freepik.com/premium-photo/group-purple-water-lilies-floating-top-pond-ai_431161-6222.jpg'
+                  className='d-block w-100'
+                  alt='Second slide'
+                  style={{ height: '100%', objectFit: 'cover' }}
                 />
-              </div>
-              <div className="text-center mb-2">
-                <MDBBtn color="dark" type="submit" disabled={loading}>
-                  {loading ? 'Logging in...' : 'Login'}
-                </MDBBtn>
-              </div>
-            </form>
-            <div className="text-center mt-3">
-              <Link to="/Register" className="text-dark">Don't have an account? Sign Up</Link>
+                <MDBCarouselCaption>
+                  <h5>Bienvenue sur Linx</h5>
+                  <p>Connectez vous pour vivre une expérience unique !</p>
+                </MDBCarouselCaption>
+              </MDBCarouselItem>
+              <MDBCarouselItem itemId={3}>
+                <img
+                  src='https://img.freepik.com/photos-premium/ciel-reve-faisant-tournoyer-fleurs_975256-616.jpg'
+                  className='d-block w-100'
+                  alt='Third slide'
+                  style={{ height: '100%', objectFit: 'cover' }}
+                />
+                <MDBCarouselCaption>
+                  <h5>Bienvenue sur Linx</h5>
+                  <p>Connectez vous pour vivre une expérience unique !</p>
+                </MDBCarouselCaption>
+              </MDBCarouselItem>
+            </MDBCarousel>
+            {/* Fin Caroussel */}
+          </MDBCol>
+          <MDBCol size="12" md="6" className="d-flex align-items-center justify-content-center">
+      <MDBCard className="shadow-3 w-100 m-0 h-100">
+        <MDBCardBody className="p-5 d-flex flex-column justify-content-center">
+          <h4 className="text-center mb-4" style={{ color: '#563d7c' }}>
+            <strong>Connexion</strong> à votre compte
+          </h4>
+          <form onSubmit={handleSubmit}>
+            {error && <div className="text-danger mb-3">{error}</div>}
+            <div className="form-group mb-4">
+              <MDBInput
+                label="Username"
+                type="text"
+                name="username"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="form-control"
+                style={{
+                  borderBottom: '2px solid #563d7c',
+                  borderRadius: '0',
+                  boxShadow: 'none'
+                }}
+              />
             </div>
-          </MDBCardBody>
-        </MDBCard>
-      </MDBCol>
+            <div className="form-group mb-4">
+              <MDBInput
+                label="Password"
+                type="password"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="form-control"
+                style={{
+                  borderBottom: '2px solid #563d7c',
+                  borderRadius: '0',
+                  boxShadow: 'none'
+                }}
+              />
+            </div>
+            <div className="text-center mb-2">
+              <MDBBtn color="primary" type="submit" disabled={loading} style={{ backgroundColor: '#563d7c' }}>
+                {loading ? 'Logging in...' : 'Login'}
+              </MDBBtn>
+            </div>
+          </form>
+          <div className="text-center mt-3">
+            <Link to="/forgot-password" style={{ color: '#563d7c' }}>Mot de passe oublié ?</Link>
+          </div>
+          <div className="text-center mt-3">
+            <Link to="/Register" style={{ color: '#563d7c' }}><strong>Inscrivez-vous</strong></Link>
+          </div>
+        </MDBCardBody>
+      </MDBCard>
+    </MDBCol>
+        </MDBRow>
+      </MDBCard>
     </MDBContainer>
   );
 }

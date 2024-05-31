@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     MDBCard,
     MDBCardImage,
@@ -11,6 +11,7 @@ import {
     MDBBtn
 } from 'mdb-react-ui-kit';
 import axios from 'axios';
+import Config from '../config.json'
 
 const Catalogue = () => {
     const [showPopup, setShowPopup] = useState(false);
@@ -18,6 +19,8 @@ const Catalogue = () => {
     const [loading, setLoading] = useState(false); // Add loading state
     const [error, setError] = useState(null); // Add error state
     const navigate = useNavigate();
+    const [activities,setActivities] = useState([])
+    const [componentActivities,setComponentActivities] = useState([])
 
     const openPopup = (title, description, img) => {
         setSelectedCard({ title, description, img });
@@ -54,10 +57,45 @@ const Catalogue = () => {
         }
     };
 
+    useEffect(()=>{
+        const getActivities = async() => {
+            const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/activities`,{withCredentials:true})
+            setActivities(response.data)
+        }
+        getActivities()
+    },[])
+
+    useEffect(()=>{
+        if(activities.length >0){
+            let tmpComp = []
+            for(let i=0; i< activities.length;i++){
+                console.log(i)
+                console.log(activities[i])
+                const newCard = <MDBCol>
+                                    <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }} onClick={() => openPopup('Card title', 'This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.', 'https://mdbootstrap.com/img/new/standard/city/041.webp')}>
+                                        <MDBCardImage
+                                            src={activities[i].image}
+                                            alt='...'
+                                            position='top'
+                                        />
+                                        <MDBCardBody>
+                                            <MDBCardTitle>{activities[i].name}</MDBCardTitle>
+                                            <MDBCardText>
+                                                {activities[i].description}
+                                            </MDBCardText>
+                                        </MDBCardBody>
+                                    </MDBCard>
+                                </MDBCol>
+                tmpComp.push(newCard)
+            }
+            setComponentActivities(tmpComp)
+        }
+    },[activities])
+
     return (
         <>
             <MDBRow className='row-cols-1 row-cols-md-3 g-4'>
-                <MDBCol>
+                {/* <MDBCol>
                     <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }} onClick={() => openPopup('Card title', 'This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.', 'https://mdbootstrap.com/img/new/standard/city/041.webp')}>
                         <MDBCardImage
                             src='https://mdbootstrap.com/img/new/standard/city/041.webp'
@@ -71,80 +109,8 @@ const Catalogue = () => {
                             </MDBCardText>
                         </MDBCardBody>
                     </MDBCard>
-                </MDBCol>
-                <MDBCol>
-                    <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }} onClick={() => openPopup('Card title', a, 'https://mdbootstrap.com/img/new/standard/city/042.webp')}>
-                        <MDBCardImage
-                            src='https://mdbootstrap.com/img/new/standard/city/042.webp'
-                            alt='...'
-                            position='top'
-                        />
-                        <MDBCardBody>
-                            <MDBCardTitle>Card title</MDBCardTitle>
-                            <MDBCardText style={{ overflowWrap: 'break-word', wordWrap: 'break-word', wordBreak: 'break-word' }}>{a}</MDBCardText>
-                        </MDBCardBody>
-                    </MDBCard>
-                </MDBCol>
-                <MDBCol>
-                    <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }}>
-                        <MDBCardImage
-                        src='https://mdbootstrap.com/img/new/standard/city/043.webp'
-                        alt='...'
-                        position='top'
-                        />
-                        <MDBCardBody>
-                        <MDBCardTitle>Card title</MDBCardTitle>
-                        <MDBCardText>
-                            This is a longer card with supporting text below as a natural lead-in to additional content.
-                        </MDBCardText>
-                        </MDBCardBody>
-                    </MDBCard>
-                </MDBCol>
-                <MDBCol>
-                    <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }}>
-                        <MDBCardImage
-                        src='https://mdbootstrap.com/img/new/standard/city/044.webp'
-                        alt='...'
-                        position='top'
-                        />
-                        <MDBCardBody>
-                        <MDBCardTitle>Card title</MDBCardTitle>
-                        <MDBCardText>
-                            This is a longer card with supporting text below as a natural lead-in to additional content.
-                            This content is a little bit longer.
-                        </MDBCardText>
-                        </MDBCardBody>
-                    </MDBCard>
-                </MDBCol>
-                <MDBCol>
-                    <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }}>
-                        <MDBCardImage
-                        src='https://mdbootstrap.com/img/new/standard/city/041.webp'
-                        alt='...'
-                        position='top'
-                        />
-                        <MDBCardBody>
-                        <MDBCardTitle>Card title</MDBCardTitle>
-                        <MDBCardText>
-                            This is a longer card with supporting text below as a natural lead-in to additional content.
-                            This content is a little bit longer.
-                        </MDBCardText>
-                        </MDBCardBody>
-                    </MDBCard>
-                </MDBCol>
-                <MDBCol>
-                    <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }}>
-                        <MDBCardImage
-                        src='https://mdbootstrap.com/img/new/standard/city/042.webp'
-                        alt='...'
-                        position='top'
-                        />
-                        <MDBCardBody>
-                        <MDBCardTitle>Card title</MDBCardTitle>
-                        <MDBCardText>This is a short card.</MDBCardText>
-                        </MDBCardBody>
-                    </MDBCard>
-                </MDBCol>
+                </MDBCol> */}
+                {componentActivities}
             </MDBRow>
 
             {/* Popup */}
