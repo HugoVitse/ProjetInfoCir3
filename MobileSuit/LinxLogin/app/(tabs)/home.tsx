@@ -1,7 +1,7 @@
 import { Link, useRouter } from "expo-router";
 import { Text, View, StyleSheet } from "react-native";
-import { Icon } from '@rneui/themed';
 import { Avatar } from '@rneui/themed';
+import { IconButton, MD3Colors } from "react-native-paper";
 
 const HEADER_HEIGHT = 100;
 
@@ -11,9 +11,12 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Link href="/../settings" style={styles.settings}>
-          <Icon name='gear' type='font-awesome' color={'#687076'}/>
-        </Link>
+        <IconButton
+          icon="cog"
+          iconColor={MD3Colors.neutral20}
+          onPress={() => router.push("/../settings")}
+          style={styles.settings}
+        />
         <Text style={styles.headerText}>Logo</Text>
         <Avatar
           size={48}
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
   },
   settings: {
     position: 'absolute', 
-    bottom: 25, 
-    left: 25,
+    bottom: 10, 
+    left: 10,
   }
 });

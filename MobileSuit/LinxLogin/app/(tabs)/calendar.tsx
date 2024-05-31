@@ -2,18 +2,38 @@ import { Link, useRouter } from "expo-router";
 import { Text, View, StyleSheet } from "react-native";
 import { Icon } from '@rneui/themed';
 import { Avatar } from '@rneui/themed';
+import { IconButton, MD3Colors } from "react-native-paper";
+import React, { useState } from 'react';
+import RadarChart from '../../components/SpiderGraph';
 
 const HEADER_HEIGHT = 100;
 
 export default function CalendarScreen() {
   const router = useRouter();
+
+  // const [chartOptions, setChartOptions] = useState({
+  //   data: [
+  //     { critere: 'Sommeil', note: 50 },
+  //     { critere: 'Sport', note: 45 },
+  //     { critere: 'Alimentation', note: 70 },
+  //     { critere: 'Social', note: 20 },
+  //     { critere: 'Moral', note: 83 },
+  //   ],
+  //   type: 'radar-area',
+  //   angleKey: 'critere', 
+  //   radiusKey: 'note', 
+  //   radiusName: 'Note'
+  // });
   
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Link href="/../settings" style={styles.settings}>
-          <Icon name='gear' type='font-awesome' color={'#687076'}/>
-        </Link>
+        <IconButton
+          icon="cog"
+          iconColor={MD3Colors.neutral20}
+          onPress={() => router.push("/../settings")}
+          style={styles.settings}
+        />
         <Text style={styles.headerText}>Logo</Text>
         <Avatar
           size={48}
@@ -24,8 +44,27 @@ export default function CalendarScreen() {
         />
       </View>
       <View style={styles.body}>
-        <Text>Calendar</Text>
-        <Link href="@/settings">?</Link>
+        <RadarChart
+          graphSize={400}
+          scaleCount={10}
+          numberInterval={2}
+          data={[
+            {
+              Sommeil: 0.7,
+              Sport: 1,
+              Alimentation: 0.9,
+              Social: 0.67,
+              Moral: 0.8,
+            },
+          ]}
+          options={{
+            graphShape: 1,
+            showAxis: false,
+            showIndicator: true,
+            colorList: ["blue"],
+            dotList: [false],
+          }}
+        />
       </View>
     </View>
   );
@@ -67,7 +106,7 @@ const styles = StyleSheet.create({
   },
   settings: {
     position: 'absolute', 
-    bottom: 25, 
-    left: 25,
+    bottom: 10, 
+    left: 10,
   }
 });
