@@ -9,15 +9,14 @@ import {
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import axios from 'axios';
 
-
 const Home = () => {
 
   const navigate = useNavigate();
   const [basicModal, setBasicModal] = useState(false);
   const toggleOpen = useCallback(() => setBasicModal(prevState => !prevState), [setBasicModal]);
-  const [setError] = useState('');
-  const [setLoading] = useState(false);
-  const [comptModal, setComptModal] = useState(0);
+  const [error, setError] = useState(''); // Corrected destructuring
+  const [loading, setLoading] = useState(false); // Corrected destructuring
+  const [comptModal, setComptModal] = useState(0); // Corrected destructuring
   const [formData, setFormData] = useState({
     activities: [],
     note: 10,
@@ -28,8 +27,9 @@ const Home = () => {
     favoriteCuisine: '',
     travelDistance: 25,
   });
-   // Partie handle du questionnaire :
-   const handleCheckboxChange = (activity) => {
+
+  // Partie handle du questionnaire :
+  const handleCheckboxChange = (activity) => {
     setFormData((prevData) => ({
       ...prevData,
       activities: prevData.activities.includes(activity)
@@ -55,7 +55,6 @@ const Home = () => {
     }
   };
 
-
   const handleRadioChange = (name, value) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -78,22 +77,23 @@ const Home = () => {
       navigate("/Login");
     }
   }, [navigate]);
-  
 
   useEffect(() => {
     retrieveCookie();
   }, [retrieveCookie]);
-  
 
   useEffect(() => {
     const wrap = async () => {
-      setComptModal((prevComptModal) => prevComptModal + 1);
-      if (comptModal >= 2) {
-        await axios.get('http://localhost/firstlogin', { withCredentials: true });
-      }
-    }
+      setComptModal((prevComptModal) => {
+        const newComptModal = prevComptModal + 1;
+        if (newComptModal >= 2) {
+          axios.get('http://localhost/firstlogin', { withCredentials: true });
+        }
+        return newComptModal;
+      });
+    };
     wrap();
-  }, [basicModal, comptModal, setComptModal, retrieveCookie, toggleOpen]);
+  }, [basicModal, retrieveCookie, toggleOpen]);
   
 
   return (
