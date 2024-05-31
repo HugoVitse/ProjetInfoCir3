@@ -1,13 +1,14 @@
 import React , {useState,useEffect} from 'react';
 import {Link, useRouter} from 'expo-router'
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { ActivityIndicator, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
+import { ActivityIndicator, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { Input,Icon,Button } from 'react-native-elements';
 import {Image,Text} from 'react-native'
 import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RootStackParamList } from '@/constants/type';
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const RegisterScreen = () => {
   const [show, setShow] = useState(false);
@@ -144,11 +145,13 @@ const RegisterScreen = () => {
 
  
   return (
-    
-    <KeyboardAvoidingView
-      style={styles.view}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    <KeyboardAwareScrollView
+      contentContainerStyle={styles.scrollViewContent}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      scrollEnabled
+      extraScrollHeight={Platform.OS === 'ios' ? 20 : 0}
     >
+      <View style={styles.inner}>
 
 
         <Input
@@ -157,6 +160,7 @@ const RegisterScreen = () => {
             leftIconContainerStyle={{
                 marginRight:5
             }}
+            inputContainerStyle={styles.inputContainer}
             leftIcon={<Icon
             name='user'
             size={24}
@@ -167,6 +171,7 @@ const RegisterScreen = () => {
 
        <Input
             placeholder='Nom'
+            inputContainerStyle={styles.inputContainer}
             leftIconContainerStyle={{
                 marginRight:5
             }}
@@ -180,6 +185,7 @@ const RegisterScreen = () => {
         />
         <Input
             placeholder='Date de naissance'
+            inputContainerStyle={styles.inputContainer}
             leftIconContainerStyle={{
                 marginRight:5
             }}
@@ -207,6 +213,7 @@ const RegisterScreen = () => {
 
         <Input
             placeholder='Email'
+            inputContainerStyle={styles.inputContainer}
             onChangeText={onChangeEmail}
             leftIconContainerStyle={{
                 marginRight:5
@@ -221,6 +228,7 @@ const RegisterScreen = () => {
 
         <Input
             secureTextEntry={true} 
+            inputContainerStyle={styles.inputContainer}
             placeholder='Mot de passe'
             onChangeText={onChangePassword}
             leftIconContainerStyle={{
@@ -236,7 +244,8 @@ const RegisterScreen = () => {
             }
         />
         <Input
-            secureTextEntry={true} 
+            secureTextEntry={true}
+            inputContainerStyle={styles.inputContainer} 
             placeholder='Confirmation du mot de passe'
             onChangeText={onChangeconfirmPass}
             leftIconContainerStyle={{
@@ -265,14 +274,19 @@ const RegisterScreen = () => {
       <Link style={styles.link} href='..'> Connectez-vous </Link>
     </View>
     <Text style={{color:'red'}}> {err}</Text>
-    
-    </KeyboardAvoidingView>
-    
+
+    </View>
+    </KeyboardAwareScrollView>
+  
   );
   
 };
 
 const styles = StyleSheet.create({
+  inputContainer: {
+    width: '90%', // Ajustez la largeur en fonction de vos préférences
+    marginBottom: 24, // Espace après chaque champ de saisie
+  },
   input: {
     height: 40,
     margin: 12,
@@ -298,6 +312,17 @@ const styles = StyleSheet.create({
     marginBottom:50,
     width: 350,
     height: 115,
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  inner: {
+    padding: 24,
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   link:{
     color:"blue"

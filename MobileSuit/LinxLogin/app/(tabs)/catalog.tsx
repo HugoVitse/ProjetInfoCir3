@@ -1,19 +1,62 @@
-import { Link, useRouter } from "expo-router";
-import { Text, View, StyleSheet } from "react-native";
-import { Icon } from '@rneui/themed';
-import { Avatar } from '@rneui/themed';
+import { Avatar } from "@rneui/themed";
+import { useRouter } from "expo-router";
+import { Text, View, StyleSheet, Dimensions } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { IconButton, MD3Colors, Card, Button } from "react-native-paper";
+import { useState , useEffect } from "react";
+import axios from 'axios'
+import Config from '../../config.json'
+import {activitie} from '../../constants/activities'
 
 const HEADER_HEIGHT = 100;
+const { width } = Dimensions.get('window');
 
 export default function CatalogScreen() {
   const router = useRouter();
+  const [activities,setActivities] = useState<activitie[]>([])
+  const [componentActivities,setComponentActivities] = useState<JSX.Element[]>([])
+
+  useEffect(()=>{
+    const getActivities = async() => {
+        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/activities`,{withCredentials:true})
+        setActivities(response.data)
+    }
+    getActivities()
+  } ,[])
+
+  useEffect(()=>{
+    if(activities.length >0){
+        let tmpComp = []
+        for(let i=0; i< activities.length;i++){
+            console.log(i)
+            console.log(activities[i])
+            const newCard = <Card style={{ width: width - 40, marginVertical: 20 }}>
+                              <Card.Cover source={{ uri: activities[i].image }} />
+                              <Card.Title title={activities[i].name} subtitle={activities[i].date}/>
+                              <Card.Content>
+                                <Text>{activities[i].adresse}</Text>
+                                <Text>{activities[i].description}</Text>
+                              </Card.Content>
+                              <Card.Actions>
+                                <Button>Cancel</Button>
+                                <Button>Ok</Button>
+                              </Card.Actions>
+                            </Card>
+            tmpComp.push(newCard)
+        }
+        setComponentActivities(tmpComp)
+    }
+  },[activities])
   
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Link href="/../settings" style={styles.settings}>
-          <Icon name='gear' type='font-awesome' color={'#687076'}/>
-        </Link>
+        <IconButton
+          icon="cog"
+          iconColor={MD3Colors.neutral20}
+          onPress={() => router.push("/../settings")}
+          style={styles.settings}
+        />
         <Text style={styles.headerText}>Logo</Text>
         <Avatar
           size={48}
@@ -23,10 +66,12 @@ export default function CatalogScreen() {
           onPress={() => router.push("/../profile")}
         />
       </View>
-      <View style={styles.body}>
-        <Text>Catalogue</Text>
-        <Link href="@/settings">?</Link>
-      </View>
+      <ScrollView 
+        style={{ paddingBottom: 40 }}
+        contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
+      >
+        {componentActivities}
+      </ScrollView>
     </View>
   );
 }
@@ -37,7 +82,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
@@ -59,15 +103,9 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 20,
   },
-  body: {
-    position: 'relative',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-  },
   settings: {
     position: 'absolute', 
-    bottom: 25, 
-    left: 25,
+    bottom: 10, 
+    left: 10,
   }
 });

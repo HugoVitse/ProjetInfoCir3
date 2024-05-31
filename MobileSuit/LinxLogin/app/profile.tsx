@@ -1,10 +1,10 @@
-import { Link, useRouter } from "expo-router";
-import { Image, Text, View, StyleSheet, Modal, Pressable, Dimensions } from "react-native";
-import { Icon } from '@rneui/themed';
+import { useRouter } from "expo-router";
+import { Image, Text, View, StyleSheet, Modal, Dimensions } from "react-native";
 import { Avatar } from '@rneui/themed';
-import { useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Input,Button } from 'react-native-elements';
+import { useState } from 'react';
+import { IconButton, MD3Colors, Button } from "react-native-paper";
+import { CameraView, useCameraPermissions } from 'expo-camera';
+import { CameraType } from "expo-camera/build/legacy/Camera.types";
 
 const HEADER_HEIGHT = 200;
 const { width } = Dimensions.get('window');
@@ -12,61 +12,43 @@ const { width } = Dimensions.get('window');
 export default function ProfileScreen() {
   const router = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
-  const [buttonPressed1, setButtonPressed1] = useState(false);
-  const [buttonPressed2, setButtonPressed2] = useState(false);
-
-  const [jwt,setJwt] = useState('');
-  const [isjwt,setisjwt] = useState(-1)
-
-  const [islogin,setLogin] = useState(-1)
-
-
-  const _storeData = async (key:string,data:string) => {
-    try {
-      await AsyncStorage.setItem(
-        key,
-        data,
-      );
-    } catch (error) {
-      // Error saving data
-      console.log(error)
-    }
-  };
-
-  const _retrieveData = async (key:string) => {
-    try {
-      const value = await AsyncStorage.getItem(key);
-      if(value == null){
-        return ""
-      }
-      return value
-
-    } catch (error) {
-      return ""
-      // Error retrieving data
-    }
-  };
-
+  const [facing, setFacing] = useState(CameraType.back);
+  const [permission, requestPermission] = useCameraPermissions();
+  const [camVisible, setCamVisible] = useState(false);
 
   const logout = () =>{
-    _storeData("jwt","")
-    router.push("/")
-  } 
 
+  }
 
+  if (!permission) {
+    // Camera permissions are still loading.
+    return <View />;
+  }
 
+  if (!permission.granted) {
+    // Camera permissions are not granted yet.
+    return (
+      <View style={styles.container}>
+        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
+        <Button onPress={requestPermission}>grant permission</Button>
+      </View>
+    );
+  }
   
-
+  function toggleCameraFacing() {
+    setFacing(current => (current === CameraType.back ? CameraType.front : CameraType.back));
+  }
+  
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Pressable
+        <IconButton
+          icon="arrow-left"
+          iconColor={MD3Colors.neutral20}
+          onPress={router.back}
           style={styles.buttonBack}
-          onPress={() => router.back()}
-        >
-          <Icon name='arrow-back' type='material' color={'#687076'}/>
-        </Pressable>
+        />
         <Avatar
           size={80}
           rounded
@@ -75,20 +57,25 @@ export default function ProfileScreen() {
           onPress={() => setModalVisible(true)}
         />
         <Text style={styles.headerText}>Prénom Nom</Text>
-        <Link href="editProfile" style={styles.edit}>
-          <Icon name='pencil' type='font-awesome' color={'#687076'}/>
-        </Link>
+        <IconButton
+          icon="account-edit"
+          iconColor={MD3Colors.neutral20}
+          onPress={() => router.push("editProfile")}
+          style={styles.edit}
+        />
       </View>
       <View style={styles.body}>
         <Text>Profil</Text>
         <Button
-          buttonStyle={{
-            width:350
+          mode="elevated"
+          style={{
+            width: width - 40,
+            borderRadius: 0,
           }}
-          title="Logout"
-          type="solid"
           onPress={logout}
-        />
+        >
+          Logout
+        </Button>
       </View>
       <Modal
         animationType="fade"
@@ -99,34 +86,72 @@ export default function ProfileScreen() {
         }}
       >
         <View style={styles.popUp}>
-          <Pressable
-            style={styles.buttonClose}
+          <IconButton
+            icon="arrow-left"
+            iconColor={MD3Colors.neutral20}
             onPress={() => setModalVisible(!modalVisible)}
-          >
-            <Icon name='arrow-back' type='material' color={'#687076'}/>
-          </Pressable>
+            style={styles.buttonClose}
+          />
           <Image 
             source={require('@/assets/images/react-logo.png')}
             style={[styles.profilePic, { width: width }]}
             resizeMode='contain'
           />
-          <Pressable
-            style={[styles.button, buttonPressed1 && styles.buttonPressed]}
-            onPress={() => setModalVisible(!modalVisible)}
-            onPressIn={() => setButtonPressed1(true)}
-            onPressOut={() => setButtonPressed1(false)}
+          <Button
+            mode="elevated"
+            style={{
+              width: width - 40,
+              borderRadius: 0
+            }}
+            onPress={() => setCamVisible(true)}
           >
-            <Text style={styles.textStyle}>Prendre une photo</Text>
-          </Pressable>
-          <Pressable
-            style={[styles.button, buttonPressed2 && styles.buttonPressed]}
+            Prendre une photo
+          </Button>
+          <Button
+            mode="elevated"
+            style={{
+              width: width - 40,
+              borderRadius: 0
+            }}
             onPress={() => setModalVisible(!modalVisible)}
-            onPressIn={() => setButtonPressed2(true)}
-            onPressOut={() => setButtonPressed2(false)}
           >
-            <Text style={styles.textStyle}>Choisir une photo de la galerie</Text>
-          </Pressable>
+            Choisir une photo de la galerie
+          </Button>
         </View>
+      </Modal>
+      <Modal
+        animationType="none"
+        transparent={true}
+        visible={camVisible}
+        onRequestClose={() => {
+          setModalVisible(!camVisible);
+        }}
+      >
+        <View style={{backgroundColor: 'white', height: 30}}></View>
+        <CameraView style={styles.camera} facing={facing}>
+          <IconButton
+            icon="arrow-left"
+            containerColor={'rgba(0, 0, 0, 0.5)'}
+            iconColor={MD3Colors.neutral100}
+            style={{ position: 'absolute', top: 10, left: 10, height: 30, width: 30 }}
+            size={24}
+            onPress={() => setCamVisible(!camVisible)}
+          />
+          <IconButton
+            icon="orbit-variant"
+            containerColor={'rgba(0, 0, 0, 0.5)'}
+            iconColor={MD3Colors.neutral100}
+            style={{ position: 'absolute', top: 10, right: 10, height: 30, width: 30 }}
+            size={24}
+            onPress={toggleCameraFacing}
+          />
+          <Button
+            mode="elevated"
+          >
+            azjfa
+          </Button>
+        </CameraView>
+        <View style={{backgroundColor: 'white', height: 30}}></View>
       </Modal>
     </View>
   );
@@ -136,6 +161,7 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
   },
   header: {
     position: 'absolute',
@@ -157,8 +183,8 @@ const styles = StyleSheet.create({
   },
   buttonBack: {
     position: 'absolute',
-    top: 40,
-    left: 20,
+    top: 30,
+    left: 10,
   },
   headerText: {
     top: 24,
@@ -173,8 +199,8 @@ const styles = StyleSheet.create({
   },
   edit: {
     position: 'absolute', 
-    right: 20,
-    top: 40
+    right: 10,
+    top: 30
   },
   popUp: {
     flex: 1,
@@ -187,23 +213,29 @@ const styles = StyleSheet.create({
     height: undefined,
     aspectRatio: 1,
   },
-  button: {
-    paddingVertical: 10,
-    width: width - 40,
-    elevation: 2,
-    backgroundColor: '#2196F3',
-  },
-  buttonPressed: {
-    backgroundColor: '#1E88E5',
-  },
   buttonClose: {
     position: 'absolute',
-    top: 20,
-    left: 20,
+    top: 6,
+    left: 10,
   },
   textStyle: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  camera: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    flex: 1,
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'white',
   },
 });

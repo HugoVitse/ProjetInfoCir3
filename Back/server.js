@@ -26,6 +26,7 @@ const port = 443
 const fillQuestionnaire = require("./fillQuestionnaire")
 const setDaily = require("./setDaily")
 const scrapActivities = require('./scrapActivities')
+const activities = require('./activities')
 const login = require('./login')
 const register = require('./register')
 const getInfos = require('./getInfos')
@@ -58,7 +59,7 @@ async function serv(){
   })
   app.post('/login', login)
   app.post('/register', register)
-  app.get('/activities', scrapActivities)
+  app.get('/activities', activities)
   app.get('/infos', getInfos)
   app.post('/fillquestionnaire',fillQuestionnaire)
   app.post('/setDaily',setDaily)
@@ -82,3 +83,4 @@ async function serv(){
 }
 
 serv();
+scrapActivities();
