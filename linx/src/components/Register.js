@@ -58,10 +58,10 @@ const Register = () => {
   }, []);
 
   return (
-    <MDBContainer fluid className="d-flex align-items-center justify-content-center vh-100" style={{ background: 'linear-gradient(#2e006c, #003399)' }}>
+    <MDBContainer fluid className="d-flex align-items-center justify-content-center vh-100" style={{ background: 'linear-gradient(#7C4DFF, #6200EA)' }}>
       <MDBCard className="w-50">
         <MDBCardBody>
-          <h2 className="text-center mb-4">Inscription</h2>
+          <h2 className="text-center mb-4 text-light bg-dark">Inscription</h2>
           <form onSubmit={handleSubmit}>
             <MDBRow className="mb-4">
               <MDBCol>
@@ -77,7 +77,7 @@ const Register = () => {
             <MDBInput label="Confirm Password" type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required className="mb-4" />
 </form>
             
-            <button type="button" className="btn btn-primary w-100"  onClick={handleSubmit} disabled={loading}>
+            <button type="button" className="btn btn-dark w-100"  onClick={handleSubmit} disabled={loading}>
               Valider
             </button>
             
@@ -86,7 +86,7 @@ const Register = () => {
           
           {error && <div className="text-danger text-center mt-3">{error}</div>}
           <div className="text-center mt-3">
-            <Link to="/login">Already have an account? Login</Link>
+            <Link to="/login" className="text-dark">Already have an account? Login</Link>
           </div>
         </MDBCardBody>
       </MDBCard>

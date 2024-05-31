@@ -107,7 +107,7 @@ const Home = () => {
         <div className="container">
           <h1 className="display-4">Découvrez les événements à venir !</h1>
           <p className="lead">Explorez notre sélection d'événements passionnants pour des expériences inoubliables.</p>
-          <Link to="/MoodTracker" className="btn btn-primary">Voir les événements</Link>
+          <Link to="/Catalogue" className="btn btn-primary">Voir les événements</Link>
         </div>
       </div>
       <div className="container mt-5">

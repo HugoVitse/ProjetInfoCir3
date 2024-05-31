@@ -118,90 +118,88 @@ const Account = () => {
   }
 
   return (
-    <MDBContainer fluid className="bg-gradient vh-100" style={{backgroundColor:'#E1BEE7'}}>
-        <MDBCol md="10" lg="8">
-          <MDBCard className="mb-4 shadow-3">
-            <MDBCardBody className='bg-gradient' style={{backgroundColor:'#E1F5FE'}}>
-              <h2 className="text-center mb-4">Mon Compte</h2>
-              <MDBRow>
-
-                <MDBCol md="4" className="text-center">
-                  <label htmlFor="profile-image">
-                    <img
-                      src={profileImage || "https://via.placeholder.com/150"}
-                      alt="Profile"
-                      className="img-fluid rounded-circle mb-3"
-                    />
-                  </label>
-                  <input
-                    id="profile-image"
-                    ref={inputRef}
-                    type="file"
-                    accept="image/png"
-                    style={{ display: 'none' }}
-                    onChange={handleImageChange}
-                  />
-                  {showAddImageBtn && (
-                    <MDBBtn color="primary" size="sm" className="mb-2" onClick={handleSelectImage}>Modifier Image</MDBBtn>
-                  )}
-                  {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                  <h4>{firstName} {lastName}</h4>
-                  <p className="text-muted">{email}</p>
-                  {isEditing ? (
-                    <MDBBtn color="primary" className="mb-2" onClick={handleSaveProfile}>Save</MDBBtn>
-                  ) : (
-                    <MDBBtn color="primary" className="mb-2" onClick={handleEditProfile}>Edit Profile</MDBBtn>
-                  )}
-                </MDBCol>
-
-                <MDBCol md="">
-                  <MDBListGroup flush>
-
-                    <MDBListGroupItem>
-                      <strong>Nom : </strong>{isEditing ? <MDBInput type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} /> : lastName}
-                    </MDBListGroupItem>
-
-                    <MDBListGroupItem>
-                      <strong>Prénom : </strong>{isEditing ? <MDBInput type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} /> : firstName}
-                    </MDBListGroupItem>
-
-                    <MDBListGroupItem>
-                      <strong>Âge : </strong>{isEditing ? <MDBInput type="number" value={age} onChange={(e) => setAge(e.target.value)} /> : age}
-                    </MDBListGroupItem>
-
-                    <MDBListGroupItem>
-                      <strong>Description : </strong>{isEditing ? <MDBInput type="textarea" value={description} onChange={handleDescriptionChange} /> : description}
-                    </MDBListGroupItem>
-
-                    <MDBListGroupItem>
-                      <strong>Gouts : </strong>
-                      <ul>
-                        {isEditing ? (
-                          interests.map((interest, index) => (
-                            <li key={index} style={{ display: 'flex', alignItems: 'center' }}>
-                              <MDBInput
-                                type="text"
-                                value={interest}
-                                onChange={(e) => handleInterestChange(index, e.target.value)}
-                              />
-                              <MDBBtn color="danger" size="sm" onClick={() => handleRemoveInterest(index)}>Supprimer</MDBBtn>
-                            </li>
-                          ))
-                        ) : (
-                          interests.map((interest, index) => interest.trim() !== '' && <li key={index}>{interest}</li>)
+    <MDBContainer fluid className="d-flex flex-column align-items-center vh-100" style={{background:'linear-gradient(#7C4DFF, #6200EA)'}}>
+        <MDBCard className="shadow-3 vh-100" style={{borderRadius:'15px', width: '80%', maxWidth: '600px'}}>
+            <MDBCardBody style={{background:'linear-gradient(#7C4DFF, #6200EA)'}}>
+                <MDBRow className="d-flex justify-content-center align-items-center">
+                    {/* Photo de profil */}
+                    <MDBCol md="4" className="text-center">
+                        <label htmlFor="profile-image">
+                            <img
+                                src={profileImage || "https://via.placeholder.com/150"}
+                                alt="Profile"
+                                className="img-fluid rounded-circle mb-3"
+                                style={{ width: '150px', height: '150px' }}
+                            />
+                        </label>
+                        <input
+                            id="profile-image"
+                            ref={inputRef}
+                            type="file"
+                            accept="image/png"
+                            style={{ display: 'none' }}
+                            onChange={handleImageChange}
+                        />
+                        {showAddImageBtn && (
+                            <MDBBtn color="black" size="sm" onClick={handleSelectImage}>Modifier Image</MDBBtn>
                         )}
-                      </ul>
-                      {isEditing && (
-                        <MDBBtn color="success" size="sm" onClick={handleAddInterest}>Ajouter un goût</MDBBtn>
-                      )}
+                        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                    </MDBCol>
+
+                    <MDBCol md="8" className="d-flex flex-column align-items-center">
+                        <h4 className='text-light'>{firstName} {lastName}</h4>
+                        <p className="text-white-50">{email}</p>
+                        {isEditing ? (
+                            <MDBBtn color="black" onClick={handleSaveProfile}>Save</MDBBtn>
+                        ) : (
+                            <MDBBtn color="black" onClick={handleEditProfile}>Edit Profile</MDBBtn>
+                        )}
+                    </MDBCol>
+                </MDBRow>
+
+                <MDBListGroup flush className="text-center mt-4">
+                    <MDBListGroupItem className="bg-transparent text-light">
+                        <table className="w-100">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Nom : </strong>{isEditing ? <MDBInput type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} /> : lastName}</td>
+                                    <td><strong>Prénom : </strong>{isEditing ? <MDBInput type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} /> : firstName}</td>
+                                    <td><strong>Âge : </strong>{isEditing ? <MDBInput type="number" value={age} onChange={(e) => setAge(e.target.value)} /> : age}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </MDBListGroupItem>
 
-                  </MDBListGroup>
-                </MDBCol>
-              </MDBRow>
+                    <MDBListGroupItem className="bg-transparent text-light">
+                        <strong>Description : </strong>{isEditing ? <MDBInput type="textarea" value={description} onChange={handleDescriptionChange} /> : description}
+                    </MDBListGroupItem>
+
+                    <MDBListGroupItem className="bg-transparent text-light">
+                        <strong>Gouts : </strong>
+                        <ul>
+                            {isEditing ? (
+                                interests.map((interest, index) => (
+                                    <li key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <MDBInput
+                                            type="text"
+                                            value={interest}
+                                            onChange={(e) => handleInterestChange(index, e.target.value)}
+                                            className="me-2"
+                                        />
+                                        <MDBBtn color="danger" size="sm" onClick={() => handleRemoveInterest(index)}>Supprimer</MDBBtn>
+                                    </li>
+                                ))
+                            ) : (
+                                interests.map((interest, index) => interest.trim() !== '' && <li key={index} className="text-light">{interest}</li>)
+                            )}
+                        </ul>
+                        {isEditing && (
+                            <MDBBtn color="success" size="sm" onClick={handleAddInterest}>Ajouter un goût</MDBBtn>
+                        )}
+                    </MDBListGroupItem>
+                </MDBListGroup>
             </MDBCardBody>
-          </MDBCard>
-        </MDBCol>   
+        </MDBCard>
     </MDBContainer>
   );
 }

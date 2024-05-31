@@ -95,7 +95,7 @@ const MoodTracker = () => {
   }, [formData]);
 
   return (
-    <MDBContainer fluid className="d-flex align-items-center justify-content-center vh-100" style={{ background: 'linear-gradient(#2e006c, #003399)' }}>
+    <MDBContainer fluid className="d-flex align-items-center justify-content-center vh-100" style={{ background: 'linear-gradient(#7C4DFF, #6200EA)' }}>
       <MDBCard className="w-50">
         <MDBCardBody>
           <form>
