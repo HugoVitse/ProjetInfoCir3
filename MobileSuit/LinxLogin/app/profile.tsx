@@ -1,10 +1,13 @@
 import { useRouter } from "expo-router";
 import { Image, Text, View, StyleSheet, Modal, Dimensions } from "react-native";
-import { Avatar } from '@rneui/themed';
-import { useState } from 'react';
-import { IconButton, MD3Colors, Button } from "react-native-paper";
+import { Avatar, Icon, Input } from '@rneui/themed';
+import { useEffect, useState } from 'react';
+import { IconButton, MD3Colors, Button, Dialog, HelperText } from "react-native-paper";
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { CameraType } from "expo-camera/build/legacy/Camera.types";
+import axios from 'axios'
+import Config from '../config.json'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HEADER_HEIGHT = 200;
 const { width } = Dimensions.get('window');
@@ -15,9 +18,40 @@ export default function ProfileScreen() {
   const [facing, setFacing] = useState(CameraType.back);
   const [permission, requestPermission] = useCameraPermissions();
   const [camVisible, setCamVisible] = useState(false);
+  const [password, onChangePassword] = useState('');
+  const [error, setError] = useState('')
 
-  const logout = () =>{
+  const editPro = async()=>{
+    const jwt_cookie = await AsyncStorage.getItem("jwt")
+    console.log(jwt_cookie)
+    const reponse = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/verifyPassword`,{password:password},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+    console.log(reponse.data)
+    if(reponse.data){
+      router.push("editProfile")
+    }
+    else {
+      setError('Mot de passe invalide')
+    }
+  }
+  const hasErrors = () => {
+    return error != ''
+  };
 
+  useEffect(()=>{
+    console.log(camVisible)
+  },[camVisible])
+
+  const [visible, setVisible] = useState(false);
+
+  const showDialog = () => setVisible(true);
+
+  const hideDialog = () => setVisible(false);
+
+
+ 
+  const logout = async() =>{
+    await AsyncStorage.setItem("jwt","")
+    router.push("/")
   }
 
   if (!permission) {
@@ -60,7 +94,7 @@ export default function ProfileScreen() {
         <IconButton
           icon="account-edit"
           iconColor={MD3Colors.neutral20}
-          onPress={() => router.push("editProfile")}
+          onPress={/*() => router.push("editProfile")*/showDialog}
           style={styles.edit}
         />
       </View>
@@ -103,7 +137,14 @@ export default function ProfileScreen() {
               width: width - 40,
               borderRadius: 0
             }}
-            onPress={() => setCamVisible(true)}
+            onPress={() => {
+              setModalVisible(false)
+              setTimeout(()=>{
+                setCamVisible(true)
+              },100)
+
+
+            }}
           >
             Prendre une photo
           </Button>
@@ -127,7 +168,7 @@ export default function ProfileScreen() {
           setModalVisible(!camVisible);
         }}
       >
-        <View style={{backgroundColor: 'white', height: 30}}></View>
+        <View style={{backgroundColor: 'white', height: 300}}></View>
         <CameraView style={styles.camera} facing={facing}>
           <IconButton
             icon="arrow-left"
@@ -153,7 +194,39 @@ export default function ProfileScreen() {
         </CameraView>
         <View style={{backgroundColor: 'white', height: 30}}></View>
       </Modal>
+      <Dialog visible={visible} onDismiss={hideDialog}>
+          <Dialog.Title>Entrez votre mot de passe</Dialog.Title>
+          <Dialog.Content>
+            <Input
+              secureTextEntry={true} 
+              inputContainerStyle={styles.inputContainer}
+              placeholder='Mot de passe'
+              onChangeText={onChangePassword}
+              leftIconContainerStyle={{
+                  marginRight:5
+              }}
+              leftIcon={
+                  <Icon
+                  name='unlock'
+                  size={24}
+                  type='feather'
+                  color='black'
+                  />
+              }
+            />
+            <HelperText type="error" visible={hasErrors()}>
+              {error}
+            </HelperText>
+            <Button icon="login" mode="contained" onPress={editPro}>
+              Valider
+            </Button>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={hideDialog}>Retour</Button>
+          </Dialog.Actions>
+      </Dialog>
     </View>
+    
   );
 }
 
@@ -196,6 +269,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
+  },
+  inputContainer: {
+    width: '90%', // Ajustez la largeur en fonction de vos préférences
+    marginBottom: 24, // Espace après chaque champ de saisie
   },
   edit: {
     position: 'absolute', 

@@ -2,11 +2,12 @@ import { Avatar } from "@rneui/themed";
 import { useRouter } from "expo-router";
 import { Text, View, StyleSheet, Dimensions } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { IconButton, MD3Colors, Card, Button } from "react-native-paper";
+import { IconButton, MD3Colors, Card, Button, ActivityIndicator } from "react-native-paper";
 import { useState , useEffect } from "react";
 import axios from 'axios'
 import Config from '../../config.json'
 import {activitie} from '../../constants/activities'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HEADER_HEIGHT = 100;
 const { width } = Dimensions.get('window');
@@ -15,11 +16,35 @@ export default function CatalogScreen() {
   const router = useRouter();
   const [activities,setActivities] = useState<activitie[]>([])
   const [componentActivities,setComponentActivities] = useState<JSX.Element[]>([])
+  const [jwt,setJwt] = useState('');
+  const [isjwt,setisjwt] = useState(-1)
+  const [islogin,setLogin] = useState(-1)
+  const [isLoaded,setIsLoaded] = useState(false)
+
+
+  const _retrieveData = async (key:string) => {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+        // We have data!!
+        setJwt(value)
+        setisjwt(1)
+      }
+      else{
+        setisjwt(0)
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
 
   useEffect(()=>{
     const getActivities = async() => {
-        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/activities`,{withCredentials:true})
-        setActivities(response.data)
+      const jwt_cookie = await AsyncStorage.getItem("jwt")
+      console.log(jwt_cookie)
+      const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/activities`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      setActivities(response.data)
+      setIsLoaded(true)
     }
     getActivities()
   } ,[])
@@ -66,17 +91,19 @@ export default function CatalogScreen() {
           onPress={() => router.push("/../profile")}
         />
       </View>
+      {!isLoaded?<View  style={{    flex: 1,      justifyContent: 'center',}} ><ActivityIndicator animating={true} color={colorMain} size='large'></ActivityIndicator></View>:
       <ScrollView 
         style={{ paddingBottom: 40 }}
         contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
       >
+        
         {componentActivities}
-      </ScrollView>
+      </ScrollView>}
     </View>
   );
 }
 
-
+const colorMain = '#99c3ff'
 const styles = StyleSheet.create({
   container: {
     flex: 1,

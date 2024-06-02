@@ -24,6 +24,7 @@ const connect_db = require('./connect_db');
 const port = 443
 
 const fillQuestionnaire = require("./fillQuestionnaire")
+const verifyPassword = require("./verifyPassword")
 const setDaily = require("./setDaily")
 const scrapActivities = require('./scrapActivities')
 const activities = require('./activities')
@@ -63,6 +64,7 @@ async function serv(){
   app.get('/infos', getInfos)
   app.post('/fillquestionnaire',fillQuestionnaire)
   app.post('/setDaily',setDaily)
+  app.post('/verifyPassword',verifyPassword)
 
 
 

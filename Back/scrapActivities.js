@@ -31,6 +31,7 @@ async function scrapActivitiesWrap(){
     const listeevent = $(initialHtml).find(".evenement");
     listeevent.each((i, event) => { 
         const link = $(event).find(".right > span > a").attr("href")
+        const lengthFin = ( (link.charCodeAt(link.length-1) <= 57) && (link.charCodeAt(link.length-1)  >= 48) ) ?link.length-1:link.length
         const predate = $(event).find(".dateInfo p:not(.subtitle)").text()
         var article = predate.indexOf("Le")
         if(article == -1){
@@ -42,7 +43,7 @@ async function scrapActivitiesWrap(){
         // scrape data from the product HTML element 
         const eventAdd = { 
             image : `https://www.lille.fr${$(event).find(".image-large > img").attr("src")}`,
-            name: link.substring(link.indexOf("Evenement")+11,link.length).replace(/-/g," "),
+            name: link.substring(link.indexOf("Evenement")+11,lengthFin).replace(/-/g," "),
             type: $(event).find(".right > .event-type").text(),
             description :  $(event).find(".right > .innerContent").text().replace(/\n/g,""),
             date:predate.substring(article,predate.indexOf("\n",predate.indexOf("\n")+1)), 
@@ -56,6 +57,7 @@ async function scrapActivitiesWrap(){
         const listeevent = $(initialHtml).find(".evenement");
         listeevent.each((i, event) => { 
             const link = $(event).find(".right > span > a").attr("href")
+            const lengthFin = ( (link.charCodeAt(link.length-1) <= 57) && (link.charCodeAt(link.length-1)  >= 48) ) ?link.length-1:link.length
             const predate = $(event).find(".dateInfo p:not(.subtitle)").text()
             var article = predate.indexOf("Le")
             if(article == -1){
@@ -67,7 +69,7 @@ async function scrapActivitiesWrap(){
             // scrape data from the product HTML element 
             const eventAdd = { 
                 image : `https://www.lille.fr${$(event).find(".image-large > img").attr("src")}`,
-                name: link.substring(link.indexOf("Evenement")+11,link.length).replace(/-/g," "),
+                name: link.substring(link.indexOf("Evenement")+11,lengthFin).replace(/-/g," "),
                 type: $(event).find(".right > .event-type").text(),
                 description :  $(event).find(".right > .innerContent").text().replace(/\n/g,""),
                 date:predate.substring(article,predate.indexOf("\n",predate.indexOf("\n")+1)), 

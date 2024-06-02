@@ -6,7 +6,7 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Stack >
         <Stack.Screen options={{headerShown:false}} name="index" />
-        <Stack.Screen name="register" />
+        <Stack.Screen options={{headerShown:false}} name="register" />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }}/>
         <Stack.Screen name="profile" options={{ title: "Profil", headerShown: false }}/>
         <Stack.Screen name="editProfile" options={{ title: "Modifier le profil" }}/>
