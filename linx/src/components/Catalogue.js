@@ -96,17 +96,17 @@ const Catalogue = () => {
     };
 
     return (
-        <>
+        <div className="container mt-4 mb-4">
             <MDBInput
                 label="Rechercher une activité"
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="mb-4"
+                className="m-4"
             />
 
             <MDBRow className="mb-4">
-                <MDBCol size="6">
+                <MDBCol size="4">
                     <MDBDropdown>
                         <MDBDropdownToggle color="primary" className="d-flex align-items-center">
                             Trier par {sortCriteria === 'name' ? 'ordre alphabétique' : 'date'}
@@ -122,7 +122,7 @@ const Catalogue = () => {
                         </MDBDropdownMenu>
                     </MDBDropdown>
                 </MDBCol>
-                <MDBCol size="6">
+                <MDBCol size="4">
                     <MDBDropdown>
                         <MDBDropdownToggle color="primary" className="d-flex align-items-center">
                             {sortOrder === 'asc' ? 'Ascendant' : 'Descendant'}
@@ -190,7 +190,7 @@ const Catalogue = () => {
                     </div>
                 </div>
             )}
-        </>
+        </div>
     );
 };
 
