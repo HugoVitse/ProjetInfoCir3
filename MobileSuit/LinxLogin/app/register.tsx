@@ -11,6 +11,7 @@ import { RootStackParamList } from '@/constants/type';
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { setShouldAnimateExitingForTag } from 'react-native-reanimated/lib/typescript/reanimated2/core';
+import Config from '../config.json'
 
 const RegisterScreen = () => {
   const [show, setShow] = useState(false);
@@ -108,7 +109,7 @@ const RegisterScreen = () => {
 
   const image = require("../assets/images/back.png")
   const register = async() => {
-    const url = 'http://172.20.10.3/register';
+    const url = `${Config.scheme}://${Config.urlapi}:${Config.portapi}/register`;
     const data = {
       email:email,
       password:password,

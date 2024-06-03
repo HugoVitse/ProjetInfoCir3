@@ -5,7 +5,7 @@ const fs = require('fs')
 const cors = require('cors')
 
 const app = express()
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());
 var whitelist = ['http://localhost:3000',undefined /** other domains if any */ ]
 var corsOptions = {
@@ -31,7 +31,8 @@ const activities = require('./activities')
 const login = require('./login')
 const register = require('./register')
 const getInfos = require('./getInfos')
-
+const updateInfos = require('./updateInfos')
+const setPicture = require('./setPicture')
 
 
 
@@ -65,6 +66,8 @@ async function serv(){
   app.post('/fillquestionnaire',fillQuestionnaire)
   app.post('/setDaily',setDaily)
   app.post('/verifyPassword',verifyPassword)
+  app.post('/updateInfos',updateInfos)
+  app.post('/setPicture',setPicture)
 
 
 

@@ -1,19 +1,20 @@
-import { Link, Stack } from 'expo-router';
+import { Link, Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, KeyboardAvoidingView, Platform,Image } from 'react-native';
-import {Button ,TextInput} from 'react-native-paper'
+import {Button ,HelperText,Icon,IconButton,TextInput} from 'react-native-paper'
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import axios from 'axios'
 import Config from '../config.json'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {user} from '../constants/user'
 
 export default function EditScreen() {
   
   const [show, setShow] = useState(false);
   const [showDate,setShowDate] = useState(false)
-
-  const [err,setErr] = useState("")
+  const router = useRouter();
+  const [error,setErr] = useState("")
   
   const [date, setDate] = useState(new Date());
   const [isdate,setisdate] = useState(0)
@@ -22,6 +23,14 @@ export default function EditScreen() {
   const [confirmPass, onChangeconfirmPass] = useState('');
   const [nom, onChangeNom] = useState('');
   const [prenom, onChangePrenom] = useState('');
+  const [isPasswordHasBeenChanged, setIsPasswordHasBeenChanged] = useState(0)
+  const [initialInfos, setInitialInfos] = useState<user>({
+    firstName:"",
+    lastName:"",
+    dateOfBirth:"",
+    email:"",
+    image:""
+  })
   
   const onChange = (event:any, selectedDate:any) => {
     const currentDate = selectedDate || date;
@@ -36,16 +45,52 @@ export default function EditScreen() {
   const hideDatepicker = () => {
     if(!showDate) setShow(false);
   };
-  const register = () => {
-
+  const update = async() => {
+    if(confirmPass!=password){
+      setErr("Mots de passe différents")
+      return
+    }
+    try{
+      const data = {
+        email:email,
+        password:password,
+        firstName:prenom,
+        lastName:nom,
+        dateOfBirth:date.toDateString(),
+        passwordChanged:isPasswordHasBeenChanged>2
+      }
+      const jwt_cookie = await AsyncStorage.getItem("jwt")
+      const reponse = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/updateInfos`,data,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      if(reponse.status == 200){
+        const jwt_full = (reponse.headers['set-cookie'])?(reponse.headers['set-cookie'])[0]:""
+        const jwt = jwt_full.substring(4,jwt_full.length)
+        console.log(jwt)
+        await AsyncStorage.setItem('jwt',jwt)
+        setIsPasswordHasBeenChanged(1)
+        router.push("/profile")
+      }
+    } 
+    catch{
+      setErr("Email déjà prit")      
+    }
+    
   }
   
+  const reset = () => {
+    onChangePrenom(initialInfos.firstName)
+    onChangeEmail(initialInfos.email)
+    onChangeNom(initialInfos.lastName)
+    onChangePassword("not-real-password")
+    onChangeconfirmPass("not-real-password")
+    setDate(new Date(Date.parse(initialInfos.dateOfBirth)))
+    setIsPasswordHasBeenChanged(1)
+  }
   
   useEffect(()=>{
     const wrap = async()=>{
       const jwt_cookie = await AsyncStorage.getItem("jwt")
       const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-      console.log(reponse.data)
+      setInitialInfos(reponse.data)
       onChangePrenom(reponse.data.firstName)
       onChangeEmail(reponse.data.email)
       onChangeNom(reponse.data.lastName)
@@ -56,6 +101,11 @@ export default function EditScreen() {
   
     wrap()
   },[])
+
+  useEffect(()=>{
+    setIsPasswordHasBeenChanged(isPasswordHasBeenChanged+1)
+  },[password])
+
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={styles.scrollViewContent}
@@ -158,10 +208,25 @@ export default function EditScreen() {
           style={styles.input}
           onChangeText={onChangeconfirmPass}
         />
-
-    <Button buttonColor={colorMain} icon="account-check" mode='contained-tonal' onPress={register} style={{marginTop:10,width:200}}>
-      Valider
-    </Button> 
+  
+      <View>
+        <HelperText type="error" visible={error.length>0}>
+          {error}
+        </HelperText>
+      </View> 
+      <View style={styles.horizontal}>
+        
+         <Button buttonColor={colorMain} mode='contained-tonal' onPress={reset} style={{marginRight:30,width:"15%"}}>
+         <Icon
+            source="reload"
+            size={20}
+          />
+        </Button> 
+        <Button buttonColor={colorMain} icon="account-check" mode='contained-tonal' onPress={update} style={{marginLeft:30,width:"75%"}}>
+          Valider
+        </Button> 
+      </View>
+    
 
     </View>
     </KeyboardAwareScrollView>

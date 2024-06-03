@@ -104,6 +104,7 @@ const TextInputExample = () => {
       setError(true)
     }
     const heads = reponse.headers.get("set-cookie")
+    console.log(heads)
     setJwt(heads?heads.substring(4,heads.length):'')
 
     await _storeData('jwt',heads?heads.substring(4,heads.length):'')
@@ -169,9 +170,9 @@ const TextInputExample = () => {
         />
 
         <View>
-        <HelperText type="error" visible={error}>
-          Adresse email ou mot de passe invalide
-        </HelperText>
+          <HelperText type="error" visible={error}>
+            Adresse email ou mot de passe invalide
+          </HelperText>
         </View>
  
 

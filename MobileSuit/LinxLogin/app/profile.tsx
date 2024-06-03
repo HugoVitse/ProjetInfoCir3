@@ -1,16 +1,20 @@
 import { useRouter } from "expo-router";
-import { Image, Text, View, StyleSheet, Modal, Dimensions } from "react-native";
-import { Avatar, Icon, Input } from '@rneui/themed';
+import { Image, Text, View, StyleSheet, Modal, Dimensions, TouchableOpacity } from "react-native";
+import { Avatar } from 'react-native-paper';
 import { useEffect, useState } from 'react';
-import { IconButton, MD3Colors, Button, Dialog, HelperText } from "react-native-paper";
+import { IconButton,TextInput, MD3Colors, Button, Dialog, HelperText, ActivityIndicator } from "react-native-paper";
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { CameraType } from "expo-camera/build/legacy/Camera.types";
 import axios from 'axios'
 import Config from '../config.json'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { user } from "@/constants/user";
+import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 
 const HEADER_HEIGHT = 200;
 const { width } = Dimensions.get('window');
+
 
 export default function ProfileScreen() {
   const router = useRouter();
@@ -20,11 +24,56 @@ export default function ProfileScreen() {
   const [camVisible, setCamVisible] = useState(false);
   const [password, onChangePassword] = useState('');
   const [error, setError] = useState('')
+  const [isLoading,setIsLoading] = useState(false)
+  const [profilePic, setProfilFic] = useState("");
+  const [disabledValid, setDisabledValid] = useState(true)
+  const [initialInfos, setInitialInfos] = useState<user>({
+    firstName:"",
+    lastName:"",
+    dateOfBirth:"",
+    email:"",
+    image:""
+  })
+  const [newPicture,setNewPicture] = useState("")
+
+  const setPhoto = async() => {
+
+    setProfilFic(newPicture)
+    setModalVisible(!modalVisible)
+    const data = {
+      picture:newPicture
+    }
+    const jwt_token = await AsyncStorage.getItem("jwt")
+    await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/setPicture`,data,{headers:{Cookie:`jwt=${jwt_token}`},withCredentials:false})
+  }
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    
+    if (!result.canceled) {
+      const base64 = await FileSystem.readAsStringAsync(result.assets[0].uri, { encoding: 'base64' });
+      setNewPicture("data:image/png;base64,"+base64);
+      setDisabledValid(false)
+    }
+  };
 
   const editPro = async()=>{
+    setIsLoading(true)
     const jwt_cookie = await AsyncStorage.getItem("jwt")
     console.log(jwt_cookie)
     const reponse = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/verifyPassword`,{password:password},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+    if(reponse.data == true){
+      hideDialog()
+    }
     console.log(reponse.data)
     if(reponse.data){
       router.push("editProfile")
@@ -32,6 +81,7 @@ export default function ProfileScreen() {
     else {
       setError('Mot de passe invalide')
     }
+    setIsLoading(false)
   }
   const hasErrors = () => {
     return error != ''
@@ -48,6 +98,16 @@ export default function ProfileScreen() {
   const hideDialog = () => setVisible(false);
 
 
+  useEffect(()=>{
+    const wrap = async()=>{
+      const jwt_cookie = await AsyncStorage.getItem("jwt")
+      const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      setInitialInfos(reponse.data)
+      setNewPicture(reponse.data.image)
+      setProfilFic(reponse.data.image)
+    }
+    wrap()
+  },[])
  
   const logout = async() =>{
     await AsyncStorage.setItem("jwt","")
@@ -72,9 +132,11 @@ export default function ProfileScreen() {
   function toggleCameraFacing() {
     setFacing(current => (current === CameraType.back ? CameraType.front : CameraType.back));
   }
-  
 
+  
+  if(isLoading)return(<View  style={{    flex: 1,      justifyContent: 'center',}} ><ActivityIndicator animating={true} color={colorMain} size='large'></ActivityIndicator></View>)
   return (
+    
     <View style={styles.container}>
       <View style={styles.header}>
         <IconButton
@@ -83,14 +145,20 @@ export default function ProfileScreen() {
           onPress={router.back}
           style={styles.buttonBack}
         />
-        <Avatar
+        {/* <Avatar
           size={80}
           rounded
           icon={{ name: "person", type: "material" }}
           containerStyle={{ backgroundColor: "#bbbec1" }}
           onPress={() => setModalVisible(true)}
-        />
-        <Text style={styles.headerText}>Prénom Nom</Text>
+          
+        > */}
+        <TouchableOpacity onPress={()=>{setModalVisible(true)}}>
+          <Avatar.Image size={80} source={{uri:profilePic}} />
+        </TouchableOpacity>
+        
+        
+        <Text style={styles.headerText}>{`${initialInfos.firstName} ${initialInfos.lastName}`}</Text>
         <IconButton
           icon="account-edit"
           iconColor={MD3Colors.neutral20}
@@ -100,6 +168,7 @@ export default function ProfileScreen() {
       </View>
       <View style={styles.body}>
         <Text>Profil</Text>
+        
         <Button
           mode="elevated"
           style={{
@@ -123,41 +192,29 @@ export default function ProfileScreen() {
           <IconButton
             icon="arrow-left"
             iconColor={MD3Colors.neutral20}
-            onPress={() => setModalVisible(!modalVisible)}
+            onPress={() => {setModalVisible(!modalVisible);setNewPicture(profilePic);setDisabledValid(true)}}
             style={styles.buttonClose}
           />
-          <Image 
-            source={require('@/assets/images/react-logo.png')}
-            style={[styles.profilePic, { width: width }]}
-            resizeMode='contain'
-          />
-          <Button
-            mode="elevated"
-            style={{
-              width: width - 40,
-              borderRadius: 0
-            }}
-            onPress={() => {
+          <Avatar.Image size={300}style={{marginBottom:30}} source={{uri:newPicture}} />
+         
+          <Button buttonColor={colorMain} icon="account-check" mode='contained-tonal' onPress={() => {
               setModalVisible(false)
               setTimeout(()=>{
                 setCamVisible(true)
               },100)
-
-
-            }}
-          >
+            }} style={{marginTop:10,width:width-40}}>
             Prendre une photo
-          </Button>
-          <Button
-            mode="elevated"
-            style={{
-              width: width - 40,
-              borderRadius: 0
-            }}
-            onPress={() => setModalVisible(!modalVisible)}
-          >
+          </Button> 
+
+          <Button buttonColor={colorMain} icon="account-check" mode='contained-tonal' onPress={pickImage} style={{marginTop:10,width:width-40}}>
             Choisir une photo de la galerie
-          </Button>
+          </Button> 
+
+          <Button disabled={disabledValid} buttonColor={colorMain} icon="account-check" mode='contained-tonal' onPress={setPhoto} style={{marginTop:40,width:width-40}}>
+            Valider
+          </Button> 
+
+         
         </View>
       </Modal>
       <Modal
@@ -194,35 +251,33 @@ export default function ProfileScreen() {
         </CameraView>
         <View style={{backgroundColor: 'white', height: 30}}></View>
       </Modal>
-      <Dialog visible={visible} onDismiss={hideDialog}>
+      <Dialog style={{backgroundColor:"white"}} visible={visible} onDismiss={hideDialog}>
+          
+          <Dialog.Icon icon="alert" />
           <Dialog.Title>Entrez votre mot de passe</Dialog.Title>
           <Dialog.Content>
-            <Input
-              secureTextEntry={true} 
-              inputContainerStyle={styles.inputContainer}
-              placeholder='Mot de passe'
+            <TextInput
+              outlineColor={colorMain}
+              activeOutlineColor={colorMain}
+              theme={theme}
+              secureTextEntry={true}
+              label="Mot de passe"
+              placeholder='Entrez votre mot de passe...'
+              left={<TextInput.Icon icon={password.length==0?"lock-open":"lock"} />}
+              mode='outlined'
+              style={styles.input}
               onChangeText={onChangePassword}
-              leftIconContainerStyle={{
-                  marginRight:5
-              }}
-              leftIcon={
-                  <Icon
-                  name='unlock'
-                  size={24}
-                  type='feather'
-                  color='black'
-                  />
-              }
             />
+            
             <HelperText type="error" visible={hasErrors()}>
               {error}
             </HelperText>
-            <Button icon="login" mode="contained" onPress={editPro}>
+            <Button  buttonColor="black" icon="login" mode="contained" onPress={editPro}>
               Valider
             </Button>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={hideDialog}>Retour</Button>
+            <Button textColor={colorMain} onPress={hideDialog}>Retour</Button>
           </Dialog.Actions>
       </Dialog>
     </View>
@@ -231,6 +286,14 @@ export default function ProfileScreen() {
 }
 
 
+
+const colorMain = '#99c3ff'
+const theme = {
+  roundness:5,
+  color:{
+    shadow:150
+  }
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -286,13 +349,25 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     zIndex: 2,
   },
+  input: {
+    backgroundColor:'white',
+    margin:10,
+    borderRadius:2,
+    shadowColor:'black',
+    shadowOpacity:0.3,
+    shadowRadius:1,
+    shadowOffset:{
+      height:2,
+      width:2
+    }
+  },
   profilePic: {
     height: undefined,
     aspectRatio: 1,
   },
   buttonClose: {
     position: 'absolute',
-    top: 6,
+    top: 30,
     left: 10,
   },
   textStyle: {
@@ -315,4 +390,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
   },
+  logo: {
+    width: 606,
+    height: 508,
+  }
 });
