@@ -1,22 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { jwtDecode } from "jwt-decode";
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  MDBRow, MDBCheckbox, MDBRadio, MDBRange, MDBCol, MDBBtn, MDBCard, MDBCardBody, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter
+  MDBRow, MDBCheckbox, MDBRadio, MDBRange, MDBContainer, MDBCol, MDBInput, MDBBtn, MDBCard, MDBCardBody, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter
 } from 'mdb-react-ui-kit';
+import { Modal, Ripple, initMDB } from 'mdb-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import axios from 'axios';
-
 const Home = () => {
 
   const navigate = useNavigate();
   const [basicModal, setBasicModal] = useState(false);
-  const toggleOpen = useCallback(() => setBasicModal(prevState => !prevState), [setBasicModal]);
-  const [error, setError] = useState(''); // Corrected destructuring
-  const [loading, setLoading] = useState(false); // Corrected destructuring
-  const [comptModal, setComptModal] = useState(0); // Corrected destructuring
+  const toggleOpen = () => setBasicModal(!basicModal);
+
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [comptModal,setComptModal] = useState(0)
   const [formData, setFormData] = useState({
     activities: [],
     note: 10,
@@ -27,9 +28,8 @@ const Home = () => {
     favoriteCuisine: '',
     travelDistance: 25,
   });
-
-  // Partie handle du questionnaire :
-  const handleCheckboxChange = (activity) => {
+   // Partie handle du questionnaire :
+   const handleCheckboxChange = (activity) => {
     setFormData((prevData) => ({
       ...prevData,
       activities: prevData.activities.includes(activity)
@@ -42,11 +42,9 @@ const Home = () => {
     e.preventDefault();
     setError('');
     setLoading(true);
-
     try {
-      const response = await axios.post('http://localhost/register', formData);
-      console.log(response.data);
-      toggleOpen(); 
+      const response = await axios.post('http://localhost/fillquestionnaire', formData,{withCredentials:true});
+      toggleOpen()
     } catch (error) {
       console.error('Error:', error);
       setError('An error occurred. Please try again later.');
@@ -54,6 +52,7 @@ const Home = () => {
       setLoading(false);
     }
   };
+
 
   const handleRadioChange = (name, value) => {
     setFormData((prevData) => ({
@@ -69,35 +68,41 @@ const Home = () => {
     }));
   };
 
-  const retrieveCookie = useCallback(() => {
-    const token = Cookies.get("jwt");
-    try {
-      jwtDecode(token);
-    } catch {
-      navigate("/Login");
+  const retrieveCookie = ()=>{
+    const token = Cookies.get("jwt")
+    try{
+      const decodedToken = jwtDecode(token);
+      console.log(decodedToken)
     }
-  }, [navigate]);
+    catch{
+      navigate("/Login")
+    }
 
-  useEffect(() => {
-    retrieveCookie();
-  }, [retrieveCookie]);
 
-  useEffect(() => {
-    const wrap = async () => {
-      setComptModal((prevComptModal) => {
-        const newComptModal = prevComptModal + 1;
-        if (newComptModal >= 2) {
-          axios.get('http://localhost/firstlogin', { withCredentials: true });
+  }
+
+  useEffect(()=>{
+    const fnc = async ()=>{
+      retrieveCookie()
+      try{
+        const response = await axios.get('http://localhost/infos',{withCredentials:true});
+        console.log(response.data.firstLogin);
+        if(response.data.firstLogin){
+          toggleOpen()
         }
-        return newComptModal;
-      });
-    };
-    wrap();
-  }, [basicModal, retrieveCookie, toggleOpen]);
+      }
+      catch{
   
+      }
+    }
+    fnc()
+    
+  },[])
+
+ 
 
   return (
-    <div className="home-container" >
+    <div className="home-container">
       <div className="jumbotron jumbotron-fluid bg-dark text-light">
         <div className="container">
           <h1 className="display-4">Découvrez les événements à venir !</h1>
@@ -119,7 +124,7 @@ const Home = () => {
       </div>
           {/* Pop-up Questionnaire !!! */}
           <MDBModal open={basicModal} onClose={() => setBasicModal(false)} tabIndex='-1'>
-            <MDBModalDialog>
+            <MDBModalDialog size="xl" className="vh-80">
               <MDBModalContent>
                 <MDBModalHeader>
                   <MDBModalTitle>Questionnaire</MDBModalTitle>

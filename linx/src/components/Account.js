@@ -13,7 +13,7 @@ const Account = () => {
   const [firstName, setFirstName] = useState('');
   const [age, setAge] = useState(0);
   const [description, setDescription] = useState('');
-  const [interests, setInterests] = useState([]);
+  const [selectedInterests, setSelectedInterests] = useState([]);
   const [profileImage, setProfileImage] = useState(null);
   const [email, setEmail] = useState('');
   const inputRef = useRef(null);
@@ -37,7 +37,7 @@ const Account = () => {
         setFirstName(response.data.firstName || '');
         setLastName(response.data.lastName || '');
         setDescription(response.data.description || '');
-        setInterests(response.data.activities || []);
+        setSelectedInterests(response.data.activities || []);
         setProfileImage(response.data.profileImage || null);
   
         // Calculate and set age
@@ -97,27 +97,45 @@ const Account = () => {
     inputRef.current.click();
   }
 
-  const handleAddInterest = () => {
-    setInterests([...interests, '']);
+  const handleAddInterest = (interest) => {
+    setSelectedInterests([...selectedInterests, interest]);
   }
   
-  const handleInterestChange = (index, value) => {
-    const newInterests = [...interests];
-    newInterests[index] = value;
-    setInterests(newInterests);
-  }
-  
-  const handleRemoveInterest = (index) => {
-    const newInterests = interests.filter((_, i) => i !== index);
-    setInterests(newInterests);
+  const handleRemoveInterest = (interest) => {
+    const newInterests = selectedInterests.filter(item => item !== interest);
+    setSelectedInterests(newInterests);
   }
   
   const handleSaveProfile = () => {
-    const filteredInterests = interests.filter(interest => interest.trim() !== '');
-    setInterests(filteredInterests);
+    // Filter out empty or unchecked interests
+    const filteredInterests = selectedInterests.filter(interest => interest.trim() !== '');
+    setSelectedInterests(filteredInterests);
     setIsEditing(false);
     setShowAddImageBtn(false);
+    // Here you can save the profile with updated data including selected interests
   }
+
+  const interestsList = [
+    'Cinéma',
+    'Attractions',
+    'Animaux',
+    'Théâtre',
+    'Danse',
+    'Manga/Anime',
+    'Séries',
+    'Échecs',
+    'Moto',
+    'Lecture',
+    'Jeux vidéos',
+    'Musique',
+    'BD/Comics',
+    'Voyager',
+    'Musées',
+    'Sortir entre amis',
+    'Sport',
+    'Nourriture',
+    'La mode'
+  ];
 
   return (
     <MDBContainer fluid className="py-5">
@@ -133,7 +151,7 @@ const Account = () => {
                       src={profileImage || "https://via.placeholder.com/150"}
                       alt="Profile"
                       className="img-fluid rounded-circle mb-3"
-                      style={{ maxWidth: "150px", maxHeight: "150px" }} // Définir les dimensions maximales
+                      style={{ maxWidth: "150px", maxHeight: "150px" }}
                     />
                   </label>
                   <input
@@ -173,24 +191,23 @@ const Account = () => {
                     <MDBListGroupItem>
                       <strong>Gouts : </strong>
                       <ul>
-                        {isEditing ? (
-                          interests.map((interest, index) => (
-                            <li key={index} style={{ display: 'flex', alignItems: 'center' }}>
-                              <MDBInput
-                                type="text"
-                                value={interest}
-                                onChange={(e) => handleInterestChange(index, e.target.value)}
-                              />
-                              <MDBBtn color="danger" size="sm" onClick={() => handleRemoveInterest(index)}>Supprimer</MDBBtn>
-                            </li>
-                          ))
-                        ) : (
-                          interests.map((interest, index) => interest.trim() !== '' && <li key={index}>{interest}</li>)
-                        )}
+                        {interestsList.map(interest => (
+                          <li key={interest} style={{ display: 'flex', alignItems: 'center' }}>
+                            {isEditing ? (
+                              <div>
+                                <input
+                                  type="checkbox"
+                                  checked={selectedInterests.includes(interest)}
+                                  onChange={() => selectedInterests.includes(interest) ? handleRemoveInterest(interest) : handleAddInterest(interest)}
+                                />
+                                <label style={{ marginLeft: '5px' }}>{interest}</label>
+                              </div>
+                            ) : (
+                              selectedInterests.includes(interest) && <span>{interest}</span>
+                            )}
+                          </li>
+                        ))}
                       </ul>
-                      {isEditing && (
-                        <MDBBtn color="success" size="sm" onClick={handleAddInterest}>Ajouter un goût</MDBBtn>
-                      )}
                     </MDBListGroupItem>
                   </MDBListGroup>
                 </MDBCol>
@@ -225,7 +242,6 @@ const Account = () => {
       </MDBRow>
     </MDBContainer>
   );
-  
-  }
+}
 
-  export default Account;
+export default Account;
