@@ -14,7 +14,7 @@ const Catalogue = () => {
     const [selectedCard, setSelectedCard] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [sortOrder, setSortOrder] = useState('asc');
-    const [sortCriteria, setSortCriteria] = useState('name'); // 'name' or 'date'
+    const [sortCriteria, setSortCriteria] = useState('date');
     const navigate = useNavigate();
     const [activities, setActivities] = useState([]);
     const [filteredActivities, setFilteredActivities] = useState([]);

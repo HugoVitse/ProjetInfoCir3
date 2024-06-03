@@ -46,7 +46,7 @@ const NavBar = () => {
         <MDBBtn onClick={logout} style={{ background: 'linear-gradient(135deg, #00c6ff, #0072ff)'}}>Logout</MDBBtn>
       </MDBListGroup>
       <hr className="border-secondary w-100" />
-      <div className="text-center mt-auto w-100">
+      <div className="text-center w-100">
         <p className="text-white">&copy; 2024 Linx</p>
       </div>
     </div>

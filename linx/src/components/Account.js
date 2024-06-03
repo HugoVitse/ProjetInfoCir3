@@ -183,7 +183,7 @@ const Account = () => {
                       <strong>Prénom : </strong>{isEditing ? <MDBInput type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} /> : firstName}
                     </MDBListGroupItem>
                     <MDBListGroupItem>
-                      <strong>Âge : </strong>{isEditing ? <MDBInput type="number" value={age} onChange={(e) => setAge(e.target.value)} /> : age}
+                      <strong>Âge : </strong>{age} ans
                     </MDBListGroupItem>
                     <MDBListGroupItem>
                       <strong>Description : </strong>{isEditing ? <MDBInput type="textarea" value={description} onChange={handleDescriptionChange} /> : description}
