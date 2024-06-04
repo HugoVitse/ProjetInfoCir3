@@ -11,6 +11,7 @@ const Home = () => {
   const [basicModal, setBasicModal] = useState(false);
   const toggleOpen = () => setBasicModal(!basicModal);
 
+  const gifUrl = 'https://78.media.tumblr.com/f254105ae6672e6252d171badfe14299/tumblr_mhiz6jgJ7N1rag9fdo1_500.gif';
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
@@ -102,9 +103,32 @@ const Home = () => {
 
   return (
     <div className="flex-grow-1 vh-100">
-      <MDBContainer fluid className="py-5" style={{ background: 'linear-gradient(#7C4DFF, #6200EA)', height: '100%' }}>
-        <MDBRow className="justify-content-center align-items-center h-100">
-          <MDBCol lg="9" xl="7">
+  <MDBContainer fluid className="py-5 vh-100" style={{ background: 'linear-gradient(#7C4DFF, #6200EA)', height: '100%' }}>
+    <MDBRow className="justify-content-center align-items-center h-100">
+      <MDBCol lg="9" xl="7" className='w-100'>
+        <header style={{
+          position: 'relative',
+          backgroundImage: 'url(https://78.media.tumblr.com/f254105ae6672e6252d171badfe14299/tumblr_mhiz6jgJ7N1rag9fdo1_500.gif)', // Example GIF URL, replace with your own
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          height: '50vh', // Height of the section
+          width: '100%',
+          color: 'white'
+        }}>
+          <div style={{
+            position: 'absolute',
+            bottom: '10px',
+            right: '10px',
+            textAlign: 'right'
+          }}>
+            <h1><strong>ÇA VA CHAUFFER</strong></h1>
+            <p>Nos modèles pour tout changer cet été.</p>
+            <div>
+              <button style={{ marginRight: '10px' }}>Acheter</button>
+              <button>Enfant</button>
+            </div>
+          </div>
+        </header>
             <MDBCard className="mb-4">
               <MDBCardBody className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
                 <MDBCardText className="lead fw-normal mb-1" style={{ fontSize: '1.2rem', color: '#6200EA' }}>
