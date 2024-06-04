@@ -25,9 +25,10 @@ const Home = () => {
     groupSize: '',
     placeType: '',
     budget: '',
-    favoriteCuisine: '',
+    description: '',
     travelDistance: 25,
   });
+  
    // Partie handle du questionnaire :
    const handleCheckboxChange = (activity) => {
     setFormData((prevData) => ({
@@ -189,13 +190,13 @@ const Home = () => {
                           </div>
 
                           <div className="mb-4">
-                            <label className="form-label">Quelle est votre cuisine préférée ?</label>
+                            <label className="form-label">Donner une description pour votre profile :</label>
                             <input
                               type="text"
                               className="form-control"
-                              id="favoriteCuisine"
-                              value={formData.favoriteCuisine}
-                              onChange={(e) => handleInputChange('favoriteCuisine', e.target.value)}
+                              id="description"
+                              value={formData.description}
+                              onChange={(e) => handleInputChange('description', e.target.value)}
                             />
                           </div>
 

@@ -2,28 +2,35 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
 import {
-  MDBContainer,MDBCarousel,   MDBCardImage, MDBCarouselItem, MDBCard, MDBCardBody, MDBRange, MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter
+  MDBContainer, MDBCarousel, MDBCardImage, MDBCarouselItem, MDBCard, MDBCardBody, MDBRange, MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter
 } from 'mdb-react-ui-kit';
-import { Modal, Ripple, initMDB } from 'mdb-ui-kit';
+import { initMDB } from 'mdb-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import '../css/MoodTracker.css';
 import Cookies from 'js-cookie';
 import { Chart, RadarController, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
+import Calendar from './Calendar';
+import axios from 'axios';
 
 Chart.register(RadarController, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
-initMDB({ Modal, Ripple });
+initMDB();
 
 const MoodTracker = () => {
   const [formData, setFormData] = useState({
-    sleepQuality: null,
-    stressLevel: null,
-    energyLevel: null,
-    moral: '',
-    additionalActivity: '',
+    sleepQuality: '0',
+    stressLevel: '0',
+    energyLevel: '0',
+    moral: '0',
+    additionalActivity: '0',
+    moyenne: '0',
+    date: getTodayDateDDMMYYYY()
   });
+  const [error, setError] = useState('');
   const navigate = useNavigate();
-  const [modalOpen, setModalOpen] = useState(false);
-  const toggleModal = () => setModalOpen(!modalOpen);
+  const [basicModal, setBasicModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const toggleOpen = () => setBasicModal(!basicModal);
 
   const radarChartRef = useRef(null);
   const chartInstance = useRef(null);
@@ -35,33 +42,51 @@ const MoodTracker = () => {
     }));
   };
 
-  useEffect(() => {
-    const retrieveCookie = () => {
-      const token = Cookies.get("jwt")
-      console.log(token)
-      try {
-        jwtDecode(token);
-      } catch {
-        navigate("/")
-      }
-    }
+  function getTodayDateDDMMYYYY() {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); 
+    const yyyy = today.getFullYear();
   
-    retrieveCookie();
-  }, [navigate]);
+    return `${dd}-${mm}-${yyyy}`;
+  }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(formData); // Just for testing purposes, replace with your submission logic
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+    try {
+      const response = await axios.post('http://localhost/FillMoodTracker', formData,{withCredentials:true});
+      setBasicModal(false)
+    } catch (error) {
+      console.error('Error:', error);
+      setError('An error occurred. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    initMDB({ Modal, Ripple });
+    const retrieveCookie = () => {
+      const token = Cookies.get("jwt");
+      console.log(token);
+      try {
+        jwtDecode(token);
+      } catch {
+        navigate("/");
+      }
+    };
+
+    retrieveCookie();
+  }, [navigate]);
+
+  useEffect(() => {
+    initMDB();
 
     if (chartInstance.current) {
       chartInstance.current.destroy();
     }
 
-    //Attributs du graphiques pentagone
     const ctx = radarChartRef.current.getContext('2d');
     chartInstance.current = new Chart(ctx, {
       type: 'radar',
@@ -107,133 +132,80 @@ const MoodTracker = () => {
     <MDBContainer fluid className="d-flex align-items-center justify-content-center vh-800">
       <MDBCard className="w-50 h-10">
         <MDBCardBody>
-          <form>
-            <button type="button" className="btn btn-primary w-100 mb-3" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#exampleModal">
-              Questionnaire Quotidien
-            </button>
+          <MDBBtn color="primary" className="w-100 mb-3" onClick={() => setBasicModal(true)}>
+            Questionnaire Quotidien
+          </MDBBtn>
             
-            {/* Caroussel  */}
+          {/* Carrousel */}
+          <MDBCarousel showIndicators showControls fade>
+            {/* Première Carrousel */}
+            <MDBCarouselItem className="w-100 d-block " itemId={1}>
+              <h5>Première Slide</h5>
+              <Calendar />
+            </MDBCarouselItem>
+            
+            {/* Carrousel du MoodBoard Quotidien */}
+            <MDBCarouselItem className="w-100 d-block vh-80" itemId={2}>
+              <h5>MoodBoard Quotidien</h5>
+              <canvas ref={radarChartRef} id="radarChart" style={{ marginTop: '20px', width: '100%', height: '400px' }}></canvas>
+            </MDBCarouselItem>
 
-            <MDBCarousel showIndicators showControls fade>
-              {/* Première Caroussel */}
-              <MDBCarouselItem
-                className="w-100 d-block "
-                itemId={1}>
+            {/* Troisième Carrousel */}
+            <MDBCarouselItem className="w-100 d-block vh-80" itemId={3}>
+              <h5>Troisième Slide</h5>
+              <MDBCardImage
+                src='https://mdbootstrap.com/img/new/standard/city/042.webp'
+                alt='...'
+                style={{ height: '80%' }}
+              />
+            </MDBCarouselItem>
+          </MDBCarousel>
 
-                <h5>Première Slide</h5>
-
-                <MDBCardImage
-                            src='https://mdbootstrap.com/img/new/standard/city/041.webp'
-                            alt='...'
-                            style={{ height: '80%' }}
-                            
-                    
-                />
-                
-                
-              </MDBCarouselItem>
-              {/* Fin Caroussel 1 */}
-              
-              {/* Caroussel du MoodBoard Quotidien */}
-              <MDBCarouselItem
-                className="w-100 d-block vh-80"
-                itemId={2}>
-
-                <h5>MoodBoard Quotidien</h5>
-
-                <canvas ref={radarChartRef} id="radarChart" style={{ marginTop: '20px', width: '100%', height: '400px' }}></canvas>
-              </MDBCarouselItem>
-              {/* Fin MoodBoard Quotidien */}
-
-              {/* Troisième Caroussel */}
-              <MDBCarouselItem
-                className="w-100 d-block vh-80"
-                itemId={3}>
-
-                <h5>Troisième Slide</h5>
-
-                <MDBCardImage
-                            src='https://mdbootstrap.com/img/new/standard/city/042.webp'
-                            alt='...'
-                            style={{ height: '80%' }}
-                    
-                />
-              </MDBCarouselItem>
-              {/* Fin */}
-
-
-            </MDBCarousel>
-            {/* Fin Caroussel  */}
-
-
-
-            {/* Pop-up Questionnaire */}
-            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div className="modal-dialog modal-dialog-centered" style={{ maxWidth: '800px' }}>
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">Le rendez-vous quotidien !</h5>
-                    <button type="button" className="btn-close" data-mdb-ripple-init data-mdb-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div className="modal-body">
-                    <div style={{ padding: '20px' }}>
-                      <h3 className="text-center mb-4">Suivi quotidien de l'humeur</h3>
-                      <form onSubmit={handleSubmit}>
-                        <div className="mb-3">
-                          <label htmlFor="sleepQuality" className="form-label">Avez-vous bien dormi ? (note sur 10)</label>
-                          <MDBRange id="sleepQuality" name="sleepQuality" min="0" max="10" value={formData.sleepQuality} onChange={(e) => handleSliderChange(e.target.value, 'sleepQuality')} />
-                        </div>
-                        <div className="mb-3">
-                          <label htmlFor="stressLevel" className="form-label">Avez-vous fait du sport aujourd'hui ? (note sur 10)</label>
-                          <MDBRange id="stressLevel" name="stressLevel" min="0" max="10" value={formData.stressLevel} onChange={(e) => handleSliderChange(e.target.value, 'stressLevel')} />
-                        </div>
-                        <div className="mb-3">
-                          <label htmlFor="energyLevel" className="form-label">Notez vos intéractions avec des personnes. (note sur 10)</label>
-                          <MDBRange id="energyLevel" name="energyLevel" min="0" max="10" value={formData.energyLevel} onChange={(e) => handleSliderChange(e.target.value, 'energyLevel')} />
-                        </div>
-                        <div className="mb-3">
-                          <label htmlFor="moral" className="form-label">Vous êtes-vous senti anxieux, heureux, ou autre ? (note sur 10)</label>
-                          <MDBRange id="moral" name="moral" min="0" max="10" value={formData.moral} onChange={(e) => handleSliderChange(e.target.value, 'moral')} />
-                        </div>
-                        <div className="mb-3">
-                          <label htmlFor="additionalActivity" className="form-label">Avez-vous bien manger aujourd'hui ?</label>
-                          <MDBRange id="miam" name="miam" min="0" max="10" value={formData.additionalActivity} onChange={(e) => handleSliderChange(e.target.value, 'additionalActivity')} />
-                        </div>
-                      </form>
+          {/* Pop-up Questionnaire */}
+          <MDBModal open={basicModal} toggle={() => setBasicModal(false)} tabIndex='-1' staticBackdrop>
+            <MDBModalDialog centered>
+              <MDBModalContent>
+                <MDBModalHeader>
+                  <h5 className="modal-title" id="exampleModalLabel">Le rendez-vous quotidien !</h5>
+                  <MDBBtn className="btn-close" color="none" onClick={() => setBasicModal(false)}></MDBBtn>
+                </MDBModalHeader>
+                <MDBModalBody>
+                  <div style={{ padding: '20px' }}>
+                    <h3 className="text-center mb-4">Suivi quotidien de l'humeur</h3>
+                      
+                    <div className="mb-3">
+                      <label htmlFor="sleepQuality" className="form-label">Avez-vous bien dormi ? (note sur 10)</label>
+                      <MDBRange id="sleepQuality" name="sleepQuality" min="0" max="10" value={formData.sleepQuality} onChange={(e) => handleSliderChange(e.target.value, 'sleepQuality')} />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="stressLevel" className="form-label">Avez-vous fait du sport aujourd'hui ? (note sur 10)</label>
+                      <MDBRange id="stressLevel" name="stressLevel" min="0" max="10" value={formData.stressLevel} onChange={(e) => handleSliderChange(e.target.value, 'stressLevel')} />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="energyLevel" className="form-label">Notez vos interactions avec des personnes. (note sur 10)</label>
+                      <MDBRange id="energyLevel" name="energyLevel" min="0" max="10" value={formData.energyLevel} onChange={(e) => handleSliderChange(e.target.value, 'energyLevel')} />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="moral" className="form-label">Vous êtes-vous senti anxieux, heureux, ou autre ? (note sur 10)</label>
+                      <MDBRange id="moral" name="moral" min="0" max="10" value={formData.moral} onChange={(e) => handleSliderChange(e.target.value, 'moral')} />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="additionalActivity" className="form-label">Avez-vous bien manger aujourd'hui ?</label>
+                      <MDBRange id="miam" name="miam" min="0" max="10" value={formData.additionalActivity} onChange={(e) => handleSliderChange(e.target.value, 'additionalActivity')} />
                     </div>
                   </div>
-                  <div className="modal-footer">
-                    <button type="button" className="btn btn-primary" data-mdb-ripple-init>Envoyez vos réponses</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Fin Pop-up */}
-          </form>
+                </MDBModalBody>
+                <MDBModalFooter>
+                  <MDBBtn color="primary" onClick={handleSubmit}>Envoyez vos réponses</MDBBtn>
+                </MDBModalFooter>
+              </MDBModalContent>
+            </MDBModalDialog>
+          </MDBModal>
 
-          
-          
-         
-        
+          {/* Fin Pop-up */}   
+
         </MDBCardBody>
       </MDBCard>
-
-      <MDBModal show={modalOpen} getOpenState={(e) => setModalOpen(e)} tabIndex="-1">
-        <MDBModalDialog centered className="modal-lg">
-          <MDBModalContent>
-            <MDBModalHeader>
-              <MDBModalTitle>Registration Successful</MDBModalTitle>
-              <MDBBtn className="btn-close" color="none" onClick={toggleModal}></MDBBtn>
-            </MDBModalHeader>
-            <MDBModalBody>
-              <p>Your registration was successful!</p>
-            </MDBModalBody>
-            <MDBModalFooter>
-              <MDBBtn color="secondary" onClick={toggleModal}>Close</MDBBtn>
-            </MDBModalFooter>
-          </MDBModalContent>
-        </MDBModalDialog>
-      </MDBModal>
     </MDBContainer>
   );
 };

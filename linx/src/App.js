@@ -15,12 +15,12 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 function App() {
   return (
     <Router>
-      <MDBContainer fluid className="vh-100">
-        <MDBRow className="h-100">
-          <MDBCol md="2" className="bg-dark p-0" style={{ minWidth: '200px' }}>
+      <MDBContainer fluid className="vh-100 p-0">
+        <MDBRow className="h-100 m-0">
+          <MDBCol md="2" className="bg-dark" style={{ minWidth: '200px'}}>
             <NavBar />
           </MDBCol>
-          <MDBCol className="p-4">
+          <MDBCol className="p-0">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/Login" element={<Login />} />

@@ -22,7 +22,8 @@ async function register(req,res){
         "firstName":firstName,
         "lastName":lastName,
         "dateOfBirth":dateOfBirth,
-        "firstLogin":true
+        "firstLogin":true,
+        "notes_par_jour": []
     }
 
     const isExist = await add_user(connect_db.client,user);
