@@ -31,6 +31,14 @@ const NavBar = () => {
           <MDBIcon fas icon="question-circle" className="me-3" />
           Login
         </MDBListGroupItem>
+        <MDBListGroupItem tag={Link} action to="/Evenements" className="d-flex align-items-center bg-dark text-white border-0">
+          <MDBIcon fas icon="book-open" className="me-3" />
+          Evenements
+        </MDBListGroupItem>
+        <MDBListGroupItem tag={Link} action to="/Catalogue" className="d-flex align-items-center bg-dark text-white border-0">
+          <MDBIcon fas icon="book-open" className="me-3" />
+          Catalogue
+        </MDBListGroupItem>
         <MDBListGroupItem tag={Link} action to="/Account" className="d-flex align-items-center bg-dark text-white border-0">
         <MDBIcon fas icon="address-book" className="me-3" />
           Profil
@@ -39,10 +47,10 @@ const NavBar = () => {
           <MDBIcon fas icon="book" className="me-3" />
           Moodtracker
         </MDBListGroupItem>
-        <MDBBtn onClick={logout}>Logout</MDBBtn>
+        <MDBBtn onClick={logout} style={{ background: 'linear-gradient(135deg, #00c6ff, #0072ff)'}}>Logout</MDBBtn>
       </MDBListGroup>
       <hr className="border-secondary w-100" />
-      <div className="text-center mt-auto w-100">
+      <div className="text-center w-100">
         <p className="text-white">&copy; 2024 Linx</p>
       </div>
     </div>

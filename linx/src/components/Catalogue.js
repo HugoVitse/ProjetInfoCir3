@@ -1,29 +1,26 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
+import { jwtDecode } from 'jwt-decode';
+import Cookies from 'js-cookie';
 import {
-    MDBCard,
-    MDBCardImage,
-    MDBCardBody,
-    MDBCardTitle,
-    MDBCardText,
-    MDBRow,
-    MDBCol,
-    MDBBtn
+    MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBCardText, MDBRow, MDBCol, MDBBtn, 
+    MDBInput, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon
 } from 'mdb-react-ui-kit';
 import axios from 'axios';
-import Config from '../config.json'
+import Config from '../config.json';
 
 const Catalogue = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [selectedCard, setSelectedCard] = useState(null);
-    const [loading, setLoading] = useState(false); // Add loading state
-    const [error, setError] = useState(null); // Add error state
+    const [searchTerm, setSearchTerm] = useState('');
+    const [sortOrder, setSortOrder] = useState('asc');
+    const [sortCriteria, setSortCriteria] = useState('date');
     const navigate = useNavigate();
-    const [activities,setActivities] = useState([])
-    const [componentActivities,setComponentActivities] = useState([])
+    const [activities, setActivities] = useState([]);
+    const [filteredActivities, setFilteredActivities] = useState([]);
 
-    const openPopup = (title, description, img) => {
-        setSelectedCard({ title, description, img });
+    const openPopup = (title, description, img, date) => {
+        setSelectedCard({ title, description, img, date });
         setShowPopup(true);
     };
 
@@ -36,81 +33,134 @@ const Catalogue = () => {
             state: {
                 cardTitle: selectedCard.title,
                 cardDescription: selectedCard.description,
-                cardImg: selectedCard.img
+                cardImg: selectedCard.img,
+                cardDate: selectedCard.date
             }
         });
     };
 
-    const a = "this card";
-    const url = 'https://www.lilletourism.com/api/render/website_v2/lille-tourisme/playlist/48080/fr_FR/json?page=17&randomSeed=5e0ec7ac-791f-4329-946f-42f86c093f5a&confId=48080';
-
-    const login = async () => {
+    const retrieveCookie = () => {
+        const token = Cookies.get("jwt");
+        if (!token) {
+            navigate("/Login");
+            return false;
+        }
         try {
-            setLoading(true);
-            const response = await axios.post(url);
-            console.log(response.data);
-        } catch (error) {
-            console.error('There was an error logging in!', error);
-            setError('An error occurred. Please try again later.');
-        } finally {
-            setLoading(false);
+            const decodedToken = jwtDecode(token);
+            console.log(decodedToken);
+            return true;
+        } catch {
+            navigate("/Login");
+            return false;
         }
     };
 
-    useEffect(()=>{
-        const getActivities = async() => {
-            const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/activities`,{withCredentials:true})
-            setActivities(response.data)
-        }
-        getActivities()
-    },[])
+    useEffect(() => {
+        const fetchActivities = async () => {
+            if (!retrieveCookie()) return;
 
-    useEffect(()=>{
-        if(activities.length >0){
-            let tmpComp = []
-            for(let i=0; i< activities.length;i++){
-                console.log(i)
-                console.log(activities[i])
-                const newCard = <MDBCol>
-                                    <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }} onClick={() => openPopup('Card title', 'This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.', 'https://mdbootstrap.com/img/new/standard/city/041.webp')}>
-                                        <MDBCardImage
-                                            src={activities[i].image}
-                                            alt='...'
-                                            position='top'
-                                        />
-                                        <MDBCardBody>
-                                            <MDBCardTitle>{activities[i].name}</MDBCardTitle>
-                                            <MDBCardText>
-                                                {activities[i].description}
-                                            </MDBCardText>
-                                        </MDBCardBody>
-                                    </MDBCard>
-                                </MDBCol>
-                tmpComp.push(newCard)
+            try {
+                const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/activities`, { withCredentials: true });
+                setActivities(response.data);
+            } catch (error) {
+                console.error('Error fetching activities', error);
             }
-            setComponentActivities(tmpComp)
-        }
-    },[activities])
+        };
+
+        fetchActivities();
+    }, []);
+
+    useEffect(() => {    
+        const sortedActivities = [...activities].sort((a, b) => {
+            if (sortCriteria === 'name') {
+                return sortOrder === 'asc'
+                    ? a.name.localeCompare(b.name)
+                    : b.name.localeCompare(a.name);
+            }
+        });
+    
+        setFilteredActivities(
+            sortedActivities.filter(activity =>
+                activity.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                activity.description.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+        );
+    }, [searchTerm, activities, sortOrder, sortCriteria]);
+
+    const handleSortOrderChange = (order) => {
+        setSortOrder(order);
+    };
+
+    const handleSortCriteriaChange = (criteria) => {
+        setSortCriteria(criteria);
+    };
 
     return (
-        <>
+        <div className="container mt-4 mb-4">
+            <MDBInput
+                label="Rechercher une activité"
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="m-4"
+            />
+
+            <MDBRow className="mb-4">
+                <MDBCol size="4">
+                    <MDBDropdown>
+                        <MDBDropdownToggle color="primary" className="d-flex align-items-center">
+                            Trier par {sortCriteria === 'name' ? 'ordre alphabétique' : 'date'}
+                            <MDBIcon icon={sortCriteria === 'name' ? 'sort-alpha-down' : 'sort-numeric-down'} className="ms-2" />
+                        </MDBDropdownToggle>
+                        <MDBDropdownMenu>
+                            <MDBDropdownItem style={{ cursor: 'pointer' }} onClick={() => handleSortCriteriaChange('name')}>
+                                <MDBIcon icon="sort-alpha-down" className="me-2" /> Par nom
+                            </MDBDropdownItem>
+                            <MDBDropdownItem style={{ cursor: 'pointer' }} onClick={() => handleSortCriteriaChange('date')}>
+                                <MDBIcon icon="sort-numeric-down" className="me-2" /> Par date
+                            </MDBDropdownItem>
+                        </MDBDropdownMenu>
+                    </MDBDropdown>
+                </MDBCol>
+                <MDBCol size="4">
+                    <MDBDropdown>
+                        <MDBDropdownToggle color="primary" className="d-flex align-items-center">
+                            {sortOrder === 'asc' ? 'Ascendant' : 'Descendant'}
+                            <MDBIcon icon={sortOrder === 'asc' ? 'sort-amount-down' : 'sort-amount-up'} className="ms-2" />
+                        </MDBDropdownToggle>
+                        <MDBDropdownMenu>
+                            <MDBDropdownItem style={{ cursor: 'pointer' }} onClick={() => handleSortOrderChange('asc')}>
+                                <MDBIcon icon="sort-amount-down" className="me-2" /> Ascendant
+                            </MDBDropdownItem>
+                            <MDBDropdownItem style={{ cursor: 'pointer' }} onClick={() => handleSortOrderChange('desc')}>
+                                <MDBIcon icon="sort-amount-up" className="me-2" /> Descendant
+                            </MDBDropdownItem>
+                        </MDBDropdownMenu>
+                    </MDBDropdown>
+                </MDBCol>
+            </MDBRow>
+
             <MDBRow className='row-cols-1 row-cols-md-3 g-4'>
-                {/* <MDBCol>
-                    <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }} onClick={() => openPopup('Card title', 'This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.', 'https://mdbootstrap.com/img/new/standard/city/041.webp')}>
-                        <MDBCardImage
-                            src='https://mdbootstrap.com/img/new/standard/city/041.webp'
-                            alt='...'
-                            position='top'
-                        />
-                        <MDBCardBody>
-                            <MDBCardTitle>Card title</MDBCardTitle>
-                            <MDBCardText>
-                                This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
-                            </MDBCardText>
-                        </MDBCardBody>
-                    </MDBCard>
-                </MDBCol> */}
-                {componentActivities}
+                {filteredActivities.map((activity, index) => (
+                    <MDBCol key={index}>
+                        <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }} onClick={() => openPopup(activity.name, activity.description, activity.image, activity.date)}>
+                            <MDBCardImage
+                                src={activity.image}
+                                alt='...'
+                                position='top'
+                            />
+                            <MDBCardBody>
+                                <MDBCardTitle>{activity.name}</MDBCardTitle>
+                                <MDBCardText>
+                                    {activity.description}
+                                </MDBCardText>
+                                <MDBCardText>
+                                    <small className="text-muted">{activity.date}</small>
+                                </MDBCardText>
+                            </MDBCardBody>
+                        </MDBCard>
+                    </MDBCol>
+                ))}
             </MDBRow>
 
             {/* Popup */}
@@ -129,6 +179,9 @@ const Catalogue = () => {
                             <MDBCardText style={{ overflowWrap: 'break-word', wordWrap: 'break-word', wordBreak: 'break-word' }}>
                                 {selectedCard.description}
                             </MDBCardText>
+                            <MDBCardText>
+                                <small className="text-muted">{selectedCard.date}</small>
+                            </MDBCardText>
                         </MDBCardBody>
                     </MDBCard>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
@@ -137,7 +190,7 @@ const Catalogue = () => {
                     </div>
                 </div>
             )}
-        </>
+        </div>
     );
 };
 

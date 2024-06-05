@@ -11,6 +11,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { user } from "@/constants/user";
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
+import Carousel, {
+  ICarouselInstance,
+  Pagination,
+} from "react-native-reanimated-carousel";
 
 const HEADER_HEIGHT = 200;
 const { width } = Dimensions.get('window');
@@ -66,6 +70,24 @@ export default function ProfileScreen() {
     }
   };
 
+  const cameraPicture = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    
+    if (!result.canceled) {
+      const base64 = await FileSystem.readAsStringAsync(result.assets[0].uri, { encoding: 'base64' });
+      setNewPicture("data:image/png;base64,"+base64);
+      setDisabledValid(false)
+    }
+  }
+
   const editPro = async()=>{
     setIsLoading(true)
     const jwt_cookie = await AsyncStorage.getItem("jwt")
@@ -107,6 +129,10 @@ export default function ProfileScreen() {
       setProfilFic(reponse.data.image)
     }
     wrap()
+  },[])
+
+  useEffect(()=>{
+
   },[])
  
   const logout = async() =>{
@@ -158,6 +184,7 @@ export default function ProfileScreen() {
         </TouchableOpacity>
         
         
+        
         <Text style={styles.headerText}>{`${initialInfos.firstName} ${initialInfos.lastName}`}</Text>
         <IconButton
           icon="account-edit"
@@ -197,12 +224,7 @@ export default function ProfileScreen() {
           />
           <Avatar.Image size={300}style={{marginBottom:30}} source={{uri:newPicture}} />
          
-          <Button buttonColor={colorMain} icon="account-check" mode='contained-tonal' onPress={() => {
-              setModalVisible(false)
-              setTimeout(()=>{
-                setCamVisible(true)
-              },100)
-            }} style={{marginTop:10,width:width-40}}>
+          <Button buttonColor={colorMain} icon="account-check" mode='contained-tonal' onPress={cameraPicture} style={{marginTop:10,width:width-40}}>
             Prendre une photo
           </Button> 
 
@@ -217,40 +239,7 @@ export default function ProfileScreen() {
          
         </View>
       </Modal>
-      <Modal
-        animationType="none"
-        transparent={true}
-        visible={camVisible}
-        onRequestClose={() => {
-          setModalVisible(!camVisible);
-        }}
-      >
-        <View style={{backgroundColor: 'white', height: 300}}></View>
-        <CameraView style={styles.camera} facing={facing}>
-          <IconButton
-            icon="arrow-left"
-            containerColor={'rgba(0, 0, 0, 0.5)'}
-            iconColor={MD3Colors.neutral100}
-            style={{ position: 'absolute', top: 10, left: 10, height: 30, width: 30 }}
-            size={24}
-            onPress={() => setCamVisible(!camVisible)}
-          />
-          <IconButton
-            icon="orbit-variant"
-            containerColor={'rgba(0, 0, 0, 0.5)'}
-            iconColor={MD3Colors.neutral100}
-            style={{ position: 'absolute', top: 10, right: 10, height: 30, width: 30 }}
-            size={24}
-            onPress={toggleCameraFacing}
-          />
-          <Button
-            mode="elevated"
-          >
-            azjfa
-          </Button>
-        </CameraView>
-        <View style={{backgroundColor: 'white', height: 30}}></View>
-      </Modal>
+      
       <Dialog style={{backgroundColor:"white"}} visible={visible} onDismiss={hideDialog}>
           
           <Dialog.Icon icon="alert" />

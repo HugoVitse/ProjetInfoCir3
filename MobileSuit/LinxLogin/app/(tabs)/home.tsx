@@ -1,8 +1,8 @@
 import { Link, useFocusEffect, useRouter } from "expo-router";
-import { Text, View, StyleSheet ,Dimensions} from "react-native";
+import { Text, View, StyleSheet ,Dimensions, Platform} from "react-native";
 import { Avatar } from '@rneui/themed';
 import { useEffect, useState  } from "react";
-import { Button, IconButton, MD3Colors, Modal, RadioButton, TextInput } from "react-native-paper";
+import { Button, IconButton, MD3Colors, Modal, RadioButton, Snackbar, TextInput } from "react-native-paper";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
 import Config from '../../config.json'
@@ -12,7 +12,7 @@ import { ScreenHeight, Slider ,Icon} from "@rneui/base";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const HEADER_HEIGHT = 100;
-const { width } = Dimensions.get('window');
+const { width,height } = Dimensions.get('window');
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -28,6 +28,13 @@ export default function HomeScreen() {
   const [checked3, setChecked3] = useState('first');
   const [checked4, setChecked4] = useState('first');
   const [text,setText] = useState("")
+
+  //snackbar
+  const [snack, setSnack] = useState(false);
+
+  const onToggleSnackBar = () => setSnack(!snack);
+
+  const onDismissSnackBar = () => setSnack(false);
 
   const containerStyle = {backgroundColor: 'white', padding: 20};
 
@@ -106,7 +113,7 @@ export default function HomeScreen() {
   };
   
 
-  const remplirForm = ()=>{
+  const remplirForm = async()=>{
     console.log(checkedState)
     const _activities = Object.keys(checkedState).filter((key:any) => checkedState[key] === true);
     console.log(_activities)
@@ -116,6 +123,22 @@ export default function HomeScreen() {
     console.log(checked4)
     console.log(value)
     console.log(value2)
+    const data  = {
+      activities: _activities,
+      note: Math.floor(value/100),
+      preferredTime: checked2,
+      groupSize: checked1,
+      placeType: checked3,
+      budget: checked4,
+      description: text,
+      travelDistance: 25,
+    }
+    console.log(data)
+    const jwt_cookie = await AsyncStorage.getItem("jwt");
+    const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/fillQuestionnaire`, data,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false});
+    hideModal()
+    setFirstLogin(false)
+    onToggleSnackBar()
   }
 
  
@@ -153,6 +176,7 @@ export default function HomeScreen() {
       </View>
       <Modal  visible={visible} onDismiss={hideModal}  style={{marginTop:HEADER_HEIGHT+20,maxHeight:ScreenHeight,width:width,padding:20}}>
         <KeyboardAwareScrollView  style={{
+              height:ScreenHeight-300,
               borderRadius:20,
               paddingHorizontal:50,
               overflow: 'hidden',
@@ -380,6 +404,17 @@ export default function HomeScreen() {
       
       </Modal>
       
+      <Snackbar
+        visible={snack}
+        onDismiss={onDismissSnackBar}
+        action={{
+          label: 'OK',
+          onPress: () => {
+            onDismissSnackBar()
+          },
+        }}>
+        Questionnaire rempli !
+      </Snackbar>
     </View>
   );
 }
