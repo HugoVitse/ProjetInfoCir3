@@ -67,76 +67,6 @@ const noteMoyMood = [
   10,
 ]
 
-const interpolate = (start: number, end: number, value: number) => {
-  let k = (value - 0) / 10; // 0 =>min  && 10 => MAX
-  return Math.ceil((1 - k) * start + k * end) % 256;
-};
-
-const color = (value: number) => {
-  let r = interpolate(255, 0, value);
-  let g = interpolate(0, 255, value);
-  let b = interpolate(0, 0, value);
-  return `rgb(${r},${g},${b})`;
-};
-
-const moodCalendar = {
-  '2024-06-11': {
-    selected: true,
-    marked: true,
-    selectedColor: color(noteMoyMood[0])
-  },
-  '2024-06-12': {
-    selected: true,
-    marked: true,
-    selectedColor: color(noteMoyMood[1])
-  },
-  '2024-06-13': {
-    selected: true,
-    marked: true,
-    selectedColor: color(noteMoyMood[2])
-  },
-  '2024-06-14': {
-    selected: true,
-    marked: true,
-    selectedColor: color(noteMoyMood[3])
-  },
-  '2024-06-15': {
-    selected: true,
-    marked: true,
-    selectedColor: color(noteMoyMood[4])
-  },
-  '2024-06-16': {
-    selected: true,
-    marked: true,
-    selectedColor: color(noteMoyMood[5])
-  },
-  '2024-06-17': {
-    selected: true,
-    marked: true,
-    selectedColor: color(noteMoyMood[6])
-  },
-  '2024-06-18': {
-    selected: true,
-    marked: true,
-    selectedColor: color(noteMoyMood[7])
-  },
-  '2024-06-19': {
-    selected: true,
-    marked: true,
-    selectedColor: color(noteMoyMood[8])
-  },
-  '2024-06-20': {
-    selected: true,
-    marked: true,
-    selectedColor: color(noteMoyMood[9])
-  },
-  '2024-06-21': {
-    selected: true,
-    marked: true,
-    selectedColor: color(noteMoyMood[10])
-  },
-}
-
 export default function CalendarScreen() {
   const width = Dimensions.get('window').width;
   const router = useRouter();
@@ -144,6 +74,76 @@ export default function CalendarScreen() {
   const carouselRef = useRef<ICarouselInstance>(null);
   const progress = useSharedValue<number>(0);
   const underlineAnim = useRef(new Animated.Value(0)).current;
+
+  const interpolate = (start: number, end: number, value: number) => {
+    let k = (value - 0) / 10; // 0 =>min  && 10 => MAX
+    return Math.ceil((1 - k) * start + k * end) % 256;
+  };
+  
+  const color = (value: number) => {
+    let r = interpolate(255, 0, value);
+    let g = interpolate(0, 255, value);
+    let b = interpolate(0, 0, value);
+    return `rgb(${r},${g},${b})`;
+  };
+
+  const moodCalendar = {
+    '2024-06-11': {
+      selected: true,
+      marked: true,
+      selectedColor: color(noteMoyMood[0])
+    },
+    '2024-06-12': {
+      selected: true,
+      marked: true,
+      selectedColor: color(noteMoyMood[1])
+    },
+    '2024-06-13': {
+      selected: true,
+      marked: true,
+      selectedColor: color(noteMoyMood[2])
+    },
+    '2024-06-14': {
+      selected: true,
+      marked: true,
+      selectedColor: color(noteMoyMood[3])
+    },
+    '2024-06-15': {
+      selected: true,
+      marked: true,
+      selectedColor: color(noteMoyMood[4])
+    },
+    '2024-06-16': {
+      selected: true,
+      marked: true,
+      selectedColor: color(noteMoyMood[5])
+    },
+    '2024-06-17': {
+      selected: true,
+      marked: true,
+      selectedColor: color(noteMoyMood[6])
+    },
+    '2024-06-18': {
+      selected: true,
+      marked: true,
+      selectedColor: color(noteMoyMood[7])
+    },
+    '2024-06-19': {
+      selected: true,
+      marked: true,
+      selectedColor: color(noteMoyMood[8])
+    },
+    '2024-06-20': {
+      selected: true,
+      marked: true,
+      selectedColor: color(noteMoyMood[9])
+    },
+    '2024-06-21': {
+      selected: true,
+      marked: true,
+      selectedColor: color(noteMoyMood[10])
+    },
+  }  
 
   const onPressPagination = (index: number) => {
     carouselRef.current?.scrollTo({
