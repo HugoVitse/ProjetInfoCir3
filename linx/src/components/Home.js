@@ -315,6 +315,7 @@ const Home = () => {
               </MDBModalContent>
             </MDBModalDialog>
           </MDBModal>
+          
     </div>
   );
 };

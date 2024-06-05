@@ -40,7 +40,7 @@ function App() {
   return (
     <Router>
       <MDBContainer fluid className="vh-100 p-0">
-        <div className={`modal ${modalOpen ? 'show' : ''}`} id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" onClick={handleCloseModal}>
+        <div className={`modal ${modalOpen ? 'show' : ''}`} id="navbar" tabIndex="-1" aria-labelledby="navbarLabel" aria-hidden="true" onClick={handleCloseModal}>
           <div className="modal-dialog modal-start modal-fullscreen custom-modal">
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
               <NavBar />
@@ -48,7 +48,7 @@ function App() {
           </div>
         </div>
         <MDBCard>
-          <button type="button" className="btn btn-primary bg-dark" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#exampleModal" onClick={handleModalToggle}>
+          <button type="button" className="btn btn-primary bg-dark" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#navbar" onClick={handleModalToggle}>
             <i className="fas fa-align-justify"></i>
           </button>
           <Routes>

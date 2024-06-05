@@ -27,10 +27,9 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const wrapper = () => {
-    toggleOpen();
-    navigate('/');
-  };
+  // const wrapper = () => {
+  //   toggleOpen();
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +39,8 @@ const Register = () => {
     try {
       const response = await axios.post('http://localhost/register', formData);
       console.log(response.data);
-      toggleOpen(); // Ouvrir la fenêtre modale après l'inscription
+      navigate('/Login');
+
     } catch (error) {
       console.error('Error:', error);
       setError('An error occurred. Please try again later.');
@@ -152,7 +152,7 @@ const Register = () => {
     </MDBCol>
 
         </MDBRow>
-        <MDBModal show={basicModal} onHide={() => setBasicModal(false)} tabIndex="-1">
+        {/* <MDBModal show={basicModal} onHide={() => setBasicModal(false)} tabIndex="-1">
         <MDBModalDialog>
           <MDBModalContent>
             <MDBModalHeader>
@@ -167,7 +167,7 @@ const Register = () => {
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>
-      </MDBModal>
+      </MDBModal> */}
       </MDBCard>
     </MDBContainer>
 
