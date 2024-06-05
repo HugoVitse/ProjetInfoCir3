@@ -72,7 +72,7 @@ const TextInputExample = () => {
   },[islogin])
 
   const login = async() => {
-    const url = 'http://172.20.10.3/login';
+    const url = 'http://192.168.245.26/login';
     const data = {
         email:email,
         password:password

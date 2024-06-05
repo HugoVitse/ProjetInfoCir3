@@ -8,6 +8,7 @@ import { StackNavigationProp, createStackNavigator } from '@react-navigation/sta
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RootStackParamList } from '@/constants/type';
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const RegisterScreen = () => {
   const [show, setShow] = useState(false);
@@ -149,7 +150,7 @@ const RegisterScreen = () => {
       style={styles.view}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-
+      <ScrollView>
 
         <Input
             placeholder='Prénom'
@@ -265,7 +266,7 @@ const RegisterScreen = () => {
       <Link style={styles.link} href='..'> Connectez-vous </Link>
     </View>
     <Text style={{color:'red'}}> {err}</Text>
-    
+    </ScrollView>
     </KeyboardAvoidingView>
     
   );

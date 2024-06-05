@@ -53,7 +53,7 @@ export default function ProfileScreen() {
           size={80}
           rounded
           icon={{ name: "person", type: "material" }}
-          containerStyle={{ backgroundColor: "#bbbec1" }}
+          containerStyle={{ backgroundColor: "#bbbec1", top: 10 }}
           onPress={() => setModalVisible(true)}
         />
         <Text style={styles.headerText}>Prénom Nom</Text>
@@ -127,7 +127,6 @@ export default function ProfileScreen() {
           setModalVisible(!camVisible);
         }}
       >
-        <View style={{backgroundColor: 'white', height: 30}}></View>
         <CameraView style={styles.camera} facing={facing}>
           <IconButton
             icon="arrow-left"
@@ -151,7 +150,6 @@ export default function ProfileScreen() {
             azjfa
           </Button>
         </CameraView>
-        <View style={{backgroundColor: 'white', height: 30}}></View>
       </Modal>
     </View>
   );
@@ -183,7 +181,7 @@ const styles = StyleSheet.create({
   },
   buttonBack: {
     position: 'absolute',
-    top: 30,
+    top: 40,
     left: 10,
   },
   headerText: {
@@ -200,7 +198,7 @@ const styles = StyleSheet.create({
   edit: {
     position: 'absolute', 
     right: 10,
-    top: 30
+    top: 40
   },
   popUp: {
     flex: 1,

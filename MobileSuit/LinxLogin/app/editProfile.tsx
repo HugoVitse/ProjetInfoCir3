@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 import { useState } from 'react';
-import { View, Text, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Button, Icon, Input } from 'react-native-elements';
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
@@ -30,11 +30,11 @@ export default function EditScreen() {
 
   
   return (
+    <ScrollView>
     <KeyboardAvoidingView
       style={styles.view}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-
 
         <Input
             placeholder='Prénom'
@@ -148,8 +148,8 @@ export default function EditScreen() {
       onPress={() => console.log('modif')}
     />
     <Text style={{color:'red'}}> {err}</Text>
-    
     </KeyboardAvoidingView>
+    </ScrollView>
     
   );
   

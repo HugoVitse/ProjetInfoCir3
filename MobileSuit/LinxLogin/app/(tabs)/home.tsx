@@ -22,7 +22,7 @@ export default function HomeScreen() {
           size={48}
           rounded
           icon={{ name: "person", type: "material" }}
-          containerStyle={{ backgroundColor: "#bbbec1", position: 'absolute', bottom: 15, right: 15 }}
+          containerStyle={{ backgroundColor: "#bbbec1", position: 'absolute', bottom: 8, right: 15 }}
           onPress={() => router.push("/../profile")}
         />
       </View>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   headerText: {
-    top: 10,
+    top: 15,
     color: 'black',
     fontSize: 20,
   },
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   settings: {
     position: 'absolute', 
-    bottom: 10, 
+    bottom: 5, 
     left: 10,
   }
 });
