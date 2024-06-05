@@ -19,8 +19,8 @@ const Catalogue = () => {
     const [activities, setActivities] = useState([]);
     const [filteredActivities, setFilteredActivities] = useState([]);
 
-    const openPopup = (title, description, img, date) => {
-        setSelectedCard({ title, description, img, date });
+    const openPopup = (title, description, img, date,adresse) => {
+        setSelectedCard({ title, description, img, date,adresse });
         setShowPopup(true);
     };
 
@@ -34,11 +34,14 @@ const Catalogue = () => {
                 cardTitle: selectedCard.title,
                 cardDescription: selectedCard.description,
                 cardImg: selectedCard.img,
-                cardDate: selectedCard.date
-            }
+                cardDate: selectedCard.date,
+                adresse:selectedCard.adresse,
+                custom:false
+            },
         });
     };
 
+    
     const retrieveCookie = () => {
         const token = Cookies.get("jwt");
         if (!token) {
@@ -143,7 +146,7 @@ const Catalogue = () => {
             <MDBRow className='row-cols-1 row-cols-md-3 g-4'>
                 {filteredActivities.map((activity, index) => (
                     <MDBCol key={index}>
-                        <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }} onClick={() => openPopup(activity.name, activity.description, activity.image, activity.date)}>
+                        <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }} onClick={() => openPopup(activity.name, activity.description, activity.image, activity.date, activity.adresse)}>
                             <MDBCardImage
                                 src={activity.image}
                                 alt='...'
@@ -163,6 +166,8 @@ const Catalogue = () => {
                 ))}
             </MDBRow>
 
+        
+        
             {/* Popup */}
             {showPopup && selectedCard && (
                 <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', maxWidth: '60%', maxHeight: '90%', overflow: 'auto', backgroundColor: 'white', padding: '20px', borderRadius: '5px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)', width: 'calc(100% - 40px)' }}>

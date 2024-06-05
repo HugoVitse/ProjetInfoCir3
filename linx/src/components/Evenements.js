@@ -18,7 +18,7 @@ const Evenements = () => {
     const [sortOrder, setSortOrder] = useState('asc');
     const [sortCriteria, setSortCriteria] = useState('date');
     const navigate = useNavigate();
-    const [activities, setActivities] = useState([]);
+    const [evenements, setEvenements] = useState([]);
     const [filteredActivities, setFilteredActivities] = useState([]);
 
     const [latlog,setlatlong] = useState({})
@@ -66,8 +66,9 @@ const Evenements = () => {
             if (!retrieveCookie()) return;
 
             try {
-                const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/activities`, { withCredentials: true });
-                setActivities(response.data);
+                const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/evenements`, { withCredentials: true });
+                console.log(response.data)
+                setEvenements(response.data);
             } catch (error) {
                 console.error('Error fetching activities', error);
             }
@@ -78,8 +79,8 @@ const Evenements = () => {
 
     useEffect(()=>{
         const wrap = async()=>{
-            if(activities.length>0){
-                const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(activities[0].adresse)}&key=${googlekey}`);
+            if(evenements.length>0){
+                const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(evenements[0].activity.adresse)}&key=${googlekey}`);
                 console.log(response.data)
                 setlatlong(response.data.results[0].geometry.location)
                 // const realtab = activities.reduce(async(acc,value,index)=>{
@@ -97,24 +98,24 @@ const Evenements = () => {
         }
         wrap()
         
-    },[activities])
+    },[evenements])
 
     useEffect(() => {    
-        const sortedActivities = [...activities].sort((a, b) => {
+        const sortedActivities = [...evenements].sort((a, b) => {
             if (sortCriteria === 'name') {
                 return sortOrder === 'asc'
-                    ? a.name.localeCompare(b.name)
-                    : b.name.localeCompare(a.name);
+                    ? a.activity.name.localeCompare(b.name)
+                    : b.activity.name.localeCompare(a.name);
             }
         });
     
         setFilteredActivities(
-            sortedActivities.filter(activity =>
-                activity.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                activity.description.toLowerCase().includes(searchTerm.toLowerCase())
+            sortedActivities.filter(evenement =>
+                evenement.activity.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                evenement.activity.description.toLowerCase().includes(searchTerm.toLowerCase())
             )
         );
-    }, [searchTerm, activities, sortOrder, sortCriteria]);
+    }, [searchTerm, evenements, sortOrder, sortCriteria]);
 
     const handleSortOrderChange = (order) => {
         setSortOrder(order);
@@ -128,11 +129,24 @@ const Evenements = () => {
 
     const selectedBtn = async(e) =>{
         const ide = e.target.id
-        const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(activities[ide].adresse)}&key=${googlekey}`);
+        const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(evenements[ide].activity.adresse)}&key=${googlekey}`);
         console.log(response.data)
         setlatlong(response.data.results[0].geometry.location)
         console.log(ide)
     }   
+
+    const customEvent = ()=>{
+        navigate('/Activite', {
+            state: {
+                cardTitle: "",
+                cardDescription: "",
+                cardImg: "",
+                cardDate: "",
+                adresse:"",     
+                custom:true
+            },
+        });
+    }
 
    
 
@@ -140,14 +154,26 @@ const Evenements = () => {
         <MDBRow className='mx-0 vh-100'>
             <MDBCol size='3' className='vh-100' style={{borderBottom:"2px solid black",overflow:"scroll"}}>
                 <MDBRow style={{height:"7%", borderBottom:"2px solid black"}}>
-                    <MDBCol className='vh-20'>
+                    <MDBCol  size='9' className='vh-20'>
 
+                    </MDBCol>
+                    <MDBCol size='3' className='vh-20 d-flex align-items-center justify-content-center'>
+                        <MDBDropdown>
+                            <MDBDropdownToggle floating><MDBIcon fab icon='plus' /></MDBDropdownToggle>
+                            <MDBDropdownMenu>
+                                <MDBDropdownItem link onClick={customEvent} >Créer un évènement personnalisé</MDBDropdownItem>
+                                <MDBDropdownItem link onClick={()=>{navigate("/Catalogue")}}>Choisir une activité dans le catalog</MDBDropdownItem>
+                            </MDBDropdownMenu>
+                        </MDBDropdown>
+                        {/* <MDBBtn className='ms-2' tag='a' color='dark' floating>
+                            <MDBIcon fab icon='plus' />
+                        </MDBBtn> */}
                     </MDBCol>
                 </MDBRow>
                 <MDBRow style={{height:"93%"}}>
                     <MDBCol className='vh-80'>
                         {filteredActivities.map((activity, index) => (
-                            <MDBBtn id={index} onClick={selectedBtn} style={{width:"100%",marginTop:"10px"}}>{activity.name}</MDBBtn>
+                            <MDBBtn id={index} onClick={selectedBtn} style={{width:"100%",marginTop:"10px"}}>{activity.activity.title}</MDBBtn>
                         ))}
                     </MDBCol>
                 </MDBRow>

@@ -28,11 +28,13 @@ const verifyPassword = require("./verifyPassword")
 const setDaily = require("./setDaily")
 const scrapActivities = require('./scrapActivities')
 const activities = require('./activities')
+const evenements = require('./evenements')
 const login = require('./login')
 const register = require('./register')
 const getInfos = require('./getInfos')
 const updateInfos = require('./updateInfos')
 const setPicture = require('./setPicture')
+const createEvenement = require('./createEvenement')
 
 
 
@@ -68,8 +70,8 @@ async function serv(){
   app.post('/verifyPassword',verifyPassword)
   app.post('/updateInfos',updateInfos)
   app.post('/setPicture',setPicture)
-
-
+  app.post('/createEvenement',createEvenement)
+  app.get('/evenements',evenements)
 
   app.listen(80,()=>{
       console.log(`serever is runing at port 80`);
