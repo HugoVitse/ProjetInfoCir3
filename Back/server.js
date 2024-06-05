@@ -24,6 +24,7 @@ const connect_db = require('./connect_db');
 const port = 443
 
 const fillQuestionnaire = require("./fillQuestionnaire")
+const FillMoodTracker = require("./FillMoodTracker")
 const setDaily = require("./setDaily")
 const scrapActivities = require('./scrapActivities')
 const activities = require('./activities')
@@ -37,14 +38,7 @@ const getInfos = require('./getInfos')
 
 
 
-async function serv(){
-
-
-
-
-    
-
-    
+async function serv(){    
 
   await connect_db.ConnectDB();
 
@@ -62,6 +56,7 @@ async function serv(){
   app.get('/activities', activities)
   app.get('/infos', getInfos)
   app.post('/fillquestionnaire',fillQuestionnaire)
+  app.post('/FillMoodTracker',FillMoodTracker)
   app.post('/setDaily',setDaily)
 
 

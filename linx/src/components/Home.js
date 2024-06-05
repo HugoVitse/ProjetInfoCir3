@@ -40,6 +40,7 @@ const Home = () => {
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     setError('');
     setLoading(true);
