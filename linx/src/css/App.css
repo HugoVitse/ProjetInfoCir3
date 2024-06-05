@@ -36,3 +36,49 @@
     transform: rotate(360deg);
   }
 }
+
+/* App.css */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 25%;
+  animation: slideInLeft 0.5s forwards;
+}
+
+.modal.show {
+  display: block;
+}
+
+.modal.fade {
+  animation: slideOutLeft 0.5s forwards;
+}
+
+/* Animation pour la fermeture */
+.modal.fade-out {
+  animation: slideOutRight 0.5s forwards;
+}
+
+.custom-modal {
+  width: 60% !important; /* Ajustez la largeur selon vos besoins */
+}

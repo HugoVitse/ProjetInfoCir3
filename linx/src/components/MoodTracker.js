@@ -95,11 +95,11 @@ const MoodTracker = () => {
   }, [formData]);
 
   return (
-    <MDBContainer fluid className="d-flex align-items-center justify-content-center vh-100" style={{ background: 'linear-gradient(#7C4DFF, #6200EA)' }}>
+    <MDBContainer fluid className="d-flex align-items-center justify-content-center h-100" style={{ background: 'linear-gradient(#7C4DFF, #6200EA)', paddingTop:'3%', height:'100%' }}>
       <MDBCard className="w-50">
         <MDBCardBody>
           <form>
-            <button type="button" className="btn btn-primary w-100" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#exampleModal">
+            <button type="button" className="btn btn-primary w-100" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#exampleModal1">
               Questionnaire Quotidien
             </button>
             
@@ -146,7 +146,7 @@ const MoodTracker = () => {
 
 
             {/* Pop-up Questionnaire */}
-            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal" id="exampleModal1" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div className="modal-dialog modal-dialog-centered" style={{ maxWidth: '800px' }}>
                 <div className="modal-content">
                   <div className="modal-header">
