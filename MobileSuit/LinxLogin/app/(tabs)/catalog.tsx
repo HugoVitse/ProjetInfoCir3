@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 import { Text, View, StyleSheet, Dimensions } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, MD3Colors, Card, Button } from "react-native-paper";
+import Theme from '@/constants/Theme';
 
 const HEADER_HEIGHT = 100;
 const { width } = Dimensions.get('window');
@@ -12,14 +13,14 @@ export default function CatalogScreen() {
   
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <View style={[styles.header, Theme().themeBack, Theme().themeShadow]}>
         <IconButton
           icon="cog"
-          iconColor={MD3Colors.neutral20}
+          iconColor={Theme().themeIcon.color}
           onPress={() => router.push("/../settings")}
           style={styles.settings}
         />
-        <Text style={styles.headerText}>Logo</Text>
+        <Text style={[styles.headerText, Theme().themeText]}>Logo</Text>
         <Avatar
           size={48}
           rounded
@@ -29,42 +30,75 @@ export default function CatalogScreen() {
         />
       </View>
       <ScrollView 
-        style={{ paddingBottom: 40 }}
+        style={[{ paddingBottom: 40 }, Theme().themeBack2]}
         contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
       >
-        <Card style={{ width: width - 40, marginVertical: 20 }}>
+        <Card style={[{ width: width - 40, marginVertical: 20 }, Theme().themeCard]}>
           <Card.Cover source={{ uri: 'https://picsum.photos/600' }} />
-          <Card.Title title="Card Title" subtitle="Card Subtitle" />
+          <Card.Title 
+            title="Card Title" 
+            subtitle="Card Subtitle" 
+            titleStyle={{color: Theme().themeText.color}}
+            subtitleStyle={{color: Theme().themeText.color}}
+          />
           <Card.Content>
-            <Text>Card title</Text>
-            <Text>Card content</Text>
+            <Text style={Theme().themeText}>Card title</Text>
+            <Text style={Theme().themeText}>Card content</Text>
           </Card.Content>
           <Card.Actions>
-            <Button>Cancel</Button>
-            <Button>Ok</Button>
+            <Button 
+              style={Theme().themeBouton2} 
+              textColor={Theme().themeBouton2.color}
+              onPress={() => console.log("a")}
+            >
+              Cancel
+            </Button>
+            <Button style={Theme().themeBouton} onPress={() => console.log("a")}>Ok</Button>
           </Card.Actions>
         </Card>
-        <Card style={{ width: width - 40, marginVertical: 20 }}>
+        <Card style={[{ width: width - 40, marginVertical: 20 }, Theme().themeCard]}>
           <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-          <Card.Title title="Graines de café" subtitle="Ch'ti café" />
+          <Card.Title 
+            title="Graines de café" 
+            subtitle="Ch'ti café"
+            titleStyle={{color: Theme().themeText.color}}
+            subtitleStyle={{color: Theme().themeText.color}}
+          />
           <Card.Content>
-            <Text>Excellent café recommandé à tous les buveurs de café qui aiment le café moulu. Personnellement je n'aime pas le café mais l'ayant gouté je peux vous affirmer que ce café est délicieux même si en vrai de vrai je n'aime pas le café</Text>
+            <Text style={Theme().themeText}>Excellent café recommandé à tous les buveurs de café qui aiment le café moulu. Personnellement je n'aime pas le café mais l'ayant gouté je peux vous affirmer que ce café est délicieux même si en vrai de vrai je n'aime pas le café</Text>
           </Card.Content>
           <Card.Actions>
-            <Button>Cancel</Button>
-            <Button>Ok</Button>
+            <Button
+              style={Theme().themeBouton2} 
+              textColor={Theme().themeBouton2.color}
+              onPress={() => console.log("a")}
+            >
+              Cancel
+            </Button>
+            <Button style={Theme().themeBouton} onPress={() => console.log("a")}>Ok</Button>
           </Card.Actions>
         </Card>
-        <Card style={{ width: width - 40, marginVertical: 20 }}>
+        <Card style={[{ width: width - 40, marginVertical: 20 }, Theme().themeCard]}>
           <Card.Cover source={{ uri: 'https://picsum.photos/800' }} />
-          <Card.Title title="Card Title" subtitle="Card Subtitle" />
+          <Card.Title 
+            title="Card Title" 
+            subtitle="Card Subtitle" 
+            titleStyle={{color: Theme().themeText.color}}
+            subtitleStyle={{color: Theme().themeText.color}}
+          />
           <Card.Content>
-            <Text>Card title</Text>
-            <Text>Card content</Text>
+            <Text style={Theme().themeText}>Card title</Text>
+            <Text style={Theme().themeText}>Card content</Text>
           </Card.Content>
           <Card.Actions>
-            <Button>Cancel</Button>
-            <Button>Ok</Button>
+            <Button 
+              style={Theme().themeBouton2} 
+              textColor={Theme().themeBouton2.color}
+              onPress={() => console.log("a")}
+            >
+              Cancel
+            </Button>
+            <Button style={Theme().themeBouton} onPress={() => console.log("a")}>Ok</Button>
           </Card.Actions>
         </Card>
       </ScrollView>
@@ -82,10 +116,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: HEADER_HEIGHT,
-    backgroundColor: 'white',
-    borderBottomWidth: 2,
-    borderBottomColor: 'white',
-    shadowColor: '#000',
+    borderBottomWidth: 1,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,

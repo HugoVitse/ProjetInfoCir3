@@ -3,6 +3,7 @@ import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Theme from '@/constants/Theme';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -11,7 +12,17 @@ export default function TabLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+          tabBarActiveTintColor: Theme().themeIcon.color,
+          tabBarStyle: { 
+            backgroundColor: Theme().themeBack.backgroundColor, 
+            shadowColor: Theme().themeShadow.shadowColor, 
+            borderColor: Theme().themeShadow.borderColor,
+            borderTopWidth: 1, 
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.8,
+            shadowRadius: 2,
+            elevation: 5,
+          },
           headerShown: false,
         }}
       >

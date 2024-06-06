@@ -1,12 +1,18 @@
 import { useRouter } from "expo-router";
-import { Text, View, StyleSheet, Dimensions, SafeAreaView, Animated, TouchableOpacity, Platform, Button } from "react-native";
-import { Avatar } from '@rneui/themed';
-import { IconButton, MD3Colors } from "react-native-paper";
-import React, { useEffect, useRef, useState } from 'react';
+import { Text, View, StyleSheet, Dimensions, SafeAreaView, TouchableOpacity} from "react-native";
+import { Avatar, Slider, Icon } from '@rneui/themed';
+import { IconButton, MD3Colors, Button, Modal, Portal, PaperProvider  } from "react-native-paper";
+import React, { useRef, useState } from 'react';
 import RadarChart from '@/components/SpiderGraph';
 import Carousel, { Pagination, ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useSharedValue } from "react-native-reanimated";
 import {Calendar, LocaleConfig} from 'react-native-calendars';
+import Theme from '@/constants/Theme';
+// import { useThemeColor } from '@/hooks/useThemeColor';
+// import { Colors } from '@/constants/Colors';
+
+// const color = Colors.dark.text
+// const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
 const HEADER_HEIGHT = 100;
 
@@ -68,18 +74,24 @@ const noteMoyMood = [
 ]
 
 export default function CalendarScreen() {
+
   const width = Dimensions.get('window').width;
   const router = useRouter();
   const [value, setValue] = useState(slideData[0].title);
   const carouselRef = useRef<ICarouselInstance>(null);
   const progress = useSharedValue<number>(0);
-  const underlineAnim = useRef(new Animated.Value(0)).current;
+  const [modalVisible, setModalVisible] = useState(false);
+  const [valueSommeil, setValueSommeil] = useState(0);
+  const [valueSport, setValueSport] = useState(0);
+  const [valueSocial, setValueSocial] = useState(0);
+  const [valueMoral, setValueMoral] = useState(0);
+  const [valueNutrition, setValueNutrition] = useState(0);
 
   const interpolate = (start: number, end: number, value: number) => {
     let k = (value - 0) / 10; // 0 =>min  && 10 => MAX
     return Math.ceil((1 - k) * start + k * end) % 256;
   };
-  
+
   const color = (value: number) => {
     let r = interpolate(255, 0, value);
     let g = interpolate(0, 255, value);
@@ -162,7 +174,7 @@ export default function CalendarScreen() {
   const renderSwitch = (item: { type: any; content: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined; }) => {
     {switch(item.type) {
       case 'text': 
-        return <Text style={styles.slideContent}>{item.content}</Text>
+        return <Text style={[styles.slideContent, Theme().themeText]}>{item.content}</Text>
       case 'chart': 
         return <RadarChart
           graphSize={400}
@@ -181,7 +193,8 @@ export default function CalendarScreen() {
             graphShape: 1,
             showAxis: false,
             showIndicator: true,
-            colorList: ["blue"],
+            color: Theme().themeTextRadar.color,
+            colorList: ["#2196f3"],
             dotList: [false],
           }}
         />
@@ -193,73 +206,216 @@ export default function CalendarScreen() {
           hideExtraDays={true}
           firstDay={1}
           disableAllTouchEventsForDisabledDays={true}
-          style={{width: width-40, marginTop: 20}}
+          style={[{width: width-40, marginTop: 20}, Theme().themeCalendar]}
           markedDates={moodCalendar}
+          theme={{calendarBackground: Theme().themeCalendar.backgroundColor, monthTextColor: Theme().themeCalendar.color}}
         />
     }}
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <IconButton
-          icon="cog"
-          iconColor={MD3Colors.neutral20}
-          onPress={() => router.push("/../settings")}
-          style={styles.settings}
-        />
-        <Text style={styles.headerText}>Logo</Text>
-        <Avatar
-          size={48}
-          rounded
-          icon={{ name: "person", type: "material" }}
-          containerStyle={{ backgroundColor: "#bbbec1", position: 'absolute', bottom: 8, right: 15 }}
-          onPress={() => router.push("/../profile")}
-        />
+    <PaperProvider>
+      <View style={styles.container}>
+        <View style={[styles.header, Theme().themeBack, Theme().themeShadow]}>
+          <IconButton
+            icon="cog"
+            iconColor={Theme().themeIcon.color}
+            onPress={() => router.push("/../settings")}
+            style={styles.settings}
+          />
+          <Text style={[styles.headerText, Theme().themeText]}>Logo</Text>
+          <Avatar
+            size={48}
+            rounded
+            icon={{ name: "person", type: "material" }}
+            containerStyle={{ backgroundColor: "#bbbec1", position: 'absolute', bottom: 8, right: 15 }}
+            onPress={() => router.push("/../profile")}
+          />
+        </View>
+        <View style={[styles.body, Theme().themeBack2]}>
+          <SafeAreaView style={styles.buttonContainer}>
+            {slideData.map((slide, index) => (
+              <TouchableOpacity key={slide.id} onPress={() => handlePress(index)} style={styles.button}>
+                <Text style={[styles.buttonText, Theme().themeText, value === slide.title && styles.selectedButtonText]}>
+                  {slide.title}
+                </Text>
+              </TouchableOpacity>
+            ))}
+            {/* <Animated.View style={[styles.underline, { left: underlineAnim, width: width / slideData.length }]} /> */}
+          </SafeAreaView>
+          <View style={{top: 40, zIndex:2}}>
+            <Button mode="contained" onPress={() => {setModalVisible(true); console.log("pressed")}} style={Theme().themeBouton} textColor={Theme().themeBouton.color}>
+              Questionnaire du jour
+            </Button>
+          </View>
+          <Portal>
+            <Modal visible={modalVisible} onDismiss={() => setModalVisible(false)} contentContainerStyle={[modalStyle, Theme().themeBack]}>
+              <Text style={[{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', margin: 10 }, Theme().themeText]}>Questionnaire du jour</Text>
+              <Text style={Theme().themeText}>Renseignez chaque données correspondantes aux questions suivantes avec une note entre 0 et 10</Text>
+              <View style={styles.slider}>
+                <Text style={Theme().themeText}>Sommeil : {valueSommeil}</Text>
+                <Slider
+                  value={valueSommeil}
+                  onValueChange={setValueSommeil}
+                  maximumValue={10}
+                  minimumValue={0}
+                  step={1}
+                  allowTouchTrack
+                  trackStyle={{ height: 5, backgroundColor: 'transparent' }}
+                  thumbStyle={{ height: 20, width: 20, backgroundColor: 'transparent' }}
+                  thumbProps={{
+                    children: (
+                      <Icon
+                        name=""
+                        type=""
+                        size={10}
+                        reverse
+                        containerStyle={{ bottom: 10, right: 10 }}
+                        color={color(valueSommeil)}
+                      />
+                    ),
+                  }}
+                />
+                <Text style={Theme().themeText}>Sport : {valueSport}</Text>
+                <Slider
+                  value={valueSport}
+                  onValueChange={setValueSport}
+                  maximumValue={10}
+                  minimumValue={0}
+                  step={1}
+                  allowTouchTrack
+                  trackStyle={{ height: 5, backgroundColor: 'transparent' }}
+                  thumbStyle={{ height: 20, width: 20, backgroundColor: 'transparent' }}
+                  thumbProps={{
+                    children: (
+                      <Icon
+                        name=""
+                        type=""
+                        size={10}
+                        reverse
+                        containerStyle={{ bottom: 10, right: 10 }}
+                        color={color(valueSport)}
+                      />
+                    ),
+                  }}
+                />
+                <Text style={Theme().themeText}>Social : {valueSocial}</Text>
+                <Slider
+                  value={valueSocial}
+                  onValueChange={setValueSocial}
+                  maximumValue={10}
+                  minimumValue={0}
+                  step={1}
+                  allowTouchTrack
+                  trackStyle={{ height: 5, backgroundColor: 'transparent' }}
+                  thumbStyle={{ height: 20, width: 20, backgroundColor: 'transparent' }}
+                  thumbProps={{
+                    children: (
+                      <Icon
+                        name=""
+                        type=""
+                        size={10}
+                        reverse
+                        containerStyle={{ bottom: 10, right: 10 }}
+                        color={color(valueSocial)}
+                      />
+                    ),
+                  }}
+                />
+                <Text style={Theme().themeText}>Moral : {valueMoral}</Text>
+                <Slider
+                  value={valueMoral}
+                  onValueChange={setValueMoral}
+                  maximumValue={10}
+                  minimumValue={0}
+                  step={1}
+                  allowTouchTrack
+                  trackStyle={{ height: 5, backgroundColor: 'transparent' }}
+                  thumbStyle={{ height: 20, width: 20, backgroundColor: 'transparent' }}
+                  thumbProps={{
+                    children: (
+                      <Icon
+                        name=""
+                        type=""
+                        size={10}
+                        reverse
+                        containerStyle={{ bottom: 10, right: 10 }}
+                        color={color(valueMoral)}
+                      />
+                    ),
+                  }}
+                />
+                <Text style={Theme().themeText}>Nutrition : {valueNutrition}</Text>
+                <Slider
+                  value={valueNutrition}
+                  onValueChange={setValueNutrition}
+                  maximumValue={10}
+                  minimumValue={0}
+                  step={1}
+                  allowTouchTrack
+                  trackStyle={{ height: 5, backgroundColor: 'transparent' }}
+                  thumbStyle={{ height: 20, width: 20, backgroundColor: 'transparent' }}
+                  thumbProps={{
+                    children: (
+                      <Icon
+                        name=""
+                        type=""
+                        size={10}
+                        reverse
+                        containerStyle={{ bottom: 10, right: 10 }}
+                        color={color(valueNutrition)}
+                      />
+                    ),
+                  }}
+                />
+              </View>
+              <Button 
+                mode="contained" 
+                onPress={() => {
+                  setModalVisible(false); 
+                  console.log("pressed"); 
+                }}
+                style={Theme().themeBouton}
+                textColor={Theme().themeBouton.color}
+              >
+                Valider
+              </Button>
+            </Modal>
+          </Portal>
+          <Carousel
+            ref={carouselRef}
+            loop={false}
+            width={width}
+            autoPlay={false}
+            data={slideData}
+            onProgressChange={progress}
+            scrollAnimationDuration={500}
+            // onScrollStart={() => {
+            //   const index = slideData.findIndex(slide => slide.title === value);
+            //   animateUnderline(index);
+            // }}
+            onSnapToItem={(index) => {
+              console.log('current index:', index);
+              setValue(slideData[index].title);
+            }}
+            renderItem={({ item }) => (
+              <View style={styles.slide}>
+                <Text style={[styles.slideTitle, Theme().themeText]}>{item.title}</Text>
+                {renderSwitch(item)}
+              </View>
+            )}
+          />
+          <Pagination.Basic
+            progress={progress}
+            data={slideData}
+            dotStyle={{...Theme().themePagination, borderRadius: 0, width:(width-30)/3, height: 3}}
+            activeDotStyle={Theme().themePagination2}
+            containerStyle={{ gap: 10, top: 42, position: 'absolute' }}
+            onPress={onPressPagination}
+          />
+        </View>
       </View>
-      <View style={styles.body}>
-        <SafeAreaView style={styles.buttonContainer}>
-          {slideData.map((slide, index) => (
-            <TouchableOpacity key={slide.id} onPress={() => handlePress(index)} style={styles.button}>
-              <Text style={[styles.buttonText, value === slide.title && styles.selectedButtonText]}>
-                {slide.title}
-              </Text>
-            </TouchableOpacity>
-          ))}
-          {/* <Animated.View style={[styles.underline, { left: underlineAnim, width: width / slideData.length }]} /> */}
-        </SafeAreaView>
-        <Carousel
-          ref={carouselRef}
-          loop={false}
-          width={width}
-          autoPlay={false}
-          data={slideData}
-          onProgressChange={progress}
-          scrollAnimationDuration={500}
-          // onScrollStart={() => {
-          //   const index = slideData.findIndex(slide => slide.title === value);
-          //   animateUnderline(index);
-          // }}
-          onSnapToItem={(index) => {
-            console.log('current index:', index);
-            setValue(slideData[index].title);
-          }}
-          renderItem={({ item }) => (
-            <View style={styles.slide}>
-              <Text style={styles.slideTitle}>{item.title}</Text>
-              {renderSwitch(item)}
-            </View>
-          )}
-        />
-        <Pagination.Basic
-          progress={progress}
-          data={slideData}
-          dotStyle={{ backgroundColor: "rgba(0,0,0,0.2)", borderRadius: 0, width:(width-30)/3, height: 3 }}
-          containerStyle={{ gap: 10, top: 42, position: 'absolute' }}
-          onPress={onPressPagination}
-        />
-      </View>
-    </View>
+    </PaperProvider>
   );
 }
 
@@ -272,10 +428,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: HEADER_HEIGHT,
-    backgroundColor: 'white',
-    borderBottomWidth: 2,
-    borderBottomColor: 'white',
-    shadowColor: '#000',
+    borderBottomWidth: 1,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
@@ -286,7 +439,6 @@ const styles = StyleSheet.create({
   },
   headerText: {
     top: 15,
-    color: 'black',
     fontSize: 20,
   },
   body: {
@@ -298,6 +450,12 @@ const styles = StyleSheet.create({
     position: 'absolute', 
     bottom: 5, 
     left: 10,
+  },
+  slider:{
+    padding: 20,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'stretch',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -312,10 +470,10 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
-    color: 'rgba(0,0,0,0.3)',
+    opacity: 0.3
   },
   selectedButtonText: {
-    color: 'black',
+    opacity: 1
   },
   underline: {
     position: 'absolute',
@@ -338,3 +496,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+const modalStyle = {padding: 20,  margin: 20, borderRadius: 20,};

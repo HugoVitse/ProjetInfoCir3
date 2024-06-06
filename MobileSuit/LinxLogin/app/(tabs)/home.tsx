@@ -2,6 +2,7 @@ import { Link, useRouter } from "expo-router";
 import { Text, View, StyleSheet } from "react-native";
 import { Avatar } from '@rneui/themed';
 import { IconButton, MD3Colors } from "react-native-paper";
+import Theme from '@/constants/Theme';
 
 const HEADER_HEIGHT = 100;
 
@@ -10,14 +11,14 @@ export default function HomeScreen() {
   
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <View style={[styles.header, Theme().themeBack, Theme().themeShadow]}>
         <IconButton
           icon="cog"
-          iconColor={MD3Colors.neutral20}
+          iconColor={Theme().themeIcon.color}
           onPress={() => router.push("/../settings")}
           style={styles.settings}
         />
-        <Text style={styles.headerText}>Logo</Text>
+        <Text style={[styles.headerText, Theme().themeText]}>Logo</Text>
         <Avatar
           size={48}
           rounded
@@ -26,8 +27,8 @@ export default function HomeScreen() {
           onPress={() => router.push("/../profile")}
         />
       </View>
-      <View style={styles.body}>
-        <Text>Edit app/index.tsx to edit this screen.</Text>
+      <View style={[styles.body, Theme().themeBack2]}>
+        <Text style={Theme().themeText}>Edit app/index.tsx to edit this screen.</Text>
         <Link href="@/settings">?</Link>
       </View>
     </View>
@@ -39,15 +40,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     height: HEADER_HEIGHT,
-    backgroundColor: 'white',
-    borderBottomWidth: 2,
-    borderBottomColor: 'white',
-    shadowColor: '#000',
+    borderBottomWidth: 1,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
