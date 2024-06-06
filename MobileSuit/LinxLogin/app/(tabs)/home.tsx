@@ -10,6 +10,7 @@ import { Checkbox } from 'react-native-paper';
 import { ScrollView } from "react-native-gesture-handler";
 import { ScreenHeight, Slider ,Icon} from "@rneui/base";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import Theme from '@/constants/Theme';
 
 const HEADER_HEIGHT = 100;
 const { width,height } = Dimensions.get('window');
@@ -146,7 +147,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
     
-      <View style={styles.header}>
+      <View style={[styles.header, Theme().themeBack, Theme().themeShadow]}>
         <IconButton
           icon="cog"
           iconColor={MD3Colors.neutral20}
@@ -156,7 +157,7 @@ export default function HomeScreen() {
         {firstLogin?
         <IconButton
           icon="form-select"
-          iconColor={MD3Colors.neutral20}
+          iconColor={Theme().themeIcon.color}
           onPress={() => showModal()}
           style={styles.form}
         />:""}
@@ -165,13 +166,12 @@ export default function HomeScreen() {
           size={48}
           rounded
           icon={{ name: "person", type: "material" }}
-          containerStyle={{ backgroundColor: "#bbbec1", position: 'absolute', bottom: 15, right: 15 }}
+          containerStyle={{ backgroundColor: "#bbbec1", position: 'absolute', bottom: 8, right: 15 }}
           onPress={() => router.push("/../profile")}
         />
       </View>
-      
-      <View style={styles.body}>
-        <Text>Edit app/index.tsx to edit this screen.</Text>
+      <View style={[styles.body, Theme().themeBack2]}>
+        <Text style={Theme().themeText}>Edit app/index.tsx to edit this screen.</Text>
         <Link href="@/settings">?</Link>
       </View>
       <Modal  visible={visible} onDismiss={hideModal}  style={{marginTop:HEADER_HEIGHT+20,maxHeight:ScreenHeight,width:width,padding:20}}>
@@ -426,15 +426,11 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
   header: {
-    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     height: HEADER_HEIGHT,
-    backgroundColor: 'white',
-    borderBottomWidth: 2,
-    borderBottomColor: 'white',
-    shadowColor: '#000',
+    borderBottomWidth: 1,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
@@ -444,7 +440,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   headerText: {
-    top: 10,
+    top: 15,
     color: 'black',
     fontSize: 20,
   },

@@ -175,7 +175,7 @@ export default function ProfileScreen() {
           size={80}
           rounded
           icon={{ name: "person", type: "material" }}
-          containerStyle={{ backgroundColor: "#bbbec1" }}
+          containerStyle={{ backgroundColor: "#bbbec1", top: 10 }}
           onPress={() => setModalVisible(true)}
           
         > */}

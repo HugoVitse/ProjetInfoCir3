@@ -26,6 +26,7 @@ export default function RadarChart({
   };
 
   const scaleShape = (columns, i) => {
+    const color = options.color
     return (
       <Path
         key={`shape-${i}`}
@@ -37,8 +38,8 @@ export default function RadarChart({
             ];
           })
         )}
-        stroke={`#928481`}
-        fill={`#FFFFFF`}
+        stroke={color}
+        fill='transparent'
         fillOpacity=".5"
       />
     );
@@ -89,13 +90,15 @@ export default function RadarChart({
   };
 
   const label = () => (column) => {
+    const color = options.color
+    console.log(color)
     return (
       <Text
         key={`label-of-${column.key}`}
         x={posX(column.angle, 1.2)}
         y={posY(column.angle, 1.2)}
         dy={10 / 2}
-        fill="#444"
+        fill={color}
         fontWeight="bold"
         fontSize="50"
         textAnchor="middle"
@@ -106,11 +109,12 @@ export default function RadarChart({
   };
 
   const textIndicator = (i) => {
+    const color = options.color;
     return (
       <Text
         x={-20}
         y={-((i / scaleCount) * graphSize)}
-        fill="#444"
+        fill={color}
         fontWeight="bold"
         fontSize="40"
         textAnchor="middle"

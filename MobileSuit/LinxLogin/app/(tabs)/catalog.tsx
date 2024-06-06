@@ -8,6 +8,7 @@ import axios from 'axios'
 import Config from '../../config.json'
 import {activitie} from '../../constants/activities'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Theme from '@/constants/Theme';
 
 const HEADER_HEIGHT = 100;
 const { width } = Dimensions.get('window');
@@ -55,16 +56,16 @@ export default function CatalogScreen() {
         for(let i=0; i< activities.length;i++){
             console.log(i)
             console.log(activities[i])
-            const newCard = <Card style={{ width: width - 40, marginVertical: 20 }}>
+            const newCard = <Card style={[{ width: width - 40, marginVertical: 20 },Theme().themeCard]}>
                               <Card.Cover source={{ uri: activities[i].image }} />
-                              <Card.Title title={activities[i].name} subtitle={activities[i].date}/>
+                              <Card.Title title={activities[i].name} subtitle={activities[i].date} titleStyle={{color: Theme().themeText.color}} subtitleStyle={{color: Theme().themeText.color}}/>
                               <Card.Content>
-                                <Text>{activities[i].adresse}</Text>
-                                <Text>{activities[i].description}</Text>
+                                <Text style={Theme().themeText}>{activities[i].adresse}</Text>
+                                <Text style={Theme().themeText}>{activities[i].description}</Text>
                               </Card.Content>
                               <Card.Actions>
-                                <Button>Cancel</Button>
-                                <Button>Ok</Button>
+                                <Button style={Theme().themeBouton2} textColor={Theme().themeBouton2.color} >Cancel</Button>
+                                <Button style={Theme().themeBouton}>Ok</Button>
                               </Card.Actions>
                             </Card>
             tmpComp.push(newCard)
@@ -75,25 +76,25 @@ export default function CatalogScreen() {
   
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <View style={[styles.header, Theme().themeBack, Theme().themeShadow]}>
         <IconButton
           icon="cog"
-          iconColor={MD3Colors.neutral20}
+          iconColor={Theme().themeIcon.color}
           onPress={() => router.push("/../settings")}
           style={styles.settings}
         />
-        <Text style={styles.headerText}>Logo</Text>
+        <Text style={[styles.headerText, Theme().themeText]}>Logo</Text>
         <Avatar
           size={48}
           rounded
           icon={{ name: "person", type: "material" }}
-          containerStyle={{ backgroundColor: "#bbbec1", position: 'absolute', bottom: 15, right: 15 }}
+          containerStyle={{ backgroundColor: "#bbbec1", position: 'absolute', bottom: 8, right: 15 }}
           onPress={() => router.push("/../profile")}
         />
       </View>
       {!isLoaded?<View  style={{    flex: 1,      justifyContent: 'center',}} ><ActivityIndicator animating={true} color={colorMain} size='large'></ActivityIndicator></View>:
       <ScrollView 
-        style={{ paddingBottom: 40 }}
+        style={[{ paddingBottom: 40 },Theme().themeBack2]}
         contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
       >
         
@@ -113,10 +114,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: HEADER_HEIGHT,
-    backgroundColor: 'white',
-    borderBottomWidth: 2,
-    borderBottomColor: 'white',
-    shadowColor: '#000',
+    borderBottomWidth: 1,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
@@ -126,7 +124,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   headerText: {
-    top: 10,
+    top: 15,
     color: 'black',
     fontSize: 20,
   },
