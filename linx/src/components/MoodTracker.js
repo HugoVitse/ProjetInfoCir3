@@ -4,7 +4,6 @@ import { jwtDecode } from "jwt-decode";
 import {
   MDBContainer, MDBCarousel, MDBCardImage, MDBCarouselItem, MDBCard, MDBCardBody, MDBRange, MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalBody, MDBModalFooter
 } from 'mdb-react-ui-kit';
-import { initMDB } from 'mdb-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import '../css/MoodTracker.css';
 import Cookies from 'js-cookie';
@@ -13,7 +12,6 @@ import Calendar from './Calendar';
 import axios from 'axios';
 
 Chart.register(RadarController, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
-initMDB();
 
 const MoodTracker = () => {
   const [formData, setFormData] = useState({
@@ -30,13 +28,13 @@ const MoodTracker = () => {
   const [basicModal, setBasicModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [today, settoday] = useState(true);
+  const [years, setyears] = useState([]);
   const [sleep, setsleep] = useState([]);
   const [stress, setstress] = useState([]);
   const [energ, setenerg] = useState([]);
   const [moral, setmoral] = useState([]);
   const [add, setadd] = useState([]);
   const [ind, setind] = useState(0);
-
   const radarChartRef = useRef(null);
   const chartInstance = useRef(null);
 
@@ -78,6 +76,7 @@ const MoodTracker = () => {
         average: 0
       });
       setBasicModal(false);
+      navigate("/MoodTracker");
     } catch (error) {
       console.error('Error:', error);
       setError('An error occurred. Please try again later.');
@@ -85,6 +84,7 @@ const MoodTracker = () => {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
 
@@ -110,6 +110,7 @@ const MoodTracker = () => {
         const moralArray = [];
         const addArray = [];
         const todayDate = getTodayDateDDMMYYYY();
+        
         response.data.moodTrackerData.forEach((data, i) => {
           yearsArray.push(data.date);
           sleepArray.push(data.sleepQuality);
@@ -117,11 +118,12 @@ const MoodTracker = () => {
           energArray.push(data.energyLevel);
           moralArray.push(data.moral);
           addArray.push(data.additionalActivity);
+          setind(i)
           if (data.date === todayDate) {
             settoday(false);
-            setind(i);
           }
         });
+        setyears(yearsArray);
         setsleep(sleepArray);
         setstress(stressArray);
         setenerg(energArray);
@@ -136,33 +138,22 @@ const MoodTracker = () => {
   }, []);
 
   useEffect(()=>{
-    if(sleep.length>1 && add.length>1 && moral.length>1 && energ.length>1 && stress.length>1){
+    if(years.length>1 && sleep.length>1 && add.length>1 && moral.length>1 && energ.length>1 && stress.length>1){
       GetCanva();
     }
  
 
-  },[sleep,add,moral,energ,stress])
+  },[years,sleep,add,moral,energ,stress])
 
 
   const GetCanva = () =>{
-
-    initMDB();
 
     if (chartInstance.current) {
       chartInstance.current.destroy();
     }
 
     const ctx = radarChartRef.current.getContext('2d');
-    
-    console.log(ind)
-    console.log(sleep[ind]);
-    console.log(stress[ind]);
-    console.log(energ[ind]);
-    console.log(moral[ind]);
-    console.log(add[ind]);
-
-
-
+  
     chartInstance.current = new Chart(ctx, {
       type: 'radar',
       data: {
@@ -212,15 +203,16 @@ const MoodTracker = () => {
         <MDBCardBody>
           {/* Afficher le bouton ou le texte en fonction de today */}
           {today ? (
-            <MDBBtn color="primary" className="w-100 mb-3" onClick={() => setBasicModal(true)}>
+            <MDBBtn className="w-100 mb-3 btn-success" onClick={() => setBasicModal(true)}>
               Questionnaire Quotidien
             </MDBBtn>
           ) : (
-            <p>Questionnaire pas disponible aujourd'hui.</p>
+            <MDBBtn className="w-100 mb-3 btn-danger" style={{ cursor: 'auto' }}>
+              Questionnaire Quotidien NON Disponible
+            </MDBBtn>
           )}
-            
           {/* Carrousel */}
-          <MDBCarousel showIndicators showControls fade>
+          <MDBCarousel showControls fade>
             {/* Première Carrousel */}
             <MDBCarouselItem className="w-100 d-block " itemId={1}>
               <h5>Première Slide</h5>
@@ -229,11 +221,10 @@ const MoodTracker = () => {
             
             {/* Carrousel du MoodBoard Quotidien */}
             <MDBCarouselItem className="w-100 d-block vh-80" itemId={2}>
-              <h5>MoodBoard Quotidien</h5>
+              <h5>MoodBoard Quotidien, Date : {years[ind]} </h5>
               <canvas ref={radarChartRef} id="radarChart" style={{ marginTop: '20px', width: '100%', height: '400px' }}></canvas>
             </MDBCarouselItem>
 
-  
             {/* Troisième Carrousel */}
             <MDBCarouselItem className="w-100 d-block vh-80" itemId={3}>
               <h5>Troisième Slide</h5>
@@ -289,7 +280,6 @@ const MoodTracker = () => {
         </MDBCard>
       </MDBContainer>
     );  
-  };
-  
-  export default MoodTracker;
-  
+};
+
+export default MoodTracker;

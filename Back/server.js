@@ -31,6 +31,7 @@ const activities = require('./activities')
 const login = require('./login')
 const register = require('./register')
 const getInfos = require('./getInfos')
+const setPicture = require("./setPicture")
 
 
 
@@ -58,6 +59,7 @@ async function serv(){
   app.post('/fillquestionnaire',fillQuestionnaire)
   app.post('/FillMoodTracker',FillMoodTracker)
   app.post('/setDaily',setDaily)
+  app.post('/setPicture',setPicture)
 
 
 
