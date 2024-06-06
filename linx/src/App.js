@@ -18,7 +18,7 @@ function App() {
     <Router>
       <MDBContainer fluid className="vh-100 p-0">
         <MDBRow className="h-100 m-0">
-          <MDBCol md="2" className="bg-dark" style={{ minWidth: '200px'}}>
+          <MDBCol md="2" className="bg-dark" style={{ minWidth: '200px' ,zIndex:4,position:'relative'}}>
             <NavBar />
           </MDBCol>
           <MDBCol className="p-0">

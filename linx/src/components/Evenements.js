@@ -1,10 +1,17 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import {
     MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBCardText, MDBRow, MDBCol, MDBBtn, 
-    MDBInput, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon,MDBContainer
+    MDBInput, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon,MDBContainer,MDBRipple,
+    MDBModal,
+    MDBModalDialog,
+    MDBModalContent,
+    MDBModalHeader,
+    MDBModalTitle,
+    MDBModalBody,
+    MDBModalFooter,
 } from 'mdb-react-ui-kit';
 import axios from 'axios';
 import Config from '../config.json';
@@ -20,9 +27,20 @@ const Evenements = () => {
     const navigate = useNavigate();
     const [evenements, setEvenements] = useState([]);
     const [filteredActivities, setFilteredActivities] = useState([]);
+    const [actualIndex, setActualIndex] = useState(0)
+    const [initialZoom,setInitialZoom] = useState("13")
+
+    const [basicModal, setBasicModal] = useState(false);
+
+    const toggleOpen = () => setBasicModal(!basicModal)
+
+    const [transform,setTransform] = useState("")
 
     const [latlog,setlatlong] = useState({})
     const googlekey = "AIzaSyAOpVdDvYUvbIB_u_d6k_HVfw13_Vux0K0"
+
+    const mapRef = useRef(null);
+    const pingRef = useRef(null);
 
 
     const openPopup = (title, description, img, date) => {
@@ -74,8 +92,43 @@ const Evenements = () => {
             }
         };
 
+        const element = pingRef.current;
+        const elementMap = mapRef.current
+
+        const updateTransform = () => {
+            const transform = window.getComputedStyle(element).transform;
+            const zoom = (elementMap.attributes.zoom.value-8)/5;
+            console.log(zoom)
+            setTransform(`${transform} translate(110%,${100*((1-zoom)/2)}%) scale(${zoom})`)
+        };
+
+      
+
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if(mutation.type === 'attributes'){
+                    updateTransform()
+                }
+                if (mutation.attributeName === 'style') {
+                    updateTransform();
+                }
+            });
+        });
+
+        observer.observe(element, {
+            attributes: true,
+            attributeFilter: ['style'],
+        });
+
+        // Initial check
+        updateTransform();
+
+     
+
         fetchActivities();
     }, []);
+
+
 
     useEffect(()=>{
         const wrap = async()=>{
@@ -83,6 +136,7 @@ const Evenements = () => {
                 const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(evenements[0].activity.adresse)}&key=${googlekey}`);
                 console.log(response.data)
                 setlatlong(response.data.results[0].geometry.location)
+          
                 // const realtab = activities.reduce(async(acc,value,index)=>{
                 //     const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?addres=${encodeURI(value.adresse)}`);
                     
@@ -129,6 +183,8 @@ const Evenements = () => {
 
     const selectedBtn = async(e) =>{
         const ide = e.target.id
+        setActualIndex(ide)
+        setInitialZoom("13")
         const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(evenements[ide].activity.adresse)}&key=${googlekey}`);
         console.log(response.data)
         setlatlong(response.data.results[0].geometry.location)
@@ -180,10 +236,43 @@ const Evenements = () => {
                 
             </MDBCol>
             <MDBCol size='9' className='px-0' style={{border:"2px solid black"}}>
-                <gmp-map center={`${latlog.lat}, ${latlog.lng}`} zoom="13" map-id="DEMO_MAP_ID">
-                    <gmp-advanced-marker position={`${latlog.lat}, ${latlog.lng}`} title="My location"></gmp-advanced-marker>
+                <gmp-map ref={mapRef} center={`${latlog.lat}, ${latlog.lng}`} zoom={initialZoom} map-id="DEMO_MAP_ID">
+                    <gmp-advanced-marker ref={pingRef} position={`${latlog.lat}, ${latlog.lng}`} title="My location"></gmp-advanced-marker>
                 </gmp-map>
+                <MDBCard style={{width:"20%",position:"absolute",top:0,transform:transform,height: '45%'}}>
+                    <MDBRipple rippleColor='light' rippleTag='div' className='bg-image hover-overlay'>
+                        <MDBCardImage src={evenements[actualIndex]?evenements[actualIndex].activity.image:""} fluid alt='...' />
+                        <a>
+                        <div className='mask' style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
+                        </a>
+                    </MDBRipple>
+                    <MDBCardBody>
+                        <MDBCardTitle>{evenements[actualIndex]?evenements[actualIndex].activity.title:""}</MDBCardTitle>
+                        <MDBCardText>
+                            {evenements[actualIndex]?evenements[actualIndex].activity.description:""}
+                        </MDBCardText>
+                        <MDBBtn onClick={toggleOpen}>S'inscrire</MDBBtn>
+                    </MDBCardBody>
+                </MDBCard>
             </MDBCol>
+            <MDBModal open={basicModal} onClose={() => setBasicModal(false)} tabIndex='-1'>
+                <MDBModalDialog>
+                    <MDBModalContent>
+                        <MDBModalHeader>
+                            <MDBModalTitle>Modal title</MDBModalTitle>
+                            <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
+                        </MDBModalHeader>
+                        <MDBModalBody>...</MDBModalBody>
+
+                        <MDBModalFooter>
+                            <MDBBtn color='secondary' onClick={toggleOpen}>
+                                Close
+                            </MDBBtn>
+                            <MDBBtn>Save changes</MDBBtn>
+                        </MDBModalFooter>
+                    </MDBModalContent>
+                </MDBModalDialog>
+            </MDBModal>
         </MDBRow>
     );
 };

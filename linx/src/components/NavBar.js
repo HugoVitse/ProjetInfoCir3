@@ -11,7 +11,7 @@ const NavBar = () => {
   }
 
   return (
-    <div className="d-flex flex-column align-items-start text-white p-3 bg-dark h-100">
+    <div className="d-flex flex-column align-items-start text-white p-3 bg-dark h-100" >
       <Link to='/' className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <img
           src="https://brand.riotgames.com/static/a91000434ed683358004b85c95d43ce0/8a20a/lol-logo.png"
