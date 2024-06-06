@@ -1,16 +1,21 @@
 import React , {useState,useEffect} from 'react';
 import {Link, useRouter} from 'expo-router'
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { ActivityIndicator, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
-import { Input,Icon,Button } from 'react-native-elements';
+import { ImageBackground, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { Input,Icon } from 'react-native-elements';
+import {TextInput,Button,ActivityIndicator,MD2Colors} from 'react-native-paper'
 import {Image,Text} from 'react-native'
 import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RootStackParamList } from '@/constants/type';
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { setShouldAnimateExitingForTag } from 'react-native-reanimated/lib/typescript/reanimated2/core';
+import Config from '../config.json'
 
 const RegisterScreen = () => {
   const [show, setShow] = useState(false);
+  const [showDate,setShowDate] = useState(false)
 
   const onChange = (event:any, selectedDate:any) => {
     const currentDate = selectedDate || date;
@@ -20,6 +25,9 @@ const RegisterScreen = () => {
 
   const showDatepicker = () => {
     setShow(true);
+  };
+  const hideDatepicker = () => {
+    if(!showDate) setShow(false);
   };
 
   const [err,setErr] = useState("")
@@ -99,8 +107,9 @@ const RegisterScreen = () => {
     setisdate(isdate+1)
   },[date])
 
+  const image = require("../assets/images/back.png")
   const register = async() => {
-    const url = 'http://172.20.10.3/register';
+    const url = `${Config.scheme}://${Config.urlapi}:${Config.portapi}/register`;
     const data = {
       email:email,
       password:password,
@@ -142,142 +151,150 @@ const RegisterScreen = () => {
     
   }
 
- 
   return (
-    
-    <KeyboardAvoidingView
-      style={styles.view}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    <ImageBackground source={image} resizeMode="cover" style={{    flex: 1,      justifyContent: 'center',}} >
+    <KeyboardAwareScrollView
+      contentContainerStyle={styles.scrollViewContent}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      scrollEnabled
+      extraScrollHeight={Platform.OS === 'ios' ? 20 : 0}
     >
+  
+      <View style={styles.inner}>
+       
 
-
-        <Input
-            placeholder='Prénom'
-            onChangeText={onChangePrenom}
-            leftIconContainerStyle={{
-                marginRight:5
-            }}
-            leftIcon={<Icon
-            name='user'
-            size={24}
-            type='font-awesome'
-            color='black'
-            />}
+        <Image
+          source={require('../assets/images/logo.png')}
+          style={styles.image}
         />
+      
 
-       <Input
-            placeholder='Nom'
-            leftIconContainerStyle={{
-                marginRight:5
-            }}
-            onChangeText={onChangeNom}
-            leftIcon={<Icon
-            name='user'
-            size={24}
-            type='font-awesome'
-            color='black'
-            />}
+        <TextInput
+          outlineColor={colorMain}
+          activeOutlineColor={colorMain}
+          theme={theme}
+          label="Prénom"
+          placeholder='Entrez votre prénom...'
+          left={<TextInput.Icon icon="account" />}
+          mode='outlined'
+          style={styles.input}
+          onChangeText={onChangePrenom}
         />
-        <Input
-            placeholder='Date de naissance'
-            leftIconContainerStyle={{
-                marginRight:5
-            }}
-            onPress={showDatepicker}
-            value={isdate>1?date.toDateString():""}
-          
-            leftIcon={<Icon
-            name='user'
-            size={24}
-            type='font-awesome'
-            color='black'
-            />}
+        <TextInput
+          outlineColor={colorMain}
+          activeOutlineColor={colorMain}
+          theme={theme}
+          label="Nom"
+          placeholder='Entrez votre nom...'
+          left={<TextInput.Icon icon="account-outline" />}
+          mode='outlined'
+          style={styles.input}
+          onChangeText={onChangeNom}
         />
-
-   
+       
+        <TextInput
+          outlineColor={colorMain}
+          activeOutlineColor={colorMain}
+          theme={theme}
+          label="Date de naissance"
+          placeholder='Entrez votre date de naissance...'
+          left={<TextInput.Icon icon="calendar" />}
+          mode='outlined'
+          style={styles.input}
+          value={isdate>1?date.toDateString():""}
+          onFocus={showDatepicker}
+          onBlur={hideDatepicker}
+        />
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
           value={date}
+          onTouchStart={()=>{
+            setShowDate(true)
+          }}
           mode="date"
           display="default"
           onChange={onChange}
         />
       )}
-
-        <Input
-            placeholder='Email'
-            onChangeText={onChangeEmail}
-            leftIconContainerStyle={{
-                marginRight:5
-            }}
-            leftIcon={<Icon
-                name='user'
-                size={24}
-                type='font-awesome'
-                color='black'
-            />}
+        <TextInput
+          outlineColor={colorMain}
+          activeOutlineColor={colorMain}
+          theme={theme}
+          label="Email"
+          placeholder='Entrez votre email...'
+          left={<TextInput.Icon icon="email" />}
+          mode='outlined'
+          style={styles.input}
+          onChangeText={onChangeEmail}
         />
 
-        <Input
-            secureTextEntry={true} 
-            placeholder='Mot de passe'
-            onChangeText={onChangePassword}
-            leftIconContainerStyle={{
-                marginRight:5
-            }}
-            leftIcon={
-                <Icon
-                name='unlock'
-                size={24}
-                type='feather'
-                color='black'
-                />
-            }
+        <TextInput
+          outlineColor={colorMain}
+          activeOutlineColor={colorMain}
+          theme={theme}
+          secureTextEntry={true}
+          label="Mot de passe"
+          placeholder='Entrez votre mot de passe...'
+          left={<TextInput.Icon icon="lock-open" />}
+          mode='outlined'
+          style={styles.input}
+          onChangeText={onChangePassword}
         />
-        <Input
-            secureTextEntry={true} 
-            placeholder='Confirmation du mot de passe'
-            onChangeText={onChangeconfirmPass}
-            leftIconContainerStyle={{
-                marginRight:5
-            }}
-            leftIcon={
-                <Icon
-                name='lock'
-                size={24}
-                type='feather'
-                color='black'
-                />
-            }
+        <TextInput
+          outlineColor={colorMain}
+          activeOutlineColor={colorMain}
+          theme={theme}
+          secureTextEntry={true}
+          label="Confirmation mot de passe"
+          placeholder='Entrez à nouveau votre mot de passe...'
+          left={<TextInput.Icon icon="lock" />}
+          mode='outlined'
+          style={styles.input}
+          onChangeText={onChangeconfirmPass}
         />
 
-    <Button
-      buttonStyle={{
-        width:350
-      }}
-      title="Inscription"
-      type="solid"
-      onPress={register}
-    />
+    <Button buttonColor={colorMain} icon="account-check" mode='contained-tonal' onPress={register} style={{marginTop:10,width:200}}>
+      Inscription
+    </Button> 
     <View style={styles.horizontal}>
       <Text>Déjà membre ?</Text>
       <Link style={styles.link} href='..'> Connectez-vous </Link>
     </View>
     <Text style={{color:'red'}}> {err}</Text>
-    
-    </KeyboardAvoidingView>
-    
+   
+    </View>
+
+    </KeyboardAwareScrollView>
+    </ImageBackground>
   );
   
 };
 
+const colorMain = '#99c3ff'
+const theme = {
+  roundness:15,
+  color:{
+    shadow:150
+  }
+}
 const styles = StyleSheet.create({
+  inputContainer: {
+    width: '90%', // Ajustez la largeur en fonction de vos préférences
+    marginBottom: 24, // Espace après chaque champ de saisie
+  },
   input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
+    backgroundColor:'white',
+    width:350,
+    margin:10,
+    borderRadius:2,
+    shadowColor:'black',
+    shadowOpacity:0.3,
+    shadowRadius:3,
+    shadowOffset:{
+      height:5,
+      width:5
+    }
   },
   view:{
     flex: 1,
@@ -295,13 +312,25 @@ const styles = StyleSheet.create({
 
   },
   image: {
-    marginBottom:50,
+    marginTop:50,
     width: 350,
     height: 115,
+    transform:'scale(0.7)'
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  inner: {
+    padding: 24,
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   link:{
     color:"blue"
-  }
+  },
 });
 
 export default RegisterScreen;

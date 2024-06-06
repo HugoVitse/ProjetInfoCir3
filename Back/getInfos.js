@@ -15,12 +15,9 @@ async function getInfos(req,res){
             
 
             const token =  req.cookies.jwt
-            console.log(token)
             const decoded = jwt.verify(token, config_serv.secretJWT);
-            console.log(decoded)
             const email = decoded.email     
         
-            console.log(email)
             const database = connect_db.client.db(config.dbName);
             const collection = database.collection(config.users);
         

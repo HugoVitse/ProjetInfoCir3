@@ -1,11 +1,15 @@
 const config_serv = require('./configServ')
+const config = require('./configDB')
 const jwt = require('jsonwebtoken');
 const axios = require("axios")
+const connect_db = require('./connect_db')
 
 
 async function activities(req,res){
 
+   
     const cookies = req.cookies
+    console.log(cookies)
     if(!('jwt' in cookies)){
         res.status(500).send()
         return
@@ -16,16 +20,17 @@ async function activities(req,res){
             const decoded = jwt.verify(token, config_serv.secretJWT);
             console.log(decoded)
 
-            const url = 'https://www.lilletourism.com/api/render/website_v2/lille-tourisme/playlist/48080/fr_FR/json?page=17&randomSeed=5e0ec7ac-791f-4329-946f-42f86c093f5a&confId=48080';
-    
+            const database = connect_db.client.db(config.dbName);
+            const collection = database.collection(config.activities);
+        
+        
+            const findOneResult = await collection.find({}).toArray();
             // Await the response from the GET request
-            const response = await axios.get(url);
-            console.log((response.data.items))
 
-            res.status(200).send(response.data.items)
+            res.status(200).send(findOneResult)
         }
         catch(err){
-
+            console.log(err)
             res.status(502).send()
             return
         }
@@ -35,7 +40,3 @@ async function activities(req,res){
 }
 
 module.exports = activities;
-
-
-https://www.lilletourism.com/api/render/website_v2/lille-tourisme/playlist/48080/fr_FR/json?page=17&randomSeed=5e0ec7ac-791f-4329-946f-42f86c093f5a&confId=48080
-https://www.lilletourism.com/api/render/website_v2/lille-tourisme/playlist/48080/fr_FR/json?page=17&randomSeed=a3b74108-a2e3-4c87-8095-eae8a309c646&confId=48080

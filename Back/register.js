@@ -21,7 +21,8 @@ async function register(req,res){
         "password":hashedpassword,
         "firstName":firstName,
         "lastName":lastName,
-        "dateOfBirth":dateOfBirth
+        "dateOfBirth":dateOfBirth,
+        "firstLogin":true
     }
 
     const isExist = await add_user(connect_db.client,user);

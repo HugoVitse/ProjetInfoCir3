@@ -1,4 +1,6 @@
 module.exports = {
     dbName:"Linx-db",
-    users:"users"
+    users:"users",
+    activities:"activities",
+    evenements:"evenements"
 }
