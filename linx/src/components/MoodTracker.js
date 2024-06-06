@@ -76,7 +76,7 @@ const MoodTracker = () => {
         average: 0
       });
       setBasicModal(false);
-      navigate("/MoodTracker");
+      window.location.reload();
     } catch (error) {
       console.error('Error:', error);
       setError('An error occurred. Please try again later.');
