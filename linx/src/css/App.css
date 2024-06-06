@@ -1,32 +1,116 @@
-.App {
-  text-align: center;
+/* Light Theme */
+.light-theme {
+  --bg-color: #fcfcfd;
+  --bg-color-inversed: #0d1017;
+  --text-color: black;
+  --text-color-inv: white;
+  --card-bg-color: #ffffff;
+  --primary-color: #5db9ee;
+  --btn-color: pink;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Dark Theme */
+.dark-theme {
+  --bg-color: #0d1017;
+  --bg-color-inversed: #fcfcfd;
+  --text-color: white;
+  --text-color-inv: black;
+  --card-bg-color: #1e1e1e;
+  --primary-color: #5c0bbe;
+  --btn-color: pink;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* General styles */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.custom-card {
+  background-color: var(--card-bg-color) !important;
 }
 
-.App-link {
-  color: #61dafb;
+.custom-text {
+  color: var(--primary-color) !important;
 }
+
+/* Add any other custom styles below */
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.vh-100 {
+  height: 100vh;
+}
+
+.py-5 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+.mt-4 {
+  margin-top: 1.5rem;
+}
+
+.lead {
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+
+.fw-normal {
+  font-weight: 400;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+.p-4 {
+  padding: 1.5rem;
+}
+
+.text-black {
+  color: #000 !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+.p-5 {
+  padding: 3rem !important;
+}
+
+.mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.justify-content-center {
+  justify-content: center !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.justify-content-between {
+  justify-content: space-between !important;
+}
+
+/* Navbar settings */
 
 @keyframes App-logo-spin {
   from {
@@ -81,4 +165,48 @@
 
 .custom-modal {
   width: 60% !important; /* Ajustez la largeur selon vos besoins */
+}
+
+/* Fin Navbar */
+
+
+/* Custom styles for MDB components */
+/* MDBCard */
+
+.bg-theme {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color-inv) !important;
+}
+
+.bg-theme-inv {
+  background-color: var(--bg-color-inversed) !important;
+  color: var(--text-color-inv) !important;
+}
+
+.nav-text{
+  color: var(--text-color) !important;
+}
+
+.nav-text-inv{
+  color: var(--text-color-inv) !important;
+}
+
+/* MDBContainer */
+.mdb-container {
+  /* Add your styles for MDBContainer here */
+}
+
+/* MDBBtn */
+.mdb-btn {
+  background-color: var(--btn-color) !important;
+}
+
+/* MDBInput */
+.mdb-input {
+  /* Add your styles for MDBInput here */
+}
+
+/* MDBCardText */
+.mdb-card-text {
+  /* Add your styles for MDBCardText here */
 }
