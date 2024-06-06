@@ -6,17 +6,18 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Theme from '@/constants/Theme';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  
+  const _Theme = Theme();
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: Theme().themeIcon.color,
+          tabBarActiveTintColor: _Theme.themeIcon.color,
           tabBarStyle: { 
-            backgroundColor: Theme().themeBack.backgroundColor, 
-            shadowColor: Theme().themeShadow.shadowColor, 
-            borderColor: Theme().themeShadow.borderColor,
+            backgroundColor: _Theme.themeBack.backgroundColor, 
+            shadowColor: _Theme.themeShadow.shadowColor, 
+            borderColor: _Theme.themeShadow.borderColor,
             borderTopWidth: 1, 
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.8,

@@ -8,7 +8,7 @@ import axios from 'axios'
 import Config from '../../config.json'
 import {activitie} from '../../constants/activities'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Theme from '@/constants/Theme';
+import Theme from "../../constants/Theme";
 
 const HEADER_HEIGHT = 100;
 const { width } = Dimensions.get('window');
@@ -22,6 +22,8 @@ export default function CatalogScreen() {
   const [islogin,setLogin] = useState(-1)
   const [isLoaded,setIsLoaded] = useState(false)
 
+
+  const _Theme = Theme();
 
   const _retrieveData = async (key:string) => {
     try {
@@ -56,16 +58,16 @@ export default function CatalogScreen() {
         for(let i=0; i< activities.length;i++){
             console.log(i)
             console.log(activities[i])
-            const newCard = <Card style={[{ width: width - 40, marginVertical: 20 },Theme().themeCard]}>
+            const newCard = <Card style={[{ width: width - 40, marginVertical: 20 },_Theme.themeCard]}>
                               <Card.Cover source={{ uri: activities[i].image }} />
-                              <Card.Title title={activities[i].name} subtitle={activities[i].date} titleStyle={{color: Theme().themeText.color}} subtitleStyle={{color: Theme().themeText.color}}/>
+                              <Card.Title titleStyle={{color:_Theme.themeText.color}} subtitleStyle={{color:_Theme.themeText.color}} title={activities[i].name} subtitle={activities[i].date}/>
                               <Card.Content>
-                                <Text style={Theme().themeText}>{activities[i].adresse}</Text>
-                                <Text style={Theme().themeText}>{activities[i].description}</Text>
+                                <Text style={_Theme.themeText}>{activities[i].adresse}</Text>
+                                <Text style={_Theme.themeText}>{activities[i].description}</Text>
                               </Card.Content>
                               <Card.Actions>
-                                <Button style={Theme().themeBouton2} textColor={Theme().themeBouton2.color} >Cancel</Button>
-                                <Button style={Theme().themeBouton}>Ok</Button>
+                                <Button style={_Theme.themeBouton2} textColor={_Theme.themeBouton2.color}>Cancel</Button>
+                                <Button style={_Theme.themeBouton} >Ok</Button>
                               </Card.Actions>
                             </Card>
             tmpComp.push(newCard)
@@ -76,27 +78,29 @@ export default function CatalogScreen() {
   
   return (
     <View style={styles.container}>
-      <View style={[styles.header, Theme().themeBack, Theme().themeShadow]}>
+      <View style={[styles.header,_Theme.themeBack,_Theme.themeShadow]}>
         <IconButton
           icon="cog"
-          iconColor={Theme().themeIcon.color}
+          iconColor={_Theme.themeIcon.color}
           onPress={() => router.push("/../settings")}
           style={styles.settings}
         />
-        <Text style={[styles.headerText, Theme().themeText]}>Logo</Text>
+        <Text style={[styles.headerText,_Theme.themeText]}>Logo</Text>
         <Avatar
           size={48}
           rounded
           icon={{ name: "person", type: "material" }}
-          containerStyle={{ backgroundColor: "#bbbec1", position: 'absolute', bottom: 8, right: 15 }}
+          containerStyle={{ backgroundColor: "#bbbec1", position: 'absolute', bottom: 15, right: 15 }}
           onPress={() => router.push("/../profile")}
         />
       </View>
-      {!isLoaded?<View  style={{    flex: 1,      justifyContent: 'center',}} ><ActivityIndicator animating={true} color={colorMain} size='large'></ActivityIndicator></View>:
+      {!isLoaded?<View   style={[{    flex: 1,      justifyContent: 'center',},_Theme.themeBack2]} ><ActivityIndicator style={_Theme.themeBack2} animating={true} color={_Theme.themeBouton.backgroundColor} size='large'></ActivityIndicator></View>:
       <ScrollView 
-        style={[{ paddingBottom: 40 },Theme().themeBack2]}
+        
+        style={[{ paddingBottom: 40 },_Theme.themeBack2]}
         contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
       >
+        
         
         {componentActivities}
       </ScrollView>}
@@ -124,7 +128,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   headerText: {
-    top: 15,
+    top: 10,
     color: 'black',
     fontSize: 20,
   },

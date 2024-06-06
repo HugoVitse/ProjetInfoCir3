@@ -87,6 +87,8 @@ export default function CalendarScreen() {
   const [valueMoral, setValueMoral] = useState(0);
   const [valueNutrition, setValueNutrition] = useState(0);
 
+  const _Theme = Theme()
+
   const interpolate = (start: number, end: number, value: number) => {
     let k = (value - 0) / 10; // 0 =>min  && 10 => MAX
     return Math.ceil((1 - k) * start + k * end) % 256;
@@ -174,7 +176,7 @@ export default function CalendarScreen() {
   const renderSwitch = (item: { type: any; content: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined; }) => {
     {switch(item.type) {
       case 'text': 
-        return <Text style={[styles.slideContent, Theme().themeText]}>{item.content}</Text>
+        return <Text style={[styles.slideContent, _Theme.themeText]}>{item.content}</Text>
       case 'chart': 
         return <RadarChart
           graphSize={400}
@@ -193,7 +195,7 @@ export default function CalendarScreen() {
             graphShape: 1,
             showAxis: false,
             showIndicator: true,
-            color: Theme().themeTextRadar.color,
+            color: _Theme.themeTextRadar.color,
             colorList: ["#2196f3"],
             dotList: [false],
           }}
@@ -206,9 +208,9 @@ export default function CalendarScreen() {
           hideExtraDays={true}
           firstDay={1}
           disableAllTouchEventsForDisabledDays={true}
-          style={[{width: width-40, marginTop: 20}, Theme().themeCalendar]}
+          style={[{width: width-40, marginTop: 20}, _Theme.themeCalendar]}
           markedDates={moodCalendar}
-          theme={{calendarBackground: Theme().themeCalendar.backgroundColor, monthTextColor: Theme().themeCalendar.color}}
+          theme={{calendarBackground: _Theme.themeCalendar.backgroundColor, monthTextColor: _Theme.themeCalendar.color}}
         />
     }}
   }
@@ -216,14 +218,14 @@ export default function CalendarScreen() {
   return (
     <PaperProvider>
       <View style={styles.container}>
-        <View style={[styles.header, Theme().themeBack, Theme().themeShadow]}>
+        <View style={[styles.header, _Theme.themeBack, _Theme.themeShadow]}>
           <IconButton
             icon="cog"
-            iconColor={Theme().themeIcon.color}
+            iconColor={_Theme.themeIcon.color}
             onPress={() => router.push("/../settings")}
             style={styles.settings}
           />
-          <Text style={[styles.headerText, Theme().themeText]}>Logo</Text>
+          <Text style={[styles.headerText, _Theme.themeText]}>Logo</Text>
           <Avatar
             size={48}
             rounded
@@ -232,11 +234,11 @@ export default function CalendarScreen() {
             onPress={() => router.push("/../profile")}
           />
         </View>
-        <View style={[styles.body, Theme().themeBack2]}>
+        <View style={[styles.body, _Theme.themeBack2]}>
           <SafeAreaView style={styles.buttonContainer}>
             {slideData.map((slide, index) => (
               <TouchableOpacity key={slide.id} onPress={() => handlePress(index)} style={styles.button}>
-                <Text style={[styles.buttonText, Theme().themeText, value === slide.title && styles.selectedButtonText]}>
+                <Text style={[styles.buttonText, _Theme.themeText, value === slide.title && styles.selectedButtonText]}>
                   {slide.title}
                 </Text>
               </TouchableOpacity>
@@ -244,16 +246,16 @@ export default function CalendarScreen() {
             {/* <Animated.View style={[styles.underline, { left: underlineAnim, width: width / slideData.length }]} /> */}
           </SafeAreaView>
           <View style={{top: 40, zIndex:2}}>
-            <Button mode="contained" onPress={() => {setModalVisible(true); console.log("pressed")}} style={Theme().themeBouton} textColor={Theme().themeBouton.color}>
+            <Button mode="contained" onPress={() => {setModalVisible(true); console.log("pressed")}} style={_Theme.themeBouton} textColor={_Theme.themeBouton.color}>
               Questionnaire du jour
             </Button>
           </View>
           <Portal>
-            <Modal visible={modalVisible} onDismiss={() => setModalVisible(false)} contentContainerStyle={[modalStyle, Theme().themeBack]}>
-              <Text style={[{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', margin: 10 }, Theme().themeText]}>Questionnaire du jour</Text>
-              <Text style={Theme().themeText}>Renseignez chaque données correspondantes aux questions suivantes avec une note entre 0 et 10</Text>
+            <Modal visible={modalVisible} onDismiss={() => setModalVisible(false)} contentContainerStyle={[modalStyle, _Theme.themeBack]}>
+              <Text style={[{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', margin: 10 }, _Theme.themeText]}>Questionnaire du jour</Text>
+              <Text style={_Theme.themeText}>Renseignez chaque données correspondantes aux questions suivantes avec une note entre 0 et 10</Text>
               <View style={styles.slider}>
-                <Text style={Theme().themeText}>Sommeil : {valueSommeil}</Text>
+                <Text style={_Theme.themeText}>Sommeil : {valueSommeil}</Text>
                 <Slider
                   value={valueSommeil}
                   onValueChange={setValueSommeil}
@@ -276,7 +278,7 @@ export default function CalendarScreen() {
                     ),
                   }}
                 />
-                <Text style={Theme().themeText}>Sport : {valueSport}</Text>
+                <Text style={_Theme.themeText}>Sport : {valueSport}</Text>
                 <Slider
                   value={valueSport}
                   onValueChange={setValueSport}
@@ -299,7 +301,7 @@ export default function CalendarScreen() {
                     ),
                   }}
                 />
-                <Text style={Theme().themeText}>Social : {valueSocial}</Text>
+                <Text style={_Theme.themeText}>Social : {valueSocial}</Text>
                 <Slider
                   value={valueSocial}
                   onValueChange={setValueSocial}
@@ -322,7 +324,7 @@ export default function CalendarScreen() {
                     ),
                   }}
                 />
-                <Text style={Theme().themeText}>Moral : {valueMoral}</Text>
+                <Text style={_Theme.themeText}>Moral : {valueMoral}</Text>
                 <Slider
                   value={valueMoral}
                   onValueChange={setValueMoral}
@@ -345,7 +347,7 @@ export default function CalendarScreen() {
                     ),
                   }}
                 />
-                <Text style={Theme().themeText}>Nutrition : {valueNutrition}</Text>
+                <Text style={_Theme.themeText}>Nutrition : {valueNutrition}</Text>
                 <Slider
                   value={valueNutrition}
                   onValueChange={setValueNutrition}
@@ -375,8 +377,8 @@ export default function CalendarScreen() {
                   setModalVisible(false); 
                   console.log("pressed"); 
                 }}
-                style={Theme().themeBouton}
-                textColor={Theme().themeBouton.color}
+                style={_Theme.themeBouton}
+                textColor={_Theme.themeBouton.color}
               >
                 Valider
               </Button>
@@ -400,7 +402,7 @@ export default function CalendarScreen() {
             }}
             renderItem={({ item }) => (
               <View style={styles.slide}>
-                <Text style={[styles.slideTitle, Theme().themeText]}>{item.title}</Text>
+                <Text style={[styles.slideTitle, _Theme.themeText]}>{item.title}</Text>
                 {renderSwitch(item)}
               </View>
             )}
@@ -408,8 +410,8 @@ export default function CalendarScreen() {
           <Pagination.Basic
             progress={progress}
             data={slideData}
-            dotStyle={{...Theme().themePagination, borderRadius: 0, width:(width-30)/3, height: 3}}
-            activeDotStyle={Theme().themePagination2}
+            dotStyle={{..._Theme.themePagination, borderRadius: 0, width:(width-30)/3, height: 3}}
+            activeDotStyle={_Theme.themePagination2}
             containerStyle={{ gap: 10, top: 42, position: 'absolute' }}
             onPress={onPressPagination}
           />
