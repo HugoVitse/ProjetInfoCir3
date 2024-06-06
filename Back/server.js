@@ -35,6 +35,7 @@ const getInfos = require('./getInfos')
 const updateInfos = require('./updateInfos')
 const setPicture = require('./setPicture')
 const createEvenement = require('./createEvenement')
+const EventRegister = require('./EventRegister')
 
 
 
@@ -74,6 +75,7 @@ async function serv(){
   app.post('/setPicture',setPicture)
   app.post('/createEvenement',createEvenement)
   app.get('/evenements',evenements)
+  app.post('/EventRegister',EventRegister)
 
   app.listen(80,()=>{
       console.log(`serever is runing at port 80`);

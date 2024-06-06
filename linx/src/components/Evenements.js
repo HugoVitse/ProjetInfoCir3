@@ -30,7 +30,10 @@ const Evenements = () => {
     const [actualIndex, setActualIndex] = useState(0)
     const [initialZoom,setInitialZoom] = useState("13")
 
+    const [jwt,setJwt] = useState("")
+
     const [basicModal, setBasicModal] = useState(false);
+    const [error, setError] = useState("")
 
     const toggleOpen = () => setBasicModal(!basicModal)
 
@@ -52,6 +55,34 @@ const Evenements = () => {
         setShowPopup(false);
     };
 
+    const inscription = async() => {
+        const data = {
+            id:evenements[actualIndex]._id
+        }
+        try{
+            const reponse = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/EventRegister`,data,{withCredentials:true})
+            if(reponse.status==200){
+                toggleOpen()
+            }
+
+        }
+        catch(err){
+            switch(err.response.status){
+                case 503 : 
+                    setError("L'évènement est plein")                   
+                    break;
+                case 504 : 
+                    setError("Vous êtes déjà inscrit à l'évènement.")
+                    break;
+                default :
+                    setError("Un problème est survenu")
+                    break;
+            }
+        }
+
+        
+    }
+
     const Activite = () => {
         navigate('/Activite', {
             state: {
@@ -71,6 +102,7 @@ const Evenements = () => {
         }
         try {
             const decodedToken = jwtDecode(token);
+            setJwt(decodedToken)
             console.log(decodedToken);
             return true;
         } catch {
@@ -236,7 +268,7 @@ const Evenements = () => {
                 
             </MDBCol>
             <MDBCol size='9' className='px-0' style={{border:"2px solid black"}}>
-                <gmp-map ref={mapRef} center={`${latlog.lat}, ${latlog.lng}`} zoom={initialZoom} map-id="DEMO_MAP_ID">
+                <gmp-map ref={mapRef} center={`${latlog.lat + 2/100}, ${latlog.lng}`} zoom={initialZoom} map-id="DEMO_MAP_ID">
                     <gmp-advanced-marker ref={pingRef} position={`${latlog.lat}, ${latlog.lng}`} title="My location"></gmp-advanced-marker>
                 </gmp-map>
                 <MDBCard style={{width:"20%",position:"absolute",top:0,transform:transform,height: '45%'}}>
@@ -251,7 +283,13 @@ const Evenements = () => {
                         <MDBCardText>
                             {evenements[actualIndex]?evenements[actualIndex].activity.description:""}
                         </MDBCardText>
-                        <MDBBtn onClick={toggleOpen}>S'inscrire</MDBBtn>
+                        <MDBCardText>
+                            {evenements[actualIndex]?(evenements[actualIndex].participants.indexOf(jwt.email)==-1?"":"Vous êtes déjà inscrits"):""}
+                        </MDBCardText>
+                        <MDBCardText>
+                            {evenements[actualIndex]?(evenements[actualIndex].participants.length >= (parseInt(evenements[actualIndex].nbinvities) +1)?"Evenement complet":""):""}
+                        </MDBCardText>
+                        <MDBBtn disabled={evenements[actualIndex]?((evenements[actualIndex].participants.indexOf(jwt.email)!=-1  || evenements[actualIndex].participants.length >= (parseInt(evenements[actualIndex].nbinvities) +1))?true:false):false} onClick={toggleOpen}>S'inscrire</MDBBtn>
                     </MDBCardBody>
                 </MDBCard>
             </MDBCol>
@@ -259,16 +297,19 @@ const Evenements = () => {
                 <MDBModalDialog>
                     <MDBModalContent>
                         <MDBModalHeader>
-                            <MDBModalTitle>Modal title</MDBModalTitle>
+                            <MDBModalTitle>Êtes-vous sûr ?</MDBModalTitle>
                             <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
                         </MDBModalHeader>
-                        <MDBModalBody>...</MDBModalBody>
+                        <MDBModalBody>
+                            <MDBCardText>{`Voulez-vous vraiment vous inscrire à l'activité : ${evenements[actualIndex]?evenements[actualIndex].activity.title:""}`}</MDBCardText>
+                            {error.length>0?<MDBCardText style={{color:"#ff3333"}}>{error}</MDBCardText>:""}
+                        </MDBModalBody>
 
                         <MDBModalFooter>
                             <MDBBtn color='secondary' onClick={toggleOpen}>
-                                Close
+                                Annuler
                             </MDBBtn>
-                            <MDBBtn>Save changes</MDBBtn>
+                            <MDBBtn onClick={inscription}>S'inscrire</MDBBtn>
                         </MDBModalFooter>
                     </MDBModalContent>
                 </MDBModalDialog>
