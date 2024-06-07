@@ -101,7 +101,7 @@ const Home = () => {
 
   return (
     <div className="flex-grow-1 vh-100">
-      <MDBContainer fluid className="py-5 vh-100" style={{ backgroundColor: 'var(--bg-color)',  height: '100%' }}>
+      <MDBContainer fluid className="py-5 vh-100 bg-theme" style={{ height: '100%' }}>
         <MDBRow className="justify-content-center align-items-center h-100">
           <MDBCol lg="9" xl="7" className='w-100'>
             <header style={{
@@ -138,8 +138,8 @@ const Home = () => {
             <MDBRow className="mt-4">
               <MDBCol md="6" className="mb-4">
                 <MDBCard className="custom-card">
-                  <MDBCardBody className="p-4 text-black custom-card">
-                    <MDBTypography tag="h5" className="custom-text">Prochains événements</MDBTypography>
+                  <MDBCardBody className="p-4 text-theme custom-card">
+                    <MDBTypography tag="h5" > <strong>Prochains événements</strong></MDBTypography>
                     <hr />
                     <MDBCardText>Contenu des prochains événements</MDBCardText>
                   </MDBCardBody>
@@ -147,9 +147,9 @@ const Home = () => {
               </MDBCol>
 
               <MDBCol md="6" className="mb-4">
-                <MDBCard className="custom-card">
-                  <MDBCardBody className="p-4 text-black custom-card">
-                    <MDBTypography tag="h5" className="custom-text">Deuxième case</MDBTypography>
+                <MDBCard className="text-theme custom-card">
+                  <MDBCardBody className="p-4 custom-card">
+                    <MDBTypography tag="h5"> <strong>Deuxième case </strong></MDBTypography>
                     <hr />
                     <MDBCardText>Contenu de la deuxième case</MDBCardText>
                   </MDBCardBody>
@@ -159,9 +159,9 @@ const Home = () => {
 
             <MDBRow className="mt-4">
               <MDBCol md="6" className="mb-4">
-                <MDBCard className="custom-card">
-                  <MDBCardBody className="p-4 text-black custom-card">
-                    <MDBTypography tag="h5" className="custom-text">Troisième case</MDBTypography>
+                <MDBCard className="text-theme custom-card">
+                  <MDBCardBody className="p-4 custom-card">
+                    <MDBTypography tag="h5">Troisième case</MDBTypography>
                     <hr />
                     <MDBCardText>Contenu de la troisième case</MDBCardText>
                   </MDBCardBody>
@@ -169,9 +169,9 @@ const Home = () => {
               </MDBCol>
 
               <MDBCol md="6" className="mb-4">
-                <MDBCard className="custom-card">
-                  <MDBCardBody className="p-4 text-black custom-card">
-                    <MDBTypography tag="h5" className="custom-text">Quatrième case</MDBTypography>
+                <MDBCard className="text-theme custom-card">
+                  <MDBCardBody className="p-4 custom-card">
+                    <MDBTypography tag="h5">Quatrième case</MDBTypography>
                     <hr />
                     <MDBCardText>Contenu de la quatrième case</MDBCardText>
                   </MDBCardBody>
@@ -181,9 +181,9 @@ const Home = () => {
 
             <MDBRow className="mt-4">
               <MDBCol md="6" className="mb-4">
-                <MDBCard className="custom-card">
-                  <MDBCardBody className="p-4 text-black custom-card">
-                    <MDBTypography tag="h5" className="custom-text">Cinquième case</MDBTypography>
+                <MDBCard className="text-theme custom-card">
+                  <MDBCardBody className="p-4 custom-card">
+                    <MDBTypography tag="h5">Cinquième case</MDBTypography>
                     <hr />
                     <MDBCardText>Contenu de la cinquième case</MDBCardText>
                   </MDBCardBody>
@@ -191,9 +191,9 @@ const Home = () => {
               </MDBCol>
 
               <MDBCol md="6" className="mb-4">
-                <MDBCard className="custom-card">
-                  <MDBCardBody className="p-4 text-black custom-card">
-                    <MDBTypography tag="h5" className="custom-text">Sixième case</MDBTypography>
+                <MDBCard className="text-theme custom-card">
+                  <MDBCardBody className="p-4 custom-card">
+                    <MDBTypography tag="h5">Sixième case</MDBTypography>
                     <hr />
                     <MDBCardText>Contenu de la sixième case</MDBCardText>
                   </MDBCardBody>

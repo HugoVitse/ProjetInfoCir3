@@ -5,7 +5,8 @@
   --text-color: black;
   --text-color-inv: white;
   --card-bg-color: #ffffff;
-  --primary-color: #5db9ee;
+  --primary-color: #89cdf5;
+  --secondary-color: #5806bde7;
   --btn-color: pink;
 }
 
@@ -16,8 +17,67 @@
   --text-color: white;
   --text-color-inv: black;
   --card-bg-color: #1e1e1e;
-  --primary-color: #5c0bbe;
+  --primary-color: #5806bde7;
+  --secondary-color: #89cdf5;
   --btn-color: pink;
+}
+
+
+/* Custom styles for MDB components */
+.bg-theme {
+  background-color: var(--bg-color) !important;
+}
+
+.bg-theme-inv {
+  background-color: var(--bg-color-inversed) !important;
+}
+
+.text-theme {
+  color: var(--text-color) !important;
+}
+
+.text-theme-inv {
+  color: var(--text-color-inv)!important;
+}
+
+.custom-btn {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.custom-btn-primary {
+  background-color: var(--secondary-color);
+  color: var(--text-color-inv);
+  border: none;
+}
+
+.custom-btn-secondary {
+  background-color: #f02f3f; /* Vert */
+  color: var(--text-color-inv);
+  border: none;
+}
+
+.custom-btn-primary:hover,
+.custom-btn-secondary:hover {
+  filter: brightness(0.9);
+}
+
+@media (max-width: 1200px) {
+  .custom-col {
+    flex: 1 1 calc(50% - 16px);
+    max-width: calc(50% - 16px);
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-col {
+    flex: 1 1 calc(100% - 16px);
+    max-width: calc(100% - 16px);
+  }
 }
 
 /* General styles */
@@ -30,84 +90,59 @@ body {
   background-color: var(--card-bg-color) !important;
 }
 
-.custom-text {
+/* .custom-text {
   color: var(--primary-color) !important;
+} */
+
+.custom-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 60%;
+  max-height: 90%;
+  overflow: auto;
+  background-color: var(--bg-color);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1050;
 }
 
-/* Add any other custom styles below */
-.flex-grow-1 {
-  flex-grow: 1;
+.custom-input {
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  font-size: 16px;
+  background-color: var(--card-bg-color);
+  color: var(--text-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.vh-100 {
-  height: 100vh;
+.custom-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-color);
 }
 
-.py-5 {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+.custom-image {
+  max-height: 200px;
+  object-fit: cover;
 }
 
-.mb-4 {
-  margin-bottom: 1.5rem;
-}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .custom-modal {
+    width: 100% !important;
+  }
 
-.mt-4 {
-  margin-top: 1.5rem;
-}
-
-.lead {
-  font-size: 1.25rem;
-  font-weight: 300;
-}
-
-.fw-normal {
-  font-weight: 400;
-}
-
-.mb-1 {
-  margin-bottom: 0.25rem;
-}
-
-.p-4 {
-  padding: 1.5rem;
-}
-
-.text-black {
-  color: #000 !important;
-}
-
-.text-center {
-  text-align: center !important;
-}
-
-.w-100 {
-  width: 100% !important;
-}
-
-.p-5 {
-  padding: 3rem !important;
-}
-
-.mx-auto {
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
-.d-flex {
-  display: flex !important;
-}
-
-.justify-content-center {
-  justify-content: center !important;
-}
-
-.align-items-center {
-  align-items: center !important;
-}
-
-.justify-content-between {
-  justify-content: space-between !important;
+  .navbar-toggler {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    background: var(--btn-color);
+    border: none;
+  }
 }
 
 /* Navbar settings */
@@ -121,22 +156,21 @@ body {
   }
 }
 
-/* App.css */
 @keyframes slideInLeft {
   from {
-    transform: translateX(-100%);
+    transform: translateX(-50%); /* Départ de la gauche */
   }
   to {
-    transform: translateX(0);
+    transform: translateX(0); /* Arrivée à la position initiale */
   }
 }
 
 @keyframes slideOutLeft {
   from {
-    transform: translateX(0);
+    transform: translateX(0); /* Départ de la position initiale */
   }
   to {
-    transform: translateX(-100%);
+    transform: translateX(-50%); /* Sortie vers la gauche */
   }
 }
 
@@ -158,55 +192,60 @@ body {
   animation: slideOutLeft 0.5s forwards;
 }
 
-/* Animation pour la fermeture */
-#navbar.fade-out {
-  animation: slideOutRight 0.5s forwards;
-}
-
 .custom-modal {
-  width: 60% !important; /* Ajustez la largeur selon vos besoins */
+  width: 60% !important;
 }
 
-/* Fin Navbar */
 
+/* Pour le catalogue */
 
-/* Custom styles for MDB components */
-/* MDBCard */
-
-.bg-theme {
-  background-color: var(--bg-color) !important;
-  color: var(--text-color-inv) !important;
+.custom-card {
+  background-color: var(--card-bg-color) !important;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
 }
 
-.bg-theme-inv {
-  background-color: var(--bg-color-inversed) !important;
-  color: var(--text-color-inv) !important;
+.custom-card:hover {
+  transform: translateY(-10px);
 }
 
-.nav-text{
-  color: var(--text-color) !important;
+.custom-card-body {
+  padding: 15px;
 }
 
-.nav-text-inv{
-  color: var(--text-color-inv) !important;
+.custom-card-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
 }
 
-/* MDBContainer */
-.mdb-container {
-  /* Add your styles for MDBContainer here */
+.custom-card-text {
+  font-size: 1rem;
+  margin-bottom: 1rem;
 }
 
-/* MDBBtn */
-.mdb-btn {
-  background-color: var(--btn-color) !important;
+.custom-card-date {
+  font-size: 0.875rem;
+  color: var(--text-color);
 }
 
-/* MDBInput */
-.mdb-input {
-  /* Add your styles for MDBInput here */
+.custom-image {
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
-/* MDBCardText */
-.mdb-card-text {
-  /* Add your styles for MDBCardText here */
+.custom-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
 }
+
+.custom-col {
+  flex: 1 1 calc(33.333% - 16px);
+  max-width: calc(33.333% - 16px);
+}
+
+/* Fin Catalogue */

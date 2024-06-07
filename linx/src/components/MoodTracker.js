@@ -2,16 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
 import {
-  MDBContainer, MDBCarousel, MDBCardImage, MDBCarouselItem, MDBCard, MDBCardBody, MDBRange, MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalBody, MDBModalFooter
+  MDBContainer, MDBCard, MDBCardBody, MDBCarousel, MDBCarouselItem, MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalBody, MDBModalFooter
 } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import '../css/MoodTracker.css';
-import Cookies from 'js-cookie';
-import { Chart, RadarController, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
+import Chart from 'chart.js/auto';
 import Calendar from './Calendar';
 import axios from 'axios';
+import Cookies from 'js-cookie';
+import '../css/MoodTracker.css';
 
-Chart.register(RadarController, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
 const MoodTracker = () => {
   const [formData, setFormData] = useState({
@@ -23,20 +22,19 @@ const MoodTracker = () => {
     date: getTodayDateDDMMYYYY(),
     average: 0
   });
-  const [error, setError] = useState('');
   const navigate = useNavigate();
   const [basicModal, setBasicModal] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [today, settoday] = useState(true);
-  const [years, setyears] = useState([]);
-  const [sleep, setsleep] = useState([]);
-  const [stress, setstress] = useState([]);
-  const [energ, setenerg] = useState([]);
-  const [moral, setmoral] = useState([]);
-  const [add, setadd] = useState([]);
-  const [ind, setind] = useState(0);
+  const [years, setYears] = useState([]);
+  const [sleep, setSleep] = useState([]);
+  const [stress, setStress] = useState([]);
+  const [energ, setEnerg] = useState([]);
+  const [moral, setMoral] = useState([]);
+  const [add, setAdd] = useState([]);
+  const [avera, setaverag] = useState([]);
+  const [ind, setInd] = useState(0);
   const radarChartRef = useRef(null);
-  const chartInstance = useRef(null);
+  const barChartRef = useRef(null);
 
   const calculateAverage = (data) => {
     const { sleepQuality, stressLevel, energyLevel, moral, additionalActivity } = data;
@@ -54,16 +52,28 @@ const MoodTracker = () => {
   function getTodayDateDDMMYYYY() {
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0'); 
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
-  
+
     return `${dd}-${mm}-${yyyy}`;
   }
 
+  const getThisWeekDates = () => {
+    const today = new Date();
+    const dayOfWeek = today.getDay()
+    const startDate = new Date(today);
+    startDate.setDate(today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1));
+    const endDate = new Date(today);
+    endDate.setDate(today.getDate() - dayOfWeek + (dayOfWeek === 0 ? 0 : 7));
+
+    const startDateFormatted = `${String(startDate.getDate()).padStart(2, '0')}-${String(startDate.getMonth() + 1).padStart(2, '0')}-${startDate.getFullYear()}`;
+    const endDateFormatted = `${String(endDate.getDate()).padStart(2, '0')}-${String(endDate.getMonth() + 1).padStart(2, '0')}-${endDate.getFullYear()}`;
+
+    return { startDate: startDateFormatted, endDate: endDateFormatted };
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setLoading(true);
     try {
       await axios.post('http://localhost/FillMoodTracker', formData, { withCredentials: true });
       setFormData({
@@ -76,18 +86,13 @@ const MoodTracker = () => {
         average: 0
       });
       setBasicModal(false);
-      window.location.reload();
+      navigate("/MoodTracker");
     } catch (error) {
       console.error('Error:', error);
-      setError('An error occurred. Please try again later.');
-    } finally {
-      setLoading(false);
     }
   };
-  
 
   useEffect(() => {
-
     const retrieveCookie = () => {
       const token = Cookies.get("jwt");
       try {
@@ -96,9 +101,7 @@ const MoodTracker = () => {
         navigate("/");
       }
     };
-  
-    retrieveCookie();
-  
+
     const fetchData = async () => {
       retrieveCookie();
       try {
@@ -110,7 +113,9 @@ const MoodTracker = () => {
         const moralArray = [];
         const addArray = [];
         const todayDate = getTodayDateDDMMYYYY();
-        
+        const Average = [];
+        const thisWeek = getThisWeekDates();
+
         response.data.moodTrackerData.forEach((data, i) => {
           yearsArray.push(data.date);
           sleepArray.push(data.sleepQuality);
@@ -118,43 +123,45 @@ const MoodTracker = () => {
           energArray.push(data.energyLevel);
           moralArray.push(data.moral);
           addArray.push(data.additionalActivity);
-          setind(i)
           if (data.date === todayDate) {
             settoday(false);
+            setInd(i);
+          }
+          if (data.date === thisWeek.startDate) {
+            setInd(i);
           }
         });
-        setyears(yearsArray);
-        setsleep(sleepArray);
-        setstress(stressArray);
-        setenerg(energArray);
-        setmoral(moralArray);
-        setadd(addArray);
+        setYears(yearsArray);
+        setSleep(sleepArray);
+        setStress(stressArray);
+        setEnerg(energArray);
+        setMoral(moralArray);
+        setAdd(addArray);
+
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
-    
   }, []);
 
-  useEffect(()=>{
-    if(years.length>1 && sleep.length>1 && add.length>1 && moral.length>1 && energ.length>1 && stress.length>1){
-      GetCanva();
+  useEffect(() => {
+    if (radarChartRef.current && barChartRef.current) {
+      if (years.length > 0 && sleep.length > 0 && add.length > 0 && moral.length > 0 && energ.length > 0 && stress.length > 0) {
+        GetCanvas();
+        GetBar();
+      }
     }
- 
+  }, [years, sleep, add, moral, energ, stress]);
 
-  },[years,sleep,add,moral,energ,stress])
-
-
-  const GetCanva = () =>{
-
-    if (chartInstance.current) {
-      chartInstance.current.destroy();
+  const GetCanvas = () => {
+    if (radarChartRef.chartInstance) {
+      radarChartRef.chartInstance.destroy();
     }
 
     const ctx = radarChartRef.current.getContext('2d');
-  
-    chartInstance.current = new Chart(ctx, {
+
+    radarChartRef.chartInstance = new Chart(ctx, {
       type: 'radar',
       data: {
         labels: ['Sommeil', 'Sport', 'Alimentation', 'Social', 'Moral'],
@@ -162,13 +169,11 @@ const MoodTracker = () => {
           {
             label: 'Mood Actuel',
             data: [
-              formData.sleepQuality || sleep[ind],
-              formData.stressLevel || stress[ind],
-              formData.energyLevel || energ[ind],
-              formData.moral || moral[ind],
-              formData.additionalActivity || add[ind],
-
-              
+              sleep[ind],
+              stress[ind],
+              energ[ind],
+              moral[ind],
+              add[ind],
             ],
             backgroundColor: 'rgba(54, 245, 39, 0.37)',
             borderColor: 'rgba(54, 162, 235, 1)',
@@ -188,55 +193,83 @@ const MoodTracker = () => {
         },
       },
     });
+  };
 
-    return () => {
-      if (chartInstance.current) {
-        chartInstance.current.destroy();
-      }
-    };
+  const GetBar = () => {
+    if (barChartRef.chartInstance) {
+      barChartRef.chartInstance.destroy();
+    }
 
-  }
+    const ctx = barChartRef.current.getContext('2d');
+    const dayOfWeek = new Date().getDay();
+    const startIndex = ind - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+
+    barChartRef.chartInstance = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'],
+        datasets: [
+          {
+            label: 'Mood Actuel',
+            data: [
+              avera[startIndex] || 0,
+              avera[startIndex + 1] || 0,
+              avera[startIndex + 2] || 0,
+              avera[startIndex + 3] || 0,
+              avera[startIndex + 4] || 0,
+              avera[startIndex + 5] || 0,
+              avera[startIndex + 6] || 0,
+            ],
+            backgroundColor: 'rgba(54, 245, 39, 0.37)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 10,
+          },
+        },
+      },
+    });
+  };
+
+
 
   return (
     <MDBContainer fluid className="d-flex align-items-center justify-content-center vh-800">
       <MDBCard className="w-50 h-10">
         <MDBCardBody>
-          {/* Afficher le bouton ou le texte en fonction de today */}
           {today ? (
             <MDBBtn className="w-100 mb-3 btn-success" onClick={() => setBasicModal(true)}>
               Questionnaire Quotidien
             </MDBBtn>
           ) : (
-            <MDBBtn className="w-100 mb-3 btn-danger" style={{ cursor: 'auto' }}>
+            <MDBBtn className="w-100 mb-3 btn-danger">
               Questionnaire Quotidien NON Disponible
             </MDBBtn>
           )}
-          {/* Carrousel */}
+
           <MDBCarousel showControls fade>
-            {/* Première Carrousel */}
             <MDBCarouselItem className="w-100 d-block " itemId={1}>
               <h5>Première Slide</h5>
               <Calendar />
             </MDBCarouselItem>
-            
-            {/* Carrousel du MoodBoard Quotidien */}
+
             <MDBCarouselItem className="w-100 d-block vh-80" itemId={2}>
-              <h5>MoodBoard Quotidien, Date : {years[ind]} </h5>
-              <canvas ref={radarChartRef} id="radarChart" style={{ marginTop: '20px', width: '100%', height: '400px' }}></canvas>
+              <h5>MoodBoard Hebdomadaire, Date : {years[ind]}</h5>
+              <canvas ref={barChartRef} id="barChart" style={{ marginTop: '20px', width: '100%', height: '400px' }}></canvas>
             </MDBCarouselItem>
 
-            {/* Troisième Carrousel */}
             <MDBCarouselItem className="w-100 d-block vh-80" itemId={3}>
-              <h5>Troisième Slide</h5>
-              <MDBCardImage
-                src='https://mdbootstrap.com/img/new/standard/city/042.webp'
-                alt='...'
-                style={{ height: '80%' }}
-              />
+              <h5>MoodBoard Quotidien, Date : {years[ind]}</h5>
+              <canvas ref={radarChartRef} id="radarChart" style={{ marginTop: '20px', width: '100%', height: '400px' }}></canvas>
             </MDBCarouselItem>
           </MDBCarousel>
-  
-          {/* Pop-up Questionnaire */}
+
           <MDBModal open={basicModal} toggle={() => setBasicModal(false)} tabIndex='-1' staticBackdrop>
             <MDBModalDialog centered>
               <MDBModalContent>
@@ -247,39 +280,39 @@ const MoodTracker = () => {
                 <MDBModalBody>
                   <div style={{ padding: '20px' }}>
                     <h3 className="text-center mb-4">Suivi quotidien de l'humeur</h3>
-                      
-                      <div className="mb-3">
-                        <label htmlFor="sleepQuality" className="form-label">Avez-vous bien dormi ? (note sur 10)</label>
-                        <MDBRange id="sleepQuality" name="sleepQuality" min="0" max="10" value={formData.sleepQuality} onChange={(e) => handleSliderChange(e.target.value, 'sleepQuality')} />
-                      </div>
-                      <div className="mb-3">
-                        <label htmlFor="stressLevel" className="form-label">Avez-vous fait du sport aujourd'hui ? (note sur 10)</label>
-                        <MDBRange id="stressLevel" name="stressLevel" min="0" max="10" value={formData.stressLevel} onChange={(e) => handleSliderChange(e.target.value, 'stressLevel')} />
-                      </div>
-                      <div className="mb-3">
-                        <label htmlFor="energyLevel" className="form-label">Notez vos interactions avec des personnes. (note sur 10)</label>
-                        <MDBRange id="energyLevel" name="energyLevel" min="0" max="10" value={formData.energyLevel} onChange={(e) => handleSliderChange(e.target.value, 'energyLevel')} />
-                      </div>
-                      <div className="mb-3">
-                        <label htmlFor="moral" className="form-label">Vous êtes-vous senti anxieux, heureux, ou autre ? (note sur 10)</label>
-                        <MDBRange id="moral" name="moral" min="0" max="10" value={formData.moral} onChange={(e) => handleSliderChange(e.target.value, 'moral')} />
-                      </div>
-                      <div className="mb-3">
-                        <label htmlFor="additionalActivity" className="form-label">Avez-vous bien mangé aujourd'hui ?</label>
-                        <MDBRange id="additionalActivity" name="additionalActivity" min="0" max="10" value={formData.additionalActivity} onChange={(e) => handleSliderChange(e.target.value, 'additionalActivity')} />
-                      </div>
+
+                    <div className="mb-3">
+                      <label htmlFor="sleepQuality" className="form-label">Avez-vous bien dormi ? (note sur 10)</label>
+                      <input type="range" className="form-range" id="sleepQuality" name="sleepQuality" min="0" max="10" value={formData.sleepQuality} onChange={(e) => handleSliderChange(e.target.value, 'sleepQuality')} />
                     </div>
-                  </MDBModalBody>
-                  <MDBModalFooter>
-                    <MDBBtn color="primary" onClick={handleSubmit}>Envoyez vos réponses</MDBBtn>
-                  </MDBModalFooter>
-                </MDBModalContent>
-              </MDBModalDialog>
-            </MDBModal>
-          </MDBCardBody>
-        </MDBCard>
-      </MDBContainer>
-    );  
+                    <div className="mb-3">
+                      <label htmlFor="stressLevel" className="form-label">Avez-vous fait du sport aujourd'hui ? (note sur 10)</label>
+                      <input type="range" className="form-range" id="stressLevel" name="stressLevel" min="0" max="10" value={formData.stressLevel} onChange={(e) => handleSliderChange(e.target.value, 'stressLevel')} />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="energyLevel" className="form-label">Notez vos interactions avec des personnes. (note sur 10)</label>
+                      <input type="range" className="form-range" id="energyLevel" name="energyLevel" min="0" max="10" value={formData.energyLevel} onChange={(e) => handleSliderChange(e.target.value, 'energyLevel')} />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="moral" className="form-label">Vous êtes-vous senti anxieux, heureux, ou autre ? (note sur 10)</label>
+                      <input type="range" className="form-range" id="moral" name="moral" min="0" max="10" value={formData.moral} onChange={(e) => handleSliderChange(e.target.value, 'moral')} />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="additionalActivity" className="form-label">Avez-vous bien mangé aujourd'hui ?</label>
+                      <input type="range" className="form-range" id="additionalActivity" name="additionalActivity" min="0" max="10" value={formData.additionalActivity} onChange={(e) => handleSliderChange(e.target.value, 'additionalActivity')} />
+                    </div>
+                  </div>
+                </MDBModalBody>
+                <MDBModalFooter>
+                  <MDBBtn color="primary" onClick={handleSubmit}>Envoyez vos réponses</MDBBtn>
+                </MDBModalFooter>
+              </MDBModalContent>
+            </MDBModalDialog>
+          </MDBModal>
+        </MDBCardBody>
+      </MDBCard>
+    </MDBContainer>
+  );
 };
 
 export default MoodTracker;

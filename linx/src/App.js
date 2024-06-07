@@ -18,31 +18,14 @@ import { Modal, Ripple, initMDB } from "mdb-ui-kit";
 initMDB({ Modal, Ripple });
 
 function App() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [theme, setTheme] = useState('light');  // State for theme
+  const [theme, setTheme] = useState('light');
+  const [isOpen, setIsOpen] = useState(false); // Ajout de isOpen
 
   useEffect(() => {
-    const storedModalOpen = localStorage.getItem('modalOpen') === 'true';
-    setModalOpen(storedModalOpen);
-
-    // Apply saved theme
     const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme);
     document.body.className = savedTheme === 'dark' ? 'dark-theme' : 'light-theme';
   }, []);
-
-  const handleModalToggle = () => {
-    setModalOpen(prevState => {
-      const newState = !prevState;
-      localStorage.setItem('modalOpen', String(newState));
-      return newState;
-    });
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-    localStorage.setItem('modalOpen', 'false');
-  };
 
   const toggleTheme = () => {
     setTheme(prevTheme => {
@@ -53,27 +36,21 @@ function App() {
     });
   };
 
+  const handleModalToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <Router>
       <MDBContainer fluid className="vh-100 p-0">
-        {modalOpen && (
-          <div className="modal show" id="navbar" tabIndex="-1" aria-labelledby="navbarLabel" aria-hidden="true" onClick={handleCloseModal}>
-            <div className="modal-dialog modal-start modal-fullscreen custom-modal">
-              <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                <NavBar isOpen={modalOpen} closePopup={handleCloseModal} />
-              </div>
+        <div className={`modal show ${isOpen ? '' : 'fade'}`} id="navbar" tabIndex="-1" aria-labelledby="navbarLabel" aria-hidden="true">
+          <div className="modal-dialog modal-start modal-fullscreen custom-modal">
+            <div className="modal-content">
+              <NavBar toggleTheme={toggleTheme} handleModalToggle={handleModalToggle} theme={theme} isOpen={isOpen} />
             </div>
           </div>
-        )}
+        </div>
         <MDBCard>
-          {/* Bouton NavBar */}
-          <button type="button" className="bg-dark" onClick={handleModalToggle}>
-            <i className="fas fa-align-justify"></i>
-          </button>
-          {/* Bouton Thème */}
-          <button onClick={toggleTheme} className="bg-theme-inv">
-            {theme === 'light' ? <MDBIcon fas icon="sun" /> : <MDBIcon fas icon="moon" />}
-          </button>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/Login" element={<Login />} />

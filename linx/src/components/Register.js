@@ -54,7 +54,7 @@ const Register = () => {
   return (
 
   
-<MDBContainer fluid className="d-flex align-items-center justify-content-center vh-100" style={{ backgroundColor: '#6200EA' }}>
+<MDBContainer fluid className="d-flex align-items-center justify-content-center vh-100 bg-theme">
       <MDBCard className="w-100 w-md-75" style={{ maxHeight: '90%' }}>
         <MDBRow className="g-0 h-100">
 
@@ -135,9 +135,9 @@ const Register = () => {
                 />
                 <MDBBtn
                   type="submit"
-                  className="w-100 mb-4"
                   disabled={loading}
-                  style={{ backgroundColor: '#563d7c' }}
+                  className="custom-btn custom-btn-primary mb-4" 
+                  style={{width:'100%'}}
                 >
                   {loading ? 'Registering...' : 'Register'}
                 </MDBBtn>
