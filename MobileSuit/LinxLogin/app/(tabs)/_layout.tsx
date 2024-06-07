@@ -37,6 +37,15 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen 
+          name="events"
+          options={{
+            title: 'Evènements',
+            tabBarIcon: ({ color, focused }) => (
+              <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen 
           name="catalog" 
           options={{
             title: 'Catalogue',

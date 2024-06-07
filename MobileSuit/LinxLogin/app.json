@@ -13,12 +13,20 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config":{
+        "googleMapsApiKey": "AIzaSyAOpVdDvYUvbIB_u_d6k_HVfw13_Vux0K0"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAOpVdDvYUvbIB_u_d6k_HVfw13_Vux0K0"
+        }
       },
       "package": "com.bwift.LinxLogin"
     },
