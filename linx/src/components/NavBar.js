@@ -12,7 +12,7 @@ const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => 
 
   return (
     <Container className="bg-theme-inv d-flex h-100 p-3 position-relative">
-      <div className={`bg-theme-inv d-flex flex-column align-items-start p-3 h-100 ${isOpen ? 'show' : 'fade'}`} id="navbar">
+      <div className={`bg-theme-inv d-flex w-50 flex-column align-items-start p-3 h-100 ${isOpen ? 'show' : 'fade'}`} id="navbar">
         <div className="position-relative">
           <Link to='/' className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-theme-inv text-decoration-none">
             <img

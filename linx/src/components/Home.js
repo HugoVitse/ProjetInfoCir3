@@ -203,6 +203,117 @@ const Home = () => {
           </MDBCol>
         </MDBRow>
       </MDBContainer>
+
+      {/* Pop-up Questionnaire !!! */}
+      <MDBModal open={basicModal} onClose={() => setBasicModal(false)} tabIndex='-1'>
+            <MDBModalDialog size="xl" className="vh-80">
+              <MDBModalContent>
+                <MDBModalHeader>
+                  <MDBModalTitle>Questionnaire</MDBModalTitle>
+                  <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
+                </MDBModalHeader>
+
+                <MDBModalBody>
+                  <MDBRow className="w-100">
+                    <MDBCol md="10" lg="8" className="mx-auto">
+                      <MDBCard>
+                        <MDBCardBody className="p-5 text-theme-inv">
+                          <h3 className="text-center mb-4">Questionnaire</h3>
+                          <div className="mb-4">
+                            <label className="form-label">Quelles activités aimez-vous ?</label>
+                            {['Cinéma', 'Attractions', 'Animaux', 'Théâtre', 'Danse', 'Manga/Anime', 'Séries', 'Échecs', 'Moto', 'Lecture', 'Jeux vidéos', 'Musique', 'BD/Comics', 'Voyager', 'Musées', 'Sortir entre amis', 'Sport', 'Nourriture', 'La mode'].map((activity) => (
+                              <MDBCheckbox
+                                key={activity}
+                                label={activity}
+                                id={activity.toLowerCase()}
+                                onChange={() => handleCheckboxChange(activity)}
+                              />
+                            ))}
+                          </div>
+
+                          <div className="mb-4">
+                            <label className="form-label">Notez votre état actuel :</label>
+                            <MDBRange
+                              defaultValue={10}
+                              min="1"
+                              max="20"
+                              step="1"
+                              id="note"
+                              value={formData.note}
+                              onChange={(e) => handleInputChange('note', e.target.value)}
+                            />
+                          </div>
+
+                          <div className="mb-4">
+                            <label className="form-label">Préférez-vous les activités en petit ou en grand groupe ?</label>
+                            <MDBRadio name="groupSize" label="Petit groupe" id="petitcomite" value="petitcomite" onChange={(e) => handleRadioChange('groupSize', e.target.value)} />
+                            <MDBRadio name="groupSize" label="Grand groupe" id="grandcomite" value="grandcomite" onChange={(e) => handleRadioChange('groupSize', e.target.value)} />
+                          </div>
+
+                          <div className="mb-4">
+                            <label className="form-label">Quel moment de la journée préférez-vous pour les sorties ?</label>
+                            <MDBRadio name="preferredTime" label="Matin" id="morning" value="morning" onChange={(e) => handleRadioChange('preferredTime', e.target.value)} />
+                            <MDBRadio name="preferredTime" label="Après-midi" id="afternoon" value="afternoon" onChange={(e) => handleRadioChange('preferredTime', e.target.value)} />
+                            <MDBRadio name="preferredTime" label="Soir" id="evening" value="evening" onChange={(e) => handleRadioChange('preferredTime', e.target.value)} />
+                          </div>
+
+                          <div className="mb-4">
+                            <label className="form-label">Préférez-vous les activités en intérieur ou en extérieur ?</label>
+                            <MDBRadio name="placeType" label="Intérieur" id="indoor" value="indoor" onChange={(e) => handleRadioChange('placeType', e.target.value)} />
+                            <MDBRadio name="placeType" label="Extérieur" id="outdoor" value="outdoor" onChange={(e) => handleRadioChange('placeType', e.target.value)} />
+                          </div>
+
+                          <div className="mb-4">
+                            <label className="form-label">Quel est votre budget pour les sorties ?</label>
+                            <MDBRadio name="budget" label="Bas" id="low" value="low" onChange={(e) => handleRadioChange('budget', e.target.value)} />
+                            <MDBRadio name="budget" label="Moyen" id="medium" value="medium" onChange={(e) => handleRadioChange('budget', e.target.value)} />
+                            <MDBRadio name="budget" label="Élevé" id="high" value="high" onChange={(e) => handleRadioChange('budget', e.target.value)} />
+                          </div>
+
+                          <div className="mb-4">
+                            <label className="form-label">Donner une description pour votre profile :</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="description"
+                              value={formData.description}
+                              onChange={(e) => handleInputChange('description', e.target.value)}
+                            />
+                          </div>
+
+                          <div className="mb-4">
+                            <label className="form-label">Quelle est la distance maximale que vous êtes prêt(e) à parcourir pour une sortie ? (en km)</label>
+                            <MDBRange
+                              defaultValue={25}
+                              min="0"
+                              max="100"
+                              step="25"
+                              id="travelDistance"
+                              value={formData.travelDistance}
+                              onChange={(e) => handleInputChange('travelDistance', e.target.value)}
+                            />
+
+                            <div className="d-flex justify-content-between">
+                              <span>0km</span>
+                              <span>25km</span>
+                              <span>50km</span>
+                              <span>75km</span>
+                              <span>100km</span>
+                            </div>
+                          </div>
+
+                        </MDBCardBody>
+                      </MDBCard>
+                    </MDBCol>
+                  </MDBRow>
+                </MDBModalBody>
+                <MDBModalFooter>
+                  <MDBBtn onClick={handleSubmit}>Finaliser</MDBBtn>
+                </MDBModalFooter>
+              </MDBModalContent>
+            </MDBModalDialog>
+          </MDBModal>
+
     </div>
   );
 };
