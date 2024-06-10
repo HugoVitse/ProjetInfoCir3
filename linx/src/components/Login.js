@@ -60,7 +60,7 @@ const Login = () => {
   };
 
   return (
-    <MDBContainer fluid className="d-flex align-items-center justify-content-center vh-100" style={{ backgroundColor: '#6200EA' }}>
+    <MDBContainer fluid className="bg-theme d-flex align-items-center justify-content-center vh-100">
       <MDBCard className="w-100 w-md-75" style={{ maxHeight: '90%' }}>
         <MDBRow className="g-0 h-100">
           <MDBCol md="6" className="d-none d-md-flex align-items-center justify-content-center p-0 h-100">
@@ -146,7 +146,7 @@ const Login = () => {
               />
             </div>
             <div className="text-center mb-2">
-              <MDBBtn color="primary" type="submit" disabled={loading} style={{ backgroundColor: '#563d7c' }}>
+              <MDBBtn color="primary" className="custom-btn custom-btn-primary" style={{width:'100%'}} type="submit" disabled={loading}>
                 {loading ? 'Logging in...' : 'Login'}
               </MDBBtn>
             </div>

@@ -4,7 +4,8 @@ import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import {
     MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBCardText, MDBRow, MDBCol, MDBBtn, 
-    MDBInput, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon
+    MDBInput, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon,
+    MDBContainer
 } from 'mdb-react-ui-kit';
 import axios from 'axios';
 import Config from '../config.json';
@@ -99,19 +100,19 @@ const Catalogue = () => {
     };
 
     return (
-        <div className="container mt-4 mb-4">
+        <MDBContainer className="mt-4 mb-4 bg-theme" style={{marginLeft:'-24'}}>
             <MDBInput
                 label="Rechercher une activité"
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="m-4"
+                className="m-4 custom-input"
             />
 
             <MDBRow className="mb-4">
                 <MDBCol size="4">
                     <MDBDropdown>
-                        <MDBDropdownToggle color="primary" className="d-flex align-items-center">
+                        <MDBDropdownToggle color="primary" className="d-flex align-items-center custom-btn-primary">
                             Trier par {sortCriteria === 'name' ? 'ordre alphabétique' : 'date'}
                             <MDBIcon icon={sortCriteria === 'name' ? 'sort-alpha-down' : 'sort-numeric-down'} className="ms-2" />
                         </MDBDropdownToggle>
@@ -127,7 +128,7 @@ const Catalogue = () => {
                 </MDBCol>
                 <MDBCol size="4">
                     <MDBDropdown>
-                        <MDBDropdownToggle color="primary" className="d-flex align-items-center">
+                        <MDBDropdownToggle color="primary" className="d-flex align-items-center custom-btn-primary ">
                             {sortOrder === 'asc' ? 'Ascendant' : 'Descendant'}
                             <MDBIcon icon={sortOrder === 'asc' ? 'sort-amount-down' : 'sort-amount-up'} className="ms-2" />
                         </MDBDropdownToggle>
@@ -143,21 +144,22 @@ const Catalogue = () => {
                 </MDBCol>
             </MDBRow>
 
-            <MDBRow className='row-cols-1 row-cols-md-3 g-4'>
+            <MDBRow className="custom-row">
                 {filteredActivities.map((activity, index) => (
-                    <MDBCol key={index}>
-                        <MDBCard className='h-100 shadow bg-image hover-zoom' style={{ cursor: 'pointer' }} onClick={() => openPopup(activity.name, activity.description, activity.image, activity.date, activity.adresse)}>
+                    <MDBCol key={index} className="custom-col">
+                        <MDBCard className='h-100 shadow bg-image hover-zoom custom-card' style={{ cursor: 'pointer' }} onClick={() => openPopup(activity.name, activity.description, activity.image, activity.date, activity.adresse)}>
                             <MDBCardImage
                                 src={activity.image}
                                 alt='...'
                                 position='top'
+                                className="custom-image"
                             />
-                            <MDBCardBody>
-                                <MDBCardTitle>{activity.name}</MDBCardTitle>
-                                <MDBCardText>
+                            <MDBCardBody className="custom-card-body">
+                                <MDBCardTitle className="custom-card-title">{activity.name}</MDBCardTitle>
+                                <MDBCardText className="custom-card-text">
                                     {activity.description}
                                 </MDBCardText>
-                                <MDBCardText>
+                                <MDBCardText className="custom-card-date">
                                     <small className="text-muted">{activity.date}</small>
                                 </MDBCardText>
                             </MDBCardBody>
@@ -166,11 +168,9 @@ const Catalogue = () => {
                 ))}
             </MDBRow>
 
-        
-        
             {/* Popup */}
             {showPopup && selectedCard && (
-                <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', maxWidth: '60%', maxHeight: '90%', overflow: 'auto', backgroundColor: 'white', padding: '20px', borderRadius: '5px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)', width: 'calc(100% - 40px)' }}>
+                <div className="custom-popup">
                     <MDBCard style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <MDBCardImage
                             className='h-10'
@@ -189,13 +189,13 @@ const Catalogue = () => {
                             </MDBCardText>
                         </MDBCardBody>
                     </MDBCard>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-                        <MDBBtn color='secondary' onClick={closePopup}>Fermer</MDBBtn>
-                        <MDBBtn color='primary' onClick={Activite}>S'inscrire à l'activité</MDBBtn>
+                    <div className="custom-popup-buttons">
+                        <MDBBtn color='secondary' className="custom-btn custom-btn-secondary" onClick={closePopup}>Fermer</MDBBtn>
+                        <MDBBtn color='primary' className="custom-btn custom-btn-primary" onClick={Activite}>S'inscrire à l'activité</MDBBtn>
                     </div>
                 </div>
             )}
-        </div>
+        </MDBContainer>
     );
 };
 

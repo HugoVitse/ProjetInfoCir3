@@ -131,7 +131,7 @@ const Evenements = () => {
             const transform = window.getComputedStyle(element).transform;
             const zoom = (elementMap.attributes.zoom.value-8)/5;
             console.log(zoom)
-            setTransform(`${transform} translate(110%,${100*((1-zoom)/2)}%) scale(${zoom})`)
+            setTransform(`${transform} translate(140%,${100*((1-zoom)/2)}%) scale(${zoom})`)
         };
 
       

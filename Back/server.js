@@ -24,6 +24,7 @@ const connect_db = require('./connect_db');
 const port = 443
 
 const fillQuestionnaire = require("./fillQuestionnaire")
+const FillMoodTracker = require("./FillMoodTracker")
 const verifyPassword = require("./verifyPassword")
 const setDaily = require("./setDaily")
 const scrapActivities = require('./scrapActivities')
@@ -47,12 +48,6 @@ const EventRegister = require('./EventRegister')
 async function serv(){
 
 
-
-
-    
-
-    
-
   await connect_db.ConnectDB();
 
   app.get("/",(req,res)=>{
@@ -69,6 +64,7 @@ async function serv(){
   app.get('/activities', activities)
   app.get('/infos', getInfos)
   app.post('/fillquestionnaire',fillQuestionnaire)
+  app.post('/FillMoodTracker',FillMoodTracker)
   app.post('/setDaily',setDaily)
   app.post('/verifyPassword',verifyPassword)
   app.post('/updateInfos',updateInfos)
@@ -77,6 +73,7 @@ async function serv(){
   app.get('/evenements',evenements)
   app.post('/EventRegister',EventRegister)
 
+  
   app.listen(80,()=>{
       console.log(`serever is runing at port 80`);
   })
