@@ -9,4 +9,5 @@ export type evenement = {
     nbinvities:string;
     host:string;
     participants:Array<string>;
+    _id:string
 };

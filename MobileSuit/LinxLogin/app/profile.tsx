@@ -20,6 +20,10 @@ const HEADER_HEIGHT = 200;
 const { width } = Dimensions.get('window');
 
 
+
+
+
+
 export default function ProfileScreen() {
   const router = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
@@ -40,6 +44,8 @@ export default function ProfileScreen() {
   })
   const [newPicture,setNewPicture] = useState("")
 
+  
+
   const setPhoto = async() => {
 
     setProfilFic(newPicture)
@@ -48,6 +54,7 @@ export default function ProfileScreen() {
       picture:newPicture
     }
     const jwt_token = await AsyncStorage.getItem("jwt")
+    
     await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/setPicture`,data,{headers:{Cookie:`jwt=${jwt_token}`},withCredentials:false})
   }
 

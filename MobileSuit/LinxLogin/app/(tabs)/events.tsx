@@ -80,6 +80,16 @@ export default function CatalogScreen() {
       setDrawerDeployed(false)
   }
   
+  const register = async() => {
+    const jwt_cookie = await AsyncStorage.getItem("jwt")
+    const data = {
+      id:evenements[actualIndex]._id
+  }
+    const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/EventRegister`,data, {headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+    console.log(response)
+    hideDialog()
+  
+  }
 
   useEffect(()=>{
     const getActivities = async() => {
@@ -219,7 +229,7 @@ export default function CatalogScreen() {
                 </Card>
   
     
-            <Button  buttonColor="black" icon="login" mode="contained" onPress={()=>{"yes"}}>
+            <Button  buttonColor="black" icon="login-variant" mode="contained" onPress={register}>
               S'inscrire
             </Button>
           </Dialog.Content>
