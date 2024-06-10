@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "name": "LinxLogin",
+    "slug": "LinxLogin",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "config":{
+        "googleMapsApiKey": "AIzaSyAOpVdDvYUvbIB_u_d6k_HVfw13_Vux0K0"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAOpVdDvYUvbIB_u_d6k_HVfw13_Vux0K0"
+        }
+      },
+      "package": "com.bwift.LinxLogin"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "694a8236-3d0e-4358-a259-91ca847ad664"
+      }
+    }
+  }
+}
