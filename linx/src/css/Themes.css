@@ -1,0 +1,17 @@
+/* Thème clair */
+.light-theme {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --card-bg-color: #f8f9fa;
+    --btn-bg-color: #007bff;
+    --btn-text-color: #ffffff;
+  }
+  
+  /* Thème sombre */
+  .dark-theme {
+    --bg-color: #343a40;
+    --text-color: #ffffff;
+    --card-bg-color: #495057;
+    --btn-bg-color: #17a2b8;
+    --btn-text-color: #ffffff;
+  }

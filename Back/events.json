@@ -1,7 +1,11 @@
 [
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-tissus/3192898-1-fre-FR/Atelier-tissus_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Atelier tissus",
+=======
     "name": "Atelier tissus2",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "DIY accessoires, customisation, réparation (Ados, Adultes)",
     "date": "Jusqu'au 21 juin 2024",
@@ -9,7 +13,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/repair-cafe5/3192968-1-fre-FR/Repair-Cafe_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Repair Cafe",
+=======
     "name": "Repair Cafe9",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Jeter ? Pas question ! Ici, on répare tout ce qu'on peut !",
     "date": "Jusqu'au 08 juin 2024",
@@ -17,7 +25,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-guidee-de-l-ancien-hospice-gantois6/3265061-1-fre-FR/Visite-guidee-de-l-ancien-Hospice-Gantois_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Visite guidee de l ancien Hospice Gantois",
+=======
     "name": "Visite guidee de l ancien Hospice Gantois6",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Visite guidée de l'ancien Hospice Gantois de Lille proposée par l'Association du Musée Hospitalier Régional de Lille.",
     "date": "Jusqu'au 25 juin 2024",
@@ -25,7 +37,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/gala-d-etoiles3/3304396-1-fre-FR/GALA-D-ETOILES_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "GALA D ETOILES",
+=======
     "name": "GALA D ETOILES2",
+>>>>>>> origin/yussc
     "type": "Spectacle",
     "description": "SAISON 14",
     "date": "Jusqu'au 22 juin 2024",
@@ -49,7 +65,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/les-grandes-gamelles-cantine-solidaire-ouverte-a-tous2/3418688-1-fre-FR/Les-Grandes-Gamelles-cantine-solidaire-ouverte-a-tous_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Les Grandes Gamelles cantine solidaire ouverte a tous",
+=======
     "name": "Les Grandes Gamelles cantine solidaire ouverte a tous2",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Les Grandes Gamelles investissent la Cuisine Commune de Chaud Bouillon toutes les deux semaines pour un moment convivial autour d'un menu unique p...",
     "date": "Jusqu'au 11 juillet 2024",
@@ -57,7 +77,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/exposition-la-reconversion-du-patrimoine-hospitalier-lillois2/3436212-1-fre-FR/Exposition-La-reconversion-du-patrimoine-hospitalier-lillois_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Exposition La reconversion du patrimoine hospitalier lillois",
+=======
     "name": "Exposition La reconversion du patrimoine hospitalier lillois2",
+>>>>>>> origin/yussc
     "type": "Exposition",
     "description": "Exposition réalisée par l’Association du Musée Hospitalier Régional de Lille.",
     "date": "Jusqu'au 29 octobre 2024",
@@ -73,7 +97,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-la-decouverte-du-patrimoine-religieux-hospitalier-2-quartier-saint-sauveur4/3439950-1-fre-FR/A-la-decouverte-du-Patrimoine-Religieux-Hospitalier-2-Quartier-Saint-Sauveur_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "A la decouverte du Patrimoine Religieux Hospitalier 2 Quartier Saint Sauveur",
+=======
     "name": "A la decouverte du Patrimoine Religieux Hospitalier 2 Quartier Saint Sauveur4",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Partez à la découverte du patrimoine religieux hospitalier du Quartier Saint-Sauveur. Un bénévole la Pastorale du Tourisme du Diocèse de Lille, su...",
     "date": "Jusqu'au 04 août 2024",
@@ -105,7 +133,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/theatre-de-marionnettes-le-p-tit-jacques-saison-2024/3453196-1-fre-FR/Theatre-de-marionnettes-Le-P-tit-Jacques-Saison-2024_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Theatre de marionnettes Le P tit Jacques Saison 202",
+=======
     "name": "Theatre de marionnettes Le P tit Jacques Saison 2024",
+>>>>>>> origin/yussc
     "type": "Spectacle",
     "description": "Le Théâtre Le Ptit Jacques situé au cœur de la ville de Lille propose des spectacles de marionnettes interactifs pour enfants de 3 à 10 ans du 14...",
     "date": "Jusqu'au 27 octobre 2024",
@@ -113,10 +145,14 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/exposition-resistance-repression-deportation.-femmes-de-france-au-camp-de-concentration-de-ravensbrueck-1942-1945/3461470-1-fre-FR/Exposition-Resistance-Repression-Deportation.-Femmes-de-France-au-camp-de-concentration-de-Ravensbrueck-1942-1945_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Exposition Resistance Repression Deportation. Femmes de France au camp de concentration de Ravensbrueck 1942 194",
+=======
     "name": "Exposition Resistance Repression Deportation. Femmes de France au camp de concentration de Ravensbrueck 1942 1945",
+>>>>>>> origin/yussc
     "type": "Exposition",
     "description": "Une exposition conçue et réalisée par le Mémorial de Ravensbrück, à découvrir aux Archives départementales du Nord",
-    "date": "Jusqu'au 07 juin 2024",
+    "date": "Du 16 avril au 7 juin 2024",
     "adresse": "22, rue Saint-Bernard - Lille0359730600"
   },
   {
@@ -153,7 +189,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/avant-premiere4/3481917-1-fre-FR/Avant-premiere_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Avant premiere",
+=======
     "name": "Avant premiere2",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Mise en valeur des artistes de la métropole lilloise",
     "date": "Jusqu'au 20 décembre 2024",
@@ -177,7 +217,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/jeu-de-piste-enquete-dans-lille-vol-au-vieux-lille/3122691-1-fre-FR/Jeu-de-piste-enquete-dans-Lille-Vol-au-Vieux-Lille_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Jeu de piste enquete dans Lille Vol au Vieux Lille",
+=======
     "name": "Jeu de piste enquete dans Lille Vol au Vieux Lille2",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Challenge, découverte, et convivialité, trois éléments que vous retrouverez dans les jeux de piste Quiveutpister.",
     "date": "Jusqu'au 30 novembre 2024",
@@ -192,16 +236,12 @@
     "adresse": "10 rue Pierre Dupont, lille06 72 39 69 70"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/soiree-blind-test2/3487821-1-fre-FR/Soiree-blind-test_equipment_image_lead_child.jpg",
-    "name": "Soiree blind test",
-    "type": "Nocturne",
-    "description": "C'est LE rdv culture musical animé par Tof ! Appelle tes copains, forme ton équipe et réserve vite une table pour notre blind-test mensuel !",
-    "date": "Du 2 mai au 6 juin 2024",
-    "adresse": "avenue Cuvier, Lille+33 3 74 09 78 81"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-la-decouverte-du-patrimoine-religieux-hospitalier-1-vieux-lille5/3440144-1-fre-FR/A-la-decouverte-du-Patrimoine-Religieux-Hospitalier-1-VIEUX-LILLE_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "A la decouverte du Patrimoine Religieux Hospitalier 1 VIEUX LILLE",
+=======
     "name": "A la decouverte du Patrimoine Religieux Hospitalier 1 VIEUX LILLE5",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Partez à la découverte du patrimoine religieux hospitalier du Vieux-Lille. Un bénévole la Pastorale du Tourisme du Diocèse de Lille, suivez le gui...",
     "date": "Jusqu'au 08 septembre 2024",
@@ -225,7 +265,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/concours-talents-des-cites-2024/3513282-1-fre-FR/Concours-Talents-des-Cites-2024_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Concours Talents des Cites 202",
+=======
     "name": "Concours Talents des Cites 2024",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Le Concours Talents des Cités valorise les initiatives entrepreneuriales des quartiers prioritaires en France, récompensant chaque année 28 projet...",
     "date": "Jusqu'au 14 juillet 2024",
@@ -273,7 +317,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/programme-d-animations-de-la-maison-du-projet-mai-a-decembre-2024/3503250-1-fre-FR/Programme-d-animations-de-la-maison-du-projet-mai-a-decembre-2024_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Programme d animations de la maison du projet mai a decembre 202",
+=======
     "name": "Programme d animations de la maison du projet mai a decembre 2024",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Découvrez une série d'activités variées à la Maison du Projet",
     "date": "Jusqu'au 15 novembre 2024",
@@ -281,7 +329,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/exposition-commencement-de-jean-baptiste-guey-et-benjamin-sabatier2/3504375-1-fre-FR/Exposition-Commencement-de-Jean-Baptiste-GUEY-et-Benjamin-SABATIER_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Exposition Commencement de Jean Baptiste GUEY et Benjamin SABATIER",
+=======
     "name": "Exposition Commencement de Jean Baptiste GUEY et Benjamin SABATIER2",
+>>>>>>> origin/yussc
     "type": "Exposition",
     "description": "Exposition de Commencement de Jean-Baptiste GUEY et Benjamin SABATIER",
     "date": "Jusqu'au 06 juillet 2024",
@@ -352,14 +404,6 @@
     "adresse": "32, rue de la monnaie 59000 Lille"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/side-step-friday-step/3506963-1-fre-FR/SIDE-STEP-Friday-Step_equipment_image_lead_child.jpg",
-    "name": "SIDE STEP Friday Step",
-    "type": "",
-    "description": "Organisé par le Flow, le Bâtisse et Session Concepts",
-    "date": "Jusqu'au 19 juillet 2024",
-    "adresse": "70 rue des sarrazins"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/le-fabuleux-festival/3488701-1-fre-FR/Le-Fabuleux-festival_equipment_image_lead_child.jpg",
     "name": "Le Fabuleux festival",
     "type": "Fête / festival",
@@ -376,8 +420,20 @@
     "adresse": "avenue Cuvier, Lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/side-step-friday-step/3506963-1-fre-FR/SIDE-STEP-Friday-Step_equipment_image_lead_child.jpg",
+    "name": "SIDE STEP Friday Step",
+    "type": "",
+    "description": "Organisé par le Flow, le Bâtisse et Session Concepts",
+    "date": "Jusqu'au 19 juillet 2024",
+    "adresse": "70 rue des sarrazins"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/rendez-vous-au-jardin-des-passereaux2/3511397-1-fre-FR/Rendez-vous-au-jardin-des-Passereaux_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Rendez vous au jardin des Passereaux",
+=======
     "name": "Rendez vous au jardin des Passereaux2",
+>>>>>>> origin/yussc
     "type": "Nature / environnement",
     "description": "Animations autour de la nature",
     "date": "Jusqu'au 18 juin 2024",
@@ -393,7 +449,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/exposition-travaux-13/3492348-1-fre-FR/Exposition-Travaux-13_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Exposition Travaux 1",
+=======
     "name": "Exposition Travaux 13",
+>>>>>>> origin/yussc
     "type": "Exposition",
     "description": "Venez découvrir une sélection de travaux issus des ateliers de photographie du CAPV !",
     "date": "Du 2 au 29 juin 2024",
@@ -409,7 +469,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/concours-quartiers-fleuris-2024/3515361-1-fre-FR/Concours-Quartiers-fleuris-2024_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Concours Quartiers fleuris 202",
+=======
     "name": "Concours Quartiers fleuris 2024",
+>>>>>>> origin/yussc
     "type": "Nature / environnement",
     "description": "Fleurissez votre façade ou votre jardin pour participer à l'embellissement de votre quartier.",
     "date": "Jusqu'au 05 juillet 2024",
@@ -449,43 +513,35 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/le-temps-des-histoires7/3494374-1-fre-FR/Le-temps-des-histoires_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Le temps des histoires",
+=======
     "name": "Le temps des histoires2",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Lectures partagées à la médiathèque de Fives",
     "date": "Du 5 au 26 juin 2024",
     "adresse": "18 Rue Bourjembois, 59000 Lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/vernissage-de-l-exposition-betes-de-scenes/3496364-1-fre-FR/Vernissage-de-l-exposition-Betes-de-scenes_equipment_image_lead_child.jpg",
+    "name": "Vernissage de l exposition Betes de scenes",
+    "type": "Exposition",
+    "description": "Mercredi 5 juin, le Théâtre La Licorne et la Maison Folie Moulins vous invitent à bien plus qu'un vernissage : un véritable moment de performances...",
+    "date": "Du 5 au 30 juin 2024",
+    "adresse": "47 rue d'Arras Lille"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/balades-de-l-ete5/3511550-1-fre-FR/Balades-de-l-ete_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Balades de l ete",
+=======
     "name": "Balades de l ete5",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Inscrivez-vous pour des sorties estivales inoubliables !",
     "date": "Jusqu'au 24 août 2024",
     "adresse": "17, avenue Verhaeren, lille0320109640"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/le-sang-imaginaire-et-realites/3498615-1-fre-FR/Le-sang-imaginaire-et-realites_equipment_image_lead_child.jpg",
-    "name": "Le sang imaginaire et realites",
-    "type": "Rencontre / conférence / débat",
-    "description": "Conférence CLIO sur l'histoire de la Médecine.",
-    "date": "Le 06 juin 2024",
-    "adresse": "27 rue Jean Bart 59000 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/les-milieux-aquatiques-de-la-citadelle/3470842-1-fre-FR/Les-milieux-aquatiques-de-la-Citadelle_equipment_image_lead_child.jpg",
-    "name": "Les milieux aquatiques de la Citadelle",
-    "type": "Nature / environnement",
-    "description": "Balade naturaliste à la découverte des milieux aquatiques",
-    "date": "Le 06 juin 2024",
-    "adresse": "Parc de la Citadelle, Lille03 62 26 08 28"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/l-histoire-du-cratere-place-de-la-republique/3505045-1-fre-FR/L-histoire-du-cratere-place-de-la-Republique_equipment_image_lead_child.jpg",
-    "name": "L histoire du cratere place de la Republique",
-    "type": "Visite",
-    "description": "Quand le patrimoine rencontre le hip-hop...",
-    "date": "Le 06 juin 2024",
-    "adresse": "Place République Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/side-step-de-l-arene-au-cratere/3507455-1-fre-FR/SIDE-STEP-De-l-arene-au-Cratere_equipment_image_lead_child.jpg",
@@ -512,14 +568,6 @@
     "adresse": "1 rue de Fontenoy 59000 Lille"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/mon-profil/profil-senior/mes-loisirs/images/ateliers-maison-lill-ages/atelier-jardinage/3501297-1-fre-FR/Atelier-jardinage_equipment_image_lead_child.jpg",
-    "name": "Trucs et astuces pour continuer a avoir la main verte",
-    "type": "Stage et atelier",
-    "description": "Atelier adapté à toute personne en perte d'autonomie.",
-    "date": "Le 06 juin 2024",
-    "adresse": "\n108 rue des Meuniers59000 Lille03 20 49 50 19"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/lille-une-histoire-de-murs-une-histoire-d-amour/3507373-1-fre-FR/Lille-une-histoire-de-murs-une-histoire-d-amour_equipment_image_lead_child.jpg",
     "name": "Lille une histoire de murs une histoire d amour",
     "type": "Cinéma - projection",
@@ -528,56 +576,12 @@
     "adresse": "avenue Cuvier, Lille"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/assiette-solidaire-la-reprise/3136960-1-fre-FR/Assiette-solidaire-la-reprise_equipment_image_lead_child.jpg",
-    "name": "Assiette solidaire Menu bio4",
-    "type": "",
-    "description": "Venez partager une assiette solidaire à la Maison de Quartier de Wazemmes",
-    "date": "Le 06 juin 2024",
-    "adresse": "36, rue d'eylau, 59 000 lille03.20.54.60.80"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/45-min-chrono-autour-de-la-porte-de-paris/3504974-1-fre-FR/45-min-chrono-autour-de-la-porte-de-Paris_equipment_image_lead_child.jpg",
-    "name": "45 min chrono autour de la porte de Paris",
-    "type": "Visite",
-    "description": "Découvrez un bâtiment emblématique de Lille, 45 min montre en main !",
-    "date": "Le 06 juin 2024",
-    "adresse": "côté rue Pierre Mauroy"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/side-step-visite-avec-bboy-knowledge/3507414-1-fre-FR/SIDE-STEP-Visite-avec-BBoy-Knowledge_equipment_image_lead_child.jpg",
-    "name": "SIDE STEP Visite avec BBoy Knowledge",
-    "type": "",
-    "description": "visite guidée de l'exposition",
-    "date": "Le 06 juin 2024",
-    "adresse": "70 rue des sarrazins"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/seance-de-sophrologie/3511591-1-fre-FR/Seance-de-sophrologie_equipment_image_lead_child.jpg",
-    "name": "Seance de sophrologie",
-    "type": "",
-    "description": "Avec Magali Florin, sophrologue",
-    "date": "Le 06 juin 2024",
-    "adresse": "Place de la République Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/saison-impressionniste-a-lille/3500232-1-fre-FR/Saison-impressionniste-a-Lille_equipment_image_lead_child.jpg",
-    "name": "Saison impressionniste a Lille",
-    "type": "Stage et atelier",
-    "description": "Expérience inédite autour de l’impressionnisme",
-    "date": "Le 07 juin 2024",
-    "adresse": "32 rue Edouard Delesalle 59000 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-et-atelier-en-partenariat-avec-la-mediatheque-jean-levy-lille-centre/3456337-1-fre-FR/VISITE-ET-ATELIER-en-partenariat-avec-la-Mediatheque-Jean-Levy-Lille-centre_equipment_image_lead_child.jpg",
-    "name": "VISITE ET ATELIER en partenariat avec la Mediatheque Jean Levy Lille centre",
-    "type": "",
-    "description": "Expérience inédite autour de l’impressionnisme (17h – 20h)",
-    "date": "Le 07 juin 2024",
-    "adresse": "Lille"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/10-ans-10-jours4/3500273-1-fre-FR/10-ans-10-jours_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "10 ans 10 jours",
+=======
     "name": "10 ans 10 jours4",
+>>>>>>> origin/yussc
     "type": "Nocturne",
     "description": "Soirée rétrogaming et apéro quizz",
     "date": "Le 07 juin 2024",
@@ -625,7 +629,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/saison-impressionniste2/3503496-1-fre-FR/Saison-impressionniste_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Saison impressionniste",
+=======
     "name": "Saison impressionniste2",
+>>>>>>> origin/yussc
     "type": "Exposition",
     "description": "Midi regard - Lectures à hautes voix et résonances impressionnistes au musée",
     "date": "Le 07 juin 2024",
@@ -638,6 +646,14 @@
     "description": "Le centre socioculturel Simone Veil vous invite à une soirée familiale pleine de jeux et d'activités sur le parvis du collège Levi Strauss.",
     "date": "Le 07 juin 2024",
     "adresse": "1, place Leroux de Fauquemont03.20.03.94.16"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/le-compost-c-est-pas-complique-!-comment/3518011-1-fre-FR/Le-compost-c-est-pas-complique-!-Comment_equipment_image_lead_child.jpg",
+    "name": "Le compost c est pas complique ! Comment",
+    "type": "Stage et atelier",
+    "description": "Comment réussir son compost",
+    "date": "Le 07 juin 2024",
+    "adresse": "rue du jardin des plantes lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/radiolarians3/3511673-1-fre-FR/RADIOLARIANS_equipment_image_lead_child.jpg",
@@ -689,7 +705,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/10-ans-10-jours5/3500396-1-fre-FR/10-ans-10-jours_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "10 ans 10 jours",
+=======
     "name": "10 ans 10 jours5",
+>>>>>>> origin/yussc
     "type": "Spectacle",
     "description": "La médiathèque fait son cirque.",
     "date": "Le 08 juin 2024",
@@ -705,7 +725,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-guidee-collections-permanentes10/3470883-1-fre-FR/Visite-guidee-Collections-permanentes_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Visite guidee Collections permanentes",
+=======
     "name": "Visite guidee Collections permanentes7",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Samedi 08 juin à 15h",
     "date": "Le 08 juin 2024",
@@ -721,7 +745,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/spectacle-poetique-des-5-ans-tout-ouie2/3496446-1-fre-FR/Spectacle-poetique-des-5-ans-Tout-ouie_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Spectacle poetique des 5 ans Tout ouie",
+=======
     "name": "Spectacle poetique des 5 ans Tout ouie2",
+>>>>>>> origin/yussc
     "type": "Spectacle",
     "description": "Des aventures extraordinaire en voix et en musique",
     "date": "Le 08 juin 2024",
@@ -841,7 +869,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-vous-de-jouer-a-la-bibliotheque22/3500314-1-fre-FR/A-vous-de-jouer-a-la-bibliotheque_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "A vous de jouer a la bibliotheque",
+=======
     "name": "A vous de jouer a la bibliotheque9",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Jeux coopératifs parents-enfants, pour bien commencer le week-end !",
     "date": "Le 08 juin 2024",
@@ -873,7 +905,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/jacques-jacques-jacques2/3514861-1-fre-FR/JACQUES-JACQUES-JACQUES_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "JACQUES JACQUES JACQUES",
+=======
     "name": "JACQUES JACQUES JACQUES2",
+>>>>>>> origin/yussc
     "type": "Fête / festival",
     "description": "Evénement festif gratuit et ouvert à tous. Les acteurs du quartiers se réunissent sur la place Jacques Febvrier. Au programme : ateliers créatifs,...",
     "date": "Le 08 juin 2024",
@@ -905,7 +941,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/remue-menage-chez-tante-rosa2/3502344-1-fre-FR/Remue-menage-chez-Tante-Rosa_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Remue menage chez Tante Rosa",
+=======
     "name": "Remue menage chez Tante Rosa2",
+>>>>>>> origin/yussc
     "type": "Spectacle",
     "description": "Spectacle de marionnettes",
     "date": "Le 09 juin 2024",
@@ -992,6 +1032,18 @@
     "adresse": "48 Boulevard du Maréchal Vaillant 59000 Lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/les-printemps-de-la-prevention-sante-edition-2/3518052-1-fre-FR/Les-printemps-de-la-prevention-sante-edition-2_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Les printemps de la prevention sante edition ",
+=======
+    "name": "Les printemps de la prevention sante edition 2",
+>>>>>>> origin/yussc
+    "type": "Salon / foire",
+    "description": "Le Centre Prévention Santé Longévité de l’Institut Pasteur de Lille est ravi d’annoncer le retour de cet événement annuel dédié à la promotion de...",
+    "date": "Le 11 juin 2024",
+    "adresse": "1 rue du Professeur Calmette, 59800 Lille0640774062"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/parcours-metiers-de-l-animation/3505187-1-fre-FR/Parcours-Metiers-de-l-Animation_equipment_image_lead_child.jpg",
     "name": "Parcours Metiers de l Animation",
     "type": "Stage et atelier",
@@ -1008,8 +1060,20 @@
     "adresse": "7 bis rue de l'Asie03 20 88 89 90"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/repair-cafe-ved/3518123-1-fre-FR/Repair-cafe-VED_equipment_image_lead_child.jpg",
+    "name": "Repair cafe VED",
+    "type": "Stage et atelier",
+    "description": "Ne jetez plus, venez apprendre à réparer",
+    "date": "Du 11 juin au 10 décembre 2024",
+    "adresse": "77 rue Roland 59000 Lille"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-destination-musee-jeune-public15/3471006-1-fre-FR/Atelier-Destination-Musee-Jeune-public_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Atelier Destination Musee Jeune public",
+=======
     "name": "Atelier Destination Musee Jeune public9",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Mercredi 12 juin à 14h30",
     "date": "Le 12 juin 2024",
@@ -1017,7 +1081,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/fete-du-jardin2/3491780-1-fre-FR/Fete-du-jardin_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Fete du jardin",
+=======
     "name": "Fete du jardin2",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "le collectif habitants en partenariat avec le centre social la Busette vous propose la fête du jardin 2024",
     "date": "Le 12 juin 2024",
@@ -1025,7 +1093,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/des-ateliers-numeriques-pour-les-adultes-a-la-bibliotheque-de-lille7/3494661-1-fre-FR/Des-ateliers-numeriques-pour-les-adultes-a-la-bibliotheque-de-Lille_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Des ateliers numeriques pour les adultes a la bibliotheque de Lille",
+=======
     "name": "Des ateliers numeriques pour les adultes a la bibliotheque de Lille5",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Rencontre numérique pour adulte \"Kit de survie !\"",
     "date": "Le 12 juin 2024",
@@ -1089,7 +1161,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/10-ans-10-jours6/3500478-1-fre-FR/10-ans-10-jours_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "10 ans 10 jours",
+=======
     "name": "10 ans 10 jours6",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Karao'comptines 0-3 ans",
     "date": "Le 12 juin 2024",
@@ -1097,7 +1173,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/kilikili-lecture-d-histoires-a-partir-de-4-ans25/3494497-1-fre-FR/Kilikili-lecture-d-histoires-a-partir-de-4-ans_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Kilikili lecture d histoires a partir de 4 ans",
+=======
     "name": "Kilikili lecture d histoires a partir de 4 ans8",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Un temps de lectures partagées à la bibliothèque !",
     "date": "Le 12 juin 2024",
@@ -1105,7 +1185,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/kilikili-lecture-d-histoires-a-partir-de-4-ans26/3494538-1-fre-FR/Kilikili-lecture-d-histoires-a-partir-de-4-ans_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Kilikili lecture d histoires a partir de 4 ans1",
+=======
     "name": "Kilikili lecture d histoires a partir de 4 ans18",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Un temps de lectures partagées à la bibliothèque !",
     "date": "Le 12 juin 2024",
@@ -1113,7 +1197,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/minikili-lecture-d-histoires-pour-les-0-3-ans25/3494579-1-fre-FR/Minikili-lecture-d-histoires-pour-les-0-3-ans_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Minikili lecture d histoires pour les 0 3 ans1",
+=======
     "name": "Minikili lecture d histoires pour les 0 3 ans19",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Un temps de lectures partagées à la bibliothèque !",
     "date": "Le 12 juin 2024",
@@ -1121,7 +1209,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/spectacle-poetique-des-5-ans-tout-ouie3/3496569-1-fre-FR/Spectacle-poetique-des-5-ans-Tout-ouie_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Spectacle poetique des 5 ans Tout ouie",
+=======
     "name": "Spectacle poetique des 5 ans Tout ouie3",
+>>>>>>> origin/yussc
     "type": "Spectacle",
     "description": "Des aventures extraordinaire en voix et en musique",
     "date": "Le 12 juin 2024",
@@ -1129,7 +1221,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/premieres-lectures3/3494620-1-fre-FR/Premieres-lectures_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Premieres lectures",
+=======
     "name": "Premieres lectures3",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Vos 6-10 ans adorent lire ? Emmenez-les à la médiathèque !",
     "date": "Le 12 juin 2024",
@@ -1137,15 +1233,43 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/le-repas-solidaire-du-myaem-et-des-grandes-gamelles-3/3512559-1-fre-FR/Le-repas-solidaire-du-MYAeM-et-des-Grandes-Gamelles-3_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Le repas solidaire du MYAeM et des Grandes Gamelles ",
+=======
     "name": "Le repas solidaire du MYAeM et des Grandes Gamelles 3",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Le restaurant vietnamien MYÄM et les bénévoles des Grandes Gamelles remettent le couvert et réorganisent un repas solidaire à la Cuisine Commune d...",
     "date": "Le 12 juin 2024",
     "adresse": "70, Passage de l'Internationale, 59800 Lille (Fives)"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/fete-du-jardin3/3518164-1-fre-FR/Fete-du-jardin_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Fete du jardin",
+=======
+    "name": "Fete du jardin3",
+>>>>>>> origin/yussc
+    "type": "Fête / festival",
+    "description": "Le Collectif Habitant et le centre social La Busette vous invite à sa Fête du jardin, au jardin du centre social.",
+    "date": "Le 12 juin 2024",
+    "adresse": "1, rue Georges Lefebvre0320490253"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/inauguration-de-la-place-rue-boissy-d-anglas/3518205-1-fre-FR/Inauguration-de-la-place-rue-Boissy-d-Anglas_equipment_image_lead_child.jpg",
+    "name": "Inauguration de la place rue Boissy d Anglas",
+    "type": "",
+    "description": "La ville de Lille poursuit les aménagements du cadre de vie.",
+    "date": "Le 12 juin 2024",
+    "adresse": "22 rue Boissy d'Anglas Lille03 28 36 11 73"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/les-entretiens-alzheimer-lille-2024/3475883-1-fre-FR/Les-Entretiens-Alzheimer-Lille-2024_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Les Entretiens Alzheimer Lille 202",
+=======
     "name": "Les Entretiens Alzheimer Lille 2024",
+>>>>>>> origin/yussc
     "type": "Rencontre / conférence / débat",
     "description": "Conférence grand public pour faire un point sur les avancées de la recherche sur la maladie d'Alzheimer et sur les thérapies non médicamenteuses",
     "date": "Le 13 juin 2024",
@@ -1193,7 +1317,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/formation-a-la-rencontre-de-l-alzheimer-lille-2024/3473677-1-fre-FR/Formation-a-la-rencontre-de-l-Alzheimer-Lille-2024_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Formation a la rencontre de l Alzheimer Lille 202",
+=======
     "name": "Formation a la rencontre de l Alzheimer Lille 2024",
+>>>>>>> origin/yussc
     "type": "Rencontre / conférence / débat",
     "description": "« À la rencontre de l’Alzheimer » est une formation destinée au personnel de santé sur l’accompagnement de patients ou de résidents en EHPAD attei...",
     "date": "Le 13 juin 2024",
@@ -1225,7 +1353,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/nocturne-gourmande-edition-printemps-2024/3511714-1-fre-FR/Nocturne-gourmande-Edition-printemps-2024_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Nocturne gourmande Edition printemps 202",
+=======
     "name": "Nocturne gourmande Edition printemps 2024",
+>>>>>>> origin/yussc
     "type": "Nocturne",
     "description": "L'association Waz'en Bouche revient avec sa Nocturne Gourmande le jeudi 13 juin 2024 pour partager un moment gourmand et festif !",
     "date": "Le 13 juin 2024",
@@ -1257,7 +1389,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/solid-art-lille2/3444254-1-fre-FR/Solid-Art-Lille_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Solid Art Lille",
+=======
     "name": "Solid Art Lille2",
+>>>>>>> origin/yussc
     "type": "Salon / foire",
     "description": "La 10ème édition de « Solid’Art Lille » se tiendra du 14 au 16 juin 2024 dans l’Hôtel de Ville de Lille. Durant 3 jours,120 artistes seront présen...",
     "date": "Du 14 au 16 juin 2024",
@@ -1265,7 +1401,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/journees-d-etudes-de-la-sfhm-du-14-juin-2024/3509966-1-fre-FR/Journees-d-etudes-de-la-SFHM-du-14-juin-2024_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Journees d etudes de la SFHM du 14 juin 202",
+=======
     "name": "Journees d etudes de la SFHM du 14 juin 2024",
+>>>>>>> origin/yussc
     "type": "Rencontre / conférence / débat",
     "description": "Journées d’études de la Société Française d’Histoire de la Médecine (SFHM) en collaboration avec l’Association du Musée Hospitalier",
     "date": "Le 14 juin 2024",
@@ -1313,7 +1453,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/10-ans-10-jours7/3500601-1-fre-FR/10-ans-10-jours_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "10 ans 10 jours",
+=======
     "name": "10 ans 10 jours7",
+>>>>>>> origin/yussc
     "type": "Concert",
     "description": "Conférence chantée \"Previously Off\"",
     "date": "Le 14 juin 2024",
@@ -1357,7 +1501,7 @@
     "type": "Stage et atelier",
     "description": "Une journée dédiée au bien-être et à la santé des femmes",
     "date": "Le 14 juin 2024",
-    "adresse": "21 boulevard de Metz, 59000 LILLE"
+    "adresse": "97 rue d'Esquermes Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-midi-regard/3502385-1-fre-FR/Visite-Midi-regard_equipment_image_lead_child.jpg",
@@ -1369,7 +1513,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-table-!-les-poetes3/3511802-1-fre-FR/A-table-!-Les-poetes_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "A table ! Les poetes",
+=======
     "name": "A table ! Les poetes2",
+>>>>>>> origin/yussc
     "type": "Nocturne",
     "description": "Le cabaret poétique \"A table! Les poètes… \" revient au Jardin de la Pouponnière à Lille … et fête son 10ème anniversaire !",
     "date": "Le 14 juin 2024",
@@ -1377,7 +1525,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-table!-les-poetes2/3512600-1-fre-FR/A-table!-Les-Poetes_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "A table! Les Poetes",
+=======
     "name": "A table! Les Poetes2",
+>>>>>>> origin/yussc
     "type": "Spectacle",
     "description": "Cabaret artistique poétique et participatif",
     "date": "Le 14 juin 2024",
@@ -1409,7 +1561,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/journees-d-etudes-de-la-sfhm-du-15-juin-2024/3508141-1-fre-FR/Journees-d-etudes-de-la-SFHM-du-15-juin-2024_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Journees d etudes de la SFHM du 15 juin 202",
+=======
     "name": "Journees d etudes de la SFHM du 15 juin 2024",
+>>>>>>> origin/yussc
     "type": "Rencontre / conférence / débat",
     "description": "Journées d’études de la Société Française d’Histoire de la Médecine (SFHM) en collaboration avec l’Association du Musée Hospitalier",
     "date": "Le 15 juin 2024",
@@ -1425,7 +1581,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/fresque-du-climat-a-lille-maison-stephane-hessel5/3447178-1-fre-FR/Fresque-du-Climat-a-Lille-Maison-Stephane-HESSEL_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Fresque du Climat a Lille Maison Stephane HESSEL",
+=======
     "name": "Fresque du Climat a Lille Maison Stephane HESSEL4",
+>>>>>>> origin/yussc
     "type": "Nature / environnement",
     "description": "En 3 heures, l’atelier collaboratif « la Fresque du Climat » permet de comprendre l’essentiel des enjeux climatiques pour passer à l’action.",
     "date": "Le 15 juin 2024",
@@ -1433,7 +1593,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-vous-de-jouer-a-la-bibliotheque20/3494784-1-fre-FR/A-vous-de-jouer-a-la-bibliotheque_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "A vous de jouer a la bibliotheque1",
+=======
     "name": "A vous de jouer a la bibliotheque11",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Il est temps de passer aux choses sérieuses !",
     "date": "Le 15 juin 2024",
@@ -1449,7 +1613,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/des-ateliers-numeriques-pour-les-adultes-a-la-bibliotheque-de-lille10/3500724-1-fre-FR/Des-ateliers-numeriques-pour-les-adultes-a-la-bibliotheque-de-Lille_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Des ateliers numeriques pour les adultes a la bibliotheque de Lille",
+=======
     "name": "Des ateliers numeriques pour les adultes a la bibliotheque de Lille2",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Rencontre numérique pour adulte \"Vendre sur Internet\"",
     "date": "Le 15 juin 2024",
@@ -1457,7 +1625,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/kili-et-plus-lectures-partagees-et-atelier-creatif-en-bibliotheque7/3494825-1-fre-FR/Kili-et-plus-lectures-partagees-et-atelier-creatif-en-bibliotheque_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Kili et plus lectures partagees et atelier creatif en bibliotheque",
+=======
     "name": "Kili et plus lectures partagees et atelier creatif en bibliotheque6",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Une lecture partagée + un atelier créatif = un temps heureux à la médiathèque !",
     "date": "Le 15 juin 2024",
@@ -1497,7 +1669,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/sortie-a-la-mer2/3491821-1-fre-FR/Sortie-a-la-mer_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Sortie a la mer",
+=======
     "name": "Sortie a la mer2",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Sortie famille à la mer - Fort Mahon",
     "date": "Le 15 juin 2024",
@@ -1521,7 +1697,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/le-comte-de-bouderbala-3/3456953-1-fre-FR/Le-comte-de-Bouderbala-3_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Le comte de Bouderbala ",
+=======
     "name": "Le comte de Bouderbala 3",
+>>>>>>> origin/yussc
     "type": "Spectacle",
     "description": "Nouveau spectacle",
     "date": "Le 15 juin 2024",
@@ -1561,7 +1741,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/book-market-4/3511092-1-fre-FR/Book-Market-4_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Book Market ",
+=======
     "name": "Book Market 4",
+>>>>>>> origin/yussc
     "type": "Marché / braderie",
     "description": "Les 15 et 16 juin, l’Institut pour la photographie investit le Bazaar St So pour deux jours consacrés à l’édition photographique.",
     "date": "Du 15 au 16 juin 2024",
@@ -1577,7 +1761,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/comptines-et-chansons-a-la-bibliotheque5/3494702-1-fre-FR/Comptines-et-chansons-a-la-bibliotheque_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Comptines et chansons a la bibliotheque",
+=======
     "name": "Comptines et chansons a la bibliotheque3",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Comptines et chansons avec Jérôme et sa guitare",
     "date": "Le 15 juin 2024",
@@ -1585,7 +1773,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/minikili-lecture-d-histoires-pour-les-0-3-ans26/3494743-1-fre-FR/Minikili-lecture-d-histoires-pour-les-0-3-ans_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Minikili lecture d histoires pour les 0 3 ans2",
+=======
     "name": "Minikili lecture d histoires pour les 0 3 ans20",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Un temps de lectures partagées à la bibliothèque !",
     "date": "Le 15 juin 2024",
@@ -1593,7 +1785,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/musique-de-chambre2/3503578-1-fre-FR/Musique-de-Chambre_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Musique de Chambre",
+=======
     "name": "Musique de Chambre2",
+>>>>>>> origin/yussc
     "type": "Concert",
     "description": "Concert - Auditions",
     "date": "Le 15 juin 2024",
@@ -1609,7 +1805,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/l-histoire-du-cratere-place-de-la-republique2/3505228-1-fre-FR/L-histoire-du-cratere-place-de-la-Republique_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "L histoire du cratere place de la Republique",
+=======
     "name": "L histoire du cratere place de la Republique2",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Quand le patrimoine rencontre le hip-hop",
     "date": "Le 15 juin 2024",
@@ -1617,7 +1817,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/lille-piano-s-festival4/3503619-1-fre-FR/Lille-Piano-s-Festival_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Lille Piano s Festival",
+=======
     "name": "Lille Piano s Festival4",
+>>>>>>> origin/yussc
     "type": "Concert",
     "description": "15 juin 2024",
     "date": "Le 15 juin 2024",
@@ -1625,7 +1829,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/fete-de-la-fabrique-du-sud-5/3515040-1-fre-FR/Fete-de-la-Fabrique-du-Sud-5_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Fete de la Fabrique du Sud ",
+=======
     "name": "Fete de la Fabrique du Sud 5",
+>>>>>>> origin/yussc
     "type": "Fête / festival",
     "description": "La Fabrique du Sud pour sa 5ème édition vous propose un programme riche en activités, spectacles et concerts. Grands et petits, vous pourrez profi...",
     "date": "Le 15 juin 2024",
@@ -1633,7 +1841,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/vente-solidaire-de-vetements-par-le-vestiaire-lasoli5/3515081-1-fre-FR/Vente-solidaire-de-vetements-par-le-Vestiaire-LaSoli_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Vente solidaire de vetements par le Vestiaire LaSoli",
+=======
     "name": "Vente solidaire de vetements par le Vestiaire LaSoli3",
+>>>>>>> origin/yussc
     "type": "Marché / braderie",
     "description": "15 Juin 2024, au 68 rue du Marché, à Wazemmes-Lille. Vente solidaire de vêtements seconde main ( homme, femme et enfant ), chaussures, linge de ma...",
     "date": "Le 15 juin 2024",
@@ -1641,7 +1853,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/printemps-de-perspectives3/3512641-1-fre-FR/Printemps-de-Perspectives_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Printemps de Perspectives",
+=======
     "name": "Printemps de Perspectives3",
+>>>>>>> origin/yussc
     "type": "Fête / festival",
     "description": "La dictée pour tous",
     "date": "Du 15 juin au 11 juillet 2024",
@@ -1664,6 +1880,14 @@
     "adresse": "50 rue Léon Blum, 59000 Lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/fete-du-sport-2024-du-centre-social-albert-jacquard/3518276-1-fre-FR/Fete-du-Sport-2024-du-Centre-social-Albert-Jacquard_equipment_image_lead_child.jpg",
+    "name": "Fete du Sport 2024 du Centre social Albert Jacquard",
+    "type": "Événement sportif",
+    "description": "La Fête du Sport 2024 du Centre social",
+    "date": "Le 15 juin 2024",
+    "adresse": "Rue Faubourg de roubaix, 59800 Lille"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/urbx-concerts-grand-place/3515544-1-fre-FR/URBX-Concerts-Grand-Place_equipment_image_lead_child.jpg",
     "name": "URBX Concerts Grand Place",
     "type": "",
@@ -1680,6 +1904,14 @@
     "adresse": "Place Gilleson, 59800 Lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/soiree-d-impro-caritative-!-la-lito-pour-le-coeur-bleu/3518317-1-fre-FR/Soiree-d-impro-caritative-!-La-LITO-pour-le-Coeur-Bleu_equipment_image_lead_child.jpg",
+    "name": "Soiree d impro caritative ! La LITO pour le Coeur Bleu",
+    "type": "Spectacle",
+    "description": "Venez vivre un spectacle d’improvisation interactif et plein de folie et faites une bonne action ! Ce soir, la LITO joue pour le Cœur Bleu.",
+    "date": "Le 15 juin 2024",
+    "adresse": "27 rue des Tours, 59800 Lille"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/side-step-battle-international-urbx/3508365-1-fre-FR/SIDE-STEP-Battle-International-URBX_equipment_image_lead_child.jpg",
     "name": "SIDE STEP Battle International URBX",
     "type": "",
@@ -1689,7 +1921,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/la-reine-des-citadelles26/3496733-1-fre-FR/La-reine-des-Citadelles_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "La reine des Citadelles3",
+=======
     "name": "La reine des Citadelles31",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Découvrez l'intérieur de la Reine des Citadelles !",
     "date": "Du 16 juin au 25 août 2024",
@@ -1745,7 +1981,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/conference-les-amis-des-musees-de-lille5/3471129-1-fre-FR/Conference-Les-Amis-des-Musees-de-Lille_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Conference Les Amis des Musees de Lille",
+=======
     "name": "Conference Les Amis des Musees de Lille4",
+>>>>>>> origin/yussc
     "type": "Rencontre / conférence / débat",
     "description": "Lundi 17 juin à 17h30",
     "date": "Le 17 juin 2024",
@@ -1785,7 +2025,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/conference-les-amis-des-musees-de-lille7/3517001-1-fre-FR/Conference-Les-Amis-des-Musees-de-Lille_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Conference Les Amis des Musees de Lille",
+=======
     "name": "Conference Les Amis des Musees de Lille3",
+>>>>>>> origin/yussc
     "type": "Rencontre / conférence / débat",
     "description": "Lundi 17 juin à 17h30",
     "date": "Le 17 juin 2024",
@@ -1793,7 +2037,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/tea-time-le-plaisir-de-l-anglais-a-la-bibliotheque12/3494866-1-fre-FR/Tea-Time-le-plaisir-de-l-anglais-a-la-bibliotheque_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Tea Time le plaisir de l anglais a la bibliotheque",
+=======
     "name": "Tea Time le plaisir de l anglais a la bibliotheque6",
+>>>>>>> origin/yussc
     "type": "",
     "description": "La lecture accessible en Version Originale.",
     "date": "Le 18 juin 2024",
@@ -1817,7 +2065,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/concert-direction-d-orchestre3/3502497-1-fre-FR/Concert-direction-d-orchestre_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Concert direction d orchestre",
+=======
     "name": "Concert direction d orchestre2",
+>>>>>>> origin/yussc
     "type": "Cinéma - projection",
     "description": "Concert",
     "date": "Le 18 juin 2024",
@@ -1833,7 +2085,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/jam-session8/3517042-1-fre-FR/Jam-Session_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Jam Session",
+=======
     "name": "Jam Session3",
+>>>>>>> origin/yussc
     "type": "Concert",
     "description": "Jam Session Jazz et Atelier Vocal",
     "date": "Le 18 juin 2024",
@@ -1841,7 +2097,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/je-reussis-mon-projet-solaire-photovoltaique4/3461951-1-fre-FR/Je-reussis-mon-projet-solaire-photovoltaique_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Je reussis mon projet solaire photovoltaique",
+=======
     "name": "Je reussis mon projet solaire photovoltaique4",
+>>>>>>> origin/yussc
     "type": "",
     "description": "L’énergie solaire, ça fonctionne même dans notre région !",
     "date": "Le 19 juin 2024",
@@ -1857,7 +2117,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/des-ateliers-numeriques-pour-les-adultes-a-la-bibliotheque-de-lille8/3494989-1-fre-FR/Des-ateliers-numeriques-pour-les-adultes-a-la-bibliotheque-de-Lille_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Des ateliers numeriques pour les adultes a la bibliotheque de Lille",
+=======
     "name": "Des ateliers numeriques pour les adultes a la bibliotheque de Lille6",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Rencontre numérique pour adulte \"Les applis de randonnée\"",
     "date": "Le 19 juin 2024",
@@ -1865,7 +2129,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-concert-opera3/3505422-1-fre-FR/Visite-concert-Opera_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Visite concert Opera",
+=======
     "name": "Visite concert Opera3",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Les notes joyeuses, récital",
     "date": "Le 19 juin 2024",
@@ -1913,7 +2181,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/kilikili-lecture-d-histoires-a-partir-de-4-ans27/3494907-1-fre-FR/Kilikili-lecture-d-histoires-a-partir-de-4-ans_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Kilikili lecture d histoires a partir de 4 ans1",
+=======
     "name": "Kilikili lecture d histoires a partir de 4 ans19",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Un temps de lectures partagées à la bibliothèque !",
     "date": "Le 19 juin 2024",
@@ -1921,7 +2193,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/kilikili-lecture-d-histoires-a-partir-de-4-ans28/3494948-1-fre-FR/Kilikili-lecture-d-histoires-a-partir-de-4-ans_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Kilikili lecture d histoires a partir de 4 ans2",
+=======
     "name": "Kilikili lecture d histoires a partir de 4 ans20",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Un temps de lectures partagées à la bibliothèque !",
     "date": "Le 19 juin 2024",
@@ -1929,7 +2205,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/spectacle-poetique-des-5-ans-tout-ouie4/3496774-1-fre-FR/Spectacle-poetique-des-5-ans-Tout-ouie_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Spectacle poetique des 5 ans Tout ouie",
+=======
     "name": "Spectacle poetique des 5 ans Tout ouie4",
+>>>>>>> origin/yussc
     "type": "Spectacle",
     "description": "Des aventures extraordinaire en voix et en musique",
     "date": "Le 19 juin 2024",
@@ -1937,7 +2217,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/loto-intergenerationnel/3267513-1-fre-FR/Loto-Intergenerationnel_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Loto Intergenerationnel",
+=======
     "name": "Loto Intergenerationnel2",
+>>>>>>> origin/yussc
     "type": "Fête / festival",
     "description": "Salle Samain",
     "date": "Le 19 juin 2024",
@@ -1961,7 +2245,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/dictee-difficile5/3495030-1-fre-FR/Dictee-difficile_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Dictee difficile",
+=======
     "name": "Dictee difficile4",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Venez tester, pour le plaisir, votre bon sens des mots !",
     "date": "Le 20 juin 2024",
@@ -2041,7 +2329,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/indian-garden-party2/3500765-1-fre-FR/Indian-Garden-Party_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Indian Garden Party",
+=======
     "name": "Indian Garden Party2",
+>>>>>>> origin/yussc
     "type": "Fête / festival",
     "description": "festivité",
     "date": "Du 21 au 23 juin 2024",
@@ -2049,7 +2341,7 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/animation-fruits-et-legumes-frais-sur-la-marche-catinat/3515656-1-fre-FR/Animation-Fruits-et-Legumes-frais-sur-la-marche-Catinat_equipment_image_lead_child.jpg",
-    "name": "Animation Fruits et Legumes frais sur la marche Catinat",
+    "name": "Animation Fruits et Legumes frais sur le marche Catinat",
     "type": "Marché / braderie",
     "description": "Cette année encore, INTERFEL en partenariat avec la Ville de Lille, organise des animations sur l’ensemble des marchés Lillois. Venez faire le ple...",
     "date": "Le 21 juin 2024",
@@ -2062,6 +2354,14 @@
     "description": "Open Mic' avec Skuuurt et showcase de Samir Flynn",
     "date": "Le 21 juin 2024",
     "adresse": "17 Bd Jean-Baptiste Lebas, 59800 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/vibrez-a-la-fete-de-la-musique-avec-les-etablissements-d-enseignement-artistique-de-la-ville-de-lille-et-les-associations/3518388-1-fre-FR/Vibrez-a-la-Fete-de-la-musique-avec-les-etablissements-d-enseignement-artistique-de-la-Ville-de-Lille-et-les-associations_equipment_image_lead_child.jpg",
+    "name": "Vibrez a la Fete de la musique avec les etablissements d enseignement artistique de la Ville de Lille et les associations",
+    "type": "Concert",
+    "description": "Joignez-vous à nous pour célébrer la Fête de la Musique le vendredi 21 juin !",
+    "date": "Le 21 juin 2024",
+    "adresse": "Place du concert Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/voisins-en-fetes/3482775-1-fre-FR/Voisins-en-Fetes_equipment_image_lead_child.jpg",
@@ -2105,7 +2405,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-d-eveil-musical-a-la-bibliotheque5/3495071-1-fre-FR/Atelier-d-eveil-musical-a-la-bibliotheque_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Atelier d eveil musical a la bibliotheque",
+=======
     "name": "Atelier d eveil musical a la bibliotheque2",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Musique et instruments du monde",
     "date": "Le 22 juin 2024",
@@ -2113,7 +2417,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/breves-de-lecteurs9/3500918-1-fre-FR/Breves-de-lecteurs_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Breves de lecteurs",
+=======
     "name": "Breves de lecteurs4",
+>>>>>>> origin/yussc
     "type": "Rencontre / conférence / débat",
     "description": "Le rendez-vous des amoureux de la lecture !",
     "date": "Le 22 juin 2024",
@@ -2121,7 +2429,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-vous-de-jouer-a-la-bibliotheque21/3495112-1-fre-FR/A-vous-de-jouer-a-la-bibliotheque_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "A vous de jouer a la bibliotheque1",
+=======
     "name": "A vous de jouer a la bibliotheque12",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Spécial jeux vidéo",
     "date": "Le 22 juin 2024",
@@ -2129,7 +2441,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/fete-de-la-musique4/3500959-1-fre-FR/Fete-de-la-musique_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Fete de la musique",
+=======
     "name": "Fete de la musique4",
+>>>>>>> origin/yussc
     "type": "Concert",
     "description": "Concert de guitare et lectures",
     "date": "Le 22 juin 2024",
@@ -2161,7 +2477,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/gala-d-etoiles-saison-14/3301881-1-fre-FR/GALA-D-ETOILES-Saison-14_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "GALA D ETOILES Saison 1",
+=======
     "name": "GALA D ETOILES Saison 14",
+>>>>>>> origin/yussc
     "type": "Spectacle",
     "description": "Une succession de ballets pour découvrir quelques-uns des grands danseurs de la scène actuelle : Étoiles, solistes de l’Opéra de Paris, artistes i...",
     "date": "Le 22 juin 2024",
@@ -2169,7 +2489,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/univershifte-2024/3491034-1-fre-FR/UniverShifte-2024_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "UniverShifte 202",
+=======
     "name": "UniverShifte 2024",
+>>>>>>> origin/yussc
     "type": "Rencontre / conférence / débat",
     "description": "2 jours pour mettre le cap vers un futur soutenable",
     "date": "Du 22 au 23 juin 2024",
@@ -2177,7 +2501,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/repair-cafe-ne-jetez-rien-reparez-tout8/3461992-1-fre-FR/Repair-Cafe-ne-jetez-rien-reparez-tout_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Repair Cafe ne jetez rien reparez tout",
+=======
     "name": "Repair Cafe ne jetez rien reparez tout8",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "La Maison de l’Habitat Durable organise son Repair Café",
     "date": "Le 22 juin 2024",
@@ -2209,7 +2537,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/terrasse-creative-4/3511133-1-fre-FR/Terrasse-creative-4_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Terrasse creative ",
+=======
     "name": "Terrasse creative 4",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Une journée d’ateliers ouverts à tous pour s’essayer à la pratique artistique",
     "date": "Le 22 juin 2024",
@@ -2225,7 +2557,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/journee-olympique-et-paralympique3/3496856-1-fre-FR/Journee-Olympique-et-Paralympique_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Journee Olympique et Paralympique",
+=======
     "name": "Journee Olympique et Paralympique3",
+>>>>>>> origin/yussc
     "type": "Événement sportif",
     "description": "Venez nombreux participer à la Journée Olympique et Paralympique",
     "date": "Le 22 juin 2024",
@@ -2249,7 +2585,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/festival-crea-queer2/3515163-1-fre-FR/Festival-Crea-Queer_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Festival Crea Queer",
+=======
     "name": "Festival Crea Queer2",
+>>>>>>> origin/yussc
     "type": "Fête / festival",
     "description": "Marché et animations de créateur·ice·s lgbtqia+, scène ouverte, buvette et petite restauration",
     "date": "Du 22 au 23 juin 2024",
@@ -2262,6 +2602,14 @@
     "description": "Les 15 ans du Quai des Artistes les 22 et 23 juin 2024 ! Art urbain, expo, DJ sets, ateliers. Concert de Juste Red & friends dimanche après-mi...",
     "date": "Le 23 juin 2024",
     "adresse": "Jardin Vauban, Bd Vauban, 59000 Lille06 16 60 04 83"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/fabrication-de-sirop-du-jardin/3504892-1-fre-FR/Fabrication-de-sirop-du-jardin_equipment_image_lead_child.jpg",
+    "name": "Fabrication de sirop du jardin",
+    "type": "Nature / environnement",
+    "description": "Relatons ensemble les fruits et les fleurs du jardin pour fabriquer de délicieux sirops !",
+    "date": "Le 23 juin 2024",
+    "adresse": "14 rue Eugène Jacquet, 5900 Lille0320551612"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/anda-diana/3491105-1-fre-FR/Anda-Diana_equipment_image_lead_child.jpg",
@@ -2321,7 +2669,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/minikili-lecture-d-histoires-pour-les-0-3-ans27/3495153-1-fre-FR/Minikili-lecture-d-histoires-pour-les-0-3-ans_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Minikili lecture d histoires pour les 0 3 ans2",
+=======
     "name": "Minikili lecture d histoires pour les 0 3 ans21",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Un temps de lectures partagées à la bibliothèque !",
     "date": "Le 26 juin 2024",
@@ -2329,7 +2681,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/spectacle-poetique-des-5-ans-tout-ouie5/3496897-1-fre-FR/Spectacle-poetique-des-5-ans-Tout-ouie_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Spectacle poetique des 5 ans Tout ouie",
+=======
     "name": "Spectacle poetique des 5 ans Tout ouie5",
+>>>>>>> origin/yussc
     "type": "Spectacle",
     "description": "Des aventures extraordinaire en voix et en musique",
     "date": "Le 26 juin 2024",
@@ -2337,7 +2693,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/bestiaire-concert2/3517154-1-fre-FR/Bestiaire-Concert_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Bestiaire Concert",
+=======
     "name": "Bestiaire Concert2",
+>>>>>>> origin/yussc
     "type": "Concert",
     "description": "Le Madrigal de Lille, composé d’une trentaine de choristes sous la direction de Madeleine Saur, vous propose un programme s’articulant autour du B...",
     "date": "Le 26 juin 2024",
@@ -2345,7 +2705,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/cafe-compost12/3509098-1-fre-FR/Cafe-Compost_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Cafe Compost",
+=======
     "name": "Cafe Compost9",
+>>>>>>> origin/yussc
     "type": "Rencontre / conférence / débat",
     "description": "Tamisage et Distribution aux Habitants",
     "date": "Le 27 juin 2024",
@@ -2377,7 +2741,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/live-stephanie-aflalo3/3512764-1-fre-FR/LIVE-Stephanie-Aflalo_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "LIVE Stephanie Aflalo",
+=======
     "name": "LIVE Stephanie Aflalo3",
+>>>>>>> origin/yussc
     "type": "Spectacle",
     "description": "LIVE est un concert-performance écrit et interprété par l’auteure-compositeure-interprète-comédienne-metteure-en-scène-pianiste Stéphanie Aflalo.",
     "date": "Le 27 juin 2024",
@@ -2393,7 +2761,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/breves-d-ados8/3495194-1-fre-FR/Breves-d-ados_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Breves d ados",
+=======
     "name": "Breves d ados4",
+>>>>>>> origin/yussc
     "type": "Rencontre / conférence / débat",
     "description": "Le rendez-vous des amoureux de la lecture !",
     "date": "Le 28 juin 2024",
@@ -2417,7 +2789,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/midi-regard2/3493453-1-fre-FR/Midi-regard_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Visite Midi regard",
+=======
     "name": "Visite Midi regard3",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Marianne Mathieu, historienne de l'art",
     "date": "Le 28 juin 2024",
@@ -2433,7 +2809,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/des-ateliers-numeriques-pour-les-adultes-a-la-bibliotheque-de-lille9/3495317-1-fre-FR/Des-ateliers-numeriques-pour-les-adultes-a-la-bibliotheque-de-Lille_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Des ateliers numeriques pour les adultes a la bibliotheque de Lille",
+=======
     "name": "Des ateliers numeriques pour les adultes a la bibliotheque de Lille7",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Rencontre numérique pour adulte \"Retoucher ses photos\"",
     "date": "Le 29 juin 2024",
@@ -2449,7 +2829,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-poses-au-musee-public-ado8/3471334-1-fre-FR/Atelier-Poses-au-musee-Public-ado_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Atelier Poses au musee Public ado",
+=======
     "name": "Atelier Poses au musee Public ado8",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Samedi 29 juin à 15h30",
     "date": "Le 29 juin 2024",
@@ -2465,7 +2849,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/fetes-de-fives-2024/3515204-1-fre-FR/Fetes-de-Fives-2024_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Fetes de Fives 202",
+=======
     "name": "Fetes de Fives 2024",
+>>>>>>> origin/yussc
     "type": "Fête / festival",
     "description": "Participez à cette grande journée de fête au cœur du quartier.",
     "date": "Le 29 juin 2024",
@@ -2473,7 +2861,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/repair-cafe9/3471293-1-fre-FR/Repair-Cafe_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Repair Cafe1",
+=======
     "name": "Repair Cafe10",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Samedi 29 juin de 10h à 13h",
     "date": "Le 29 juin 2024",
@@ -2481,7 +2873,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/tea-time-le-plaisir-de-l-anglais-a-la-bibliotheque13/3495235-1-fre-FR/Tea-Time-le-plaisir-de-l-anglais-a-la-bibliotheque_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Tea Time le plaisir de l anglais a la bibliotheque",
+=======
     "name": "Tea Time le plaisir de l anglais a la bibliotheque7",
+>>>>>>> origin/yussc
     "type": "",
     "description": "La lecture accessible en Version Originale.",
     "date": "Le 29 juin 2024",
@@ -2489,7 +2885,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/minikili-lecture-d-histoires-pour-les-0-3-ans28/3495276-1-fre-FR/Minikili-lecture-d-histoires-pour-les-0-3-ans_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Minikili lecture d histoires pour les 0 3 ans2",
+=======
     "name": "Minikili lecture d histoires pour les 0 3 ans22",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Un temps de lectures partagées à la bibliothèque !",
     "date": "Le 29 juin 2024",
@@ -2505,7 +2905,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-guidee-collections-permanentes11/3471375-1-fre-FR/Visite-guidee-Collections-permanentes_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Visite guidee Collections permanentes1",
+=======
     "name": "Visite guidee Collections permanentes10",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Dimanche 30 juin à 15h",
     "date": "Le 30 juin 2024",
@@ -2513,7 +2917,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-guidee-exposition-temporaire4/3471416-1-fre-FR/Visite-guidee-Exposition-temporaire_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Visite guidee Exposition temporaire",
+=======
     "name": "Visite guidee Exposition temporaire3",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Dimanche 30 juin à 16h",
     "date": "Le 30 juin 2024",
@@ -2529,7 +2937,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/stage-graphisme-libre2/3512876-1-fre-FR/Stage-graphisme-libre_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Stage graphisme libre",
+=======
     "name": "Stage graphisme libre2",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Stage de graphisme libre pour adultes",
     "date": "Du 1 au 05 juillet 2024",
@@ -2545,7 +2957,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/seance-de-yoga-nouveaute2/3471457-1-fre-FR/Seance-de-yoga-NOUVEAUTE_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Seance de yoga NOUVEAUTE",
+=======
     "name": "Seance de yoga NOUVEAUTE2",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Mardi 02 juillet à 19h",
     "date": "Le 02 juillet 2024",
@@ -2585,7 +3001,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-vous-de-jouer-a-la-bibliotheque23/3517195-1-fre-FR/A-vous-de-jouer-a-la-bibliotheque_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "A vous de jouer a la bibliotheque1",
+=======
     "name": "A vous de jouer a la bibliotheque13",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Il est temps de passer aux choses sérieuses !",
     "date": "Le 03 juillet 2024",
@@ -2593,7 +3013,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/olympiades-culturelles-escrime-et-litterature2/3511921-1-fre-FR/Olympiades-culturelles-Escrime-et-litterature_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Olympiades culturelles Escrime et litterature",
+=======
     "name": "Olympiades culturelles Escrime et litterature2",
+>>>>>>> origin/yussc
     "type": "Spectacle",
     "description": "Spectacle d’escrime artistique « Botte Noire »",
     "date": "Le 03 juillet 2024",
@@ -2601,11 +3025,23 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/le-temps-des-histoires8/3517236-1-fre-FR/Le-temps-des-histoires_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Le temps des histoires",
+=======
     "name": "Le temps des histoires3",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Lectures partagées à la médiathèque de Fives",
     "date": "Du 3 au 24 juillet 2024",
     "adresse": "18 Rue Bourjembois, 59000 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/rencontre-naturaliste/3518429-1-fre-FR/Rencontre-naturaliste_equipment_image_lead_child.jpg",
+    "name": "Rencontre naturaliste",
+    "type": "Rencontre / conférence / débat",
+    "description": "Notre région en été",
+    "date": "Le 03 juillet 2024",
+    "adresse": "32-34 rue Edouard Delesalle"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/les-mangeurs-d-etoiles-les-rencontres-du-mercredi/3515809-1-fre-FR/Les-mangeurs-d-etoiles-Les-rencontres-du-mercredi_equipment_image_lead_child.jpg",
@@ -2617,7 +3053,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/les-nuits-d-ete-2024/3298677-1-fre-FR/Les-Nuits-d-ete-2024_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Les Nuits d ete 202",
+=======
     "name": "Les Nuits d ete 2024",
+>>>>>>> origin/yussc
     "type": "Concert",
     "description": "La dernière d'Alexandre Bloch !",
     "date": "Du 4 au 05 juillet 2024",
@@ -2672,6 +3112,14 @@
     "adresse": "292 Rue Camille Guérin, 59800 Lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/savon-de-plantes/3518470-1-fre-FR/Savon-de-Plantes_equipment_image_lead_child.jpg",
+    "name": "Savon de Plantes",
+    "type": "Nature / environnement",
+    "description": "Créez le votre !",
+    "date": "Le 05 juillet 2024",
+    "adresse": "286, rue du Jardin des Plantes"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/mix-myself-and-i-de-fin-de-saison/3515891-1-fre-FR/Mix-Myself-and-I-de-fin-de-saison_equipment_image_lead_child.jpg",
     "name": "Mix Myself and I de fin de saison",
     "type": "",
@@ -2697,7 +3145,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-guidee-collections-permanentes12/3471498-1-fre-FR/Visite-guidee-Collections-permanentes_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Visite guidee Collections permanentes1",
+=======
     "name": "Visite guidee Collections permanentes11",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Samedi 06 juillet à 15h",
     "date": "Le 06 juillet 2024",
@@ -2705,7 +3157,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/les-oeuvres-de-ladislas-kijno-a-lille2/3505799-1-fre-FR/Les-oeuvres-de-Ladislas-Kijno-a-Lille_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Les oeuvres de Ladislas Kijno a Lille",
+=======
     "name": "Les oeuvres de Ladislas Kijno a Lille2",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "La cathédrale et le Centre d'Art Sacré",
     "date": "Le 06 juillet 2024",
@@ -2713,7 +3169,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/decouverte-de-five-cail2/3505870-1-fre-FR/Decouverte-de-Five-Cail_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Decouverte de Five Cail",
+=======
     "name": "Decouverte de Five Cail2",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Découverte de la Loco",
     "date": "Le 06 juillet 2024",
@@ -2721,7 +3181,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/decouverte-de-five-cail3/3505911-1-fre-FR/Decouverte-de-Five-Cail_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Decouverte de Five Cail",
+=======
     "name": "Decouverte de Five Cail3",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Découverte de la ferme urbaine de Chaud-Bouillon",
     "date": "Le 06 juillet 2024",
@@ -2729,7 +3193,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-guidee-exposition-temporaire5/3471539-1-fre-FR/Visite-guidee-Exposition-temporaire_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Visite guidee Exposition temporaire",
+=======
     "name": "Visite guidee Exposition temporaire5",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Samedi 06 juillet à 16h",
     "date": "Le 06 juillet 2024",
@@ -2800,12 +3268,20 @@
     "adresse": "11 rue de l'Asie"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/plein-de-pattes-a-la-recherche-des-petites-betes/3518511-1-fre-FR/Plein-de-pattes-a-la-recherche-des-petites-betes_equipment_image_lead_child.jpg",
+    "name": "Plein de pattes a la recherche des petites betes",
+    "type": "Nature / environnement",
+    "description": "Cette animation destinée aux enfants de 3 à 12 ans les invite à découvrir le grand rôle que jouent ces petits acteurs de la nature",
+    "date": "Le 06 juillet 2024",
+    "adresse": "Parc de la Citadelle, 59800 Lille"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/block-party-faubourg-de-bethune/3515932-1-fre-FR/Block-Party-Faubourg-de-Bethune_equipment_image_lead_child.jpg",
     "name": "Block Party Faubourg de Bethune",
     "type": "",
     "description": "Tout au long de l'été, une série d'événement croisant sport et culture Hip-hop",
     "date": "Le 06 juillet 2024",
-    "adresse": "21 boulevard de Metz, 59000 LILLE"
+    "adresse": "97 rue d'Esquermes Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-vos-manettes-a-la-bibliotheque/3517318-1-fre-FR/A-vos-manettes-a-la-bibliotheque_equipment_image_lead_child.jpg",
@@ -2872,8 +3348,20 @@
     "adresse": "4 rue des Sarrazins03 20 54 71 84"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/nature-pour-les-tout-petits/3518552-1-fre-FR/Nature-pour-les-Tout-petits_equipment_image_lead_child.jpg",
+    "name": "Nature pour les Tout petits",
+    "type": "Stage et atelier",
+    "description": "Atelier d'éveil à la nature",
+    "date": "Du 9 juillet au 13 août 2024",
+    "adresse": "rue du jardin des plantes lille"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-destination-musee-jeune-public17/3471621-1-fre-FR/Atelier-Destination-Musee-Jeune-public_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Atelier Destination Musee Jeune public1",
+=======
     "name": "Atelier Destination Musee Jeune public14",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Mercredi 10 juillet à 14h30",
     "date": "Le 10 juillet 2024",
@@ -2886,6 +3374,18 @@
     "description": "Posez-vous un instant dans la prairie fleurie. Un spectacle haut en couleurs et tout en mouvement s’offre à vous…",
     "date": "Le 10 juillet 2024",
     "adresse": "18 Rue du Château d'Isenghien, 59160 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/balades-de-l-ete6/3518593-1-fre-FR/Balades-de-l-ete_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Balades de l ete",
+=======
+    "name": "Balades de l ete6",
+>>>>>>> origin/yussc
+    "type": "",
+    "description": "La mairie de quartier de Vauban-Esquermes vous propose le programme de ses balades de l'été.",
+    "date": "Du 10 juillet au 7 août 2024",
+    "adresse": "212 A, rue Colbert 59000 Lille03 28 36 11 73"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-d-auto-massage-parent-enfant/3517359-1-fre-FR/Atelier-d-auto-massage-parent-enfant_equipment_image_lead_child.jpg",
@@ -2905,7 +3405,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-destination-musee-jeune-public16/3471580-1-fre-FR/Atelier-Destination-Musee-Jeune-public_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Atelier Destination Musee Jeune public1",
+=======
     "name": "Atelier Destination Musee Jeune public13",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Mercredi 10 juillet à 10h30",
     "date": "Le 10 juillet 2024",
@@ -2913,7 +3417,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-vous-de-jouer-a-la-bibliotheque24/3517400-1-fre-FR/A-vous-de-jouer-a-la-bibliotheque_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "A vous de jouer a la bibliotheque1",
+=======
     "name": "A vous de jouer a la bibliotheque16",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Il est temps de passer aux choses sérieuses !",
     "date": "Le 10 juillet 2024",
@@ -2921,11 +3429,23 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-vous-de-jouer-a-la-bibliotheque25/3517441-1-fre-FR/A-vous-de-jouer-a-la-bibliotheque_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "A vous de jouer a la bibliotheque1",
+=======
     "name": "A vous de jouer a la bibliotheque17",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Il est temps de passer aux choses sérieuses !",
     "date": "Le 10 juillet 2024",
     "adresse": "11 rue de l'Asie"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/workshop-creation-numerique/3518634-1-fre-FR/Workshop-creation-numerique_equipment_image_lead_child.jpg",
+    "name": "Workshop creation numerique",
+    "type": "Stage et atelier",
+    "description": "Créez votre propre journal",
+    "date": "Du 10 au 13 juillet 2024",
+    "adresse": "32 rue Edouard Delesalle 59000 Lille06 16 23 48 91"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/olympicorama/3516014-1-fre-FR/Olympicorama_equipment_image_lead_child.jpg",
@@ -2937,7 +3457,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/l-histoire-du-cratere-place-de-la-republique3/3506064-1-fre-FR/L-histoire-du-cratere-place-de-la-Republique_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "L histoire du cratere place de la Republique",
+=======
     "name": "L histoire du cratere place de la Republique3",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Quand le patrimoine rencontre le hip-hop",
     "date": "Le 11 juillet 2024",
@@ -2961,7 +3485,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/cafe-compost14/3510914-1-fre-FR/Cafe-Compost_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Cafe Compost1",
+=======
     "name": "Cafe Compost11",
+>>>>>>> origin/yussc
     "type": "Nature / environnement",
     "description": "organisé par les Ajoncs",
     "date": "Le 11 juillet 2024",
@@ -2985,9 +3513,9 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/les-freres-tatanes/3516055-1-fre-FR/Les-Freres-Tatanes_equipment_image_lead_child.jpg",
-    "name": "Les Freres Tatanes",
+    "name": "Les Freres Tatane",
     "type": "",
-    "description": "Dans le cadre de ses festivités estivales, la Maison Folie Moulins vous invite à poursuivre la folie avec la nouba électronique des Frères Tatanes",
+    "description": "Dans le cadre de ses festivités estivales, la Maison Folie Moulins vous invite à poursuivre la folie avec la nouba électronique des Frères Tatane",
     "date": "Le 12 juillet 2024",
     "adresse": "47 rue d'Arras Lille"
   },
@@ -3025,7 +3553,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-destination-musee-jeune-public18/3474463-1-fre-FR/Atelier-Destination-Musee-Jeune-public_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Atelier Destination Musee Jeune public1",
+=======
     "name": "Atelier Destination Musee Jeune public15",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Mercredi 17 juillet 14h30",
     "date": "Le 17 juillet 2024",
@@ -3041,15 +3573,31 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-poses-au-musee-public-ado9/3474504-1-fre-FR/Atelier-Poses-au-musee-Public-ado_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Atelier Poses au musee Public ado",
+=======
     "name": "Atelier Poses au musee Public ado9",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Mercredi 17 juillet à 16h",
     "date": "Le 17 juillet 2024",
     "adresse": "32, rue de la Monnaie 59000 Lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-vous-de-jouer-a-la-bibliotheque-!-autour-du-japon/3518675-1-fre-FR/A-vous-de-jouer-a-la-bibliotheque-!-Autour-du-Japon_equipment_image_lead_child.jpg",
+    "name": "A vous de jouer a la bibliotheque ! Autour du Japon",
+    "type": "",
+    "description": "Il est temps de passer aux choses sérieuses !",
+    "date": "Du 17 au 20 juillet 2024",
+    "adresse": "25/27 Place Louise de Béttignies 59 000 Lille"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-vous-de-jouer-a-la-bibliotheque26/3517482-1-fre-FR/A-vous-de-jouer-a-la-bibliotheque_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "A vous de jouer a la bibliotheque1",
+=======
     "name": "A vous de jouer a la bibliotheque18",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Il est temps de passer aux choses sérieuses !",
     "date": "Le 17 juillet 2024",
@@ -3073,7 +3621,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/summer-parvis2/3516219-1-fre-FR/Summer-Parvis_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Summer Parvis",
+=======
     "name": "Summer Parvis2",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Temps festif et familial pour célébrer la culture Hip-hop !",
     "date": "Le 18 juillet 2024",
@@ -3081,7 +3633,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/tristan-pfaff-piano2/3513900-1-fre-FR/Tristan-Pfaff-piano_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Tristan Pfaff piano",
+=======
     "name": "Tristan Pfaff piano2",
+>>>>>>> origin/yussc
     "type": "Concert",
     "description": "« Hommage à György Cziffra »",
     "date": "Le 18 juillet 2024",
@@ -3097,7 +3653,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-guidee-exposition-temporaire6/3473748-1-fre-FR/Visite-guidee-Exposition-temporaire_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Visite guidee Exposition temporaire",
+=======
     "name": "Visite guidee Exposition temporaire6",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Samedi 20 juillet à 16h",
     "date": "Le 20 juillet 2024",
@@ -3105,7 +3665,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-guidee-collections-permanentes13/3473789-1-fre-FR/Visite-guidee-Collections-permanentes_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Visite guidee Collections permanentes1",
+=======
     "name": "Visite guidee Collections permanentes12",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Dimanche 21 juillet à 15h",
     "date": "Le 21 juillet 2024",
@@ -3121,7 +3685,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-guidee-exposition-temporaire7/3473830-1-fre-FR/Visite-guidee-Exposition-temporaire_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Visite guidee Exposition temporaire",
+=======
     "name": "Visite guidee Exposition temporaire7",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Dimanche 21 juillet à 16h",
     "date": "Le 21 juillet 2024",
@@ -3144,6 +3712,30 @@
     "adresse": "Rue de la ville de Naumbourg, 59260 Lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-vous-de-jouer-a-la-bibliotheque27/3518716-1-fre-FR/A-vous-de-jouer-a-la-bibliotheque_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "A vous de jouer a la bibliotheque1",
+=======
+    "name": "A vous de jouer a la bibliotheque19",
+>>>>>>> origin/yussc
+    "type": "",
+    "description": "Il est temps de passer aux choses sérieuses !",
+    "date": "Le 24 juillet 2024",
+    "adresse": "25/27 Place Louise de Béttignies 59 000 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-vous-de-jouer-a-la-bibliotheque28/3518757-1-fre-FR/A-vous-de-jouer-a-la-bibliotheque_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "A vous de jouer a la bibliotheque2",
+=======
+    "name": "A vous de jouer a la bibliotheque20",
+>>>>>>> origin/yussc
+    "type": "",
+    "description": "Il est temps de passer aux choses sérieuses !",
+    "date": "Le 24 juillet 2024",
+    "adresse": "11 rue de l'Asie"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/mon-profil/profil-senior/mes-loisirs/images/ateliers-maison-lill-ages/domotique/3501342-1-fre-FR/Domotique_equipment_image_lead_child.jpg",
     "name": "Quand la domotique apporte du confort et de la securite dans son logement",
     "type": "Stage et atelier",
@@ -3160,8 +3752,20 @@
     "adresse": "Place du concert 59000 Lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/du-haut-de-mes-branches/3518798-1-fre-FR/Du-haut-de-mes-branches_equipment_image_lead_child.jpg",
+    "name": "Du haut de mes branches",
+    "type": "Nature / environnement",
+    "description": "Un temps privilégié au cœur de la nature pour vous permettre d'en apprendre plus sur les arbres qui nous entourent",
+    "date": "Le 25 juillet 2024",
+    "adresse": "Parc de la Citadelle, 59800 Lille"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/alexander-paley-piano2/3514012-1-fre-FR/Alexander-Paley-piano_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Alexander Paley piano",
+=======
     "name": "Alexander Paley piano2",
+>>>>>>> origin/yussc
     "type": "Concert",
     "description": "« Hommage à Vera Gornostayeva »",
     "date": "Le 25 juillet 2024",
@@ -3177,7 +3781,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/ahna-minuit-24/3516443-1-fre-FR/AHNA-MINUIT-24_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "AHNA MINUIT 2",
+=======
     "name": "AHNA MINUIT 24",
+>>>>>>> origin/yussc
     "type": "",
     "description": "Dans le cadre de ses festivités estivales, la Maison Folie Moulins vous invite à poursuivre la folie avec le métal alternatif & Pop Rock d'AĦN...",
     "date": "Le 26 juillet 2024",
@@ -3208,6 +3816,14 @@
     "adresse": "47 rue d'Arras Lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/les-plantes-qui-boostent/3518839-1-fre-FR/Les-plantes-qui-boostent_equipment_image_lead_child.jpg",
+    "name": "Les plantes qui boostent",
+    "type": "Nature / environnement",
+    "description": "Venez mettre les plantes au service de votre énergie : prêts à faire le plein de peps?",
+    "date": "Le 03 août 2024",
+    "adresse": "Parc de la Citadelle, 59800 Lille"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/lever-de-rideau-lee-hyunhee-piano/3514135-1-fre-FR/Lever-de-Rideau-Lee-Hyunhee-piano_equipment_image_lead_child.jpg",
     "name": "Lever de Rideau Lee Hyunhee piano",
     "type": "Concert",
@@ -3225,11 +3841,23 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-guidee-collections-permanentes14/3498703-1-fre-FR/Visite-guidee-Collections-permanentes_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Visite guidee Collections permanentes",
+=======
     "name": "Visite guidee Collections permanentes6",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Samedi 10 août à 15h",
     "date": "Le 10 août 2024",
     "adresse": "32, rue de la Monnaie 59000 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/decouvrons-les-herissons-saint-maurice-pellevoisin/3518880-1-fre-FR/Decouvrons-les-herissons-Saint-Maurice-Pellevoisin_equipment_image_lead_child.jpg",
+    "name": "Decouvrons les herissons Saint Maurice Pellevoisin",
+    "type": "Nature / environnement",
+    "description": "Ce petit mammifère discret cache bien des secrets que vous découvrirez au cours de cette animation avec la Ligue pour la Protection des Oiseaux (L...",
+    "date": "Le 14 août 2024",
+    "adresse": "74 Rue Saint-Gabriel, 59800 Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/lever-de-rideau-constantin-mathias-mathis-cathignol-piano/3514217-1-fre-FR/Lever-de-Rideau-Constantin-Mathias-Mathis-Cathignol-piano_equipment_image_lead_child.jpg",
@@ -3256,6 +3884,14 @@
     "adresse": "47 rue d'Arras Lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-la-decouverte-des-paysages-sonores-urbains-et-a-la-biodiversite-sonore/3518921-1-fre-FR/A-la-decouverte-des-paysages-sonores-urbains-et-a-la-biodiversite-sonore_equipment_image_lead_child.jpg",
+    "name": "A la decouverte des paysages sonores urbains et a la biodiversite sonore",
+    "type": "Nature / environnement",
+    "description": "Au cours d'une balade sonore au sein du Parc de la Citadelle, vous découvrirez comment la faune sauvage réagit face au bruit de la ville",
+    "date": "Le 17 août 2024",
+    "adresse": "Parc de la Citadelle, 59800 Lille"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/conference-sur-l-art-de-la-fugue-de-jean-sebastien-bach-par-david-lively/3514299-1-fre-FR/Conference-sur-L-art-de-la-Fugue-de-Jean-Sebastien-Bach-par-David-Lively_equipment_image_lead_child.jpg",
     "name": "Conference sur L art de la Fugue de Jean Sebastien Bach par David Lively",
     "type": "Rencontre / conférence / débat",
@@ -3273,7 +3909,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-destination-musee-jeune-public19/3498744-1-fre-FR/Atelier-Destination-Musee-Jeune-public_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Atelier Destination Musee Jeune public1",
+=======
     "name": "Atelier Destination Musee Jeune public16",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Mercredi 21 août à 14h30",
     "date": "Le 21 août 2024",
@@ -3281,7 +3921,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-destination-musee-jeune-public20/3498785-1-fre-FR/Atelier-Destination-Musee-Jeune-public_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Atelier Destination Musee Jeune public1",
+=======
     "name": "Atelier Destination Musee Jeune public17",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Mercredi 21 août à 16h",
     "date": "Le 21 août 2024",
@@ -3289,7 +3933,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/lille-aux-comtesses6/3506146-1-fre-FR/Lille-aux-Comtesses_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Lille aux Comtesses",
+=======
     "name": "Lille aux Comtesses5",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Faites un saut dans l'histoire, au temps des comtes et comtesses de Flandre",
     "date": "Le 22 août 2024",
@@ -3297,11 +3945,23 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/45-min-chrono-autour-de-la-porte-de-paris2/3506105-1-fre-FR/45-min-chrono-autour-de-la-porte-de-Paris_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "45 min chrono autour de la porte de Paris",
+=======
     "name": "45 min chrono autour de la porte de Paris2",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Le midi, découvrez Lille en 45 min, montre en main !",
     "date": "Le 22 août 2024",
     "adresse": "côté rue Pierre Mauroy"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/voyage-au-centre-de-l-arbre/3518962-1-fre-FR/Voyage-au-centre-de-l-arbre_equipment_image_lead_child.jpg",
+    "name": "Voyage au centre de l arbre",
+    "type": "Nature / environnement",
+    "description": "Au cours d'une balade en nature, on vous dit tout sur les piliers à écorce de notre écosystème",
+    "date": "Le 22 août 2024",
+    "adresse": "Parc de la Citadelle, 59800 Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/le-blind-test-karaoke-de-bertrand-fashion/3516566-1-fre-FR/LE-Blind-Test-Karaoke-de-Bertrand-Fashion_equipment_image_lead_child.jpg",
@@ -3313,7 +3973,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-guidee-collections-permanentes15/3498826-1-fre-FR/Visite-guidee-Collections-permanentes_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Visite guidee Collections permanentes1",
+=======
     "name": "Visite guidee Collections permanentes13",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Dimanche 25 août à 15h",
     "date": "Le 25 août 2024",
@@ -3321,7 +3985,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/45-min-chrono-lille-de-place-en-place2/3506187-1-fre-FR/45-min-chrono-Lille-de-place-en-place_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "45 min chrono Lille de place en place",
+=======
     "name": "45 min chrono Lille de place en place2",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Pendant la pause du midi, (re)découvrez un bâtiment ou un quartier emblématique de Lille en 45 minutes montre en main !",
     "date": "Le 29 août 2024",
@@ -3334,6 +4002,14 @@
     "description": "La Maison Folie Moulins clôture son été avec le double DJ Set, père et fils : DJ Farid et DJ Sebti !",
     "date": "Le 30 août 2024",
     "adresse": "47 rue d'Arras Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/laissez-vous-conter-la-solidarite-chez-les-plantes-utiles/3519003-1-fre-FR/Laissez-vous-conter-la-solidarite-chez-les-plantes-utiles_equipment_image_lead_child.jpg",
+    "name": "Laissez vous conter la solidarite chez les plantes utiles",
+    "type": "Nature / environnement",
+    "description": "Venez découvrir les nombreux secrets des plantes lilloises !",
+    "date": "Le 31 août 2024",
+    "adresse": "Parc de la Citadelle, 59800 Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/archi-express-la-maison-folie-wazemmes/3506228-1-fre-FR/Archi-express-la-Maison-Folie-Wazemmes_equipment_image_lead_child.jpg",
@@ -3353,7 +4029,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-guidee-collections-permanentes16/3498867-1-fre-FR/Visite-guidee-Collections-permanentes_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Visite guidee Collections permanentes1",
+=======
     "name": "Visite guidee Collections permanentes14",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Samedi 7 septembre à 15h",
     "date": "Le 07 septembre 2024",
@@ -3361,7 +4041,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/un-dimanche-un-quartier2/3506269-1-fre-FR/Un-dimanche-un-quartier_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Un dimanche un quartier",
+=======
     "name": "Un dimanche un quartier2",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Wazemmes, du village au quartier",
     "date": "Le 08 septembre 2024",
@@ -3393,11 +4077,39 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-destination-musee-jeune-public21/3498908-1-fre-FR/Atelier-Destination-Musee-Jeune-public_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Atelier Destination Musee Jeune public1",
+=======
     "name": "Atelier Destination Musee Jeune public18",
+>>>>>>> origin/yussc
     "type": "Stage et atelier",
     "description": "Mercredi 18 septembre à 14h30",
     "date": "Le 18 septembre 2024",
     "adresse": "32, rue de la Monnaie 59000 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/reconnaissance-des-arbres-et-des-arbustes-a-partir-de-leurs-feuilles/3519044-1-fre-FR/Reconnaissance-des-arbres-et-des-arbustes-a-partir-de-leurs-feuilles_equipment_image_lead_child.jpg",
+    "name": "Reconnaissance des arbres et des arbustes a partir de leurs feuilles",
+    "type": "Nature / environnement",
+    "description": "Au cours d'une balade nature, venez apprendre à reconnaître les principales espèces d’arbres ou d’arbustes de notre territoire",
+    "date": "Le 21 septembre 2024",
+    "adresse": "Parc de la Citadelle, 59800 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/la-biodiversite-lilloise/3519085-1-fre-FR/La-biodiversite-lilloise_equipment_image_lead_child.jpg",
+    "name": "La biodiversite lilloise",
+    "type": "Nature / environnement",
+    "description": "Prenez le temps d'une balade pour observer la richesse naturelle qui vous entoure",
+    "date": "Le 22 septembre 2024",
+    "adresse": "Parc de la Citadelle, 59800 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/les-plantes-alliees-des-femmes/3519126-1-fre-FR/Les-plantes-alliees-des-femmes_equipment_image_lead_child.jpg",
+    "name": "Les plantes alliees des femmes",
+    "type": "Nature / environnement",
+    "description": "Venez à la découverte des plantes sauvages à travers une balade dans le Parc de la Citadelle",
+    "date": "Le 22 septembre 2024",
+    "adresse": "Parc de la Citadelle, 59800 Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-pose-au-musee-public-ado/3498949-1-fre-FR/Atelier-Pose-au-musee-Public-ado_equipment_image_lead_child.jpg",
@@ -3409,7 +4121,11 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-guidee-collections-permanentes17/3498990-1-fre-FR/Visite-guidee-Collections-permanentes_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Visite guidee Collections permanentes1",
+=======
     "name": "Visite guidee Collections permanentes15",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Dimanche 29 septembre à 15h",
     "date": "Le 29 septembre 2024",
@@ -3424,8 +4140,20 @@
     "adresse": "Métro Gambetta Lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-la-decouverte-des-fruits-d-automne/3519167-1-fre-FR/A-la-decouverte-des-fruits-d-automne_equipment_image_lead_child.jpg",
+    "name": "A la decouverte des fruits d automne",
+    "type": "Nature / environnement",
+    "description": "Quels secrets se cachent sous les feuilles colorées de cette saison?",
+    "date": "Le 05 octobre 2024",
+    "adresse": "Parc de la Citadelle, 59800 Lille"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/journee-mondiale-de-la-vue2/3510477-1-fre-FR/Journee-Mondiale-de-la-Vue_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Journee Mondiale de la Vue",
+=======
     "name": "Journee Mondiale de la Vue2",
+>>>>>>> origin/yussc
     "type": "Visite",
     "description": "Village associatif consacré à la Journée Mondiale de la Vue où le public peut venir découvrir les adaptations faites pour une meilleure inclusion...",
     "date": "Le 11 octobre 2024",
@@ -3441,10 +4169,22 @@
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/festival-biere-a-lille-2024/3499031-1-fre-FR/Festival-Biere-a-Lille-2024_equipment_image_lead_child.jpg",
+<<<<<<< HEAD
+    "name": "Festival Biere a Lille 202",
+=======
     "name": "Festival Biere a Lille 2024",
+>>>>>>> origin/yussc
     "type": "Fête / festival",
     "description": "Le BAL c'est le festival de la bière et de la culture brassicole dans la métropole lilloise. Une série d’événements ludiques dans les bars et rest...",
     "date": "Du 4 au 10 novembre 2024",
     "adresse": "17 boulevard Jean-Baptiste Lebas"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/tanguy-pastureau/3519208-1-fre-FR/TANGUY-PASTUREAU_equipment_image_lead_child.jpg",
+    "name": "TANGUY PASTUREAU",
+    "type": "Spectacle",
+    "description": "Un monde hostile",
+    "date": "Le 16 mars 2025",
+    "adresse": "777 pont de Flandres, 59777 LILLE0328144777"
   }
 ]

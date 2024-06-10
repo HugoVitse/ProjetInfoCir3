@@ -1,6 +1,11 @@
 /node_modules
+/Back/node_modules
 /.pnp
 
 /build
 
 *.log*
+
+TAGS.md
+
+.vscode

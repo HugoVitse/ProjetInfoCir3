@@ -22,7 +22,9 @@ async function setPicture(req,res){
             const picture = req.body.picture
             console.log(picture)
         
+        
             const findOneResult = await collection.findOneAndUpdate({'email': email},{$set:{image:picture}});
+
 
             res.send("ok")
         }

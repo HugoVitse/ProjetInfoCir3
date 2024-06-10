@@ -1,23 +1,26 @@
-import { useNavigate } from "react-router-dom";
-import Cookies from 'js-cookie';
-import { jwtDecode } from "jwt-decode";
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import {
-  MDBRow, MDBCheckbox, MDBRadio, MDBRange, MDBContainer, MDBCol, MDBInput, MDBBtn, MDBCard, MDBCardBody, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter
+  MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardText,
+  MDBTypography, MDBRadio, MDBRange, MDBModalFooter, MDBBtn, MDBModalTitle,
+  MDBCheckbox, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalBody
 } from 'mdb-react-ui-kit';
-import { Modal, Ripple, initMDB } from 'mdb-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import {jwtDecode} from "jwt-decode";
+import Cookies from 'js-cookie';
 import axios from 'axios';
-const Home = () => {
+import { useNavigate } from "react-router-dom";
+import { Modal, Ripple, initMDB } from 'mdb-ui-kit';
 
-  const navigate = useNavigate();
+const Home = () => {
   const [basicModal, setBasicModal] = useState(false);
   const toggleOpen = () => setBasicModal(!basicModal);
-
+  const [lastName, setLastName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [email, setEmail] = useState('');
+  const navigate = useNavigate();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [comptModal,setComptModal] = useState(0)
+  const [comptModal, setComptModal] = useState(0)
   const [formData, setFormData] = useState({
     activities: [],
     note: 10,
@@ -28,9 +31,8 @@ const Home = () => {
     description: '',
     travelDistance: 25,
   });
-  
-   // Partie handle du questionnaire :
-   const handleCheckboxChange = (activity) => {
+
+  const handleCheckboxChange = (activity) => {
     setFormData((prevData) => ({
       ...prevData,
       activities: prevData.activities.includes(activity)
@@ -40,12 +42,11 @@ const Home = () => {
   };
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
     setError('');
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost/fillquestionnaire', formData,{withCredentials:true});
+      const response = await axios.post('http://localhost/fillquestionnaire', formData, { withCredentials: true });
       toggleOpen()
     } catch (error) {
       console.error('Error:', error);
@@ -54,7 +55,6 @@ const Home = () => {
       setLoading(false);
     }
   };
-
 
   const handleRadioChange = (name, value) => {
     setFormData((prevData) => ({
@@ -70,62 +70,142 @@ const Home = () => {
     }));
   };
 
-  const retrieveCookie = ()=>{
+  const retrieveCookie = () => {
     const token = Cookies.get("jwt")
-    try{
+    try {
       const decodedToken = jwtDecode(token);
       console.log(decodedToken)
     }
-    catch{
+    catch {
       navigate("/Login")
     }
-
-
   }
 
-  useEffect(()=>{
-    const fnc = async ()=>{
+  useEffect(() => {
+    const fnc = async () => {
       retrieveCookie()
-      try{
-        const response = await axios.get('http://localhost/infos',{withCredentials:true});
+      try {
+        const response = await axios.get('http://localhost/infos', { withCredentials: true });
         console.log(response.data.firstLogin);
-        if(response.data.firstLogin){
+        if (response.data.firstLogin) {
           toggleOpen()
         }
       }
-      catch{
-  
+      catch {
+
       }
     }
     fnc()
-    
-  },[])
 
- 
+  }, [])
 
   return (
-    <div className="home-container">
-      <div className="jumbotron jumbotron-fluid bg-dark text-light">
-        <div className="container">
-          <h1 className="display-4">Découvrez les événements à venir !</h1>
-          <p className="lead">Explorez notre sélection d'événements passionnants pour des expériences inoubliables.</p>
-          <Link to="/Catalogue" className="btn btn-primary">Voir les événements</Link>
-        </div>
-      </div>
-      <div className="container mt-5">
-        <h2>Des suggestions pour améliorer votre page d'accueil :</h2>
-        <ul>
-          <li>Afficher une liste d'événements populaires ou recommandés directement sur la page d'accueil.</li>
-          <li>Intégrer un carrousel d'images mettant en valeur les moments forts de vos événements passés.</li>
-          <li>Permettre aux utilisateurs de s'abonner à une newsletter pour recevoir des mises à jour sur les événements à venir.</li>
-          <li>Inclure des témoignages ou des critiques d'utilisateurs sur des événements précédents pour renforcer la confiance.</li>
-          <li>Proposer une fonctionnalité de recherche d'événements par catégorie, lieu ou date.</li>
-          <li>Créer une section FAQ pour répondre aux questions courantes des visiteurs.</li>
-          <li>Intégrer des boutons de partage sur les réseaux sociaux pour encourager les utilisateurs à partager leurs découvertes.</li>
-        </ul>
-      </div>
-          {/* Pop-up Questionnaire !!! */}
-          <MDBModal open={basicModal} onClose={() => setBasicModal(false)} tabIndex='-1'>
+    <div className="flex-grow-1 vh-100">
+      <MDBContainer fluid className="py-5 vh-100 bg-theme" style={{ height: '100%' }}>
+        <MDBRow className="justify-content-center align-items-center h-100">
+          <MDBCol lg="9" xl="7" className='w-100'>
+            <header style={{
+              position: 'relative',
+              backgroundImage: 'url(https://78.media.tumblr.com/f254105ae6672e6252d171badfe14299/tumblr_mhiz6jgJ7N1rag9fdo1_500.gif)', // Example GIF URL, replace with your own
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              height: '50vh', // Height of the section
+              width: '100%',
+              color: 'white'
+            }}>
+              <div style={{
+                position: 'absolute',
+                bottom: '10px',
+                right: '10px',
+                textAlign: 'right'
+              }}>
+                <h1><strong>ÇA VA CHAUFFER</strong></h1>
+                <p>Nos modèles pour tout changer cet été.</p>
+                <div>
+                  <button style={{ marginRight: '10px' }}>Acheter</button>
+                  <button>Enfant</button>
+                </div>
+              </div>
+            </header>
+            <MDBCard className="mb-4 custom-card">
+              <MDBCardBody className="p-4 text-black custom-card">
+                <MDBCardText className="lead fw-normal mb-1" style={{ fontSize: '1.2rem', color: 'var(--primary-color)' }}>
+                  Bonjour, {firstName} ! Bienvenue sur Linx
+                </MDBCardText>
+              </MDBCardBody>
+            </MDBCard>
+
+            <MDBRow className="mt-4">
+              <MDBCol md="6" className="mb-4">
+                <MDBCard className="custom-card">
+                  <MDBCardBody className="p-4 text-theme custom-card">
+                    <MDBTypography tag="h5" > <strong>Prochains événements</strong></MDBTypography>
+                    <hr />
+                    <MDBCardText>Contenu des prochains événements</MDBCardText>
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBCol>
+
+              <MDBCol md="6" className="mb-4">
+                <MDBCard className="text-theme custom-card">
+                  <MDBCardBody className="p-4 custom-card">
+                    <MDBTypography tag="h5"> <strong>Deuxième case </strong></MDBTypography>
+                    <hr />
+                    <MDBCardText>Contenu de la deuxième case</MDBCardText>
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBCol>
+            </MDBRow>
+
+            <MDBRow className="mt-4">
+              <MDBCol md="6" className="mb-4">
+                <MDBCard className="text-theme custom-card">
+                  <MDBCardBody className="p-4 custom-card">
+                    <MDBTypography tag="h5">Troisième case</MDBTypography>
+                    <hr />
+                    <MDBCardText>Contenu de la troisième case</MDBCardText>
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBCol>
+
+              <MDBCol md="6" className="mb-4">
+                <MDBCard className="text-theme custom-card">
+                  <MDBCardBody className="p-4 custom-card">
+                    <MDBTypography tag="h5">Quatrième case</MDBTypography>
+                    <hr />
+                    <MDBCardText>Contenu de la quatrième case</MDBCardText>
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBCol>
+            </MDBRow>
+
+            <MDBRow className="mt-4">
+              <MDBCol md="6" className="mb-4">
+                <MDBCard className="text-theme custom-card">
+                  <MDBCardBody className="p-4 custom-card">
+                    <MDBTypography tag="h5">Cinquième case</MDBTypography>
+                    <hr />
+                    <MDBCardText>Contenu de la cinquième case</MDBCardText>
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBCol>
+
+              <MDBCol md="6" className="mb-4">
+                <MDBCard className="text-theme custom-card">
+                  <MDBCardBody className="p-4 custom-card">
+                    <MDBTypography tag="h5">Sixième case</MDBTypography>
+                    <hr />
+                    <MDBCardText>Contenu de la sixième case</MDBCardText>
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBCol>
+            </MDBRow>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+
+      {/* Pop-up Questionnaire !!! */}
+      <MDBModal open={basicModal} onClose={() => setBasicModal(false)} tabIndex='-1'>
             <MDBModalDialog size="xl" className="vh-80">
               <MDBModalContent>
                 <MDBModalHeader>
@@ -233,9 +313,8 @@ const Home = () => {
               </MDBModalContent>
             </MDBModalDialog>
           </MDBModal>
-          
-      </div>
+    </div>
   );
-}
+};
 
 export default Home;
