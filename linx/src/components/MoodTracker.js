@@ -189,15 +189,23 @@ const MoodTracker = () => {
         ],
       },
       options: {
+        
         scales: {
           r: {
             angleLines: {
+              color: 'blue', // Changez ici pour la couleur désirée
               display: false,
             },
             suggestedMin: 0,
             suggestedMax: 10,
+            ticks: {
+              font: {
+                color: 'red', // Changez ici pour la couleur désirée
+              },
+            },
           },
         },
+        // maintainAspectRatio: false,
       },
     });
   };
@@ -250,6 +258,22 @@ const MoodTracker = () => {
           y: {
             beginAtZero: true,
             max: 10,
+            ticks: {
+              font: {
+                size: 14,
+                family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                style: 'normal',
+                weight: 'bold',
+              },
+              color: 'blue', // Couleur des étiquettes
+            },
+          },
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: 'blue', // Couleur des légendes
+            },
           },
         },
       },
@@ -257,9 +281,11 @@ const MoodTracker = () => {
   };
 
   return (
-    <MDBContainer fluid className="contourpage d-flex align-items-center justify-content-center vh-800">
-      <MDBCard className="w-50 h-10">
-        <MDBCardBody>
+    <div style={{ height: '100vh', maxWidth: '100%', overflowX: 'hidden', overflowY: 'hidden' }}>
+    <MDBContainer fluid className="bg-theme text-theme contourpage d-flex align-items-center justify-content-center vh-100">
+      <MDBCard className="w-50 h-100">
+        <MDBCardBody className="bg-theme">
+          {/* Boutons pour Questionnaire Quotidien */}
           {today ? (
             <MDBBtn className="w-100 mb-3 btn-success" onClick={() => setBasicModal(true)}>
               Questionnaire Quotidien
@@ -269,24 +295,31 @@ const MoodTracker = () => {
               Questionnaire Quotidien NON Disponible
             </MDBBtn>
           )}
-
-          <MDBCarousel showControls fade>
-            <MDBCarouselItem className="w-100 d-block " itemId={1}>
-              <h5>Première Slide</h5>
-              <Calendar />
+          {/* ----- */}
+          <MDBCarousel showControls fade interval={10000}> 
+            {/* Interval : temps de défilement du Carousel */}
+            <MDBCarouselItem className="w-100 d-flex flex-column justify-content-center align-items-center text-theme-inv" itemId={1}>
+              <h5 className="mb-4">Calendrier</h5>
+              <div className="text-theme-inv bg-light" style={{ width: '100%', height: '70vh' }}>
+                <Calendar />
+              </div>
             </MDBCarouselItem>
-
-            <MDBCarouselItem className="w-100 d-block vh-80" itemId={2}>
-              <h5>MoodBoard Quotidien, Date : {years[ind]}</h5>
-              <canvas ref={radarChartRef} id="radarChart" style={{ marginTop: '20px', width: '100%', height: '400px' }}></canvas>
+            <MDBCarouselItem className="w-100 d-flex flex-column justify-content-center align-items-center text-theme-inv" itemId={2}>
+              <h5 className="mb-4">MoodBoard du jour :</h5>
+              <div className="text-center text-theme-inv bg-light d-flex justify-content-center" style={{ width: '95%', height: '50vh' }}>
+                <canvas ref={radarChartRef} id="radarChart"></canvas>
+              </div>
             </MDBCarouselItem>
-
-            <MDBCarouselItem className="w-100 d-block vh-80" itemId={3}>
-              <h5>MoodBoard Hebdomadaire, Date : {`${getThisWeekDates().startDate} - ${getThisWeekDates().endDate}`}</h5>
-              <canvas ref={barChartRef} id="barChart" style={{ marginTop: '20px', width: '100%', height: '400px' }}></canvas>
+            <MDBCarouselItem className="w-100 d-flex flex-column justify-content-center align-items-center text-theme-inv" itemId={3}>
+              <h5 className="mb-4">MoodBoard de la Semaine</h5>
+              <div className="text-theme-inv bg-light" style={{ width: '100%', height: '50vh' }}>
+                <canvas ref={barChartRef} id="barChart"></canvas>
+              </div>
             </MDBCarouselItem>
           </MDBCarousel>
 
+
+          {/* Pop-up Questionnaire Quotidien */}
           <MDBModal open={basicModal} toggle={() => setBasicModal(false)} tabIndex='-1' staticBackdrop>
             <MDBModalDialog centered>
               <MDBModalContent>
@@ -329,6 +362,7 @@ const MoodTracker = () => {
         </MDBCardBody>
       </MDBCard>
     </MDBContainer>
+    </div>
   );
 };
 
