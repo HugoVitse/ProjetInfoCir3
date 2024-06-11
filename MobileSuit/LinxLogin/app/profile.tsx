@@ -1,8 +1,8 @@
 import { useRouter } from "expo-router";
-import { Image, Text, View, StyleSheet, Modal, Dimensions, TouchableOpacity } from "react-native";
-import { Avatar } from 'react-native-paper';
+import { Image, Text, View, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
+import { Avatar, PaperProvider, Portal } from 'react-native-paper';
 import { useEffect, useState } from 'react';
-import { IconButton,TextInput, MD3Colors, Button, Dialog, HelperText, ActivityIndicator } from "react-native-paper";
+import { IconButton,TextInput, MD3Colors, Modal, Button, Dialog, HelperText, ActivityIndicator } from "react-native-paper";
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { CameraType } from "expo-camera/build/legacy/Camera.types";
 import axios from 'axios'
@@ -15,6 +15,7 @@ import Carousel, {
   ICarouselInstance,
   Pagination,
 } from "react-native-reanimated-carousel";
+import Theme from "@/constants/Theme";
 
 const HEADER_HEIGHT = 200;
 const { width } = Dimensions.get('window');
@@ -44,7 +45,7 @@ export default function ProfileScreen() {
   })
   const [newPicture,setNewPicture] = useState("")
 
-  
+  const _Theme = Theme()
 
   const setPhoto = async() => {
 
@@ -170,113 +171,113 @@ export default function ProfileScreen() {
   if(isLoading)return(<View  style={{    flex: 1,      justifyContent: 'center',}} ><ActivityIndicator animating={true} color={colorMain} size='large'></ActivityIndicator></View>)
   return (
     
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <IconButton
-          icon="arrow-left"
-          iconColor={MD3Colors.neutral20}
-          onPress={router.back}
-          style={styles.buttonBack}
-        />
-        {/* <Avatar
-          size={80}
-          rounded
-          icon={{ name: "person", type: "material" }}
-          containerStyle={{ backgroundColor: "#bbbec1", top: 10 }}
-          onPress={() => setModalVisible(true)}
-          
-        > */}
-        <TouchableOpacity onPress={()=>{setModalVisible(true)}}>
-          <Avatar.Image size={80} source={{uri:profilePic}} />
-        </TouchableOpacity>
-        
-        
-        
-        <Text style={styles.headerText}>{`${initialInfos.firstName} ${initialInfos.lastName}`}</Text>
-        <IconButton
-          icon="account-edit"
-          iconColor={MD3Colors.neutral20}
-          onPress={/*() => router.push("editProfile")*/showDialog}
-          style={styles.edit}
-        />
-      </View>
-      <View style={styles.body}>
-        <Text>Profil</Text>
-        
-        <Button
-          mode="elevated"
-          style={{
-            width: width - 40,
-            borderRadius: 0,
-          }}
-          onPress={logout}
-        >
-          Logout
-        </Button>
-      </View>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.popUp}>
+    <PaperProvider>
+      <View style={styles.container}>
+        <View style={[styles.header, _Theme.themeBack, _Theme.themeShadow]}>
           <IconButton
             icon="arrow-left"
-            iconColor={MD3Colors.neutral20}
-            onPress={() => {setModalVisible(!modalVisible);setNewPicture(profilePic);setDisabledValid(true)}}
-            style={styles.buttonClose}
+            iconColor={_Theme.themeIcon.color}
+            onPress={router.back}
+            style={styles.buttonBack}
           />
-          <Avatar.Image size={300}style={{marginBottom:30}} source={{uri:newPicture}} />
-         
-          <Button buttonColor={colorMain} icon="account-check" mode='contained-tonal' onPress={cameraPicture} style={{marginTop:10,width:width-40}}>
-            Prendre une photo
-          </Button> 
-
-          <Button buttonColor={colorMain} icon="account-check" mode='contained-tonal' onPress={pickImage} style={{marginTop:10,width:width-40}}>
-            Choisir une photo de la galerie
-          </Button> 
-
-          <Button disabled={disabledValid} buttonColor={colorMain} icon="account-check" mode='contained-tonal' onPress={setPhoto} style={{marginTop:40,width:width-40}}>
-            Valider
-          </Button> 
-
-         
-        </View>
-      </Modal>
-      
-      <Dialog style={{backgroundColor:"white"}} visible={visible} onDismiss={hideDialog}>
-          
-          <Dialog.Icon icon="alert" />
-          <Dialog.Title>Entrez votre mot de passe</Dialog.Title>
-          <Dialog.Content>
-            <TextInput
-              outlineColor={colorMain}
-              activeOutlineColor={colorMain}
-              theme={theme}
-              secureTextEntry={true}
-              label="Mot de passe"
-              placeholder='Entrez votre mot de passe...'
-              left={<TextInput.Icon icon={password.length==0?"lock-open":"lock"} />}
-              mode='outlined'
-              style={styles.input}
-              onChangeText={onChangePassword}
-            />
+          {/* <Avatar
+            size={80}
+            rounded
+            icon={{ name: "person", type: "material" }}
+            containerStyle={{ backgroundColor: "#bbbec1", top: 10 }}
+            onPress={() => setModalVisible(true)}
             
-            <HelperText type="error" visible={hasErrors()}>
-              {error}
-            </HelperText>
-            <Button  buttonColor="black" icon="login" mode="contained" onPress={editPro}>
+          > */}
+          <TouchableOpacity onPress={()=>{setModalVisible(true)}}>
+            <Avatar.Image size={80} source={{uri:profilePic}} />
+          </TouchableOpacity>
+          
+          
+          
+          <Text style={[styles.headerText, _Theme.themeText]}>{`${initialInfos.firstName} ${initialInfos.lastName}`}</Text>
+          <IconButton
+            icon="account-edit"
+            iconColor={_Theme.themeIcon.color}
+            onPress={/*() => router.push("editProfile")*/showDialog}
+            style={styles.edit}
+          />
+        </View>
+        <View style={[styles.body, _Theme.themeBack2]}>
+          <Text style={_Theme.themeText}>Profil</Text>
+          
+          <Button
+            mode="elevated"
+            style={{
+              width: width - 40,
+              borderRadius: 0,
+            }}
+            onPress={logout}
+          >
+            Logout
+          </Button>
+        </View>
+        <Portal>
+          <Modal
+            visible={modalVisible}
+            onDismiss={() => {
+              setModalVisible(false);
+            }}
+            contentContainerStyle={[styles.popUp, _Theme.themeBack2]}
+          >
+            <IconButton
+              icon="arrow-left"
+              iconColor={_Theme.themeIcon.color}
+              onPress={() => {setModalVisible(!modalVisible);setNewPicture(profilePic);setDisabledValid(true)}}
+              style={styles.buttonClose}
+            />
+            <Avatar.Image size={300}style={{marginBottom:30}} source={{uri:newPicture}} />
+          
+            <Button buttonColor={_Theme.themeBouton.backgroundColor} textColor={_Theme.themeBouton.color} icon="account-check" mode='contained-tonal' onPress={cameraPicture} style={{marginTop:10,width:width-40}}>
+              Prendre une photo
+            </Button> 
+
+            <Button buttonColor={_Theme.themeBouton.backgroundColor} textColor={_Theme.themeBouton.color} icon="account-check" mode='contained-tonal' onPress={pickImage} style={{marginTop:10,width:width-40}}>
+              Choisir une photo de la galerie
+            </Button> 
+
+            <Button disabled={disabledValid} buttonColor={_Theme.themeBouton.backgroundColor} textColor={_Theme.themeBouton.color} icon="account-check" mode='contained-tonal' onPress={setPhoto} style={{marginTop:40,width:width-40}}>
               Valider
-            </Button>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button textColor={colorMain} onPress={hideDialog}>Retour</Button>
-          </Dialog.Actions>
-      </Dialog>
-    </View>
+            </Button> 
+          </Modal>
+        </Portal>
+        <Portal>
+          <Dialog style={{backgroundColor: _Theme.themeBack2.backgroundColor}} visible={visible} onDismiss={hideDialog}>
+              
+              <Dialog.Icon icon="alert" color={_Theme.themeIcon.color}/>
+              <Dialog.Title style={_Theme.themeText}>Entrez votre mot de passe</Dialog.Title>
+              <Dialog.Content>
+                <TextInput
+                  outlineColor={_Theme.themeBouton.backgroundColor}
+                  activeOutlineColor={_Theme.themeBouton.backgroundColor}
+                  theme={theme}
+                  secureTextEntry={true}
+                  label="Mot de passe"
+                  placeholder='Entrez votre mot de passe...'
+                  left={<TextInput.Icon icon={password.length==0?"lock-open":"lock"} color={_Theme.themeIcon.color}/>}
+                  mode='outlined'
+                  style={[styles.input, _Theme.themeBack2, _Theme.themeShadow]}
+                  onChangeText={onChangePassword}
+                />
+                
+                <HelperText type="error" visible={hasErrors()}>
+                  {error}
+                </HelperText>
+                <Button  buttonColor={_Theme.themeBouton.backgroundColor} icon="login" mode="contained" onPress={editPro}>
+                  Valider
+                </Button>
+              </Dialog.Content>
+              <Dialog.Actions>
+                <Button textColor={_Theme.themeBouton.backgroundColor} onPress={hideDialog}>Retour</Button>
+              </Dialog.Actions>
+          </Dialog>
+        </Portal>
+      </View>
+    </PaperProvider>
     
   );
 }
@@ -296,15 +297,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   header: {
-    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     height: HEADER_HEIGHT,
-    backgroundColor: 'white',
-    borderBottomWidth: 2,
-    borderBottomColor: 'white',
-    shadowColor: '#000',
+    borderBottomWidth: 1,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.5,
     shadowRadius: 2,
@@ -342,14 +339,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
-    zIndex: 2,
+    zIndex: 4,
   },
   input: {
-    backgroundColor:'white',
     margin:10,
     borderRadius:2,
-    shadowColor:'black',
     shadowOpacity:0.3,
     shadowRadius:1,
     shadowOffset:{

@@ -6,8 +6,9 @@ import React, { useRef, useState } from 'react';
 import RadarChart from '@/components/SpiderGraph';
 import Carousel, { Pagination, ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useSharedValue } from "react-native-reanimated";
-import {Calendar, LocaleConfig} from 'react-native-calendars';
+import {Calendar, LocaleConfig } from 'react-native-calendars';
 import Theme from '@/constants/Theme';
+import { BarChart } from "react-native-chart-kit";
 // import { useThemeColor } from '@/hooks/useThemeColor';
 // import { Colors } from '@/constants/Colors';
 
@@ -43,13 +44,13 @@ const slideData = [
     id: '1',
     title: 'Quotidien',
     content: 'Contenu Quotidien',
-    type: 'chart'
+    type: 'radarChart'
   },
   {
     id: '2',
     title: 'Hebdomadaire',
     content: 'Contenu Hebdomadaire',
-    type: 'text'
+    type: 'barChart'
   },
   {
     id: '3',
@@ -73,6 +74,15 @@ const noteMoyMood = [
   10,
 ]
 
+const barData = {
+  labels: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+  datasets: [
+    {
+      data: [2, 5, 6, 4, 5, 7, 9 ]
+    }
+  ]
+};
+
 export default function CalendarScreen() {
 
   const width = Dimensions.get('window').width;
@@ -86,6 +96,13 @@ export default function CalendarScreen() {
   const [valueSocial, setValueSocial] = useState(0);
   const [valueMoral, setValueMoral] = useState(0);
   const [valueNutrition, setValueNutrition] = useState(0);
+
+  var todayDate = new Date();
+  todayDate.toString();
+  var todayDay = todayDate.getDate()
+  var todayMonth = todayDate.getMonth() + 1
+  var todayYear = todayDate.getFullYear()
+  console.log(todayDay+'-'+todayMonth+'-'+todayYear);
 
   const _Theme = Theme()
 
@@ -177,7 +194,32 @@ export default function CalendarScreen() {
     {switch(item.type) {
       case 'text': 
         return <Text style={[styles.slideContent, _Theme.themeText]}>{item.content}</Text>
-      case 'chart': 
+      case 'barChart': 
+        return <BarChart
+          style={{borderRadius: 8, elevation: 3, marginTop: 20 }}
+          data={barData}
+          width={width - 40}
+          height={320}
+          fromZero={true}
+          yAxisLabel=""
+          yAxisSuffix=""
+          chartConfig={{
+            backgroundGradientFrom: _Theme.themeBack.backgroundColor,
+            backgroundGradientTo: _Theme.themeBack2.backgroundColor,
+            decimalPlaces: 2, // optional, defaults to 2dp
+            color: (opacity = 1) => `rgba(33, 150, 243, ${opacity})`,
+            labelColor: (opacity = 1) => _Theme.themeTextRadar.color,
+            propsForVerticalLabels: {
+              translateX: -20
+            },
+            propsForHorizontalLabels: {
+              translateX: 10
+            },
+          }}
+          verticalLabelRotation={30}
+          
+        />
+      case 'radarChart': 
         return <RadarChart
           graphSize={400}
           scaleCount={10}
@@ -208,9 +250,13 @@ export default function CalendarScreen() {
           hideExtraDays={true}
           firstDay={1}
           disableAllTouchEventsForDisabledDays={true}
-          style={[{width: width-40, marginTop: 20}, _Theme.themeCalendar]}
+          style={[{width: width-40, borderRadius: 8, elevation: 3, marginTop: 20}, _Theme.themeCalendar]}
           markedDates={moodCalendar}
-          theme={{calendarBackground: _Theme.themeCalendar.backgroundColor, monthTextColor: _Theme.themeCalendar.color}}
+          theme={{
+            calendarBackground: _Theme.themeCalendar.backgroundColor, 
+            monthTextColor: _Theme.themeCalendar.color,
+            todayTextColor: _Theme.themeTextRadar.color,
+          }}
         />
     }}
   }
