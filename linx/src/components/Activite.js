@@ -121,7 +121,7 @@ const Activite = () => {
       setEventCreated(false);
       setTimeout(() => {
         navigate("/Evenements");
-      }, 2000);
+      }, 500);
     }, 2000);
   };
 
@@ -212,7 +212,7 @@ const Activite = () => {
           <MDBCol size='6'>
             <MDBCardText className="text-center mb-2">Centre d'intérêt</MDBCardText>
             <select value={type} onChange={changeType} className="form-select">
-              <option disabled>Choisir un intérêt</option>
+              <option >Choisir un intérêt</option>
               {interestsList.map(interest => (
                 <option key={interest} value={interest}>{interest}</option>
               ))}

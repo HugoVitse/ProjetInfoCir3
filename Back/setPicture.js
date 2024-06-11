@@ -20,10 +20,9 @@ async function setPicture(req,res){
             const collection = database.collection(config.users);
 
             const { picture, lastName, firstName, selectedInterests } = req.body;
-            console.log('Received body:', req.body);
         
-            const findOneResult = await collection.findOneAndUpdate({'email': email},{$set:{'firstName':firstName},$set:{'lastName':lastName,$set:{'activities':selectedInterests,$set:{image:picture}}}});
-
+            const findOneResult = await collection.findOneAndUpdate({ 'email': email },{$set: {'firstName': firstName,'lastName': lastName,'activities': selectedInterests,'image': picture}});
+              
             res.send("ok")
         }
         catch(err){

@@ -90,17 +90,23 @@ const Account = () => {
 
   const handleSubmit = async () => {
     try {
-      await axios.post('http://localhost/setPicture', { picture: pp, firstName: firstName, lastName: lastName, selectedInterests: selectedInterests}, { withCredentials: true });
+      if (pp) {
+        await axios.post('http://localhost/setPicture', { picture: pp, firstName: firstName, lastName: lastName, selectedInterests: selectedInterests}, { withCredentials: true });
+      } else {
+        await axios.post('http://localhost/setPicture', { firstName: firstName, lastName: lastName, selectedInterests: selectedInterests}, { withCredentials: true });
+      }
     } catch (error) {
       console.error('Error:', error);
     }
   };
+  
 
   const handleSaveProfile = () => {
     const filteredInterests = selectedInterests.filter(interest => interest.trim() !== '');
     setSelectedInterests(filteredInterests);
     setIsEditing(false);
     handleSubmit();
+    console.log(filteredInterests);
   };
 
   const handleAddInterest = (interest) => {

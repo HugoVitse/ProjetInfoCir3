@@ -73,7 +73,7 @@ async function serv(){
   app.post('/createEvenement',createEvenement)
   app.get('/evenements',evenements)
   app.post('/EventRegister',EventRegister)
-  app.post('/getEvents', getEvents)
+  app.get('/getEvents', getEvents)
 
   
   app.listen(80,()=>{
