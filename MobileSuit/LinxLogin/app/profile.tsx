@@ -72,7 +72,7 @@ export default function ProfileScreen() {
     
     if (!result.canceled) {
       const base64 = await FileSystem.readAsStringAsync(result.assets[0].uri, { encoding: 'base64' });
-      setNewPicture("data:image/png;base64,"+base64);
+      setNewPicture(`data:image/png;base64,${base64}`);
       setDisabledValid(false)
     }
   };
@@ -90,7 +90,7 @@ export default function ProfileScreen() {
     
     if (!result.canceled) {
       const base64 = await FileSystem.readAsStringAsync(result.assets[0].uri, { encoding: 'base64' });
-      setNewPicture("data:image/png;base64,"+base64);
+      setNewPicture(`data:image/png;base64,${base64}`);
       setDisabledValid(false)
     }
   }
@@ -132,8 +132,8 @@ export default function ProfileScreen() {
       const jwt_cookie = await AsyncStorage.getItem("jwt")
       const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
       setInitialInfos(reponse.data)
-      setNewPicture(reponse.data.image)
-      setProfilFic(reponse.data.image)
+      setNewPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
+      setProfilFic(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
     }
     wrap()
   },[])

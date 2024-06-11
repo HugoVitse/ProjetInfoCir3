@@ -2,15 +2,17 @@ import { Link, useFocusEffect, useRouter } from "expo-router";
 import { Text, View, StyleSheet ,Dimensions, Platform} from "react-native";
 import { Avatar } from '@rneui/themed';
 import { useEffect, useState  } from "react";
-import { Button, IconButton, MD3Colors, Modal, RadioButton, Snackbar, TextInput } from "react-native-paper";
+import { Button, IconButton, List, MD3Colors, Modal, RadioButton, Snackbar, TextInput } from "react-native-paper";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
 import Config from '../../config.json'
 import { Checkbox } from 'react-native-paper';
 import { ScrollView } from "react-native-gesture-handler";
-import { ScreenHeight, Slider ,Icon} from "@rneui/base";
+import { ScreenHeight, Slider ,Icon, ScreenWidth, ListItem} from "@rneui/base";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Theme from "@/constants/Theme";
+import RIcon from '@mdi/react';
+import { mdiCalendarMultipleCheck } from '@mdi/js';
 
 const HEADER_HEIGHT = 100;
 const { width,height } = Dimensions.get('window');
@@ -30,7 +32,11 @@ export default function HomeScreen() {
   const [checked3, setChecked3] = useState('first');
   const [checked4, setChecked4] = useState('first');
   const [text,setText] = useState("")
-
+  const [events,setEvents] = useState([])
+  const [eventSoonComponent, setEventSoonComponent] = useState([])
+  const [eventPastComponent, setEventPastComponent] = useState([])
+  const [expandedSoon, setExpandedSoon] = useState(true);
+  const [expandedPast, setExpandedPast] = useState(false);
   //snackbar
   const [snack, setSnack] = useState(false);
 
@@ -77,6 +83,8 @@ export default function HomeScreen() {
       const jwt_cookie = await AsyncStorage.getItem("jwt")
       const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
       setFirstLogin(reponse.data.firstLogin)
+      const reponseEvents = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getEvents`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      setEvents(reponseEvents.data)
     }
     wrap()
     handleCheckboxPress('Cinéma')
@@ -84,6 +92,47 @@ export default function HomeScreen() {
     
   },[])
 
+  useEffect(()=>{
+    let tmp = []
+    let tmp2 = []
+    if(events.length>0){
+      for(let i = 0; i<events.length;i++){
+        const date = new Date(events[i].date)
+        const today = new Date()
+        if(date>today){
+          tmp.push(
+            <ListItem key={i}  bottomDivider>
+              <Avatar title={"ok"} source={{ uri: "" }} />
+              <ListItem.Content>
+                <ListItem.Title>{events[i].activity.title}</ListItem.Title>
+                <ListItem.Subtitle>{events[i].date}</ListItem.Subtitle>
+              </ListItem.Content>
+              <ListItem.Chevron />
+            </ListItem>
+          )
+        }
+        else{
+
+          tmp2.push(
+            <ListItem key={i}  bottomDivider>
+              <Avatar title={"ok"} source={{ uri: "" }} />
+              <ListItem.Content>
+                <ListItem.Title>{events[i].activity.title}</ListItem.Title>
+                <ListItem.Subtitle>{events[i].date}</ListItem.Subtitle>
+              </ListItem.Content>
+              <ListItem.Chevron />
+            </ListItem>
+          )
+        }
+        
+      }
+
+      setEventSoonComponent(tmp)
+      setEventPastComponent(tmp2)
+      
+      
+    }
+  },[events])
   useEffect(()=>{
     if(firstLogin){
       showModal()
@@ -100,7 +149,7 @@ export default function HomeScreen() {
     return Math.ceil((1 - k) * start + k * end) % 256;
   };
   
-  
+
 
   const color = () => {
     let r = interpolate(255, 0);
@@ -145,7 +194,6 @@ export default function HomeScreen() {
     onToggleSnackBar()
   }
 
- 
   
   return (
     <View style={styles.container}>
@@ -175,8 +223,40 @@ export default function HomeScreen() {
       </View>
       
       <View style={[styles.body,_Theme.themeBack2]}>
-        <Text style={_Theme.themeText}>Edit app/index.tsx to edit this screen.</Text>
-        <Link href="@/settings">?</Link>
+        <ListItem.Accordion
+          content={
+            <>
+              <Icon type='material-community' name="calendar-multiple" size={30} />
+              <ListItem.Content>
+                <ListItem.Title> Evénements à venir</ListItem.Title>
+              </ListItem.Content>
+            </>
+          }
+          isExpanded={expandedSoon}
+          onPress={() => {
+            setExpandedSoon(!expandedSoon);
+          }}
+        >
+          {eventSoonComponent}
+          
+        </ListItem.Accordion>
+        <ListItem.Accordion
+          content={
+            <>
+              <Icon type='material-community' name="calendar-multiple-check" size={30} />
+              <ListItem.Content>
+                <ListItem.Title> Evenements passés</ListItem.Title>
+              </ListItem.Content>
+            </>
+          }
+          isExpanded={expandedPast}
+          onPress={() => {
+            setExpandedPast(!expandedPast);
+          }}
+        >
+          {eventPastComponent}
+          
+        </ListItem.Accordion>
       </View>
       <Modal visible={visible} onDismiss={hideModal} style={{marginTop: HEADER_HEIGHT + 20, maxHeight: ScreenHeight, width: width, padding: 20}}>
         <KeyboardAwareScrollView style={[{ height: ScreenHeight - 300, borderRadius: 20, paddingHorizontal: 50, overflow: 'hidden' }, _Theme.themeBack2]}>
@@ -404,9 +484,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   body: {
+    width:ScreenWidth,
     position: 'relative',
-    justifyContent: 'center',
-    alignItems: 'center',
+    top: HEADER_HEIGHT,
     flex: 1,
   },
   settings: {

@@ -13,6 +13,8 @@ import MapView, {Marker} from 'react-native-maps';
 import { PROVIDER_GOOGLE } from 'react-native-maps';
 import { ScreenHeight, ScreenWidth } from "@rneui/base";
 import { coords } from "../../constants/coord"
+import { jwtDecode } from 'jwt-decode';
+
 const HEADER_HEIGHT = 100;
 const { width } = Dimensions.get('window');
 const drawerWidth = 75
@@ -21,7 +23,7 @@ export default function CatalogScreen() {
   const router = useRouter();
   const [evenements,setEvenements] = useState<evenement[]>([])
   const [componentActivities,setComponentActivities] = useState<JSX.Element[]>([])
-  const [jwt,setJwt] = useState('');
+  const [jwt,setJwt] = useState<string>();
   const [isjwt,setisjwt] = useState(-1)
   const [islogin,setLogin] = useState(-1)
   const [isLoaded,setIsLoaded] = useState(false)
@@ -46,21 +48,6 @@ export default function CatalogScreen() {
 
   const _Theme = Theme();
 
-  const _retrieveData = async (key:string) => {
-    try {
-      const value = await AsyncStorage.getItem(key);
-      if (value !== null) {
-        // We have data!!
-        setJwt(value)
-        setisjwt(1)
-      }
-      else{
-        setisjwt(0)
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
-  };
 
   const startAnimation = () => {
     Animated.timing(leftDecal, {
@@ -94,12 +81,17 @@ export default function CatalogScreen() {
   useEffect(()=>{
     const getActivities = async() => {
       const jwt_cookie = await AsyncStorage.getItem("jwt")
-      console.log(jwt_cookie)
+      const decoded = jwtDecode(jwt_cookie?jwt_cookie:"")
+      console.log(decoded)
+      const email = 'email'in decoded?decoded.email:""
+      setJwt(typeof(email)=="string"?email:"")
       const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/evenements`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
       setEvenements(response.data)
       setIsLoaded(true)
     }
     getActivities()
+
+
   } ,[])
 
   useEffect(()=>{
@@ -127,7 +119,10 @@ export default function CatalogScreen() {
                       latitude: response.data.results[0].geometry.location.lat,
                       longitude: response.data.results[0].geometry.location.lng,
                     }}
-                    onPress={showDialog}
+                    onPress={()=>{
+                      setActualIndex(i)
+                      showDialog()
+                    }}
                     title={'Test Marker'}
                     description={'This is a description of the marker'}
                   />)
@@ -228,8 +223,15 @@ export default function CatalogScreen() {
 
                 </Card>
   
+                  
+                <Text>
+                    {evenements[actualIndex]?(evenements[actualIndex].participants.indexOf(jwt?jwt:"")==-1?"":"Vous êtes déjà inscrits"):""}
+                </Text>
+                <Text>
+                    {evenements[actualIndex]?(evenements[actualIndex].participants.length >= (parseInt(evenements[actualIndex].nbinvities) +1)?"Evenement complet":""):""}
+                </Text>
     
-            <Button  buttonColor="black" icon="login-variant" mode="contained" onPress={register}>
+            <Button disabled={evenements[actualIndex]?((evenements[actualIndex].participants.indexOf(jwt?jwt:"")!=-1  || evenements[actualIndex].participants.length >= (parseInt(evenements[actualIndex].nbinvities) +1))?true:false):false} buttonColor="black" icon="login-variant" mode="contained" onPress={register}>
               S'inscrire
             </Button>
           </Dialog.Content>

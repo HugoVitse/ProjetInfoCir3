@@ -3,7 +3,7 @@ const cookieParser = require('cookie-parser')
 const https = require('https');
 const fs = require('fs')
 const cors = require('cors')
-
+const path = require('path')
 const app = express()
 app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());
@@ -37,10 +37,7 @@ const updateInfos = require('./updateInfos')
 const setPicture = require('./setPicture')
 const createEvenement = require('./createEvenement')
 const EventRegister = require('./EventRegister')
-
-
-
-
+const getEvents = require('./getEvents')
 
 
 
@@ -49,6 +46,9 @@ async function serv(){
 
 
   await connect_db.ConnectDB();
+
+    
+  
 
   app.get("/",(req,res)=>{
       console.log("ok")
@@ -72,8 +72,13 @@ async function serv(){
   app.post('/createEvenement',createEvenement)
   app.get('/evenements',evenements)
   app.post('/EventRegister',EventRegister)
+  app.get('/getEvents',getEvents)
 
-  
+
+  console.log(path.join(__dirname, 'profile_pictures'))
+
+  app.use('/profile_pictures',express.static(path.join(__dirname, 'profile_pictures')));
+
   app.listen(80,()=>{
       console.log(`serever is runing at port 80`);
   })
