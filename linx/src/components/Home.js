@@ -5,18 +5,17 @@ import {
   MDBCheckbox, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalBody
 } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import { Modal, Ripple, initMDB } from 'mdb-ui-kit';
 
 const Home = () => {
   const [basicModal, setBasicModal] = useState(false);
   const toggleOpen = () => setBasicModal(!basicModal);
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');
-  const [email, setEmail] = useState('');
+  const [selectedInterests, setSelectedInterests] = useState([]);
   const navigate = useNavigate();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -86,7 +85,9 @@ const Home = () => {
       retrieveCookie()
       try {
         const response = await axios.get('http://localhost/infos', { withCredentials: true });
-        console.log(response.data.firstLogin);
+        setFirstName(response.data.firstName || '');
+        setLastName(response.data.lastName || '');
+        setSelectedInterests(response.data.activities || []);
         if (response.data.firstLogin) {
           toggleOpen()
         }
@@ -99,6 +100,20 @@ const Home = () => {
 
   }, [])
 
+  const renderInterestCards = () => {
+    return selectedInterests.map((interest, index) => (
+      <MDBCol md="6" className="mb-4" key={index}>
+        <MDBCard className="text-theme custom-card">
+          <MDBCardBody className="p-4 custom-card">
+            <MDBTypography tag="h5">{interest}</MDBTypography>
+            <hr />
+            <MDBCardText>Contenu de l'intérêt {interest}</MDBCardText>
+          </MDBCardBody>
+        </MDBCard>
+      </MDBCol>
+    ));
+  };
+
   return (
     <div className="flex-grow-1 vh-100">
       <MDBContainer fluid className="py-5 vh-100 bg-theme" style={{ height: '100%' }}>
@@ -109,7 +124,7 @@ const Home = () => {
               backgroundImage: 'url(https://78.media.tumblr.com/f254105ae6672e6252d171badfe14299/tumblr_mhiz6jgJ7N1rag9fdo1_500.gif)', // Example GIF URL, replace with your own
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              height: '50vh', // Height of the section
+              height: '50vh',
               width: '100%',
               color: 'white'
             }}>
@@ -130,7 +145,7 @@ const Home = () => {
             <MDBCard className="mb-4 custom-card">
               <MDBCardBody className="p-4 text-black custom-card">
                 <MDBCardText className="lead fw-normal mb-1" style={{ fontSize: '1.2rem', color: 'var(--primary-color)' }}>
-                  Bonjour, {firstName} ! Bienvenue sur Linx
+                  Bonjour {firstName} {lastName} ! Bienvenue sur Linx
                 </MDBCardText>
               </MDBCardBody>
             </MDBCard>
@@ -145,60 +160,7 @@ const Home = () => {
                   </MDBCardBody>
                 </MDBCard>
               </MDBCol>
-
-              <MDBCol md="6" className="mb-4">
-                <MDBCard className="text-theme custom-card">
-                  <MDBCardBody className="p-4 custom-card">
-                    <MDBTypography tag="h5"> <strong>Deuxième case </strong></MDBTypography>
-                    <hr />
-                    <MDBCardText>Contenu de la deuxième case</MDBCardText>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-            </MDBRow>
-
-            <MDBRow className="mt-4">
-              <MDBCol md="6" className="mb-4">
-                <MDBCard className="text-theme custom-card">
-                  <MDBCardBody className="p-4 custom-card">
-                    <MDBTypography tag="h5">Troisième case</MDBTypography>
-                    <hr />
-                    <MDBCardText>Contenu de la troisième case</MDBCardText>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-
-              <MDBCol md="6" className="mb-4">
-                <MDBCard className="text-theme custom-card">
-                  <MDBCardBody className="p-4 custom-card">
-                    <MDBTypography tag="h5">Quatrième case</MDBTypography>
-                    <hr />
-                    <MDBCardText>Contenu de la quatrième case</MDBCardText>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-            </MDBRow>
-
-            <MDBRow className="mt-4">
-              <MDBCol md="6" className="mb-4">
-                <MDBCard className="text-theme custom-card">
-                  <MDBCardBody className="p-4 custom-card">
-                    <MDBTypography tag="h5">Cinquième case</MDBTypography>
-                    <hr />
-                    <MDBCardText>Contenu de la cinquième case</MDBCardText>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-
-              <MDBCol md="6" className="mb-4">
-                <MDBCard className="text-theme custom-card">
-                  <MDBCardBody className="p-4 custom-card">
-                    <MDBTypography tag="h5">Sixième case</MDBTypography>
-                    <hr />
-                    <MDBCardText>Contenu de la sixième case</MDBCardText>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
+              {renderInterestCards()}
             </MDBRow>
           </MDBCol>
         </MDBRow>

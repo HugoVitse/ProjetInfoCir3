@@ -46,10 +46,8 @@ const Account = () => {
         }
       } catch (error) {
         console.error(error);
-        // Handle network errors
       }
     };
-
     fetchData();
   }, [navigate]);
 
@@ -92,7 +90,7 @@ const Account = () => {
 
   const handleSubmit = async () => {
     try {
-      await axios.post('http://localhost/setPicture', { picture: pp }, { withCredentials: true });
+      await axios.post('http://localhost/setPicture', { picture: pp, firstName: firstName, lastName: lastName, selectedInterests: selectedInterests}, { withCredentials: true });
     } catch (error) {
       console.error('Error:', error);
     }
@@ -114,29 +112,10 @@ const Account = () => {
     setSelectedInterests(newInterests);
   };
 
-
-
-  
   const interestsList = [
-    'Cinéma',
-    'Attractions',
-    'Animaux',
-    'Théâtre',
-    'Danse',
-    'Manga/Anime',
-    'Séries',
-    'Échecs',
-    'Moto',
-    'Lecture',
-    'Jeux vidéos',
-    'Musique',
-    'BD/Comics',
-    'Voyager',
-    'Musées',
-    'Sortir entre amis',
-    'Sport',
-    'Nourriture',
-    'La mode'
+    'Cinéma', 'Attractions', 'Animaux', 'Théâtre', 'Danse', 'Manga/Anime', 'Séries', 'Échecs',
+    'Moto', 'Lecture', 'Jeux vidéos', 'Musique', 'BD/Comics', 'Voyager', 'Musées', 'Sortir entre amis',
+    'Sport', 'Nourriture', 'La mode'
   ];
 
   return (

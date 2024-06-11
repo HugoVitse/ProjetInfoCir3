@@ -59,7 +59,7 @@ const MoodTracker = () => {
 
   const getDayOfWeek = (dateString) => {
     const [day, month, year] = dateString.split('-').map(Number);
-    const date = new Date(year, month - 1, day); // Month is zero-based in JavaScript
+    const date = new Date(year, month - 1, day);
     return date.getDay();
 }
 

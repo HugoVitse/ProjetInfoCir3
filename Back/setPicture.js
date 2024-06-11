@@ -19,12 +19,10 @@ async function setPicture(req,res){
             const database = connect_db.client.db(config.dbName);
             const collection = database.collection(config.users);
 
-            const picture = req.body.picture
-            console.log(picture)
+            const { picture, lastName, firstName, selectedInterests } = req.body;
+            console.log('Received body:', req.body);
         
-        
-            const findOneResult = await collection.findOneAndUpdate({'email': email},{$set:{image:picture}});
-
+            const findOneResult = await collection.findOneAndUpdate({'email': email},{$set:{'firstName':firstName},$set:{'lastName':lastName,$set:{'activities':selectedInterests,$set:{image:picture}}}});
 
             res.send("ok")
         }
@@ -34,7 +32,6 @@ async function setPicture(req,res){
             return
         }
     }
-  
 }
 
 module.exports = setPicture

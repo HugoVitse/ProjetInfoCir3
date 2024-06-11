@@ -37,6 +37,7 @@ const updateInfos = require('./updateInfos')
 const setPicture = require('./setPicture')
 const createEvenement = require('./createEvenement')
 const EventRegister = require('./EventRegister')
+const getEvents = require('./getEvents')
 
 
 
@@ -72,6 +73,7 @@ async function serv(){
   app.post('/createEvenement',createEvenement)
   app.get('/evenements',evenements)
   app.post('/EventRegister',EventRegister)
+  app.post('/getEvents', getEvents)
 
   
   app.listen(80,()=>{
