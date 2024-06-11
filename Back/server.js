@@ -38,7 +38,7 @@ const setPicture = require('./setPicture')
 const createEvenement = require('./createEvenement')
 const EventRegister = require('./EventRegister')
 const getEvents = require('./getEvents')
-
+const getMoodTracker = require('./getMoodTracker')
 
 
 
@@ -63,6 +63,7 @@ async function serv(){
   app.post('/register', register)
   app.get('/activities', activities)
   app.get('/infos', getInfos)
+  app.get('/getMoodTracker', getMoodTracker)
   app.post('/fillquestionnaire',fillQuestionnaire)
   app.post('/FillMoodTracker',FillMoodTracker)
   app.post('/setDaily',setDaily)

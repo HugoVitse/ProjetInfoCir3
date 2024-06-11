@@ -3,5 +3,5 @@ module.exports = {
     users:"users",
     activities:"activities",
     evenements:"evenements",
-    picture:"picture",
+    moodTracker:"moodTracker",
 }

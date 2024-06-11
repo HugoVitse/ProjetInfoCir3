@@ -16,15 +16,28 @@ async function FillMoodTracker(req, res) {
       console.log(decoded);
       const email = decoded.email;
       const database = connect_db.client.db(config.dbName);
-      const collection = database.collection(config.users);
+      const collection = database.collection(config.moodTracker);
 
       const questionnaire = req.body;
       console.log(questionnaire);
 
-      const findOneResult = await collection.findOneAndUpdate(
-        { 'email': email },
-        { $push: { moodTrackerData: questionnaire } }
-      );
+      const findOne = await collection.findOne({ 'email': email });
+
+      if(findOne == null) {
+        const insertOne = await collection.insertOne({
+          'email': email,
+          'moodTrackerData': [questionnaire]
+        })
+      }
+
+      else{
+        const findOneResult = await collection.findOneAndUpdate(
+          { 'email': email },
+          { $push: { moodTrackerData: questionnaire } }
+        );
+      }
+
+  
       res.send("ok");
     } catch (err) {
       console.log(err);

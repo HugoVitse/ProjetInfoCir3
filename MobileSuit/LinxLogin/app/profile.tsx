@@ -337,6 +337,7 @@ const styles = StyleSheet.create({
   },
   popUp: {
     flex: 1,
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 4,

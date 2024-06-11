@@ -1,6 +1,9 @@
 import { Stack } from "expo-router";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Theme from "@/constants/Theme";
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
+
 
 export default function RootLayout() {
   const _Theme = Theme()
