@@ -111,7 +111,7 @@ const MoodTracker = () => {
     const fetchData = async () => {
   retrieveCookie();
   try {
-    const response = await axios.get('http://localhost/getMoodTracker', { withCredentials: true });
+    const response = await axios.get('http://localhost/infos', { withCredentials: true });
     const yearsArray = [];
     const sleepArray = [];
     const stressArray = [];
