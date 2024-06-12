@@ -1,7 +1,9 @@
 const connect_db = require('./connect_db')
 const config_serv = require('./configServ')
 const config = require('./configDB')
+const fs = require('fs')
 const jwt = require('jsonwebtoken');
+const path = require('path');
 
 async function setPicture(req,res){
     const cookies = req.cookies
@@ -19,11 +21,26 @@ async function setPicture(req,res){
             const database = connect_db.client.db(config.dbName);
             const collection = database.collection(config.users);
 
-            const picture = req.body.picture
+            const picture = req.body.picture.substring(22,req.body.picture.length)
             console.log(picture)
+
         
+            const outputFile = path.join(__dirname, `profile_pictures/${email}.png`);
+
+            // Écrire les données de l'image dans le fichier
+            fs.writeFile(outputFile, picture, 'base64', (err) => {
+                if (err) {
+                    throw err;
+                }
+                console.log(`Image sauvegardée sous : ${outputFile}`);
+            });
+            
         
-            const findOneResult = await collection.findOneAndUpdate({'email': email},{$set:{image:picture}});
+  
+            const findOneResult = await collection.findOneAndUpdate({'email': email},{$set:{image:`profile_pictures/${email}.png`}});
+            
+        
+            
 
 
             res.send("ok")

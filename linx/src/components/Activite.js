@@ -3,8 +3,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import Cookies from 'js-cookie';
-import { MDBContainer, MDBCard,MDBCardBody, MDBCardTitle, MDBCardText, MDBInput, MDBBtn, MDBCardImage, MDBRow , MDBCol, MDBTable, MDBTextArea,MDBCarousel, MDBCarouselItem} from 'mdb-react-ui-kit';
-import ReactStars from 'react-rating-stars-component';
+import { MDBContainer, MDBCard,MDBCardBody, MDBCardTitle, MDBCardText, MDBInput, MDBBtn, MDBCardImage, MDBRow , MDBCol, MDBTable, MDBTextArea,MDBCarousel, MDBCarouselItem} from 'mdb-react-ui-kit';import ReactStars from 'react-rating-stars-component';
 import { useNavigate } from "react-router-dom";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -12,6 +11,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
 import { AutoComplete } from 'primereact/autocomplete';
+
 
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 
@@ -155,7 +155,7 @@ const Activite = () => {
     }
 
     return (
-        <MDBContainer className='contourpage'>
+        <MDBContainer>
             <h1>Créer un évènement</h1>
             <MDBCard className='mb-4'>
                 

@@ -46,10 +46,8 @@ const Account = () => {
         }
       } catch (error) {
         console.error(error);
-        // Handle network errors
       }
     };
-
     fetchData();
   }, [navigate]);
 
@@ -92,17 +90,23 @@ const Account = () => {
 
   const handleSubmit = async () => {
     try {
-      await axios.post('http://localhost/setPicture', { picture: pp }, { withCredentials: true });
+      if (pp) {
+        await axios.post('http://localhost/setPicture', { picture: pp, firstName: firstName, lastName: lastName, selectedInterests: selectedInterests}, { withCredentials: true });
+      } else {
+        await axios.post('http://localhost/setPicture', { firstName: firstName, lastName: lastName, selectedInterests: selectedInterests}, { withCredentials: true });
+      }
     } catch (error) {
       console.error('Error:', error);
     }
   };
+  
 
   const handleSaveProfile = () => {
     const filteredInterests = selectedInterests.filter(interest => interest.trim() !== '');
     setSelectedInterests(filteredInterests);
     setIsEditing(false);
     handleSubmit();
+    console.log(filteredInterests);
   };
 
   const handleAddInterest = (interest) => {
@@ -114,33 +118,14 @@ const Account = () => {
     setSelectedInterests(newInterests);
   };
 
-
-
-  
   const interestsList = [
-    'Cinéma',
-    'Attractions',
-    'Animaux',
-    'Théâtre',
-    'Danse',
-    'Manga/Anime',
-    'Séries',
-    'Échecs',
-    'Moto',
-    'Lecture',
-    'Jeux vidéos',
-    'Musique',
-    'BD/Comics',
-    'Voyager',
-    'Musées',
-    'Sortir entre amis',
-    'Sport',
-    'Nourriture',
-    'La mode'
+    'Cinéma', 'Attractions', 'Animaux', 'Théâtre', 'Danse', 'Manga/Anime', 'Séries', 'Échecs',
+    'Moto', 'Lecture', 'Jeux vidéos', 'Musique', 'BD/Comics', 'Voyager', 'Musées', 'Sortir entre amis',
+    'Sport', 'Nourriture', 'La mode'
   ];
 
   return (
-    <div className="bg-theme text-theme contourpage">
+    <div className="bg-theme text-theme">
       <MDBContainer className="py-5 h-100">
         <MDBRow className="justify-content-center align-items-center h-100">
           <MDBCol lg="9" xl="7">

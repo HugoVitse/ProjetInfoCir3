@@ -239,7 +239,7 @@ const Evenements = () => {
    
 
     return (
-        <MDBRow className='mx-0 vh-100 contourpage'>
+        <MDBRow className='mx-0 vh-100'>
             <MDBCol size='3' className='vh-100' style={{borderBottom:"2px solid black",overflow:"scroll"}}>
                 <MDBRow style={{height:"7%", borderBottom:"2px solid black"}}>
                     <MDBCol  size='9' className='vh-20'>
