@@ -42,6 +42,8 @@ async function getEvents(req,res){
             return
         }
     }
+
+
 }
 
 module.exports = getEvents;

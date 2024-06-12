@@ -22,7 +22,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     activities: [],
-    note: 10,
+    note: 5,
     preferredTime: '',
     groupSize: '',
     placeType: '',
@@ -100,6 +100,11 @@ const Home = () => {
     };
     fnc();
   }, []);
+
+  const isFormComplete = () => {
+    return (Object.values(formData).every(value => value !== '' && value !== undefined)&&
+    formData.activities.length > 0);
+  }
 
   const renderInterestCards = () => {
     return selectedInterests.map((interest, index) => (
@@ -204,7 +209,7 @@ const Home = () => {
                         <MDBRange
                           defaultValue={10}
                           min="1"
-                          max="20"
+                          max="10"
                           step="1"
                           id="note"
                           value={formData.note}
@@ -276,7 +281,7 @@ const Home = () => {
               </MDBRow>
             </MDBModalBody>
             <MDBModalFooter>
-              <MDBBtn onClick={handleSubmit}>Finaliser</MDBBtn>
+              <MDBBtn onClick={handleSubmit} disabled={!isFormComplete()}>Finaliser</MDBBtn>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>
