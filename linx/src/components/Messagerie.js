@@ -12,10 +12,8 @@ import axios from 'axios';
 
 const Messagerie = () => {
   const navigate = useNavigate();
-  const { activityName } = useParams();  
-  const { idEvent } = useParams();
-  const [email, setemail] = useState("");
-
+  const { activityName, idEvent } = useParams();  
+  const [email, setEmail] = useState("");
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
 
@@ -24,36 +22,49 @@ const Messagerie = () => {
     try {
       const decodedToken = jwtDecode(token);
       console.log(decodedToken);
-      setemail(decodedToken.email);
+      setEmail(decodedToken.email);
     } catch {
       navigate("/Login");
     }
+  };
+
+  const updateMessageTypes = (messages, email) => {
+    return messages.map(message => ({
+      ...message,
+      type: message.sender === email ? 'sent' : 'received'
+    }));
   };
 
   useEffect(() => {
     const fnc = async () => {
       retrieveCookie();
       try {
-        const messArray = [];
-        const response = await axios.get('http://localhost/getMessagerie/'+idEvent, { withCredentials: true });
-        response.data.messages.forEach((data, i) => {
-          messArray.push(data.date);          
-        });
-        setMessages(messArray);
-        console.log(messArray);
+        const response = await axios.get(`http://localhost/getMessage/${idEvent}`, { withCredentials: true });
+        const updatedMessages = updateMessageTypes(response.data.messages, email);
+        setMessages(updatedMessages);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
     fnc();
-  }, [messages]);
+  }, [email]);
 
-  const handleSendMessage = async() => {
-    if (newMessage.trim()) {
-      setMessages([...messages, { text: newMessage, sender: email, type: 'sent' }]);
-      setNewMessage('');
+  const requete = async (updatedMessages) => {
+    try {
+      await axios.post('http://localhost/setMessagerie', { id: idEvent, messages: updatedMessages }, { withCredentials: true });
+    } catch (error) {
+      console.error('Error sending message:', error);
     }
-    await axios.post('http://localhost/setMessagerie', { id : idEvent, messages: messages}, { withCredentials: true });
+  };
+
+  const handleSendMessage = () => {
+    if (newMessage.trim()) {
+      const updatedMessages = [...messages, { text: newMessage, sender: email, type: 'sent' }];
+      setMessages(updatedMessages);
+      setNewMessage('');
+      requete(updatedMessages);
+      window.location.reload();
+    }
   };
 
   return (

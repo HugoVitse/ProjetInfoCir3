@@ -43,7 +43,6 @@ const setMessagerie = require('./setMessagerie')
 const getMessage = require('./getMessage')
 
 
-
 async function serv(){
 
 
@@ -74,7 +73,7 @@ async function serv(){
   app.post('/EventRegister',EventRegister)
   app.get('/getEvents',getEvents)
   app.post('/setMessagerie',setMessagerie)
-  app.get('/getMessage',getMessage)
+  app.get('/getMessage/:id',getMessage)
 
   console.log(path.join(__dirname, 'profile_pictures'))
 
