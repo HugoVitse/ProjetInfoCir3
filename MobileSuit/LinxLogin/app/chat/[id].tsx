@@ -8,6 +8,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
 import Config from '../../config.json'
+import { jwtDecode } from 'jwt-decode';
 
 const { width } = Dimensions.get('window')
 
@@ -19,7 +20,7 @@ export default function SettingsScreen() {
 
   const [message,setMessage] = useState([])
   const [messageComponent, setMessageComponent] = useState([])
-
+  const [messageToSend, setMessageToSend] = useState('')
   const [isFocused, setIsFocused] = useState(false);
 
   const theme = {
@@ -31,14 +32,30 @@ export default function SettingsScreen() {
 
   const scrollViewRef = useRef<ScrollView>(null);
 
-  useEffect(()=>{
-    const wrap = async()=>{
-      const jwt_cookie = await AsyncStorage.getItem("jwt")
-      const reponseMessage = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getMessage/${id}`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-      setMessage(reponseMessage.data)
-      console.log(reponseMessage.data)
-    }
+  const sendMessage = async()=>{
+    console.log(messageToSend)
+    const jwt_cookie = await AsyncStorage.getItem("jwt")
+    const reponseMessage = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/sendMessage`,{id:id,message:messageToSend},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+    setMessageToSend('')
     wrap()
+    console.log(reponseMessage.data)
+  
+  }
+
+  const wrap = async()=>{
+    const jwt_cookie = await AsyncStorage.getItem("jwt")
+    const reponseMessage = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getMessage/${id}`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+    setMessage(reponseMessage.data)
+    console.log(reponseMessage.data)
+  }
+  useEffect(()=>{
+    
+    wrap()
+
+    setInterval(()=>{
+      wrap()
+    
+    },5000)
   },[])
 
   useEffect(() => {
@@ -49,22 +66,37 @@ export default function SettingsScreen() {
     }, 200)
     setIsFocused(false)
   }, [isFocused]);
+  
 
 
   useEffect(()=>{
-    // let messages = []
-    // if(message.length>0){
-    //   for(let i = 0; i<message.length;i++){
-    //     messages.push(
-    //       <View style={{flexDirection: 'row', marginVertical: 5, marginTop: (i-1 == -1 ? 20 : (message[i-1].autor == message[i].autor ? 0 : 20)), alignSelf: (message[i].autor == jwt.autor ? 'flex-end' : 'flex-start')}}>
-    //         {i-1 == -1 ? <Avatar.Image size={30} source={{uri:'../assets/images/avatar.png'}} /> : (message[i-1].autor == message[i].autor ? <></> : <Avatar.Image size={30} source={{uri:'../assets/images/avatar.png'}} />)}
-    //         <Text style={[styles.messages, (message[i].autor == jwt.autor ? _Theme.themeBackMyMessage : _Theme.themeBackMessage), _Theme.themeText, (i-1 == -1 ? {} : (message[i-1].autor == message[i].autor ? (message[i].autor == jwt.autor ? {marginRight: 40} : {marginLeft: 40}) : {}))]}>{message[i].text}</Text>
-    //       </View>
-    //     )
-    //   }
-    // }
+    const wrap = async()=>{
+      if(message.length >0){
+        const jwt = await AsyncStorage.getItem("jwt")
+        const decoded = jwtDecode(jwt?jwt:"")
+        let messages = []
+        console.log(jwt)
+  
+        for(let i = 0; i<message.length;i++){
+          let b = decoded.email != message[i].author
+          console.log(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${message[i].author}`)
+          console.log(b)
+          messages.push(
+            <View style={{flexDirection: 'row', marginVertical: 5, marginTop: (i-1 == -1 ? 20 : (message[i-1].author == message[i].author ? 0 : 20)), alignSelf: (message[i].author == decoded.email ? 'flex-end' : 'flex-start')}}>
+              { !b ? <></>  : ( (i-1 == -1) ? (<Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${message[i].author}.png`}} /> ): ((message[i-1].author == message[i].author ? <></> : <Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${message[i].author}.png`}} />)))}
+              <View style={[styles.messages, (message[i].author == decoded.email ? _Theme.themeBackMyMessage : _Theme.themeBackMessage), (i-1 == -1 ? {} : (message[i-1].author == message[i].author ? (message[i].author == decoded.email ? {marginRight: 40} : {marginLeft: 40}) : {}))]}><Text style={ _Theme.themeText}>{message[i].message}</Text></View>
+              { b ? <></>  : ( (i-1 == -1) ? (<Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${message[i].author}.png`}} /> ): ((message[i-1].author == message[i].author ? <></> : <Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${message[i].author}.png`}} />)))}
+            </View>
+          )
+        }
+        
+        console.log(messages)
+  
+        setMessageComponent(messages)
+      }
+    }
+    wrap()
 
-    // setMessageComponent(messages)
 
   },[message])
 
@@ -82,34 +114,15 @@ export default function SettingsScreen() {
         contentContainerStyle={{ paddingTop: 10, paddingBottom: 20 }}
       >
         {messageComponent}
-        <View style={{flexDirection: 'row', marginTop: 20, marginVertical: 5, alignSelf: 'flex-start'}}>
-          <Avatar.Image size={30} source={{uri:'../assets/images/avatar.png'}} />
-          <Text style={[styles.messages, _Theme.themeBackMessage, _Theme.themeText]}>Bonjour je m'appelle Benjamin je suis une carotte et j'aime les endives bien cuites aux petits ognions à la poele et les crustacés. Mais ce que j'aime par dessus tout ce sont les molusques cuits au barbecue. {id}</Text>
-        </View>
-        <View style={{flexDirection: 'row', marginTop: 20, marginVertical: 5, alignSelf: 'flex-end'}}>
-          <Text style={[styles.messages, _Theme.themeBackMyMessage, _Theme.themeText]}>Bonjour je m'appelle Benjamin je suis une carotte et j'aime les endives bien cuites aux petits ognions à la poele et les crustacés. Mais ce que j'aime par dessus tout ce sont les molusques cuits au barbecue.</Text>
-          <Avatar.Image size={30} source={{uri:'../assets/images/avatar.png'}} />
-        </View>
-        <View style={{flexDirection: 'row', marginTop: 0, marginVertical: 5, alignSelf: 'flex-end'}}>
-          <Text style={[styles.messages, _Theme.themeBackMyMessage, _Theme.themeText, {marginRight: 40}]}>Bonjour je m'appelle Benjamin je suis une carotte et j'aime les endives bien cuites aux petits ognions à la poele et les crustacés. Mais ce que j'aime par dessus tout ce sont les molusques cuits au barbecue.</Text>
-        </View>
-        <View style={{flexDirection: 'row', marginTop: 20, marginVertical: 5, alignSelf: 'flex-start'}}>
-          <Avatar.Image size={30} source={{uri:'../assets/images/avatar.png'}} />
-          <Text style={[styles.messages, _Theme.themeBackMessage, _Theme.themeText]}>Bonjour je m'appelle Benjamin je suis une carotte et j'aime les endives bien cuites aux petits ognions à la poele et les crustacés. Mais ce que j'aime par dessus tout ce sont les molusques cuits au barbecue.</Text>
-        </View>
-        <View style={{flexDirection: 'row', marginTop: 0, marginVertical: 5, alignSelf: 'flex-start'}}>
-          <Text style={[styles.messages, _Theme.themeBackMessage, _Theme.themeText, {marginLeft: 40}]}>Bonjour je m'appelle Benjamin je suis une carotte et j'aime les endives bien cuites aux petits ognions à la poele et les crustacés. Mais ce que j'aime par dessus tout ce sont les molusques cuits au barbecue.</Text>
-        </View>
-        <View style={{flexDirection: 'row', marginTop: 20, marginVertical: 5, alignSelf: 'flex-start'}}>
-          <Avatar.Image size={30} source={{uri:'../assets/images/avatar.png'}} />
-          <Text style={[styles.messages, _Theme.themeBackMessage, _Theme.themeText]}>Bonjour je m'appelle Benjamin je suis une carotte et j'aime les endives bien cuites aux petits ognions à la poele et les crustacés. Mais ce que j'aime par dessus tout ce sont les molusques cuits au barbecue.</Text>
-        </View>
+        
       </ScrollView>
       <View style={[styles.writeMessage, _Theme.themeBack, _Theme.themeShadow]}>
         <TextInput
             outlineColor={_Theme.themeBouton.backgroundColor}
             activeOutlineColor={_Theme.themeBouton.backgroundColor}
             theme={theme}
+            value={messageToSend}
+            onChangeText={setMessageToSend}
             placeholder='Ecrivez votre message...'
             mode='outlined'
             style={[styles.input, _Theme.themeBack2, _Theme.themeShadow]}
@@ -122,7 +135,7 @@ export default function SettingsScreen() {
             icon="send"
             iconColor={'#efefef'}
             size={20}
-            onPress={() => console.log('Pressed')}
+            onPress={()=>sendMessage()}
         />
       </View>
     </KeyboardAwareScrollView>
@@ -138,8 +151,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginVertical: 1,
     paddingHorizontal: 10,
-    paddingVertical: 5,
-    width: (width*2)/3,
+    paddingVertical: 11,
+    maxWidth: (width*2)/3,
     borderRadius: 20,
   },
   writeMessage: {

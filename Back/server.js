@@ -25,6 +25,7 @@ const port = 443
 
 const fillQuestionnaire = require("./fillQuestionnaire")
 const FillMoodTracker = require("./FillMoodTracker")
+const sendMessage = require('./sendMessage')
 const verifyPassword = require("./verifyPassword")
 const setDaily = require("./setDaily")
 const scrapActivities = require('./scrapActivities')
@@ -40,6 +41,7 @@ const EventRegister = require('./EventRegister')
 const getEvents = require('./getEvents')
 const getMoodTracker = require('./getMoodTracker')
 const getMessage = require('./getMessage')
+
 
 
 async function serv(){
@@ -75,6 +77,7 @@ async function serv(){
   app.post('/EventRegister',EventRegister)
   app.get('/getEvents',getEvents)
   app.get('/getMessage/:id',getMessage)
+  app.post('/sendMessage',sendMessage)
 
 
   console.log(path.join(__dirname, 'profile_pictures'))
