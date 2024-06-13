@@ -41,6 +41,8 @@ const getEvents = require('./getEvents')
 const getMoodTracker = require('./getMoodTracker')
 const setMessagerie = require('./setMessagerie')
 const getMessage = require('./getMessage')
+const getInfosEmail = require('./getInfosEmail')
+
 
 
 async function serv(){
@@ -74,6 +76,8 @@ async function serv(){
   app.get('/getEvents',getEvents)
   app.post('/setMessagerie',setMessagerie)
   app.get('/getMessage/:id',getMessage)
+  app.get('/getInfosEmail/:email',getInfosEmail)
+
 
   console.log(path.join(__dirname, 'profile_pictures'))
 
