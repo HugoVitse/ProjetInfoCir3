@@ -13,6 +13,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import Theme from "@/constants/Theme";
 import RIcon from '@mdi/react';
 import { mdiCalendarMultipleCheck } from '@mdi/js';
+import { evenement } from "@/constants/evenement";
 
 const HEADER_HEIGHT = 100;
 const { width,height } = Dimensions.get('window');
@@ -32,9 +33,9 @@ export default function HomeScreen() {
   const [checked3, setChecked3] = useState('first');
   const [checked4, setChecked4] = useState('first');
   const [text,setText] = useState("")
-  const [events,setEvents] = useState([])
-  const [eventSoonComponent, setEventSoonComponent] = useState([])
-  const [eventPastComponent, setEventPastComponent] = useState([])
+  const [events,setEvents] = useState<evenement[]>([])
+  const [eventSoonComponent, setEventSoonComponent] = useState<React.JSX.Element[]>([])
+  const [eventPastComponent, setEventPastComponent] = useState<React.JSX.Element[]>([])
   const [expandedSoon, setExpandedSoon] = useState(true);
   const [expandedPast, setExpandedPast] = useState(false);
   const [picture, setPicture] = useState("")
@@ -97,8 +98,8 @@ export default function HomeScreen() {
   },[])
 
   useEffect(()=>{
-    let tmp = []
-    let tmp2 = []
+    let tmp:React.JSX.Element[] = []
+    let tmp2:React.JSX.Element[] = []
     if(events.length>0){
       for(let i = 0; i<events.length;i++){
         const date = new Date(events[i].date)
@@ -228,6 +229,7 @@ export default function HomeScreen() {
       </View>
       
       <View style={[styles.body,_Theme.themeBack2]}>
+        <ScrollView style={{maxHeight:"45%"}}>
         <ListItem.Accordion
           content={
             <>
@@ -245,23 +247,27 @@ export default function HomeScreen() {
           {eventSoonComponent}
           
         </ListItem.Accordion>
-        <ListItem.Accordion
-          content={
-            <>
-              <Icon type='material-community' name="calendar-multiple-check" size={30} />
-              <ListItem.Content>
-                <ListItem.Title> Evenements passés</ListItem.Title>
-              </ListItem.Content>
-            </>
-          }
-          isExpanded={expandedPast}
-          onPress={() => {
-            setExpandedPast(!expandedPast);
-          }}
-        >
-          {eventPastComponent}
-          
-        </ListItem.Accordion>
+        </ScrollView>
+        <ScrollView style={{maxHeight:"45%"}}>
+          <ListItem.Accordion
+            content={
+              <>
+                  <Icon type='material-community' name="calendar-multiple-check" size={30} />
+                  <ListItem.Content>
+                    <ListItem.Title> Evenements passés</ListItem.Title>
+                  </ListItem.Content>
+              </>
+            }
+            isExpanded={expandedPast}
+            onPress={() => {
+              setExpandedPast(!expandedPast);
+            }}
+          >
+        
+            {eventPastComponent}
+            
+          </ListItem.Accordion>
+        </ScrollView>
       </View>
       <Modal visible={visible} onDismiss={hideModal} style={{marginTop: HEADER_HEIGHT + 20, maxHeight: ScreenHeight, width: width, padding: 20}}>
         <KeyboardAwareScrollView style={[{ height: ScreenHeight - 300, borderRadius: 20, paddingHorizontal: 50, overflow: 'hidden' }, _Theme.themeBack2]}>

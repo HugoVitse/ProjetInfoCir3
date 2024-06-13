@@ -1,6 +1,6 @@
 import { Avatar } from "@rneui/themed";
 import { useRouter } from "expo-router";
-import { Text, View, StyleSheet, Dimensions, SafeAreaView, Animated, Modal,Image } from "react-native";
+import { Text, View, StyleSheet, Dimensions, SafeAreaView, Animated, Modal,Image, Platform } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, MD3Colors, Card, Button, ActivityIndicator, Dialog, Drawer, TextInput, Menu, Divider, Provider, PaperProvider, List } from "react-native-paper";
 import { useState , useEffect, useRef } from "react";
@@ -18,6 +18,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import Carousel, { Pagination, ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useSharedValue } from "react-native-reanimated";
+import {Picker} from '@react-native-picker/picker';
 
 const HEADER_HEIGHT = 100;
 const { width } = Dimensions.get('window');
@@ -62,12 +63,12 @@ export default function CatalogScreen() {
   const [adresseLoading, setAdresseLoading] = useState("")
   const [propsAdresse,setPropsAdresse] = useState("")
   const [trueAdresse, setTrueAdresse] = useState("")
-
+  const [picture, setPicture] = useState("")
   const [actualIndexImg,setActualIndexImg] = useState(0)
-
+  const [type, setType] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [text, setText] = useState("");
-
+  const [showAndroid, setshowAndroid] = useState(false)
 
   const googlekey = "AIzaSyAOpVdDvYUvbIB_u_d6k_HVfw13_Vux0K0"
 
@@ -92,9 +93,18 @@ export default function CatalogScreen() {
 
   const _Theme = Theme();
 
+  const types = [
+    'Cinéma', 'Attractions', 'Animaux', 'Théâtre', 'Danse',
+    'Manga/Anime', 'Séries', 'Échecs', 'Moto', 'Lecture',
+    'Jeux vidéos', 'Musique', 'BD/Comics', 'Voyager', 'Musées',
+    'Sortir entre amis', 'Sport', 'Nourriture', 'La mode'
+  ];
+
   const onChange = (event:any, selectedDate:any) => {
+    setshowAndroid(false)
     const currentDate = selectedDate || date;
     setDate(currentDate);
+  
   };
 
   const fetchAdresse = async(adresse:string) => {
@@ -152,6 +162,7 @@ export default function CatalogScreen() {
         adresse:trueAdresse,
       },
       date:date,
+      type:type,
       nbinvities:text,
     }
 
@@ -172,10 +183,12 @@ export default function CatalogScreen() {
       const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/evenements`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
       setEvenements(response.data)
       setIsLoaded(true)
+      const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      setPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
     }
     getActivities()
 
-
+  
 
   } ,[])
 
@@ -315,16 +328,45 @@ export default function CatalogScreen() {
               </View>
               <View style={styles.horizontal}>
                 <Text style={{justifyContent:'center',alignItems:'center',flex:1}}>Date de l'évènement</Text>
+                {Platform.OS === 'ios' && (
                 <DateTimePicker
                   testID="dateTimePicker"
                   value={date}
                   mode="date"
-                  display="default"
+      
                   onChange={onChange}
-                />
+                />)}
+                {Platform.OS === 'android' && (<>
+                  <Button onPress={()=>setshowAndroid(!showAndroid)}>{date.toDateString()}</Button>
+                  {showAndroid && (
+                    <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode="date"
+        
+                    onChange={onChange}
+                    />
+                  )}
+                  </>
+                )}
               
               </View>
-              <View style={styles.horizontal}>
+            
+              <Text style={{left:0,width:"100%",padding:10}}>Catégorie</Text>
+              <Picker
+                style={{width:"100%",justifyContent:"center",height:Platform.OS=='ios'?200:40}}
+                selectedValue={type}
+                onValueChange={(itemValue, itemIndex) =>
+                  setType(itemValue)
+                }>
+                {types.map((type,index) => {
+                  return(
+                    <Picker.Item key={index} label={type} value={type} />
+                  )
+                })}
+              </Picker>
+              
+              <View style={{ width:'100%', justifyContent:'space-between',   padding:10,    flexDirection: 'row',}}>
                 <Button onPress={()=>{setModalVisible(!modalVisible)}} mode="contained" style={[_Theme.themeBouton]}>
                   Annuler
                 </Button>
@@ -375,6 +417,7 @@ export default function CatalogScreen() {
         <Avatar
           size={48}
           rounded
+          source={{uri:picture}}
           icon={{ name: "person", type: "material" }}
           containerStyle={{ backgroundColor: "#bbbec1", position: 'absolute', bottom: 15, right: 15 }}
           onPress={() => router.push("/../profile")}
@@ -384,6 +427,7 @@ export default function CatalogScreen() {
       <SafeAreaView style={{flex: 1}}>
         <Animated.View style={{zIndex:3,position:'absolute',width:`${drawerWidth}%`,backgroundColor:"white",height:ScreenHeight,left:leftDecal}}>
             <Drawer.Section title="Liste des évènements">
+                <ScrollView style={{height:"70%"}}>
                 {
                      evenements.map((evenement,index) => {
                         return(
@@ -403,6 +447,7 @@ export default function CatalogScreen() {
                         )
                     })
                 }
+                </ScrollView>
               
             </Drawer.Section>
         </Animated.View>
@@ -635,7 +680,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   modalView: {
-    width:"80%",
+    width:"90%",
     maxHeight:"80%",
     backgroundColor: 'white',
     borderRadius: 20,

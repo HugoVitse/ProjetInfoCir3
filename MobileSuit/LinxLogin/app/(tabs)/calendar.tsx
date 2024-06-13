@@ -93,6 +93,7 @@ export default function CalendarScreen() {
   const [valueNutrition, setValueNutrition] = useState(0);
   const [moodCalendar,setMoodCalendar] = useState({})
   const [alreadyFill,setalreadyFill] = useState(false)
+  const [picutre,setPicture] = useState('')
   const [radarData, setRadarData] = useState([
     {
       Sommeil: 0,
@@ -118,6 +119,89 @@ export default function CalendarScreen() {
 
   const _Theme = Theme()
 
+  const wrap = async()=>{
+    const today = new Date()
+  
+    const jwt_cookie = await AsyncStorage.getItem('jwt')
+    const mood = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getMoodTracker`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+    const moodTracker = mood.data.moodTrackerData
+    let tmp = {}
+
+    for(let i=0;i< moodTracker.length;i++){
+      const date = new Date(moodTracker[i].date).toLocaleDateString().split('/')
+      const actualDate = `${date[2]}-${date[1]}-${date[0]}` 
+      tmp = {
+        ...tmp,
+        [actualDate]: {
+          selected: true,
+          marked: true,
+          selectedColor: color(moodTracker[i].average)
+        }
+      }
+    }
+
+    console.log(tmp)
+    setMoodCalendar(tmp)
+    const lastQuestionnaire = moodTracker[moodTracker.length-1]
+    const dateLastQuestionnaire = new Date(lastQuestionnaire.date)
+    console.log(today.getDay())
+    if(dateLastQuestionnaire.toDateString() == today.toDateString()){
+
+      setalreadyFill(true)
+      setRadarData(
+        [
+          {
+            Sommeil: lastQuestionnaire.sleepLevel/10,
+            Sport: lastQuestionnaire.sportLevel/10,
+            Alimentation: lastQuestionnaire.eatLevel/10,
+            Social: lastQuestionnaire.socialLevel/10,
+            Moral: lastQuestionnaire.moralLevel/10,
+          },
+        ]
+      )
+
+    }
+
+
+    const day = today.getDay()
+    const days = [today.toDateString()]
+
+    for(let i=1; i<day;i++){
+      let d = new Date(`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()-i}`)
+      days.push(d.toDateString())
+    }
+
+ 
+    for(let i=0;i<days.length;i++){
+      console.log(days[i])
+    }
+ 
+
+    let dayWeek = [0,0,0,0,0,0,0]
+
+    for(let i=0;i<day;i++){
+      if(moodTracker.length-1-i >=0){
+        const d = new Date(moodTracker[moodTracker.length-1-i].date)
+        if(days.indexOf(d.toDateString()) != -1){
+          dayWeek[d.getDay()-1] = moodTracker[moodTracker.length-1-i].average
+        }
+      }
+
+    }
+
+    console.log(dayWeek)
+  
+    setBarData({
+      labels: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+      datasets: [
+        {
+          data: dayWeek
+        }
+      ]
+    })
+    
+  }
+
   const sendQuestionnaire = async() => {
     const data = {
       sleepLevel: valueSommeil,
@@ -134,6 +218,8 @@ export default function CalendarScreen() {
     const jwt_cookie = await AsyncStorage.getItem('jwt')
 
     const reponse = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/FillMoodTracker`, data,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+
+    wrap()
   }
 
   const interpolate = (start: number, end: number, value: number) => {
@@ -149,88 +235,14 @@ export default function CalendarScreen() {
   };
 
   useEffect(()=>{
-    const wrap = async()=>{
-      const today = new Date()
-    
+
+    const wrap_picture = async()=>{
       const jwt_cookie = await AsyncStorage.getItem('jwt')
-      const mood = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getMoodTracker`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-      const moodTracker = mood.data.moodTrackerData
-      let tmp = {}
-
-      for(let i=0;i< moodTracker.length;i++){
-        const date = new Date(moodTracker[i].date).toLocaleDateString().split('/')
-        const actualDate = `${date[2]}-${date[1]}-${date[0]}` 
-        tmp = {
-          ...tmp,
-          [actualDate]: {
-            selected: true,
-            marked: true,
-            selectedColor: color(moodTracker[i].average)
-          }
-        }
-      }
-
-      console.log(tmp)
-      setMoodCalendar(tmp)
-      const lastQuestionnaire = moodTracker[moodTracker.length-1]
-      const dateLastQuestionnaire = new Date(lastQuestionnaire.date)
-      console.log(today.getDay())
-      if(dateLastQuestionnaire.toDateString() == today.toDateString()){
-
-        setalreadyFill(true)
-        setRadarData(
-          [
-            {
-              Sommeil: lastQuestionnaire.sleepLevel/10,
-              Sport: lastQuestionnaire.sportLevel/10,
-              Alimentation: lastQuestionnaire.eatLevel/10,
-              Social: lastQuestionnaire.socialLevel/10,
-              Moral: lastQuestionnaire.moralLevel/10,
-            },
-          ]
-        )
-
-      }
-
-
-      const day = today.getDay()
-      const days = [today.toDateString()]
-
-      for(let i=1; i<day;i++){
-        let d = new Date(`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()-i}`)
-        days.push(d.toDateString())
-      }
-
-   
-      for(let i=0;i<days.length;i++){
-        console.log(days[i])
-      }
-   
-
-      let dayWeek = [0,0,0,0,0,0,0]
-
-      for(let i=0;i<day;i++){
-        if(moodTracker.length-1-i >=0){
-          const d = new Date(moodTracker[moodTracker.length-1-i].date)
-          if(days.indexOf(d.toDateString()) != -1){
-            dayWeek[d.getDay()-1] = moodTracker[moodTracker.length-1-i].average
-          }
-        }
-
-      }
-
-      console.log(dayWeek)
-    
-      setBarData({
-        labels: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
-        datasets: [
-          {
-            data: dayWeek
-          }
-        ]
-      })
-      
+      const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      setPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
     }
+    wrap_picture()
+    
     wrap()
   },[])
 
@@ -327,6 +339,7 @@ export default function CalendarScreen() {
           <Avatar
             size={48}
             rounded
+            source={{ uri: picutre}}
             icon={{ name: "person", type: "material" }}
             containerStyle={{ backgroundColor: "#bbbec1", position: 'absolute', bottom: 8, right: 15 }}
             onPress={() => router.push("/../profile")}
