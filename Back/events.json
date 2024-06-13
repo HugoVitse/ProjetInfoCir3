@@ -440,68 +440,12 @@
     "adresse": "avenue Cuvier, Lille"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/tout-comprendre-sur-l-association-syndicale-libre/3461910-1-fre-FR/Tout-comprendre-sur-l-Association-Syndicale-Libre_equipment_image_lead_child.jpg",
-    "name": "Tout comprendre sur l Association Syndicale Libre",
-    "type": "",
-    "description": "C'est l'équivalent d'un syndicat de copropriétaires dans une copropriété, cependant, l'ASL n'est pas régie par la loi sur la copropriété",
-    "date": "Le 11 juin 2024",
-    "adresse": "7 bis rue Racine 59000 Lille03 59 00 03 59"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/mobiliers-liturgiques-pour-notre-dame-de-paris/3509925-1-fre-FR/Mobiliers-liturgiques-pour-Notre-Dame-de-Paris_equipment_image_lead_child.jpg",
     "name": "Mobiliers liturgiques pour Notre Dame de Paris",
     "type": "Exposition",
     "description": "Cet été, la Cathédrale en partenariat avec l’Ecole de Design ESDAC - Lille accueille une exposition originale de maquettes de projets de mobiliers...",
     "date": "Jusqu'au 20 septembre 2024",
     "adresse": "place Gilleson"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/cine-debat-propose-par-sos-homophobie/3488843-1-fre-FR/Cine-debat-propose-par-SOS-homophobie_equipment_image_lead_child.jpg",
-    "name": "Cine debat propose par SOS homophobie",
-    "type": "Rencontre / conférence / débat",
-    "description": "Ciné-débat autour documentaire « Guet-apens : des crimes invisible »",
-    "date": "Le 11 juin 2024",
-    "adresse": "794, avenue de Dunkerque, Lomme"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/cavaliers-impurs/3490706-1-fre-FR/Cavaliers-impurs_equipment_image_lead_child.jpg",
-    "name": "Cavaliers impurs",
-    "type": "Spectacle",
-    "description": "Cavaliers Impurs est la nouvelle pièce du duo incontournable et impertinent Latifa Laâbissi et Antonia Baehr : un cabaret exaltant, burlesque et q...",
-    "date": "Le 11 juin 2024",
-    "adresse": "70 rue des Sarrazins"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/cavaliers-impurs-latifa-laabissi-et-antonia-baehr/3507772-1-fre-FR/CAVALIERS-IMPURS-Latifa-Laabissi-et-Antonia-Baehr_equipment_image_lead_child.jpg",
-    "name": "CAVALIERS IMPURS Latifa Laabissi et Antonia Baehr",
-    "type": "Spectacle",
-    "description": "La nouvelle pièce du duo incontournable et impertinent Latifa Laâbissi et Antonia Baehr : c’est un cabaret exaltant, burlesque et queer, dans une...",
-    "date": "Le 11 juin 2024",
-    "adresse": "70 rue des sarrazins"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/les-printemps-de-la-prevention-sante-edition-2/3518052-1-fre-FR/Les-printemps-de-la-prevention-sante-edition-2_equipment_image_lead_child.jpg",
-    "name": "Les printemps de la prevention sante edition ",
-    "type": "Salon / foire",
-    "description": "Le Centre Prévention Santé Longévité de l’Institut Pasteur de Lille est ravi d’annoncer le retour de cet événement annuel dédié à la promotion de...",
-    "date": "Le 11 juin 2024",
-    "adresse": "1 rue du Professeur Calmette, 59800 Lille0640774062"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/printemps-de-la-prevention-2024-2eme-edition/3513394-1-fre-FR/Printemps-de-la-Prevention-2024-2eme-edition_equipment_image_lead_child.jpg",
-    "name": "Printemps de la Prevention 2024 2eme edition",
-    "type": "Rencontre / conférence / débat",
-    "description": "Les Printemps de la Prévention reviennent cette année avec un thème puissant : \"Allons Vers une santé accessible pour tous\" !",
-    "date": "Le 11 juin 2024",
-    "adresse": "48 Boulevard du Maréchal Vaillant 59000 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/parcours-metiers-de-l-animation/3505187-1-fre-FR/Parcours-Metiers-de-l-Animation_equipment_image_lead_child.jpg",
-    "name": "Parcours Metiers de l Animation",
-    "type": "Stage et atelier",
-    "description": "Découvre les métiers de l’animation, informe-toi et forme-toi !",
-    "date": "Le 11 juin 2024",
-    "adresse": "65 rue Saint Bernard Lille03 20 92 21 49"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/participez-a-un-spectacle/3503332-1-fre-FR/Participez-a-un-spectacle_equipment_image_lead_child.jpg",
@@ -518,62 +462,6 @@
     "description": "Ne jetez plus, venez apprendre à réparer",
     "date": "Jusqu'au 10 décembre 2024",
     "adresse": "77 rue Roland 59000 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/seance-de-yoga-nouveaute/3470965-1-fre-FR/Seance-de-yoga-NOUVEAUTE_equipment_image_lead_child.jpg",
-    "name": "Seance de yoga NOUVEAUTE",
-    "type": "Stage et atelier",
-    "description": "Mardi 11 juin à 19h",
-    "date": "Le 11 juin 2024",
-    "adresse": "32, rue de la Monnaie 59000 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-destination-musee-jeune-public15/3471006-1-fre-FR/Atelier-Destination-Musee-Jeune-public_equipment_image_lead_child.jpg",
-    "name": "Atelier Destination Musee Jeune public",
-    "type": "Stage et atelier",
-    "description": "Mercredi 12 juin à 14h30",
-    "date": "Le 12 juin 2024",
-    "adresse": "32, rue de la Monnaie 59000 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-creation-de-paysages-au-fusain/3496610-1-fre-FR/Atelier-creation-de-paysages-au-fusain_equipment_image_lead_child.jpg",
-    "name": "Atelier creation de paysages au fusain",
-    "type": "Stage et atelier",
-    "description": "Un mercredi par mois, un atelier vous est proposé en lien avec l’exposition ou la résidence en cours. Le temps d’une après-midi, venez vous initie...",
-    "date": "Le 12 juin 2024",
-    "adresse": "86 rue des Meuniers 59 000 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/des-ateliers-numeriques-pour-les-adultes-a-la-bibliotheque-de-lille7/3494661-1-fre-FR/Des-ateliers-numeriques-pour-les-adultes-a-la-bibliotheque-de-Lille_equipment_image_lead_child.jpg",
-    "name": "Des ateliers numeriques pour les adultes a la bibliotheque de Lille",
-    "type": "Stage et atelier",
-    "description": "Rencontre numérique pour adulte \"Kit de survie !\"",
-    "date": "Le 12 juin 2024",
-    "adresse": "32 rue Edouard Delesalle 59000 Lille06 16 23 48 91"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/fete-du-jardin2/3491780-1-fre-FR/Fete-du-jardin_equipment_image_lead_child.jpg",
-    "name": "Fete du jardin",
-    "type": "Visite",
-    "description": "le collectif habitants en partenariat avec le centre social la Busette vous propose la fête du jardin 2024",
-    "date": "Le 12 juin 2024",
-    "adresse": "1 rue georges lefebvre"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/maxime-et-nada/3507813-1-fre-FR/Maxime-et-Nada_equipment_image_lead_child.jpg",
-    "name": "Maxime et Nada",
-    "type": "Cinéma - projection",
-    "description": "Présentation et Projection du Spectacle",
-    "date": "Le 12 juin 2024",
-    "adresse": "15, avenue Verhaeren, Lille06 85 90 17 29"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/haiku-in-situ-promenade-poetique/3500519-1-fre-FR/Haiku-in-situ-promenade-poetique_equipment_image_lead_child.jpg",
-    "name": "Haiku in situ promenade poetique",
-    "type": "Spectacle",
-    "description": "Poème japonais en mouvement !",
-    "date": "Le 12 juin 2024",
-    "adresse": "8 allée de la Filature 59 000 Lille03 28 55 30 93"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/conference-avec-roller-derby-lille/3496651-1-fre-FR/Conference-avec-Roller-Derby-Lille_equipment_image_lead_child.jpg",
@@ -928,6 +816,14 @@
     "adresse": "Place de la République 59000 Lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/friday-step-3-popping-music-avec-le-batisse-et-sessions-concepts/3524071-1-fre-FR/FRIDAY-STEP-3-Popping-Music-avec-Le-Batisse-et-Sessions-Concepts_equipment_image_lead_child.jpg",
+    "name": "FRIDAY STEP 3 Popping Music avec Le Batisse et Sessions Concepts",
+    "type": "",
+    "description": "FRIDAY STEP 3 ⚡️",
+    "date": "Le 14 juin 2024",
+    "adresse": "70 rue des sarrazins"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/avant-premiere-14-juin/3519705-1-fre-FR/Avant-Premiere-14-juin_equipment_image_lead_child.jpg",
     "name": "Avant Premiere 14 juin",
     "type": "Spectacle",
@@ -1206,6 +1102,14 @@
     "description": "15 juin 2024",
     "date": "Le 15 juin 2024",
     "adresse": "Place du concert 59000 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/side-step-visite-guidee-de-l-arene-au-cratere/3524112-1-fre-FR/SIDE-STEP-Visite-guidee-De-l-arene-au-Cratere_equipment_image_lead_child.jpg",
+    "name": "SIDE STEP Visite guidee De l arene au Cratere",
+    "type": "",
+    "description": "En collaboration avec l'Office de Tourisme & le service Ville d'art et d'histoire",
+    "date": "Le 15 juin 2024",
+    "adresse": "Place République Lille03 62 26 08 30"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/printemps-de-perspectives3/3512641-1-fre-FR/Printemps-de-Perspectives_equipment_image_lead_child.jpg",
@@ -1675,7 +1579,7 @@
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/fete-de-la-musique-x-buzz-booster/3515727-1-fre-FR/Fete-de-la-Musique-x-Buzz-Booster_equipment_image_lead_child.jpg",
     "name": "Fete de la Musique x Buzz Booster",
     "type": "",
-    "description": "Open Mic' avec Skuuurt et showcase de Samir Flynn",
+    "description": "plateau Skuuurt All Stars et showcase de Samir Flynn",
     "date": "Le 21 juin 2024",
     "adresse": "17 Bd Jean-Baptiste Lebas, 59800 Lille"
   },
@@ -1702,6 +1606,14 @@
     "description": "Vibrez lors de la fête de la musique partout à Lille",
     "date": "Le 21 juin 2024",
     "adresse": "quai léon jouhaux"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/coestre-en-quartier-aux-bois-blancs/3524153-1-fre-FR/Coestre-en-Quartier-aux-Bois-Blancs_equipment_image_lead_child.jpg",
+    "name": "Coestre en Quartier aux Bois Blancs",
+    "type": "Concert",
+    "description": "Animation musicale et poétique",
+    "date": "Le 21 juin 2024",
+    "adresse": "Quai de l'Ouest"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/concert-racines-choeur-ekla/3515122-1-fre-FR/Concert-Racines-Choeur-Ekla_equipment_image_lead_child.jpg",
@@ -1896,20 +1808,20 @@
     "adresse": "4 rue des Sarrazins03 20 54 71 84"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/week-end-olympique-lillois-initiation-au-ping-vr/3519899-1-fre-FR/Week-end-Olympique-lillois-Initiation-au-Ping-VR_equipment_image_lead_child.jpg",
-    "name": "Week end Olympique lillois Initiation au Ping VR",
-    "type": "Événement sportif",
-    "description": "Initiez vous au \"Ping VR\", le Tennis de Table en réalité virtuelle !",
-    "date": "Du 22 au 23 juin 2024",
-    "adresse": "tripostal lille"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/le-quai-des-artistes-15-edition/3487394-1-fre-FR/Le-Quai-des-artistes-15-edition_equipment_image_lead_child.jpg",
     "name": "Le Quai des artistes 15 edition",
     "type": "Fête / festival",
     "description": "Les 15 ans du Quai des Artistes les 22 et 23 juin 2024 ! Art urbain, expo, DJ sets, ateliers. Concert de Juste Red & friends dimanche après-mi...",
     "date": "Le 23 juin 2024",
     "adresse": "Jardin Vauban, Bd Vauban, 59000 Lille06 16 60 04 83"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/week-end-olympique-lillois-initiation-au-ping-vr/3519899-1-fre-FR/Week-end-Olympique-lillois-Initiation-au-Ping-VR_equipment_image_lead_child.jpg",
+    "name": "Week end Olympique lillois Initiation au Ping VR",
+    "type": "Événement sportif",
+    "description": "Initiez vous au \"Ping VR\", le Tennis de Table en réalité virtuelle !",
+    "date": "Le 23 juin 2024",
+    "adresse": "tripostal lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/fabrication-de-sirop-du-jardin/3504892-1-fre-FR/Fabrication-de-sirop-du-jardin_equipment_image_lead_child.jpg",
@@ -1950,6 +1862,14 @@
     "description": "À la suite d’un accident, Diana Niepce a perdu une grande partie de sa mobilité. Dans Anda, Diana, elle nous offre un partage sensible de la longu...",
     "date": "Le 25 juin 2024",
     "adresse": "70 rue des sarrazins"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/representation-de-theatre/3524224-1-fre-FR/Representation-de-theatre_equipment_image_lead_child.jpg",
+    "name": "Representation de theatre",
+    "type": "Spectacle",
+    "description": "Avec les élèves de cycle 3 du département théâtre du Conservatoire de Lille",
+    "date": "Le 25 juin 2024",
+    "adresse": "28 rue alphonse mercier 59000 Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/impro-wars-episode-2-par-la-cric/3519981-1-fre-FR/IMPRO-WARS-Episode-2-par-la-CRIC_equipment_image_lead_child.jpg",
@@ -2008,6 +1928,14 @@
     "adresse": "11 rue de l'Asie"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/representation-de-theatre2/3524265-1-fre-FR/Representation-de-theatre_equipment_image_lead_child.jpg",
+    "name": "Representation de theatre",
+    "type": "Spectacle",
+    "description": "Avec les élèves de cycle 3 du département théâtre du Conservatoire de Lille",
+    "date": "Le 26 juin 2024",
+    "adresse": "28 rue alphonse mercier 59000 Lille"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/impro-wars-episode-3-par-la-cric/3520022-1-fre-FR/IMPRO-WARS-Episode-3-par-la-CRIC_equipment_image_lead_child.jpg",
     "name": "IMPRO WARS Episode 3 par la CRIC",
     "type": "Spectacle",
@@ -2046,6 +1974,14 @@
     "description": "Les artistes palestiniennes Samaa Wakim et Samar Haddad King interrogent par la danse & la musique comment l’expérience de grandir dans une zo...",
     "date": "Du 27 au 28 juin 2024",
     "adresse": "70 rue des Sarrazins"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/stand-s-up-de-l-insertion/3524306-1-fre-FR/Stand-s-up-de-l-insertion_equipment_image_lead_child.jpg",
+    "name": "Stand s up de l insertion",
+    "type": "Événement sportif",
+    "description": "Animations à destination des allocataires du RSA",
+    "date": "Le 27 juin 2024",
+    "adresse": "108 Quai Géry Legrand03 20 09 13 02"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/mon-profil/profil-senior/rdv-droits/3504178-1-fre-FR/rdv-droits_equipment_image_lead_child.jpg",
@@ -2126,6 +2062,14 @@
     "description": "Marianne Mathieu, historienne de l'art",
     "date": "Le 28 juin 2024",
     "adresse": "Place de la République 59000 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/representation-de-theatre3/3524377-1-fre-FR/Representation-de-theatre_equipment_image_lead_child.jpg",
+    "name": "Representation de theatre",
+    "type": "Spectacle",
+    "description": "Plongez dans le répertoire théâtral allemand",
+    "date": "Le 28 juin 2024",
+    "adresse": "28 rue alphonse mercier 59000 Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/impro-wars-episode-5-par-la-cric/3520186-1-fre-FR/IMPRO-WARS-Episode-5-par-la-CRIC_equipment_image_lead_child.jpg",
@@ -2222,6 +2166,14 @@
     "description": "Un temps de lectures partagées à la bibliothèque !",
     "date": "Le 29 juin 2024",
     "adresse": "25/27 Place Louise de Béttignies 59 000 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/representation-de-theatre4/3524418-1-fre-FR/Representation-de-theatre_equipment_image_lead_child.jpg",
+    "name": "Representation de theatre",
+    "type": "Spectacle",
+    "description": "Plongez dans le répertoire théâtral allemand",
+    "date": "Le 29 juin 2024",
+    "adresse": "28 rue alphonse mercier 59000 Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-cup-of-tea-concert-de-l-oul/3520227-1-fre-FR/A-cup-of-Tea-Concert-de-l-OUL_equipment_image_lead_child.jpg",

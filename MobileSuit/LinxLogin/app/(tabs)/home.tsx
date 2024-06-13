@@ -37,6 +37,7 @@ export default function HomeScreen() {
   const [eventPastComponent, setEventPastComponent] = useState([])
   const [expandedSoon, setExpandedSoon] = useState(true);
   const [expandedPast, setExpandedPast] = useState(false);
+  const [picture, setPicture] = useState("")
   //snackbar
   const [snack, setSnack] = useState(false);
 
@@ -83,6 +84,9 @@ export default function HomeScreen() {
       const jwt_cookie = await AsyncStorage.getItem("jwt")
       const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
       setFirstLogin(reponse.data.firstLogin)
+      if(reponse.data.image!=null){
+        setPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
+      }
       const reponseEvents = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getEvents`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
       setEvents(reponseEvents.data)
     }
@@ -216,6 +220,7 @@ export default function HomeScreen() {
         <Avatar
           size={48}
           rounded
+          source={{ uri: picture }}
           icon={{ name: "person", type: "material" }}
           containerStyle={{ backgroundColor: "#bbbec1", position: 'absolute', bottom: 15, right: 15 }}
           onPress={() => router.push("/../profile")}

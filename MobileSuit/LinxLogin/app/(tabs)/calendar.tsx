@@ -170,6 +170,8 @@ export default function CalendarScreen() {
         }
       }
 
+      console.log(tmp)
+      setMoodCalendar(tmp)
       const lastQuestionnaire = moodTracker[moodTracker.length-1]
       const dateLastQuestionnaire = new Date(lastQuestionnaire.date)
       console.log(today.getDay())
@@ -192,12 +194,29 @@ export default function CalendarScreen() {
 
 
       const day = today.getDay()
+      const days = [today.toDateString()]
+
+      for(let i=1; i<day;i++){
+        let d = new Date(`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()-i}`)
+        days.push(d.toDateString())
+      }
+
+   
+      for(let i=0;i<days.length;i++){
+        console.log(days[i])
+      }
+   
 
       let dayWeek = [0,0,0,0,0,0,0]
 
-      for(let i=day-1;i>=0;i--){
-        const d = new Date(moodTracker[moodTracker.length-1-i].date)
-        if(d.getDay() == day-i) dayWeek[day-i-1] = moodTracker[moodTracker.length-1-i].average
+      for(let i=0;i<day;i++){
+        if(moodTracker.length-1-i >=0){
+          const d = new Date(moodTracker[moodTracker.length-1-i].date)
+          if(days.indexOf(d.toDateString()) != -1){
+            dayWeek[d.getDay()-1] = moodTracker[moodTracker.length-1-i].average
+          }
+        }
+
       }
 
       console.log(dayWeek)
@@ -210,8 +229,7 @@ export default function CalendarScreen() {
           }
         ]
       })
-      console.log(tmp)
-      setMoodCalendar(tmp)
+      
     }
     wrap()
   },[])
