@@ -150,7 +150,7 @@ const Messagerie = () => {
           <MDBCard className="my-5">
             <MDBCardBody>
               <MDBTypography tag="h4" className="text-center mt-4 mb-4">
-                Users
+                participants
               </MDBTypography>
               <ul className="list-unstyled">
                 {userInfo ? (
