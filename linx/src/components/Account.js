@@ -91,10 +91,11 @@ const Account = () => {
   const handleSubmit = async () => {
     try {
       if (pp) {
-        await axios.post('http://localhost/setPicture', { picture: pp, firstName: firstName, lastName: lastName, selectedInterests: selectedInterests}, { withCredentials: true });
+        await axios.post('http://localhost/setPicture', { picture: pp, firstName: firstName, lastName: lastName, selectedInterests: selectedInterests, description: description}, { withCredentials: true });
       } else {
-        await axios.post('http://localhost/setPicture', { firstName: firstName, lastName: lastName, selectedInterests: selectedInterests}, { withCredentials: true });
+        await axios.post('http://localhost/setPicture', {picture:"", firstName: firstName, lastName: lastName, selectedInterests: selectedInterests, description: description}, { withCredentials: true });
       }
+      console.log(pp, firstName, lastName, selectedInterests, description)
     } catch (error) {
       console.error('Error:', error);
     }
@@ -106,6 +107,7 @@ const Account = () => {
     setSelectedInterests(filteredInterests);
     setIsEditing(false);
     handleSubmit();
+    window.location.reload();
     console.log(filteredInterests);
   };
 
@@ -134,7 +136,7 @@ const Account = () => {
                 <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
                   <label htmlFor="profile-image">
                     <MDBCardImage 
-                      src={profileImage || "https://via.placeholder.com/150"}
+                      src={isEditing ? profileImage : "http://localhost/"+profileImage || "https://via.placeholder.com/150"}                      
                       alt="Generic placeholder image" 
                       className=" mb-2 img-thumbnail" 
                       fluid 
