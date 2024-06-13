@@ -115,7 +115,7 @@ export default function CatalogScreen() {
                                 <Text style={_Theme.themeText}>{activities[i].description}</Text>
                               </Card.Content>
                               <Card.Actions>
-                                <Button style={_Theme.themeBouton} onPress={()=>{setModalVisible(!modalVisible);setActualIndex(i)}} >Créer un évènement</Button>
+                                <Button mode={'contained'} style={_Theme.themeBouton} textColor={_Theme.themeBouton.color} onPress={()=>{setModalVisible(!modalVisible);setActualIndex(i)}} >Créer un évènement</Button>
                               </Card.Actions>
                             </Card>
             tmpComp.push(newCard)

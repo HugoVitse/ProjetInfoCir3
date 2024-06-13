@@ -29,7 +29,7 @@ export default function SettingsScreen() {
     }
   }
 
-  const scrollViewRef = useRef(null);
+  const scrollViewRef = useRef<ScrollView>(null);
 
   useEffect(()=>{
     const wrap = async()=>{
