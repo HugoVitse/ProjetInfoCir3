@@ -62,7 +62,7 @@ function App() {
             <Route path="/Activite" element={<Activite />} />
             <Route path="/Evenements" element={<Evenements />} />
             <Route path="/MoodTracker" element={<MoodTracker />} />
-            <Route path="/event/:activityName" element={<Messagerie />} />
+            <Route path="/event/:activityName/:idEvent" element={<Messagerie />} />
           </Routes>
         </MDBCard>
       </MDBContainer>

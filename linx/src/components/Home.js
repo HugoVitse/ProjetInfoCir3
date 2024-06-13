@@ -93,7 +93,6 @@ const Home = () => {
         }
 
         const eventsResponse = await axios.get('http://localhost/evenements', { withCredentials: true });
-        console.log(eventsResponse.data);
         setEvents(eventsResponse.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -120,8 +119,8 @@ const Home = () => {
               .filter(event => event.types === interest)
               .slice(0, 5)
               .map((event, index) => (
-                <Link to={`/event/${event.activity.title}`} key={index} className="text-decoration-none"> {/* Assurez-vous que "/event/${event.id}" est l'URL appropriée */}
-                  <MDBCardText className="fw-bold mb-2">
+                <Link to={`/event/${event.activity.title}/${event._id}`} key={index} className="text-decoration-none"> {/* Assurez-vous que "/event/${event.id}" est l'URL appropriée */}
+                  <MDBCardText className="fw-bold mb-2"> 
                     <MDBBadge color="secondary" className="mr-2">Event</MDBBadge>
                     : {event.activity.title}
                   </MDBCardText>

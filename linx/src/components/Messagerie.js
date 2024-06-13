@@ -13,12 +13,10 @@ import axios from 'axios';
 const Messagerie = () => {
   const navigate = useNavigate();
   const { activityName } = useParams();  
+  const { idEvent } = useParams();
   const [email, setemail] = useState("");
 
-  const [messages, setMessages] = useState([
-    { text: 'Hello! How are you?', sender: 'user1@example.com', type: 'received' },
-    { text: 'I am good, thank you! How about you?', sender: 'user2@example.com', type: 'sent' }
-  ]);
+  const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
 
   const retrieveCookie = () => {
@@ -36,20 +34,26 @@ const Messagerie = () => {
     const fnc = async () => {
       retrieveCookie();
       try {
-        const request = await axios.post('http://localhost/setMessagerie', { title: decodeURIComponent(activityName), messages: messages}, { withCredentials: true });
-        const response = await axios.get('http://localhost/getMessagerie', { withCredentials: true });
+        const messArray = [];
+        const response = await axios.get('http://localhost/getMessagerie/'+idEvent, { withCredentials: true });
+        response.data.messages.forEach((data, i) => {
+          messArray.push(data.date);          
+        });
+        setMessages(messArray);
+        console.log(messArray);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
     fnc();
-  }, []);
+  }, [messages]);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async() => {
     if (newMessage.trim()) {
       setMessages([...messages, { text: newMessage, sender: email, type: 'sent' }]);
       setNewMessage('');
     }
+    await axios.post('http://localhost/setMessagerie', { id : idEvent, messages: messages}, { withCredentials: true });
   };
 
   return (

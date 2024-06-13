@@ -23,8 +23,7 @@ async function createEvenement(req,res){
             const event = {
                 ...pre_event,
                 host:email,
-                participants:[email],
-                messages : "Que pensez-vous de cette activité ?"
+                participants:[email]
             }
         
         

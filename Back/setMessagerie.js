@@ -4,8 +4,9 @@ const config = require('./configDB')
 const fs = require('fs')
 const jwt = require('jsonwebtoken');
 const path = require('path');
+const { ObjectId } = require('mongodb');
 
-async function setPicture(req,res){
+async function setMessagerie(req,res){
     const cookies = req.cookies
     if(!('jwt' in cookies)){
         res.status(500).send()
@@ -20,12 +21,11 @@ async function setPicture(req,res){
             const email = decoded.email     
             const database = connect_db.client.db(config.dbName);
             const collection = database.collection(config.evenements);
-            
-            const {title, messages } = req.body;
-            console.log(title, messages);
+            const {id, messages } = req.body;
+            console.log(id, messages);
+            const objectId = new ObjectId(id);
 
-            const findOneResult = await collection.findOneAndUpdate({'activity.title': title},{$set: {Messages : messages}});
-            
+            const findOneResult = await collection.findOneAndUpdate({_id: objectId },{$set: {messages : messages}});
 
             res.send("ok")
         }
@@ -38,4 +38,4 @@ async function setPicture(req,res){
   
 }
 
-module.exports = setPicture
+module.exports = setMessagerie;

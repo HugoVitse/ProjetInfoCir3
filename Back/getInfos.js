@@ -12,8 +12,6 @@ async function getInfos(req,res){
     }
     else{
         try{
-            
-
             const token =  req.cookies.jwt
             const decoded = jwt.verify(token, config_serv.secretJWT);
             const email = decoded.email     
