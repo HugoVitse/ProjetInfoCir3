@@ -39,7 +39,7 @@ const createEvenement = require('./createEvenement')
 const EventRegister = require('./EventRegister')
 const getEvents = require('./getEvents')
 const getMoodTracker = require('./getMoodTracker')
-
+const getMessage = require('./getMessage')
 
 
 async function serv(){
@@ -74,6 +74,7 @@ async function serv(){
   app.get('/evenements',evenements)
   app.post('/EventRegister',EventRegister)
   app.get('/getEvents',getEvents)
+  app.get('/getMessage/:id',getMessage)
 
 
   console.log(path.join(__dirname, 'profile_pictures'))

@@ -29,13 +29,14 @@ export default function SettingsScreen() {
     }
   }
 
-  const scrollViewRef = useRef(null);
+  const scrollViewRef = useRef<ScrollView>(null);
 
   useEffect(()=>{
     const wrap = async()=>{
       const jwt_cookie = await AsyncStorage.getItem("jwt")
-      const reponseMessage = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getMessage`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      const reponseMessage = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getMessage/${id}`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
       setMessage(reponseMessage.data)
+      console.log(reponseMessage.data)
     }
     wrap()
   },[])
@@ -50,29 +51,29 @@ export default function SettingsScreen() {
   }, [isFocused]);
 
 
-  // useEffect(()=>{
-  //   let messages = []
-  //   if(message.length>0){
-  //     for(let i = 0; i<message.length;i++){
-  //       messages.push(
-  //         <View style={{flexDirection: 'row', marginVertical: 5, marginTop: (i-1 == -1 ? 20 : (message[i-1].autor == message[i].autor ? 0 : 20)), alignSelf: (message[i].autor == jwt.autor ? 'flex-end' : 'flex-start')}}>
-  //           {i-1 == -1 ? <Avatar.Image size={30} source={{uri:'../assets/images/avatar.png'}} /> : (message[i-1].autor == message[i].autor ? <></> : <Avatar.Image size={30} source={{uri:'../assets/images/avatar.png'}} />)}
-  //           <Text style={[styles.messages, (message[i].autor == jwt.autor ? _Theme.themeBackMyMessage : _Theme.themeBackMessage), _Theme.themeText, (i-1 == -1 ? {} : (message[i-1].autor == message[i].autor ? (message[i].autor == jwt.autor ? {marginRight: 40} : {marginLeft: 40}) : {}))]}>{message[i].text}</Text>
-  //         </View>
-  //       )
-  //     }
-  //   }
+  useEffect(()=>{
+    // let messages = []
+    // if(message.length>0){
+    //   for(let i = 0; i<message.length;i++){
+    //     messages.push(
+    //       <View style={{flexDirection: 'row', marginVertical: 5, marginTop: (i-1 == -1 ? 20 : (message[i-1].autor == message[i].autor ? 0 : 20)), alignSelf: (message[i].autor == jwt.autor ? 'flex-end' : 'flex-start')}}>
+    //         {i-1 == -1 ? <Avatar.Image size={30} source={{uri:'../assets/images/avatar.png'}} /> : (message[i-1].autor == message[i].autor ? <></> : <Avatar.Image size={30} source={{uri:'../assets/images/avatar.png'}} />)}
+    //         <Text style={[styles.messages, (message[i].autor == jwt.autor ? _Theme.themeBackMyMessage : _Theme.themeBackMessage), _Theme.themeText, (i-1 == -1 ? {} : (message[i-1].autor == message[i].autor ? (message[i].autor == jwt.autor ? {marginRight: 40} : {marginLeft: 40}) : {}))]}>{message[i].text}</Text>
+    //       </View>
+    //     )
+    //   }
+    // }
 
-  //   setMessageComponent(messages)
+    // setMessageComponent(messages)
 
-  // },[message])
+  },[message])
 
 
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={[styles.container, _Theme.themeBack2]}
       resetScrollToCoords={{ x: 0, y: 0 }}
-      scrollEnabled
+      scrollEnabled={false}
       extraScrollHeight={Platform.OS === 'ios' ? 20 : 0}
     >
       <ScrollView
