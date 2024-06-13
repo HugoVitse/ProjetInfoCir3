@@ -13,6 +13,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import Theme from "@/constants/Theme";
 import RIcon from '@mdi/react';
 import { mdiCalendarMultipleCheck } from '@mdi/js';
+import { DarkTheme } from "@react-navigation/native";
 
 const HEADER_HEIGHT = 100;
 const { width,height } = Dimensions.get('window');
@@ -101,13 +102,18 @@ export default function HomeScreen() {
         const today = new Date()
         if(date>today){
           tmp.push(
-            <ListItem key={i}  bottomDivider>
+            <ListItem 
+              key={i}  
+              bottomDivider 
+              style={_Theme.themeBack2}
+              onPress={() => {router.push(`/../chat/${i}`)}}
+            >
               <Avatar title={"ok"} source={{ uri: "" }} />
-              <ListItem.Content>
-                <ListItem.Title>{events[i].activity.title}</ListItem.Title>
-                <ListItem.Subtitle>{events[i].date}</ListItem.Subtitle>
+              <ListItem.Content style={_Theme.themeBack2}>
+                <ListItem.Title style={_Theme.themeText}>{events[i].activity.title}</ListItem.Title>
+                <ListItem.Subtitle style={_Theme.themeText}>{events[i].date}</ListItem.Subtitle>
               </ListItem.Content>
-              <ListItem.Chevron />
+              <ListItem.Chevron style={_Theme.themeText}/>
             </ListItem>
           )
         }
@@ -226,9 +232,9 @@ export default function HomeScreen() {
         <ListItem.Accordion
           content={
             <>
-              <Icon type='material-community' name="calendar-multiple" size={30} />
-              <ListItem.Content>
-                <ListItem.Title> Evénements à venir</ListItem.Title>
+              <Icon type='material-community' name="calendar-multiple" size={30} style={_Theme.themeIcon}/>
+              <ListItem.Content style={_Theme.themeBack2}>
+                <ListItem.Title style={_Theme.themeText}> Evénements à venir</ListItem.Title>
               </ListItem.Content>
             </>
           }
