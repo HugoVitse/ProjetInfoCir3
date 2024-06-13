@@ -106,7 +106,7 @@ export default function HomeScreen() {
               key={i}  
               bottomDivider 
               style={_Theme.themeBack2}
-              onPress={() => {router.push(`/../chat/${i}`)}}
+              onPress={() => {router.push(`/../chat/${events[i]._id}`)}}
             >
               <Avatar title={"ok"} source={{ uri: "" }} />
               <ListItem.Content style={_Theme.themeBack2}>

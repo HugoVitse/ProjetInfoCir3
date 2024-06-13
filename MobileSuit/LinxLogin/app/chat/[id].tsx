@@ -29,7 +29,7 @@ export default function SettingsScreen() {
     }
   }
 
-  const scrollViewRef = useRef(null);
+  const scrollViewRef = useRef<ScrollView>(null);
 
   useEffect(()=>{
     const wrap = async()=>{
@@ -72,7 +72,7 @@ export default function SettingsScreen() {
     <KeyboardAwareScrollView
       contentContainerStyle={[styles.container, _Theme.themeBack2]}
       resetScrollToCoords={{ x: 0, y: 0 }}
-      scrollEnabled
+      scrollEnabled={false}
       extraScrollHeight={Platform.OS === 'ios' ? 20 : 0}
     >
       <ScrollView
