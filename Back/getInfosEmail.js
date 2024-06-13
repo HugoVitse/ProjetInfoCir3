@@ -6,7 +6,7 @@ const connect_db = require('./connect_db')
 const { ObjectId } = require('mongodb');
 
 
-async function getMessage(req,res){
+async function getInfosEmail(req,res){
 
     const cookies = req.cookies
     console.log(cookies)
@@ -36,4 +36,4 @@ async function getMessage(req,res){
     }
 }
 
-module.exports = getMessage;
+module.exports = getInfosEmail;
