@@ -42,6 +42,7 @@ const slideData = [
 export default function CatalogScreen() {
   const router = useRouter();
   const [evenements,setEvenements] = useState<evenement[]>([])
+  const [evenementsRecommandes,setEvenementsRecommandes] = useState<evenement[]>([])
   const [componentActivities,setComponentActivities] = useState<JSX.Element[]>([])
   const [jwt,setJwt] = useState<string>();
   const [isjwt,setisjwt] = useState(-1)
@@ -49,7 +50,7 @@ export default function CatalogScreen() {
   const [isLoaded,setIsLoaded] = useState(false)
   const [markers, setMarkers] = useState<JSX.Element[]>([])
   const [active, setActive] = useState('');
-  const leftDecal =  useState(new Animated.Value(-drawerWidth*4))[0];
+  const leftDecal =  useState(new Animated.Value(-drawerWidth*4 - 10))[0];
   const [drawerDeployed, setDrawerDeployed] = useState(false)
   const [actualLat,setActualLat] = useState(50.633333)
   const [actualLong,setActualLong] = useState(3.066667)
@@ -75,6 +76,8 @@ export default function CatalogScreen() {
   const [visible, setVisible] = useState(false);
 
   const [actualIndex,setActualIndex] = useState(0)
+  const [recommandeActualIndex,setRecommandeActualIndex] = useState(0)
+  const [recommande, setRecommande] = useState(false)
 
   const showDialog = () => setVisible(true);
 
@@ -132,7 +135,7 @@ export default function CatalogScreen() {
 
   const endAnimation = () => {
     Animated.timing(leftDecal, {
-        toValue: -drawerWidth*4, // Move to -60
+        toValue: -drawerWidth*4 - 10, // Move to -60
         duration: 400, // Animation duration in ms
         useNativeDriver: false, // 'left' is not supported by native driver
       }).start();
@@ -142,8 +145,8 @@ export default function CatalogScreen() {
   const register = async() => {
     const jwt_cookie = await AsyncStorage.getItem("jwt")
     const data = {
-      id:evenements[actualIndex]._id
-  }
+      id: recommande ? evenementsRecommandes[recommandeActualIndex]._id : evenements[actualIndex]._id
+    }
     const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/EventRegister`,data, {headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
     console.log(response)
     hideDialog()
@@ -185,6 +188,14 @@ export default function CatalogScreen() {
       setIsLoaded(true)
       const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
       setPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
+      const tmp = []
+      for(let i=0;i<response.data.length;i++){
+        if(reponse.data.activities.includes(evenements[i].type)) {
+          tmp.push(evenements[i])
+        }
+      }
+      console.log(tmp)
+      setEvenementsRecommandes(tmp)
     }
     getActivities()
 
@@ -245,135 +256,136 @@ export default function CatalogScreen() {
           >
             <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
           
-            <View style={styles.modalView}>
+            <View style={[styles.modalView, _Theme.themeBack2]}>
               <KeyboardAwareScrollView contentContainerStyle={[styles.centeredView]}>
               
-              <View style={styles.horizontal}>
-                <Text style={{justifyContent:'center',alignItems:'center',flex:1}}>Titre</Text>
+                <View style={styles.horizontal}>
+                  <Text style={[{justifyContent:'center',alignItems:'center',flex:1}, _Theme.themeText]}>Titre</Text>
+                  <TextInput
+                    style={{width:"80%"}}
+                    label="Titre"
+                    mode="outlined"
+                    value={title}
+                    onChangeText={text => setTitle(text)}
+                  />
+                </View>
+                <Text style={[{left:0,width:"100%",padding:10}, _Theme.themeText]}>Description</Text>
                 <TextInput
-                  style={{width:"80%"}}
+                  style={{width:"100%"}}
                   label="Titre"
                   mode="outlined"
-                  value={title}
-                  onChangeText={text => setTitle(text)}
+                  value={description}
+                  onChangeText={text => setDescription(text)}
                 />
-              </View>
-              <Text style={{left:0,width:"100%",padding:10}}>Description</Text>
-              <TextInput
-                style={{width:"100%"}}
-                label="Titre"
-                mode="outlined"
-                value={description}
-                onChangeText={text => setDescription(text)}
-              />
-              <Text style={{left:0,width:"100%",padding:10}}>Adresse</Text>
-              <TextInput
-                style={{width:"100%",height:70}}
-                label="Titre"
-                mode="outlined"
-                value={propsAdresse}
-                dense={true}
-                onPress={openMenu2}
-                onChangeText={text => fetchAdresse(text)}
-              />
-              {adresseLoading.length>0?
-                <List.Section style={{height:70}}>
-                <List.Item  style={{height:70}} onPress={()=>{setPropsAdresse(adresseLoading);setAdresseLoading("")}} title={"Adresse"} description={adresseLoading} left={() => <List.Icon icon="map-marker" />} />
-              </List.Section>:<></>
-              }
-              
-
-              <View style={{ height: 200 ,width:200,alignItems:'center'}}>
-
-                <Carousel
-                  ref={carouselRef}
-                  loop={false}
-                  
-                  width={300}
-                  autoPlay={false}
-                  data={slideData}
-                  onProgressChange={progress}
-                  scrollAnimationDuration={500}
-                  style={{ height: 200 ,width:300,borderColor:"black"}}
-                  // onScrollStart={() => {
-                  //   const index = slideData.findIndex(slide => slide.title === value);
-                  //   animateUnderline(index);
-                  // }}
-                  onSnapToItem={(index) => {
-                    setActualIndexImg(index)
-                    console.log('current index:', index);
-                    setValue(slideData[index].src);
-                  }}
-                  renderItem={({ item }) => (
-                    <View style={styles.slide}>
-                      <Image source={{uri:item.src}} style={{width:300,height:200, transform:"scale(0.8)"}}/>
-                      
-                    </View>
-                  )}
-                />
-              </View>
-              
-              
-              
-            
-              <View style={styles.horizontal}>
-                <Text style={{justifyContent:'center',alignItems:'center',flex:1}}>Nombre d'invités</Text>
+                <Text style={[{left:0,width:"100%",padding:10}, _Theme.themeText]}>Adresse</Text>
                 <TextInput
-                  label="Invités"
+                  style={{width:"100%",height:70}}
+                  label="Titre"
                   mode="outlined"
-                  value={text}
-                  keyboardType = 'numeric'
-                  onChangeText={text => setText(text)}
+                  value={propsAdresse}
+                  dense={true}
+                  onPress={openMenu2}
+                  onChangeText={text => fetchAdresse(text)}
                 />
-              </View>
-              <View style={styles.horizontal}>
-                <Text style={{justifyContent:'center',alignItems:'center',flex:1}}>Date de l'évènement</Text>
-                {Platform.OS === 'ios' && (
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  value={date}
-                  mode="date"
-      
-                  onChange={onChange}
-                />)}
-                {Platform.OS === 'android' && (<>
-                  <Button onPress={()=>setshowAndroid(!showAndroid)}>{date.toDateString()}</Button>
-                  {showAndroid && (
-                    <DateTimePicker
+                {adresseLoading.length>0?
+                  <List.Section style={{height:70}}>
+                  <List.Item  style={{height:70}} onPress={()=>{setPropsAdresse(adresseLoading);setAdresseLoading("")}} title={"Adresse"} description={adresseLoading} left={() => <List.Icon icon="map-marker" />} />
+                </List.Section>:<></>
+                }
+                
+
+                <View style={{ height: 200 ,width:200,alignItems:'center'}}>
+
+                  <Carousel
+                    ref={carouselRef}
+                    loop={false}
+                    
+                    width={300}
+                    autoPlay={false}
+                    data={slideData}
+                    onProgressChange={progress}
+                    scrollAnimationDuration={500}
+                    style={{ height: 200 ,width:300,borderColor:"black"}}
+                    // onScrollStart={() => {
+                    //   const index = slideData.findIndex(slide => slide.title === value);
+                    //   animateUnderline(index);
+                    // }}
+                    onSnapToItem={(index) => {
+                      setActualIndexImg(index)
+                      console.log('current index:', index);
+                      setValue(slideData[index].src);
+                    }}
+                    renderItem={({ item }) => (
+                      <View style={styles.slide}>
+                        <Image source={{uri:item.src}} style={{width:300,height:200, transform:"scale(0.8)"}}/>
+                        
+                      </View>
+                    )}
+                  />
+                </View>
+                
+                
+                
+              
+                <View style={[styles.horizontal, _Theme.themeBack2]}>
+                  <Text style={[{justifyContent:'center',alignItems:'center',flex:1}, _Theme.themeText]}>Nombre d'invités</Text>
+                  <TextInput
+                    label="Invités"
+                    mode="outlined"
+                    value={text}
+                    keyboardType = 'numeric'
+                    onChangeText={text => setText(text)}
+                  />
+                </View>
+                <View style={[styles.horizontal, _Theme.themeBack2]}>
+                  <Text style={[{justifyContent:'center',alignItems:'center',flex:1}, _Theme.themeText]}>Date de l'évènement</Text>
+                  {Platform.OS === 'ios' && (
+                  <DateTimePicker
                     testID="dateTimePicker"
                     value={date}
                     mode="date"
-        
                     onChange={onChange}
-                    />
+                  />)}
+                  {Platform.OS === 'android' && (<>
+                    <Button mode={'text'} onPress={()=>setshowAndroid(!showAndroid)} textColor={_Theme.themeText.color}>{date.toDateString()}</Button>
+                    {showAndroid && (
+                      <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode="date"
+                        onChange={onChange}
+                      />
+                    )}
+                    </>
                   )}
-                  </>
-                )}
+                
+                </View>
               
-              </View>
-            
-              <Text style={{left:0,width:"100%",padding:10}}>Catégorie</Text>
-              <Picker
-                style={{width:"100%",justifyContent:"center",height:Platform.OS=='ios'?200:40}}
-                selectedValue={type}
-                onValueChange={(itemValue, itemIndex) =>
-                  setType(itemValue)
-                }>
-                {types.map((type,index) => {
-                  return(
-                    <Picker.Item key={index} label={type} value={type} />
-                  )
-                })}
-              </Picker>
-              
-              <View style={{ width:'100%', justifyContent:'space-between',   padding:10,    flexDirection: 'row',}}>
-                <Button onPress={()=>{setModalVisible(!modalVisible)}} mode="contained" style={[_Theme.themeBouton]}>
-                  Annuler
-                </Button>
-                <Button onPress={createEvent} mode="contained" style={[_Theme.themeBouton]}>
-                  Creer
-                </Button>
-              </View>
+                <Text style={[{left:0,width:"100%",padding:10}, _Theme.themeText]}>Catégorie</Text>
+                <Picker
+                  style={[{width:"100%",justifyContent:"center",height:Platform.OS=='ios'?200:40}, _Theme.themeBack2]}
+                  selectionColor={_Theme.themeText.color}
+                  itemStyle={_Theme.themeBack2}
+                  dropdownIconColor={_Theme.themeIcon.color}
+                  selectedValue={type}
+                  onValueChange={(itemValue, itemIndex) =>
+                    setType(itemValue)
+                  }>
+                  {types.map((type,index) => {
+                    return(
+                      <Picker.Item key={index} label={type} value={type} color={_Theme.themeText.color} style={_Theme.themeBack2}/>
+                    )
+                  })}
+                </Picker>
+                
+                <View style={{ width:'100%', justifyContent:'space-between',   padding:10,    flexDirection: 'row',}}>
+                  <Button onPress={()=>{setModalVisible(!modalVisible)}} mode="outlined" style={_Theme.themeBouton2} textColor={_Theme.themeBouton2.color}>
+                    Annuler
+                  </Button>
+                  <Button onPress={createEvent} mode="contained" style={_Theme.themeBouton} textColor={_Theme.themeBouton.color}>
+                    Creer
+                  </Button>
+                </View>
               </KeyboardAwareScrollView>   
             </View>
             </View>
@@ -425,11 +437,11 @@ export default function CatalogScreen() {
       </View>
       
       <SafeAreaView style={{flex: 1}}>
-        <Animated.View style={{zIndex:3,position:'absolute',width:`${drawerWidth}%`,backgroundColor:"white",height:ScreenHeight,left:leftDecal}}>
-            <Drawer.Section title="Liste des évènements">
-                <ScrollView style={{height:"70%"}}>
+        <Animated.View style={{zIndex:3,position:'absolute',width:`${drawerWidth}%`,backgroundColor:_Theme.themeBack2.backgroundColor,height:ScreenHeight,left:leftDecal}}>
+          <Drawer.Section title="Evènements recommandés pour vous" theme={{colors: {onSurfaceVariant: _Theme.themeBouton2.color}}}>
+                <ScrollView style={{height:"30%"}}>
                 {
-                     evenements.map((evenement,index) => {
+                     evenementsRecommandes.map((evenement,index) => {
                         return(
                             <Drawer.Item
                                 key={index}
@@ -438,6 +450,31 @@ export default function CatalogScreen() {
                                 onPress={
                                     () => {
                                         setActive(index.toString())
+                                        setRecommande(true)
+                                        setRecommandeActualIndex(index)
+                                        endAnimation()
+                                        showDialog()
+                                    }
+                                }
+                            />
+                        )
+                    })
+                }
+                </ScrollView>
+            </Drawer.Section>
+            <Drawer.Section title="Liste des évènements" theme={{colors: {onSurfaceVariant: _Theme.themeBouton2.color}}}>
+                <ScrollView style={{height:"30%"}}>
+                {
+                     evenements.map((evenement,index) => {
+                        return(
+                            <Drawer.Item
+                                key={evenementsRecommandes.length+index}
+                                label={evenement.activity.title}
+                                active={active === evenementsRecommandes.length+index.toString()}
+                                onPress={
+                                    () => {
+                                        setActive(index.toString())
+                                        setRecommande(false)
                                         setActualIndex(index)
                                         endAnimation()
                                         showDialog()
@@ -473,14 +510,14 @@ export default function CatalogScreen() {
 
     
 
-    <Dialog style={{backgroundColor:"white"}} visible={visible} onDismiss={hideDialog}>
+    <Dialog style={_Theme.themeBack2} visible={visible} onDismiss={hideDialog}>
           
-          <Dialog.Icon icon="alert" />
-          <Dialog.Title>Voulez-vous vraiment vous inscrire ?</Dialog.Title>
+          <Dialog.Icon icon="alert" color={_Theme.themeIcon.color}/>
+          <Dialog.Title style={[_Theme.themeText, {textAlign: 'center'}]}>Voulez-vous vraiment vous inscrire ?</Dialog.Title>
           <Dialog.Content>
                 <Card style={[{marginVertical: 20 },_Theme.themeCard]}>
-                  <Card.Cover source={{ uri: evenements[actualIndex]?evenements[actualIndex].activity.image:"" }} />
-                  <Card.Title titleStyle={{color:_Theme.themeText.color}} subtitleStyle={{color:_Theme.themeText.color}} title={evenements[actualIndex]?evenements[actualIndex].activity.title:""} subtitle={evenements[actualIndex]?evenements[actualIndex].date:""}/>
+                  <Card.Cover source={{ uri: recommande ? (evenementsRecommandes[recommandeActualIndex] ? evenementsRecommandes[recommandeActualIndex].activity.image : "") : (evenements[actualIndex] ? evenements[actualIndex].activity.image : "") }} />
+                  <Card.Title titleStyle={{color:_Theme.themeText.color}} subtitleStyle={{color:_Theme.themeText.color}} title={recommande ? (evenementsRecommandes[recommandeActualIndex] ? evenementsRecommandes[recommandeActualIndex].activity.title : "") : (evenements[actualIndex] ? evenements[actualIndex].activity.title : "")} subtitle={recommande ? (evenementsRecommandes[recommandeActualIndex] ? evenementsRecommandes[recommandeActualIndex].date:"") : (evenements[actualIndex] ? evenements[actualIndex].date : "")}/>
                   {/* <Card.Content>
                     <Text style={_Theme.themeText}>{activities[i].adresse}</Text>
                     <Text style={_Theme.themeText}>{activities[i].description}</Text>
@@ -489,19 +526,26 @@ export default function CatalogScreen() {
                 </Card>
   
                   
-                <Text>
-                    {evenements[actualIndex]?(evenements[actualIndex].participants.indexOf(jwt?jwt:"")==-1?"":"Vous êtes déjà inscrits"):""}
+                <Text style={_Theme.themeText}>
+                    {recommande ? (evenementsRecommandes[recommandeActualIndex] ? (evenementsRecommandes[recommandeActualIndex].participants.indexOf(jwt ? jwt : "")==-1 ? "" : "Vous êtes déjà inscrits") : "") : (evenements[actualIndex] ? (evenements[actualIndex].participants.indexOf(jwt ? jwt : "")==-1 ? "" : "Vous êtes déjà inscrits") : "")}
                 </Text>
-                <Text>
-                    {evenements[actualIndex]?(evenements[actualIndex].participants.length >= (parseInt(evenements[actualIndex].nbinvities) +1)?"Evenement complet":""):""}
+                <Text style={_Theme.themeText}>
+                    {recommande ? (evenementsRecommandes[recommandeActualIndex] ? (evenementsRecommandes[recommandeActualIndex].participants.length >= (parseInt(evenementsRecommandes[recommandeActualIndex].nbinvities) +1) ? "Evenement complet" : "") : "") : (evenements[actualIndex] ? (evenements[actualIndex].participants.length >= (parseInt(evenements[actualIndex].nbinvities) +1) ? "Evenement complet" : "") : "")}
                 </Text>
     
-            <Button disabled={evenements[actualIndex]?((evenements[actualIndex].participants.indexOf(jwt?jwt:"")!=-1  || evenements[actualIndex].participants.length >= (parseInt(evenements[actualIndex].nbinvities) +1))?true:false):false} buttonColor="black" icon="login-variant" mode="contained" onPress={register}>
+            <Button 
+              disabled={recommande ? (evenementsRecommandes[recommandeActualIndex] ? ((evenementsRecommandes[recommandeActualIndex].participants.indexOf(jwt ? jwt : "")!=-1  || evenementsRecommandes[recommandeActualIndex].participants.length >= (parseInt(evenementsRecommandes[recommandeActualIndex].nbinvities) +1)) ? true : false) : false) : (evenements[actualIndex] ? ((evenements[actualIndex].participants.indexOf(jwt ? jwt : "")!=-1  || evenements[actualIndex].participants.length >= (parseInt(evenements[actualIndex].nbinvities) +1)) ? true : false) : false)} 
+              buttonColor={_Theme.themeBouton.backgroundColor} 
+              textColor={_Theme.themeBouton.color}
+              icon="login-variant" 
+              mode="contained" 
+              onPress={register}
+            >
               S'inscrire
             </Button>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button textColor={colorMain} onPress={hideDialog}>Retour</Button>
+            <Button mode="text" textColor={_Theme.themeBouton2.color} onPress={hideDialog}>Retour</Button>
           </Dialog.Actions>
       </Dialog>
     </View>

@@ -267,7 +267,13 @@ export default function ProfileScreen() {
                 <HelperText type="error" visible={hasErrors()}>
                   {error}
                 </HelperText>
-                <Button  buttonColor={_Theme.themeBouton.backgroundColor} icon="login" mode="contained" onPress={editPro}>
+                <Button  
+                  buttonColor={_Theme.themeBouton.backgroundColor}
+                  textColor={_Theme.themeBouton.color}
+                  icon="login" 
+                  mode="contained" 
+                  onPress={editPro}
+                >
                   Valider
                 </Button>
               </Dialog.Content>
