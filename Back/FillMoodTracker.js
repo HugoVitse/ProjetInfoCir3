@@ -16,7 +16,11 @@ async function FillMoodTracker(req, res) {
       console.log(decoded);
       const email = decoded.email;
       const database = connect_db.client.db(config.dbName);
+<<<<<<< HEAD
       const collection = database.collection(config.moodTracker);
+=======
+      const collection = database.collection(config.users);
+>>>>>>> 772cb86b1ef8a124952956cc5f16ef9efa4f8d2e
 
       const questionnaire = req.body;
       console.log(questionnaire);

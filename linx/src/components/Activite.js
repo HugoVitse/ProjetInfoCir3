@@ -41,6 +41,9 @@ const Activite = () => {
   const [currentAdresse, setCurrentAdresse] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [eventCreated, setEventCreated] = useState(false);
+  const [message] = useState([
+    { text: 'Que pensez-vous de cette activité ?', sender: 'user1@example.com', type: 'received' }
+  ]);
     const images = [
         'https://mdbootstrap.com/img/new/slides/041.jpg',
         'https://mdbootstrap.com/img/new/slides/042.jpg',
@@ -111,6 +114,7 @@ const Activite = () => {
           },
           nbinvities: invites,
           type: type,
+          messages: message,
           date: date.toString()
         };
     
@@ -169,6 +173,15 @@ const Activite = () => {
         
     }
 
+    const top100Films = [
+        { label: 'The Shawshank Redemption', year: 1994 },
+        { label: 'The Godfather', year: 1972 },
+        { label: 'The Godfather: Part II', year: 1974 },
+        { label: 'The Dark Knight', year: 2008 },
+        { label: '12 Angry Men', year: 1957 },
+        { label: "Schindler's List", year: 1993 },
+        { label: 'Pulp Fiction', year: 1994 }
+    ]
 
     const search = (event) => {
         newAdresses()

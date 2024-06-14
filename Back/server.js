@@ -25,7 +25,10 @@ const port = 443
 
 const fillQuestionnaire = require("./fillQuestionnaire")
 const FillMoodTracker = require("./FillMoodTracker")
+<<<<<<< HEAD
 const sendMessage = require('./sendMessage')
+=======
+>>>>>>> 772cb86b1ef8a124952956cc5f16ef9efa4f8d2e
 const verifyPassword = require("./verifyPassword")
 const setDaily = require("./setDaily")
 const scrapActivities = require('./scrapActivities')
@@ -35,6 +38,7 @@ const login = require('./login')
 const register = require('./register')
 const getInfos = require('./getInfos')
 const updateInfos = require('./updateInfos')
+<<<<<<< HEAD
 const setPicture = require('./updateInfoWeb')
 const createEvenement = require('./createEvenement')
 const EventRegister = require('./EventRegister')
@@ -45,6 +49,13 @@ const getAllUsers = require('./getAllUsers')
 const friendRequests = require('./friendRequest')
 const getMessage = require('./getMessage')
 const updateInfoWeb = require('./updateInfoWeb')
+=======
+const setPicture = require('./setPicture')
+const createEvenement = require('./createEvenement')
+
+
+
+>>>>>>> 772cb86b1ef8a124952956cc5f16ef9efa4f8d2e
 
 
 

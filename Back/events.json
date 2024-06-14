@@ -120,6 +120,14 @@
     "adresse": "86 rue des Meuniers 59 000 Lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/residence-de-territoire-de-jeremy-moncheaux/3463152-1-fre-FR/Residence-de-territoire-de-Jeremy-Moncheaux_equipment_image_lead_child.jpg",
+    "name": "Residence de territoire de Jeremy Moncheaux",
+    "type": "",
+    "description": "Résidence de l'artiste Jérémy Moncheaux",
+    "date": "Jusqu'au 10 juillet 2024",
+    "adresse": "86 rue des Meuniers 59 000 Lille"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/rever-graver-grandir-petites-empreintes-d-enfances/3498005-1-fre-FR/Rever-graver-grandir-petites-empreintes-d-enfances_equipment_image_lead_child.jpg",
     "name": "Rever graver grandir petites empreintes d enfances",
     "type": "Exposition",
@@ -464,6 +472,30 @@
     "adresse": "tripostal lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/imaginons-ensemble-l-anniversaire-de-narcisse/3497517-1-fre-FR/Imaginons-ensemble-l-anniversaire-de-Narcisse_equipment_image_lead_child.jpg",
+    "name": "Imaginons ensemble l anniversaire de Narcisse",
+    "type": "Stage et atelier",
+    "description": "Le troisième atelier de quartier dédié à l'organisation des 170 ans du P'tit Quinquin se déroulera jeudi 13 juin 2024.",
+    "date": "Le 13 juin 2024",
+    "adresse": "31 rue des fossés0320159740"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/ina-hip-hop-aux-origines-du-mouvement/3515503-1-fre-FR/INA-HIP-HOP-aux-origines-du-mouvement_equipment_image_lead_child.jpg",
+    "name": "INA HIP HOP aux origines du mouvement",
+    "type": "",
+    "description": "Lors de cette conférence, Jean Pierre Douterluigne (pionnier de la danse hip hop) et Laure Schortgen (éditorialiste de la chaîne) viendront faire...",
+    "date": "Le 13 juin 2024",
+    "adresse": "70 rue des sarrazins"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/sommerspiele/3490829-1-fre-FR/Sommerspiele_equipment_image_lead_child.jpg",
+    "name": "Sommerspiele",
+    "type": "Spectacle",
+    "description": "Sommerspiele est un film de la chorégraphe et artiste Eszter Salamon, une fiction surréaliste qui se déroule dans l’ancien site des Jeux Olympique...",
+    "date": "Le 13 juin 2024",
+    "adresse": "70 rue des Sarrazins"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/solid-art-lille2/3444254-1-fre-FR/Solid-Art-Lille_equipment_image_lead_child.jpg",
     "name": "Solid Art Lille",
     "type": "Salon / foire",
@@ -480,12 +512,12 @@
     "adresse": "30 Place Pierre Mendès France, 59000 Lille"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/un-cimetiere-plein-de-vie-!-lille-sud/3475965-1-fre-FR/Un-cimetiere-plein-de-vie-!-Lille-Sud_equipment_image_lead_child.jpg",
-    "name": "Un cimetiere plein de vie ! Lille Sud",
-    "type": "Nature / environnement",
-    "description": "Quoi de mieux qu’un lieu calme comme le cimetière du Sud pour partir à la rencontre de la faune qui nous entoure ?",
-    "date": "Le 14 juin 2024",
-    "adresse": "100 Rue de l'Arbrisseau, 59000 Lille"
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/sparks-francesca-grilli/3508018-1-fre-FR/SPARKS-Francesca-Grilli_equipment_image_lead_child.jpg",
+    "name": "SPARKS Francesca Grilli",
+    "type": "Spectacle",
+    "description": "Sparks est une performance qui cherche à renverser le rapport d'autorité lié à l'âge, en laissant des enfants lire l'avenir des adultes dans les l...",
+    "date": "Du 14 au 15 juin 2024",
+    "adresse": "32, rue Edouard Delesalle, Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/sparks-francesca-grilli/3508018-1-fre-FR/SPARKS-Francesca-Grilli_equipment_image_lead_child.jpg",
@@ -629,7 +661,7 @@
     "type": "",
     "description": "Il est temps de passer aux choses sérieuses !",
     "date": "Le 15 juin 2024",
-    "adresse": "11 rue de l'Asie"
+    "adresse": "7 bis rue de l'Asie"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/fresque-du-climat-a-lille-maison-stephane-hessel5/3447178-1-fre-FR/Fresque-du-Climat-a-Lille-Maison-Stephane-HESSEL_equipment_image_lead_child.jpg",
@@ -637,7 +669,7 @@
     "type": "Nature / environnement",
     "description": "En 3 heures, l’atelier collaboratif « la Fresque du Climat » permet de comprendre l’essentiel des enjeux climatiques pour passer à l’action.",
     "date": "Le 15 juin 2024",
-    "adresse": "235 Bd Paul Painlevé, 59000 Lille"
+    "adresse": "Boulevard du Professeur Jules Leclercq, Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-bricoles/3500642-1-fre-FR/Atelier-bricoles_equipment_image_lead_child.jpg",
@@ -661,7 +693,15 @@
     "type": "Stage et atelier",
     "description": "Une lecture partagée + un atelier créatif = un temps heureux à la médiathèque !",
     "date": "Le 15 juin 2024",
-    "adresse": "36 avenue Marx Dormoy"
+    "adresse": "235 Bd Paul Painlevé, 59000 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/a-vous-de-jouer-a-la-bibliotheque20/3494784-1-fre-FR/A-vous-de-jouer-a-la-bibliotheque_equipment_image_lead_child.jpg",
+    "name": "A vous de jouer a la bibliotheque11",
+    "type": "",
+    "description": "Il est temps de passer aux choses sérieuses !",
+    "date": "Le 15 juin 2024",
+    "adresse": "11 rue de l'Asie"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/la-parole-est-aux-chercheurs3/3500683-1-fre-FR/La-parole-est-aux-chercheurs_equipment_image_lead_child.jpg",
@@ -736,6 +776,14 @@
     "adresse": "1 Rue du Ballon, 59800 Lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/le-comte-de-bouderbala-3/3456953-1-fre-FR/Le-comte-de-Bouderbala-3_equipment_image_lead_child.jpg",
+    "name": "Le comte de Bouderbala 3",
+    "type": "Spectacle",
+    "description": "Nouveau spectacle",
+    "date": "Le 15 juin 2024",
+    "adresse": "777 pont de Flandres, 59777 LILLE0328144777"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-d-ecriture-exposition-temporaire/3471047-1-fre-FR/Atelier-d-ecriture-Exposition-temporaire_equipment_image_lead_child.jpg",
     "name": "Atelier d ecriture Exposition temporaire",
     "type": "Stage et atelier",
@@ -768,20 +816,20 @@
     "adresse": "60 Bd Vauban, 59800 Lille"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/festival-lillu/3510007-1-fre-FR/Festival-Lillu_equipment_image_lead_child.jpg",
-    "name": "Festival Lillu",
-    "type": "Fête / festival",
-    "description": "✍️ Des rencontres et des dédicaces - un marché de 60 artistes Des maisons d’éditions - Le village japon et associatif - ️ Des conférences - Du cos...",
-    "date": "Du 15 au 16 juin 2024",
-    "adresse": "boulevard de Metz lille"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/book-market-4/3511092-1-fre-FR/Book-Market-4_equipment_image_lead_child.jpg",
     "name": "Book Market ",
     "type": "Marché / braderie",
     "description": "Les 15 et 16 juin, l’Institut pour la photographie investit le Bazaar St So pour deux jours consacrés à l’édition photographique.",
     "date": "Du 15 au 16 juin 2024",
     "adresse": "292 rue Camille Guérin"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/festival-lillu/3510007-1-fre-FR/Festival-Lillu_equipment_image_lead_child.jpg",
+    "name": "Festival Lillu",
+    "type": "Fête / festival",
+    "description": "✍️ Des rencontres et des dédicaces - un marché de 60 artistes Des maisons d’éditions - Le village japon et associatif - ️ Des conférences - Du cos...",
+    "date": "Du 15 au 16 juin 2024",
+    "adresse": "boulevard de Metz lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/comptines-et-chansons-a-la-bibliotheque5/3494702-1-fre-FR/Comptines-et-chansons-a-la-bibliotheque_equipment_image_lead_child.jpg",
@@ -808,12 +856,28 @@
     "adresse": "134 rue de l'Abbé Aerts 59 000 Lille"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/l-arbre-qui-cache-la-foret/3471088-1-fre-FR/L-arbre-qui-cache-la-foret_equipment_image_lead_child.jpg",
-    "name": "L arbre qui cache la foret",
-    "type": "Nature / environnement",
-    "description": "Promenade à la découverte des arbres",
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/lille-piano-s-festival4/3503619-1-fre-FR/Lille-Piano-s-Festival_equipment_image_lead_child.jpg",
+    "name": "Lille Piano s Festival4",
+    "type": "Concert",
+    "description": "15 juin 2024",
     "date": "Le 15 juin 2024",
-    "adresse": "Parc de la Citadelle, Lille03 62 26 08 28"
+    "adresse": "Place du concert 59000 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/fete-de-la-fabrique-du-sud-5/3515040-1-fre-FR/Fete-de-la-Fabrique-du-Sud-5_equipment_image_lead_child.jpg",
+    "name": "Fete de la Fabrique du Sud 5",
+    "type": "Fête / festival",
+    "description": "La Fabrique du Sud pour sa 5ème édition vous propose un programme riche en activités, spectacles et concerts. Grands et petits, vous pourrez profi...",
+    "date": "Le 15 juin 2024",
+    "adresse": "7 bis rue de l'Asie"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/vente-solidaire-de-vetements-par-le-vestiaire-lasoli5/3515081-1-fre-FR/Vente-solidaire-de-vetements-par-le-Vestiaire-LaSoli_equipment_image_lead_child.jpg",
+    "name": "Vente solidaire de vetements par le Vestiaire LaSoli3",
+    "type": "Marché / braderie",
+    "description": "15 Juin 2024, au 68 rue du Marché, à Wazemmes-Lille. Vente solidaire de vêtements seconde main ( homme, femme et enfant ), chaussures, linge de ma...",
+    "date": "Le 15 juin 2024",
+    "adresse": "68, rue du marché, Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/fete-de-la-fabrique-du-sud-5/3515040-1-fre-FR/Fete-de-la-Fabrique-du-Sud-5_equipment_image_lead_child.jpg",
@@ -1200,6 +1264,14 @@
     "adresse": "1 rue de Fontenoy 59000 Lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/kilikili-lecture-d-histoires-a-partir-de-4-ans28/3494948-1-fre-FR/Kilikili-lecture-d-histoires-a-partir-de-4-ans_equipment_image_lead_child.jpg",
+    "name": "Kilikili lecture d histoires a partir de 4 ans20",
+    "type": "",
+    "description": "Un temps de lectures partagées à la bibliothèque !",
+    "date": "Le 19 juin 2024",
+    "adresse": "11 rue de l'Asie"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/spectacle-poetique-des-5-ans-tout-ouie4/3496774-1-fre-FR/Spectacle-poetique-des-5-ans-Tout-ouie_equipment_image_lead_child.jpg",
     "name": "Spectacle poetique des 5 ans Tout ouie",
     "type": "Spectacle",
@@ -1458,6 +1530,14 @@
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/fete-de-la-musique4/3500959-1-fre-FR/Fete-de-la-musique_equipment_image_lead_child.jpg",
     "name": "Fete de la musique",
+    "type": "Concert",
+    "description": "Concert de guitare et lectures",
+    "date": "Le 22 juin 2024",
+    "adresse": "11 rue de l'Asie"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/fete-de-la-musique4/3500959-1-fre-FR/Fete-de-la-musique_equipment_image_lead_child.jpg",
+    "name": "Fete de la musique4",
     "type": "Concert",
     "description": "Concert de guitare et lectures",
     "date": "Le 22 juin 2024",
@@ -1904,20 +1984,20 @@
     "adresse": "Av. Willy Brandt 59777 Euralille"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/cluedo-geant-a-la-mediatheque/3501088-1-fre-FR/Cluedo-geant-a-la-mediatheque_equipment_image_lead_child.jpg",
-    "name": "Cluedo geant a la mediatheque",
-    "type": "",
-    "description": "Viens trouver le meurtrier",
-    "date": "Le 29 juin 2024",
-    "adresse": "11 rue de l'Asie0320530762"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/des-ateliers-numeriques-pour-les-adultes-a-la-bibliotheque-de-lille9/3495317-1-fre-FR/Des-ateliers-numeriques-pour-les-adultes-a-la-bibliotheque-de-Lille_equipment_image_lead_child.jpg",
     "name": "Des ateliers numeriques pour les adultes a la bibliotheque de Lille",
     "type": "Stage et atelier",
     "description": "Rencontre numérique pour adulte \"Retoucher ses photos\"",
     "date": "Le 29 juin 2024",
     "adresse": "32 rue Edouard Delesalle 59000 Lille06 16 23 48 91"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/cluedo-geant-a-la-mediatheque/3501088-1-fre-FR/Cluedo-geant-a-la-mediatheque_equipment_image_lead_child.jpg",
+    "name": "Cluedo geant a la mediatheque",
+    "type": "",
+    "description": "Viens trouver le meurtrier",
+    "date": "Le 29 juin 2024",
+    "adresse": "11 rue de l'Asie0320530762"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-poses-au-musee-public-ado8/3471334-1-fre-FR/Atelier-Poses-au-musee-Public-ado_equipment_image_lead_child.jpg",
@@ -2534,6 +2614,30 @@
     "description": "Club jeunesse de l’été",
     "date": "Le 10 juillet 2024",
     "adresse": "48 rue Faidherbe Hellemmes03 20 56 93 38"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/minute-papillon-!-lomme/3476566-1-fre-FR/Minute-papillon-!-Lomme_equipment_image_lead_child.jpg",
+    "name": "Minute papillon ! Lomme",
+    "type": "Nature / environnement",
+    "description": "Posez-vous un instant dans la prairie fleurie. Un spectacle haut en couleurs et tout en mouvement s’offre à vous…",
+    "date": "Le 10 juillet 2024",
+    "adresse": "18 Rue du Château d'Isenghien, 59160 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/balades-de-l-ete6/3518593-1-fre-FR/Balades-de-l-ete_equipment_image_lead_child.jpg",
+    "name": "Balades de l ete6",
+    "type": "",
+    "description": "La mairie de quartier de Vauban-Esquermes vous propose le programme de ses balades de l'été.",
+    "date": "Du 10 juillet au 7 août 2024",
+    "adresse": "212 A, rue Colbert 59000 Lille03 28 36 11 73"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-d-auto-massage-parent-enfant/3517359-1-fre-FR/Atelier-d-auto-massage-parent-enfant_equipment_image_lead_child.jpg",
+    "name": "Atelier d auto massage parent enfant",
+    "type": "",
+    "description": "Avec Alice Genty, relaxologue, spécialisée dans le massage intuitif",
+    "date": "Le 10 juillet 2024",
+    "adresse": "Place de la République Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/decouvrons-les-herissons-wazemmes/3476525-1-fre-FR/Decouvrons-les-herissons-Wazemmes_equipment_image_lead_child.jpg",
