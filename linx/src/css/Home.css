@@ -43,3 +43,8 @@ home-container {
     top: 0; /* Align image top with navbar */
     left: 0; /* Align image left with navbar */
   }
+
+
+input{
+  width: "100%";
+}

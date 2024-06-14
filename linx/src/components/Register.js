@@ -27,10 +27,9 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const wrapper = () => {
-    toggleOpen();
-    navigate('/');
-  };
+  // const wrapper = () => {
+  //   toggleOpen();
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +39,8 @@ const Register = () => {
     try {
       const response = await axios.post('http://localhost/register', formData);
       console.log(response.data);
-      toggleOpen(); // Ouvrir la fenêtre modale après l'inscription
+      navigate('/Login');
+
     } catch (error) {
       console.error('Error:', error);
       setError('An error occurred. Please try again later.');
@@ -54,7 +54,7 @@ const Register = () => {
   return (
 
   
-<MDBContainer fluid className="d-flex align-items-center justify-content-center vh-100" style={{ backgroundColor: '#6200EA' }}>
+<MDBContainer fluid className="d-flex align-items-center justify-content-center vh-100 bg-theme">
       <MDBCard className="w-100 w-md-75" style={{ maxHeight: '90%' }}>
         <MDBRow className="g-0 h-100">
 
@@ -135,9 +135,9 @@ const Register = () => {
                 />
                 <MDBBtn
                   type="submit"
-                  className="w-100 mb-4"
                   disabled={loading}
-                  style={{ backgroundColor: '#563d7c' }}
+                  className="custom-btn custom-btn-primary mb-4" 
+                  style={{width:'100%'}}
                 >
                   {loading ? 'Registering...' : 'Register'}
                 </MDBBtn>
@@ -152,7 +152,7 @@ const Register = () => {
     </MDBCol>
 
         </MDBRow>
-        <MDBModal show={basicModal} onHide={() => setBasicModal(false)} tabIndex="-1">
+        {/* <MDBModal show={basicModal} onHide={() => setBasicModal(false)} tabIndex="-1">
         <MDBModalDialog>
           <MDBModalContent>
             <MDBModalHeader>
@@ -167,7 +167,7 @@ const Register = () => {
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>
-      </MDBModal>
+      </MDBModal> */}
       </MDBCard>
     </MDBContainer>
 

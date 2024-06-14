@@ -1,10 +1,13 @@
 import { Stack } from 'expo-router';
 import { View, Text, StyleSheet } from 'react-native';
+import Theme from '@/constants/Theme';
 
 export default function SettingsScreen() {
+  const _Theme = Theme()
+
   return (
-    <View style={styles.container}>
-      <Text>Paramètres</Text>
+    <View style={[styles.container, _Theme.themeBack2]}>
+      <Text style={_Theme.themeText}>Paramètres</Text>
     </View>
   );
 }

@@ -1,32 +1,151 @@
-.App {
-  text-align: center;
+/* Light Theme */
+.light-theme {
+  --bg-color: #fcfcfd;
+  --bg-color-inversed: #0d1017;
+  --text-color: black;
+  --text-color-inv: white;
+  --card-bg-color: #ffffff;
+  --primary-color: #89cdf5;
+  --secondary-color: #5806bde7;
+  --btn-color: pink;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Dark Theme */
+.dark-theme {
+  --bg-color: #0d1017;
+  --bg-color-inversed: #fcfcfd;
+  --text-color: white;
+  --text-color-inv: black;
+  --card-bg-color: #1e1e1e;
+  --primary-color: #5806bde7;
+  --secondary-color: #89cdf5;
+  --btn-color: pink;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+
+/* Custom styles for MDB components */
+.bg-theme {
+  background-color: var(--bg-color) !important;
+}
+
+.bg-theme-inv {
+  background-color: var(--bg-color-inversed) !important;
+}
+
+.text-theme {
+  color: var(--text-color) !important;
+}
+
+.text-theme-inv {
+  color: var(--text-color-inv)!important;
+}
+
+.custom-btn {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.custom-btn-primary {
+  background-color: var(--secondary-color);
+  color: var(--text-color-inv);
+  border: none;
+}
+
+.custom-btn-secondary {
+  background-color: #f02f3f; /* Vert */
+  color: var(--text-color-inv);
+  border: none;
+}
+
+.custom-btn-primary:hover,
+.custom-btn-secondary:hover {
+  filter: brightness(0.9);
+}
+
+@media (max-width: 1200px) {
+  .custom-col {
+    flex: 1 1 calc(50% - 16px);
+    max-width: calc(50% - 16px);
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@media (max-width: 768px) {
+  .custom-col {
+    flex: 1 1 calc(100% - 16px);
+    max-width: calc(100% - 16px);
+  }
 }
 
-.App-link {
-  color: #61dafb;
+/* General styles */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
+
+.custom-card {
+  background-color: var(--card-bg-color) !important;
+}
+
+/* .custom-text {
+  color: var(--primary-color) !important;
+} */
+
+.custom-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 60%;
+  max-height: 90%;
+  overflow: auto;
+  background-color: var(--bg-color);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1050;
+}
+
+.custom-input {
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  font-size: 16px;
+  background-color: var(--card-bg-color);
+  color: var(--text-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.custom-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+.custom-image {
+  max-height: 200px;
+  object-fit: cover;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .custom-modal {
+    width: 100% !important;
+  }
+
+  .navbar-toggler {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    background: var(--btn-color);
+    border: none;
+  }
+}
+
+/* Navbar settings */
 
 @keyframes App-logo-spin {
   from {
@@ -36,3 +155,115 @@
     transform: rotate(360deg);
   }
 }
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-50%); /* Départ de la gauche */
+  }
+  to {
+    transform: translateX(0); /* Arrivée à la position initiale */
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0); /* Départ de la position initiale */
+  }
+  to {
+    transform: translateX(-50%); /* Sortie vers la gauche */
+  }
+}
+
+#navbar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 35%;
+  animation: slideInLeft 0.5s forwards;
+}
+
+#navbar.show {
+  display: block;
+}
+
+#navbar.fade {
+  animation: slideOutLeft 0.5s forwards;
+}
+
+.custom-modal {
+  width: 60% !important;
+}
+
+
+/* Pour le catalogue */
+
+.custom-card {
+  background-color: var(--card-bg-color) !important;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.custom-card:hover {
+  transform: translateY(-10px);
+}
+
+.custom-card-body {
+  padding: 15px;
+}
+
+.custom-card-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.custom-card-text {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.custom-card-date {
+  font-size: 0.875rem;
+  color: var(--text-color);
+}
+
+.custom-image {
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.custom-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.custom-col {
+  flex: 1 1 calc(33.333% - 16px);
+  max-width: calc(33.333% - 16px);
+}
+
+/* Fin Catalogue */
+
+
+/* App.css */
+
+
+#navbar.fade {
+  animation: slideOutLeft 0.5s forwards;
+  width: 270px;
+}
+
+.modal.show {
+  display: block;
+}
+
+.content-hidden {
+  display: none;
+}
+

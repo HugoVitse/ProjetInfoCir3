@@ -3,4 +3,5 @@ export type RootStackParamList = {
     accueil:undefined;
     register:undefined;
     home:undefined;
+    events:undefined;
 };

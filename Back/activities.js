@@ -9,6 +9,7 @@ async function activities(req,res){
 
    
     const cookies = req.cookies
+    console.log(cookies)
     if(!('jwt' in cookies)){
         res.status(500).send()
         return
@@ -24,13 +25,12 @@ async function activities(req,res){
         
         
             const findOneResult = await collection.find({}).toArray();
-            console.log(findOneResult)
             // Await the response from the GET request
 
             res.status(200).send(findOneResult)
         }
         catch(err){
-
+            console.log(err)
             res.status(502).send()
             return
         }
