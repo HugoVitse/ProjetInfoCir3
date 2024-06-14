@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MDBContainer, MDBListGroup, MDBInputGroup, MDBListGroupItem, MDBInput, MDBBtn } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -22,7 +22,8 @@ const Friends = () => {
     const retrieveCookie = () => {
       const token = Cookies.get('jwt');
       try {
-        jwtDecode(token);
+        const decoded = jwtDecode(token);
+        setEmail(decoded.email);
       } catch {
         navigate('/Login');
       }
@@ -32,7 +33,6 @@ const Friends = () => {
       retrieveCookie();
       try {
         const response = await axios.get('http://localhost/infos', { withCredentials: true });
-        setEmail(response.data.email || '');
         setFirstName(response.data.firstName || '');
         setLastName(response.data.lastName || '');
         setDescription(response.data.description || '');
@@ -74,11 +74,27 @@ const Friends = () => {
     let otherUsersList = [];
 
     users.forEach(user => {
+      if (user.email === email) {
+        return; // Ne pas afficher l'utilisateur connecté lui-même
+      }
+
       if (friends.includes(user.email)) {
         friendsList.push(user);
       } else {
         otherUsersList.push(user);
       }
+    });
+
+    // Filtrer les utilisateurs en fonction du terme de recherche
+    const filteredUsers = users.filter(user => {
+      if (user.email === email) {
+        return false; // Ne pas afficher l'utilisateur connecté lui-même
+      }
+      return (
+        user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     });
 
     // Fonction pour rendre une liste d'utilisateurs
@@ -126,11 +142,15 @@ const Friends = () => {
         <MDBListGroup>
           {/* Section pour afficher les amis */}
           <h3>Amis</h3>
-          {renderUserList(friendsList)}
+          {renderUserList(searchTerm ? filteredUsers.filter(user => friends.includes(user.email)) : friendsList)}
 
           {/* Section pour afficher les autres utilisateurs */}
-          <h3>Autres utilisateurs</h3>
-          {renderUserList(otherUsersList)}
+          {searchTerm && (
+            <>
+              <h3>Autres utilisateurs</h3>
+              {renderUserList(filteredUsers.filter(user => !friends.includes(user.email)))}
+            </>
+          )}
         </MDBListGroup>
       </MDBContainer>
     );
