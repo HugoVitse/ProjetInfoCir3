@@ -1,11 +1,15 @@
-const config = require('./configDB')
-const hash_password = require('./hash_password')
 const config_serv = require('./configServ')
+const config = require('./configDB')
 const jwt = require('jsonwebtoken');
+const axios = require("axios")
 const connect_db = require('./connect_db')
+const { ObjectId } = require('mongodb');
 
-async function getInfos(req,res){
+
+async function getInfosEmail(req,res){
+
     const cookies = req.cookies
+    console.log(cookies)
     if(!('jwt' in cookies)){
         res.status(500).send()
         return
@@ -14,13 +18,14 @@ async function getInfos(req,res){
         try{
             const token =  req.cookies.jwt
             const decoded = jwt.verify(token, config_serv.secretJWT);
-            const email = decoded.email     
-        
+
             const database = connect_db.client.db(config.dbName);
             const collection = database.collection(config.users);
         
-        
+            const email = req.params.email;
+
             const findOneResult = await collection.findOne({'email': email});
+
             res.send(findOneResult)
         }
         catch(err){
@@ -29,7 +34,6 @@ async function getInfos(req,res){
             return
         }
     }
-
 }
 
-module.exports = getInfos
+module.exports = getInfosEmail;

@@ -300,19 +300,19 @@ const MoodTracker = () => {
           {/* ----- */}
           <MDBCarousel showControls fade interval={10000}> 
             {/* Interval : temps de défilement du Carousel */}
-            <MDBCarouselItem className="w-100 d-flex flex-column justify-content-center align-items-center text-theme-inv" itemId={1}>
+            <MDBCarouselItem className="w-100 d-flex flex-column justify-content-center align-items-center text-theme" itemId={1}>
               <h5 className="mb-4">Calendrier</h5>
               <div className="text-theme-inv bg-light" style={{ width: '100%', height: '70vh' }}>
                 <Calendar />
               </div>
             </MDBCarouselItem>
-            <MDBCarouselItem className="w-100 d-flex flex-column justify-content-center align-items-center text-theme-inv" itemId={2}>
+            <MDBCarouselItem className="w-100 d-flex flex-column justify-content-center align-items-center text-theme" itemId={2}>
               <h5 className="mb-4">MoodBoard du jour :</h5>
               <div className="text-center text-theme-inv bg-light d-flex justify-content-center" style={{ width: '95%', height: '50vh' }}>
                 <canvas ref={radarChartRef} id="radarChart"></canvas>
               </div>
             </MDBCarouselItem>
-            <MDBCarouselItem className="w-100 d-flex flex-column justify-content-center align-items-center text-theme-inv" itemId={3}>
+            <MDBCarouselItem className="w-100 d-flex flex-column justify-content-center align-items-center text-theme" itemId={3}>
               <h5 className="mb-4">MoodBoard de la Semaine</h5>
               <div className="text-theme-inv bg-light" style={{ width: '100%', height: '50vh' }}>
                 <canvas ref={barChartRef} id="barChart"></canvas>

@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import {
   MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardText,
   MDBTypography, MDBRadio, MDBRange, MDBModalFooter, MDBBtn, MDBModalTitle,
-  MDBCheckbox, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalBody
+  MDBCheckbox, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalBody,MDBBadge
 } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [basicModal, setBasicModal] = useState(false);
@@ -91,8 +92,7 @@ const Home = () => {
           toggleOpen();
         }
 
-        const eventsResponse = await axios.get('http://localhost/getEvents', { withCredentials: true });
-        console.log(eventsResponse.data);
+        const eventsResponse = await axios.get('http://localhost/evenements', { withCredentials: true });
         setEvents(eventsResponse.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -109,27 +109,58 @@ const Home = () => {
   const renderInterestCards = () => {
     return selectedInterests.map((interest, index) => (
       <MDBCol md="6" className="mb-4" key={index}>
-        <MDBCard className="text-theme custom-card">
-          <MDBCardBody className="p-4 custom-card">
-            <MDBTypography tag="h5">{interest}</MDBTypography>
+        <MDBCard className="text-theme custom-card border border-primary">
+          <MDBCardBody className="p-4 custom-card bg-light">
+            <MDBTypography tag="h4" className="text-primary font-weight-bold">
+              {interest}
+            </MDBTypography>
             <hr/>
             {events
-              .filter(events => events.types === interest)
+              .filter(event => event.types === interest)
               .slice(0, 5)
-              .map((events, index) => (
-                <MDBCardText key={index} className="fw-bold mb-0">Titre de l'événement: {events.activity.title}</MDBCardText>
+              .map((event, index) => (
+                <Link to={`/event/${event.activity.title}/${event._id}`} key={index} className="text-decoration-none"> {/* Assurez-vous que "/event/${event.id}" est l'URL appropriée */}
+                  <MDBCardText className="fw-bold mb-2"> 
+                    <MDBBadge color="secondary" className="mr-2">Event</MDBBadge>
+                    : {event.activity.title}
+                  </MDBCardText>
+                </Link>
               ))}
           </MDBCardBody>
         </MDBCard>
       </MDBCol>
     ));
   };
+  
 
   return (
     <div className="flex-grow-1 vh-100">
       <MDBContainer fluid className="py-5 vh-100 bg-theme" style={{ height: '100%' }}>
         <MDBRow className="justify-content-center align-items-center h-100">
           <MDBCol lg="9" xl="7" className='w-100'>
+            <header style={{
+              position: 'relative',
+              backgroundImage: 'url(https://78.media.tumblr.com/f254105ae6672e6252d171badfe14299/tumblr_mhiz6jgJ7N1rag9fdo1_500.gif)', // Example GIF URL, replace with your own
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              height: '50vh',
+              width: '100%',
+              color: 'white'
+            }}>
+              <div style={{
+                position: 'absolute',
+                bottom: '10px',
+                right: '10px',
+                textAlign: 'right'
+              }}>
+                <h1><strong>ÇA VA CHAUFFER</strong></h1>
+                <p>Nos modèles pour tout changer cet été.</p>
+                <div>
+                  <button style={{ marginRight: '10px' }}>Acheter</button>
+                  <button>Enfant</button>
+                </div>
+              </div>
+            </header>
             <MDBCard className="mb-4 custom-card">
               <MDBCardBody className="p-4 text-black custom-card">
                 <MDBCardText className="lead fw-normal mb-1" style={{ fontSize: '1.2rem', color: 'var(--primary-color)' }}>
@@ -139,7 +170,7 @@ const Home = () => {
             </MDBCard>
 
             <MDBRow className="mt-4">
-              <MDBCol md="6" className="mb-4">
+              <MDBCol md="6" className="mb-4" style={{ pointerEvents: 'none' }}>
                 <MDBCard className="custom-card">
                   <MDBCardBody className="p-4 text-theme custom-card">
                     <MDBTypography tag="h5" > <strong>Prochains événements</strong></MDBTypography>

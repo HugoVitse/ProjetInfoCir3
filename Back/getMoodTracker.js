@@ -4,7 +4,7 @@ const config_serv = require('./configServ')
 const jwt = require('jsonwebtoken');
 const connect_db = require('./connect_db')
 
-async function getInfos(req,res){
+async function getMoodTracker(req,res){
     const cookies = req.cookies
     if(!('jwt' in cookies)){
         res.status(500).send()
@@ -12,13 +12,14 @@ async function getInfos(req,res){
     }
     else{
         try{
+            
+
             const token =  req.cookies.jwt
             const decoded = jwt.verify(token, config_serv.secretJWT);
             const email = decoded.email     
         
             const database = connect_db.client.db(config.dbName);
-            const collection = database.collection(config.users);
-        
+            const collection = database.collection(config.moodTracker);
         
             const findOneResult = await collection.findOne({'email': email});
             res.send(findOneResult)
@@ -32,4 +33,4 @@ async function getInfos(req,res){
 
 }
 
-module.exports = getInfos
+module.exports = getMoodTracker

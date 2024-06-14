@@ -40,8 +40,10 @@ const Activite = () => {
   const [autoAdresses, setAutoAdresses] = useState([]);
   const [currentAdresse, setCurrentAdresse] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
-  const [eventCreated, setEventCreated] = useState(false); // State to manage event creation message
-
+  const [eventCreated, setEventCreated] = useState(false);
+  const [message] = useState([
+    { text: 'Que pensez-vous de cette activité ?', sender: 'user1@example.com', type: 'received' }
+  ]);
     const images = [
         'https://mdbootstrap.com/img/new/slides/041.jpg',
         'https://mdbootstrap.com/img/new/slides/042.jpg',
@@ -111,7 +113,8 @@ const Activite = () => {
             adresse: realCustom ? currentAdresse : adresse
           },
           nbinvities: invites,
-          types : type,
+          types: type,
+          messages: message,
           date: date.toString()
         };
     

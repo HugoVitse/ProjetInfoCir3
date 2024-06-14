@@ -3,7 +3,7 @@ import { MDBContainer, MDBRow, MDBListGroup, MDBCol, MDBCard, MDBCardBody, MDBBt
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 const Account = () => {
@@ -13,6 +13,7 @@ const Account = () => {
   const [age, setAge] = useState(0);
   const [description, setDescription] = useState('');
   const [selectedInterests, setSelectedInterests] = useState([]);
+  const [friends, setFriends] = useState([]);
   const [profileImage, setProfileImage] = useState(null);
   const [email, setEmail] = useState('');
   const [pp, setPp] = useState('');
@@ -34,12 +35,14 @@ const Account = () => {
       retrieveCookie();
       try {
         const response = await axios.get('http://localhost/infos', { withCredentials: true });
+        console.log('Data received from API:', response.data);
         setEmail(response.data.email || '');
         setFirstName(response.data.firstName || '');
         setLastName(response.data.lastName || '');
         setDescription(response.data.description || '');
         setSelectedInterests(response.data.activities || []);
         setProfileImage(response.data.image || null);
+        setFriends(response.data.friends || []);
         if (response.data.dateOfBirth) {
           const calculatedAge = calculateAge(new Date(response.data.dateOfBirth));
           setAge(calculatedAge);
@@ -91,10 +94,11 @@ const Account = () => {
   const handleSubmit = async () => {
     try {
       if (pp) {
-        await axios.post('http://localhost/setPicture', { picture: pp, firstName: firstName, lastName: lastName, selectedInterests: selectedInterests}, { withCredentials: true });
+        await axios.post('http://localhost/setPicture', { picture: pp, firstName: firstName, lastName: lastName, selectedInterests: selectedInterests, description: description}, { withCredentials: true });
       } else {
-        await axios.post('http://localhost/setPicture', { firstName: firstName, lastName: lastName, selectedInterests: selectedInterests}, { withCredentials: true });
+        await axios.post('http://localhost/setPicture', {picture:"", firstName: firstName, lastName: lastName, selectedInterests: selectedInterests, description: description}, { withCredentials: true });
       }
+      console.log(pp, firstName, lastName, selectedInterests, description)
     } catch (error) {
       console.error('Error:', error);
     }
@@ -106,6 +110,7 @@ const Account = () => {
     setSelectedInterests(filteredInterests);
     setIsEditing(false);
     handleSubmit();
+    window.location.reload();
     console.log(filteredInterests);
   };
 
@@ -134,7 +139,7 @@ const Account = () => {
                 <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
                   <label htmlFor="profile-image">
                     <MDBCardImage 
-                      src={profileImage || "https://via.placeholder.com/150"}
+                      src={isEditing ? profileImage : "http://localhost/"+profileImage || "https://via.placeholder.com/150"}                      
                       alt="Generic placeholder image" 
                       className=" mb-2 img-thumbnail" 
                       fluid 
@@ -175,15 +180,13 @@ const Account = () => {
                 <div className="d-flex justify-content-end text-center py-1">
                   <div>
                     <MDBCardText className="mb-1 h5">253</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">Photos</MDBCardText>
+                    <MDBCardText className="small text-muted mb-0">Events</MDBCardText>
                   </div>
                   <div className="px-3">
-                    <MDBCardText className="mb-1 h5">1026</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">Followers</MDBCardText>
-                  </div>
-                  <div>
-                    <MDBCardText className="mb-1 h5">478</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">Following</MDBCardText>
+                    <Link to="/Friends" style={{ color: '#563d7c' }}>
+                      <MDBCardText className="mb-1 h5">{friends.length}</MDBCardText>
+                      <MDBCardText className="small text-muted mb-0">Amis</MDBCardText>
+                    </Link>
                   </div>
                 </div>
               </div>

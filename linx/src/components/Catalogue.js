@@ -191,7 +191,7 @@ const Catalogue = () => {
                     </MDBCard>
                     <div className="custom-popup-buttons">
                         <MDBBtn color='secondary' className="custom-btn custom-btn-secondary" onClick={closePopup}>Fermer</MDBBtn>
-                        <MDBBtn color='primary' className="custom-btn custom-btn-primary" onClick={Activite}>S'inscrire à l'activité</MDBBtn>
+                        <MDBBtn color='primary' className="custom-btn custom-btn-primary" onClick={Activite}>Créer un événement</MDBBtn>
                     </div>
                 </div>
             )}

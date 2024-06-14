@@ -34,10 +34,6 @@ const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => 
           <MDBIcon fas icon="question-circle" className="me-3" />
           Login
         </MDBListGroupItem>
-        <MDBListGroupItem tag={Link} action to="/Catalogue" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
-          <MDBIcon fas icon="book-open" className="me-3" />
-          Catalogue
-        </MDBListGroupItem>
         <MDBListGroupItem tag={Link} action to="/Evenements" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
           <MDBIcon fas icon="book-open" className="me-3" />
           Evenements
