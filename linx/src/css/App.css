@@ -249,3 +249,21 @@ body {
 }
 
 /* Fin Catalogue */
+
+
+/* App.css */
+
+
+#navbar.fade {
+  animation: slideOutLeft 0.5s forwards;
+  width: 270px;
+}
+
+.modal.show {
+  display: block;
+}
+
+.content-hidden {
+  display: none;
+}
+

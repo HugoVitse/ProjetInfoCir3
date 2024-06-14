@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardText,
+  MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardText, MDBListGroup, MDBListGroupItem,
   MDBTypography, MDBBtn, MDBInput
 } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
@@ -109,6 +109,7 @@ const Messagerie = () => {
       setNewMessage('');
       try {
         await axios.post('http://localhost/setMessagerie', { id: idEvent, messages: updatedMessages }, { withCredentials: true });
+        window.location.reload();
       } catch (error) {
         console.error('Error sending message:', error);
       }
@@ -119,30 +120,48 @@ const Messagerie = () => {
     <MDBContainer>
       <MDBRow className="justify-content-center">
         <MDBCol md="8">
-          <MDBCard className="mt-3 mb-0" style={{maxHeight: '100vh'}}>
+          <MDBCard className="mt-3 mb-0" style={{ maxHeight: '100vh' }}>
             <MDBTypography tag="h4" className="text-center mb-4 mt-4">
-                Messagerie - {decodeURIComponent(activityName)}
+              Messagerie - {decodeURIComponent(activityName)}
             </MDBTypography>
             <MDBCardBody style={{ maxHeight: '70vh', overflowY: 'scroll' }}>
-              <div className="message-list" style={{marginBottom: '20px' }}>
+              <div className="message-list" style={{ marginBottom: '20px' }}>
                 {chat.map((message, index) => (
                   <MDBCardText key={index} className={`message ${message.type === 'sent' ? 'text-end' : 'text-start'}`}>
-                    <div>
-                      <img src={"http://localhost/"+message.pp} alt={`${message.fn}'s profile`} style={{ width: '30px', height: '30px', borderRadius: '50%', marginRight: '5px' }} />
-                      <strong>{message.fn} {message.ln}</strong>: {message.text}
+                    <div className={`d-flex align-items-center ${message.type === 'sent' ? 'justify-content-end' : 'justify-content-start'}`}>
+                      {message.type === 'received' && (
+                        <img
+                          src={`http://localhost/${message.pp}`}
+                          alt={`${message.fn}'s profile`}
+                          style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }}
+                        />
+                      )}
+                      <div className={`message-bubble ${message.type === 'sent' ? 'bg-primary text-white' : 'bg-light text-dark'} p-2 rounded`} style={{ maxWidth: '70%' }}>
+                        <div className="message-content">
+                          <strong>{message.fn} {message.ln}</strong>
+                          <p className="mb-0">{message.text}</p>
+                        </div>
+                      </div>
+                      {message.type === 'sent' && (
+                        <img
+                          src={`http://localhost/${message.pp}`}
+                          alt={`${message.fn}'s profile`}
+                          style={{ width: '40px', height: '40px', borderRadius: '50%', marginLeft: '10px' }}
+                        />
+                      )}
                     </div>
                   </MDBCardText>
                 ))}
               </div>
             </MDBCardBody>
             <div className="input-group mt-3 mb-3">
-                <MDBInput
-                  label="Type your message here..."
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                />
-                <MDBBtn color="primary" onClick={sendMessage}>Send</MDBBtn>
-              </div>
+              <MDBInput
+                label="Type your message here..."
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+              />
+              <MDBBtn color="primary" onClick={sendMessage}>Send</MDBBtn>
+            </div>
           </MDBCard>
         </MDBCol>
 
@@ -150,25 +169,30 @@ const Messagerie = () => {
           <MDBCard className="my-5">
             <MDBCardBody>
               <MDBTypography tag="h4" className="text-center mt-4 mb-4">
-                participants
+                Participants
               </MDBTypography>
-              <ul className="list-unstyled">
-                {userInfo ? (
-                  userInfo.map((info, index) => (
-                    <li key={index}>
-                      <img
-                        src={`http://localhost/${info.userInfo.pp}`}
-                        alt={`${info.userInfo.firstName}'s profile`}
-                        style={{ width: '30px', height: '30px', borderRadius: '50%', marginRight: '10px' }}
-                      />
-                      <strong>{info.email}</strong> - {info.userInfo.firstName} {info.userInfo.lastName}
-                    </li>
-                  ))
-                ) : (
-                  <li>No users available</li>
-                )}
-              </ul>
-
+              <MDBListGroup light className='mb-4'>
+                <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
+                  {userInfo ? (
+                    userInfo.map((info, index) => (
+                      <div key={index} className='d-flex align-items-center'>
+                        <img
+                          src={`http://localhost/${info.userInfo.pp}`}
+                          alt={`${info.userInfo.firstName}'s profile`}
+                          style={{ width: '45px', height: '45px', borderRadius: '50%' }}
+                          className='me-3'
+                        />
+                        <div>
+                          <p className='fw-bold mb-1'>{info.userInfo.firstName} {info.userInfo.lastName}</p>
+                          <p className='text-muted mb-0'>{info.email}</p>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <li>No users available</li>
+                  )}
+                </MDBListGroupItem>
+              </MDBListGroup>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
