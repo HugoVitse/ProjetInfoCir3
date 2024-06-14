@@ -35,15 +35,16 @@ const login = require('./login')
 const register = require('./register')
 const getInfos = require('./getInfos')
 const updateInfos = require('./updateInfos')
-const setPicture = require('./setPicture')
+const setPicture = require('./updateInfoWeb')
 const createEvenement = require('./createEvenement')
 const EventRegister = require('./EventRegister')
 const getEvents = require('./getEvents')
 const getMoodTracker = require('./getMoodTracker')
-const getMessage = require('./getMessage')
 const getFriendList = require('./getFriendList')
 const getAllUsers = require('./getAllUsers')
 const friendRequests = require('./friendRequest')
+const getMessage = require('./getMessage')
+const updateInfoWeb = require('./updateInfoWeb')
 
 
 
@@ -84,6 +85,7 @@ async function serv(){
   app.get('/getFriendList',getFriendList)
   app.get('/getAllUsers',getAllUsers)
   app.post('/friendRequests',friendRequests)
+  app.post('/updateInfoWeb',updateInfoWeb)
 
 
   console.log(path.join(__dirname, 'profile_pictures'))

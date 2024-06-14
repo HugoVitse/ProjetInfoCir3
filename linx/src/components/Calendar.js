@@ -39,7 +39,7 @@ const MyCalendar = () => {
     const fetchData = async () => {
       retrieveCookie();
       try {
-        const response = await axios.get('http://localhost/infos', { withCredentials: true });
+        const response = await axios.get('http://localhost/getMoodTracker', { withCredentials: true });
 
         const yearsArray = [];
         const moyArray = [];
@@ -86,7 +86,7 @@ const MyCalendar = () => {
     }
 
     if (isToday) {
-      return <div style={{ backgroundColor: 'transparent' }}></div>; // Pour laisser le background de la date d'aujourd'hui transparent
+      return <div style={{ backgroundColor: 'transparent' }}></div>;
     }
 
     return null;

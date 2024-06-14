@@ -160,7 +160,6 @@ export default function HomeScreen() {
   };
   
 
-
   const color = () => {
     let r = interpolate(255, 0);
     let g = interpolate(0, 255);

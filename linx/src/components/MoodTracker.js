@@ -109,46 +109,46 @@ const MoodTracker = () => {
     };
 
     const fetchData = async () => {
-      retrieveCookie();
-      try {
-        const response = await axios.get('http://localhost/infos', { withCredentials: true });
-        const yearsArray = [];
-        const sleepArray = [];
-        const stressArray = [];
-        const energArray = [];
-        const moralArray = [];
-        const addArray = [];
-        const Average = [];
-        const todayDate = getTodayDateDDMMYYYY();
-        const thisWeek = getThisWeekDates();
+  retrieveCookie();
+  try {
+    const response = await axios.get('http://localhost/getMoodTracker', { withCredentials: true });
+    const yearsArray = [];
+    const sleepArray = [];
+    const stressArray = [];
+    const energArray = [];
+    const moralArray = [];
+    const addArray = [];
+    const Average = [];
+    const todayDate = getTodayDateDDMMYYYY();
+    const thisWeek = getThisWeekDates();
 
-        response.data.moodTrackerData.forEach((data, i) => {
-          yearsArray.push(data.date);
-          sleepArray.push(data.sleepQuality);
-          stressArray.push(data.stressLevel);
-          energArray.push(data.energyLevel);
-          moralArray.push(data.moral);
-          addArray.push(data.additionalActivity);
-          Average.push(data.average);
-          setInd(i);
-          if (data.date === todayDate) {
-            settoday(false);
-          }
-          if (data.date === thisWeek.startDate) {
-            setInd(i);
-          }
-        });
-        setYears(yearsArray);
-        setSleep(sleepArray);
-        setStress(stressArray);
-        setEnerg(energArray);
-        setMoral(moralArray);
-        setAdd(addArray);
-        setaverag(Average);
-      } catch (error) {
-        console.error(error);
+    response.data.moodTrackerData.forEach((data, i) => {
+      yearsArray.push(data.date);
+      sleepArray.push(data.sleepQuality);
+      stressArray.push(data.stressLevel);
+      energArray.push(data.energyLevel);
+      moralArray.push(data.moral);
+      addArray.push(data.additionalActivity);
+      Average.push(data.average);
+      setInd(i);
+      if (data.date === todayDate) {
+        settoday(false);
       }
-    };
+      if (data.date === thisWeek.startDate) {
+        setInd(i);
+      }
+    });
+    setYears(yearsArray);
+    setSleep(sleepArray);
+    setStress(stressArray);
+    setEnerg(energArray);
+    setMoral(moralArray);
+    setAdd(addArray);
+    setaverag(Average);
+  } catch (error) {
+    console.error(error);
+  }
+};
     fetchData();
   }, []);
 
@@ -189,40 +189,58 @@ const MoodTracker = () => {
         ],
       },
       options: {
+        
         scales: {
           r: {
             angleLines: {
+              color: 'blue', // Changez ici pour la couleur désirée
               display: false,
             },
             suggestedMin: 0,
             suggestedMax: 10,
+            ticks: {
+              font: {
+                color: 'red', // Changez ici pour la couleur désirée
+              },
+            },
           },
         },
+        // maintainAspectRatio: false,
       },
     });
   };
+
+  const fillMissingDays = (avera) => {
+    const daysOfWeek = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+    const filledData = new Array(7).fill(0);
+    const today = new Date();
+    const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay() + 1));
+    startOfWeek.setHours(0, 0, 0, 0);
+
+    years.forEach((date, index) => {
+      const [day, month, year] = date.split('-').map(Number);
+      const dateObj = new Date(year, month - 1, day);
+      const dayOfWeek = dateObj.getDay();
+
+      if (dateObj >= startOfWeek && dateObj < new Date(startOfWeek).setDate(startOfWeek.getDate() + 7)) {
+        filledData[dayOfWeek - 1] = avera[index];
+      }
+    });
+    return filledData;
+  };
+  
 
   const GetBar = () => {
     if (barChartRef.chartInstance) {
       barChartRef.chartInstance.destroy();
     }
-
+  
     const ctx = barChartRef.current.getContext('2d');
     const currentDayOfWeek = getDayOfWeek(years[ind]);
+    const { startDate, endDate } = getThisWeekDates();
     
-    const startIndex = ((ind+1) % 6) - currentDayOfWeek;
-    console.log(years[ind]);
-    console.log((ind+1) % 6);
-    console.log(startIndex);
-    console.log(currentDayOfWeek);
-    console.log(avera);
-    console.log(avera[startIndex]);
-    console.log(avera[startIndex+1]);
-    console.log(avera[startIndex+2]);
-    console.log(avera[startIndex+3]);
-    console.log(avera[startIndex+4]);
-    console.log(avera[startIndex+5]);
-    console.log(avera[startIndex+6]);
+    const filledData = fillMissingDays(avera, startDate, endDate);
+  
     barChartRef.chartInstance = new Chart(ctx, {
       type: 'bar',
       data: {
@@ -230,15 +248,7 @@ const MoodTracker = () => {
         datasets: [
           {
             label: 'Mood Actuel',
-            data: [
-              avera[startIndex] || 0,
-              avera[startIndex + 1] || 0,
-              avera[startIndex + 2] || 0,
-              avera[startIndex + 3] || 0,
-              avera[startIndex + 4] || 0,
-              avera[startIndex + 5] || 0,
-              avera[startIndex + 6] || 0,
-            ],
+            data: filledData,
             backgroundColor: 'rgba(54, 245, 39, 0.37)',
             borderColor: 'rgba(54, 162, 235, 1)',
             borderWidth: 1,
@@ -250,6 +260,22 @@ const MoodTracker = () => {
           y: {
             beginAtZero: true,
             max: 10,
+            ticks: {
+              font: {
+                size: 14,
+                family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                style: 'normal',
+                weight: 'bold',
+              },
+              color: 'blue', // Couleur des étiquettes
+            },
+          },
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: 'blue', // Couleur des légendes
+            },
           },
         },
       },
@@ -257,9 +283,11 @@ const MoodTracker = () => {
   };
 
   return (
-    <MDBContainer fluid className="d-flex align-items-center justify-content-center vh-800">
-      <MDBCard className="w-50 h-10">
-        <MDBCardBody>
+    <div style={{ height: '100vh', maxWidth: '100%', overflowX: 'hidden', overflowY: 'hidden' }}>
+    <MDBContainer fluid className="bg-theme text-theme contourpage d-flex align-items-center justify-content-center vh-100">
+      <MDBCard className="w-50 h-100">
+        <MDBCardBody className="bg-theme">
+          {/* Boutons pour Questionnaire Quotidien */}
           {today ? (
             <MDBBtn className="w-100 mb-3 btn-success" onClick={() => setBasicModal(true)}>
               Questionnaire Quotidien
@@ -269,24 +297,31 @@ const MoodTracker = () => {
               Questionnaire Quotidien NON Disponible
             </MDBBtn>
           )}
-
-          <MDBCarousel showControls fade>
-            <MDBCarouselItem className="w-100 d-block " itemId={1}>
-              <h5>Première Slide</h5>
-              <Calendar />
+          {/* ----- */}
+          <MDBCarousel showControls fade interval={10000}> 
+            {/* Interval : temps de défilement du Carousel */}
+            <MDBCarouselItem className="w-100 d-flex flex-column justify-content-center align-items-center text-theme-inv" itemId={1}>
+              <h5 className="mb-4">Calendrier</h5>
+              <div className="text-theme-inv bg-light" style={{ width: '100%', height: '70vh' }}>
+                <Calendar />
+              </div>
             </MDBCarouselItem>
-
-            <MDBCarouselItem className="w-100 d-block vh-80" itemId={2}>
-              <h5>MoodBoard Quotidien, Date : {years[ind]}</h5>
-              <canvas ref={radarChartRef} id="radarChart" style={{ marginTop: '20px', width: '100%', height: '400px' }}></canvas>
+            <MDBCarouselItem className="w-100 d-flex flex-column justify-content-center align-items-center text-theme-inv" itemId={2}>
+              <h5 className="mb-4">MoodBoard du jour :</h5>
+              <div className="text-center text-theme-inv bg-light d-flex justify-content-center" style={{ width: '95%', height: '50vh' }}>
+                <canvas ref={radarChartRef} id="radarChart"></canvas>
+              </div>
             </MDBCarouselItem>
-
-            <MDBCarouselItem className="w-100 d-block vh-80" itemId={3}>
-              <h5>MoodBoard Hebdomadaire, Date : {`${getThisWeekDates().startDate} - ${getThisWeekDates().endDate}`}</h5>
-              <canvas ref={barChartRef} id="barChart" style={{ marginTop: '20px', width: '100%', height: '400px' }}></canvas>
+            <MDBCarouselItem className="w-100 d-flex flex-column justify-content-center align-items-center text-theme-inv" itemId={3}>
+              <h5 className="mb-4">MoodBoard de la Semaine</h5>
+              <div className="text-theme-inv bg-light" style={{ width: '100%', height: '50vh' }}>
+                <canvas ref={barChartRef} id="barChart"></canvas>
+              </div>
             </MDBCarouselItem>
           </MDBCarousel>
 
+
+          {/* Pop-up Questionnaire Quotidien */}
           <MDBModal open={basicModal} toggle={() => setBasicModal(false)} tabIndex='-1' staticBackdrop>
             <MDBModalDialog centered>
               <MDBModalContent>
@@ -329,6 +364,7 @@ const MoodTracker = () => {
         </MDBCardBody>
       </MDBCard>
     </MDBContainer>
+    </div>
   );
 };
 

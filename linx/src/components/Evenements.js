@@ -4,13 +4,8 @@ import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import {
     MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBCardText, MDBRow, MDBCol, MDBBtn, 
-    MDBInput, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon,MDBContainer,MDBRipple,
-    MDBModal,
-    MDBModalDialog,
-    MDBModalContent,
-    MDBModalHeader,
-    MDBModalTitle,
-    MDBModalBody,
+    MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon,MDBRipple,
+    MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody,
     MDBModalFooter,
 } from 'mdb-react-ui-kit';
 import axios from 'axios';
@@ -26,25 +21,19 @@ const Evenements = () => {
     const [sortCriteria, setSortCriteria] = useState('date');
     const navigate = useNavigate();
     const [evenements, setEvenements] = useState([]);
+    const [selectedInterests, setSelectedInterests] = useState([]);
     const [filteredActivities, setFilteredActivities] = useState([]);
     const [actualIndex, setActualIndex] = useState(0)
     const [initialZoom,setInitialZoom] = useState("13")
-
     const [jwt,setJwt] = useState("")
-
     const [basicModal, setBasicModal] = useState(false);
     const [error, setError] = useState("")
-
     const toggleOpen = () => setBasicModal(!basicModal)
-
     const [transform,setTransform] = useState("")
-
     const [latlog,setlatlong] = useState({})
     const googlekey = "AIzaSyAOpVdDvYUvbIB_u_d6k_HVfw13_Vux0K0"
-
     const mapRef = useRef(null);
     const pingRef = useRef(null);
-
 
     const openPopup = (title, description, img, date) => {
         setSelectedCard({ title, description, img, date });
@@ -64,7 +53,6 @@ const Evenements = () => {
             if(reponse.status==200){
                 toggleOpen()
             }
-
         }
         catch(err){
             switch(err.response.status){
@@ -78,9 +66,7 @@ const Evenements = () => {
                     setError("Un problème est survenu")
                     break;
             }
-        }
-
-        
+        }        
     }
 
     const Activite = () => {
@@ -119,6 +105,10 @@ const Evenements = () => {
                 const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/evenements`, { withCredentials: true });
                 console.log(response.data)
                 setEvenements(response.data);
+
+                const responses = await axios.get('http://localhost/infos', { withCredentials: true });
+                setSelectedInterests(response.data.activities || []);
+
             } catch (error) {
                 console.error('Error fetching activities', error);
             }
@@ -168,18 +158,6 @@ const Evenements = () => {
                 const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(evenements[0].activity.adresse)}&key=${googlekey}`);
                 console.log(response.data)
                 setlatlong(response.data.results[0].geometry.location)
-          
-                // const realtab = activities.reduce(async(acc,value,index)=>{
-                //     const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?addres=${encodeURI(value.adresse)}`);
-                    
-                //     const returns = {
-                //         ...value,
-                //         realadress:response.data
-                //     }
-                //     return returns
-    
-                // })
-                // console.log(realtab)
             }
         }
         wrap()
@@ -240,10 +218,9 @@ const Evenements = () => {
 
     return (
         <MDBRow className='mx-0 vh-100'>
-            <MDBCol size='3' className='vh-100' style={{borderBottom:"2px solid black",overflow:"scroll"}}>
+            <MDBCol size='4' className='vh-100' style={{borderBottom:"2px solid black"}}>
                 <MDBRow style={{height:"7%", borderBottom:"2px solid black"}}>
                     <MDBCol  size='9' className='vh-20'>
-
                     </MDBCol>
                     <MDBCol size='3' className='vh-20 d-flex align-items-center justify-content-center'>
                         <MDBDropdown>
@@ -253,21 +230,35 @@ const Evenements = () => {
                                 <MDBDropdownItem link onClick={()=>{navigate("/Catalogue")}}>Choisir une activité dans le catalog</MDBDropdownItem>
                             </MDBDropdownMenu>
                         </MDBDropdown>
-                        {/* <MDBBtn className='ms-2' tag='a' color='dark' floating>
-                            <MDBIcon fab icon='plus' />
-                        </MDBBtn> */}
                     </MDBCol>
                 </MDBRow>
-                <MDBRow style={{height:"93%"}}>
+
+                <MDBRow className='recommendations' style={{ maxHeight: 'calc(100vh - 22rem)', overflowY: 'auto'}}>
+                    <h6 className='text-center mt-3 mb-2'>Recommandations</h6>
                     <MDBCol className='vh-80'>
-                        {filteredActivities.map((activity, index) => (
+                        {filteredActivities
+                            .filter(activity => activity.type === selectedInterests && new Date(activity.date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0))
+                            .map((activity, index) => (
+                                <MDBBtn id={index} onClick={selectedBtn} style={{width:"100%",marginTop:"10px"}}>{activity.activity.title}</MDBBtn>
+                            ))}
+                    </MDBCol>
+                </MDBRow>
+
+                <hr className='mb-3' />
+
+                <MDBRow className='recommendations' style={{ maxHeight: 'calc(100vh - 18rem)', overflowY: 'auto' }}>
+                    <h6 className='text-center mb-2'>Liste</h6>
+                    <MDBCol className='vh-80'>
+                        {filteredActivities
+                        .filter(activity => new Date(activity.date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0))
+                        .map((activity, index) => (
                             <MDBBtn id={index} onClick={selectedBtn} style={{width:"100%",marginTop:"10px"}}>{activity.activity.title}</MDBBtn>
                         ))}
                     </MDBCol>
                 </MDBRow>
-                
             </MDBCol>
-            <MDBCol size='9' className='px-0' style={{border:"2px solid black"}}>
+
+            <MDBCol size='8' className='px-0' style={{border:"2px solid black"}}>
                 <gmp-map ref={mapRef} center={`${latlog.lat + 2/100}, ${latlog.lng}`} zoom={initialZoom} map-id="DEMO_MAP_ID">
                     <gmp-advanced-marker ref={pingRef} position={`${latlog.lat}, ${latlog.lng}`} title="My location"></gmp-advanced-marker>
                 </gmp-map>
