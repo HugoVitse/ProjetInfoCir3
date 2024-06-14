@@ -215,13 +215,6 @@ export default function HomeScreen() {
           onPress={() => router.push("/../settings")}
           style={styles.settings}
         />
-        {firstLogin?
-        <IconButton
-          icon="form-select"
-          iconColor={_Theme.themeIcon.color}
-          onPress={() => showModal()}
-          style={styles.form}
-        />:""}
         <Text style={[styles.headerText,_Theme.themeText]}>Logo</Text>
         <Avatar
           size={48}

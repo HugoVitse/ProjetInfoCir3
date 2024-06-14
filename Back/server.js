@@ -41,6 +41,9 @@ const EventRegister = require('./EventRegister')
 const getEvents = require('./getEvents')
 const getMoodTracker = require('./getMoodTracker')
 const getMessage = require('./getMessage')
+const getFriendList = require('./getFriendList')
+const getAllUsers = require('./getAllUsers')
+const friendRequests = require('./friendRequest')
 
 
 
@@ -78,6 +81,9 @@ async function serv(){
   app.get('/getEvents',getEvents)
   app.get('/getMessage/:id',getMessage)
   app.post('/sendMessage',sendMessage)
+  app.get('/getFriendList',getFriendList)
+  app.get('/getAllUsers',getAllUsers)
+  app.post('/friendRequests',friendRequests)
 
 
   console.log(path.join(__dirname, 'profile_pictures'))

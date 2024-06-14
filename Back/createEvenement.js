@@ -23,7 +23,8 @@ async function createEvenement(req,res){
             const event = {
                 ...pre_event,
                 host:email,
-                participants:[email]
+                participants:[email],
+                chat:[]
             }
         
         

@@ -1,5 +1,5 @@
 import { Stack, useLocalSearchParams } from 'expo-router';
-import { View, Text, StyleSheet, Dimensions, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, KeyboardAvoidingView, Platform, TouchableOpacity, Animated, Keyboard } from 'react-native';
 import Theme from '@/constants/Theme';
 import { Avatar, IconButton, TextInput } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -9,12 +9,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
 import Config from '../../config.json'
 import { jwtDecode } from 'jwt-decode';
+import { ScreenHeight } from '@rneui/base';
 
 const { width } = Dimensions.get('window')
 
+const HEADER_HEIGHT = 100;
+
 export default function SettingsScreen() {
   const { id } = useLocalSearchParams();
-  console.log(id)
+
 
   const _Theme = Theme()
 
@@ -22,6 +25,8 @@ export default function SettingsScreen() {
   const [messageComponent, setMessageComponent] = useState([])
   const [messageToSend, setMessageToSend] = useState('')
   const [isFocused, setIsFocused] = useState(false);
+  const inputWidth =  useState(new Animated.Value(width))[0];
+  const [scrollviewHeight, setScrollviewHeight] = useState(ScreenHeight-HEADER_HEIGHT-70)
 
   const theme = {
     roundness:5,
@@ -31,14 +36,17 @@ export default function SettingsScreen() {
   }
 
   const scrollViewRef = useRef<ScrollView>(null);
+  const textInputRef = useRef(null);
 
   const sendMessage = async()=>{
-    console.log(messageToSend)
-    const jwt_cookie = await AsyncStorage.getItem("jwt")
-    const reponseMessage = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/sendMessage`,{id:id,message:messageToSend},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-    setMessageToSend('')
-    wrap()
-    console.log(reponseMessage.data)
+    textInputRef.current.focus()
+    if(messageToSend.length > 0){
+      const jwt_cookie = await AsyncStorage.getItem("jwt")
+      const reponseMessage = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/sendMessage`,{id:id,message:messageToSend},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      setMessageToSend('')
+      wrap()
+    }
+    
   
   }
 
@@ -46,17 +54,33 @@ export default function SettingsScreen() {
     const jwt_cookie = await AsyncStorage.getItem("jwt")
     const reponseMessage = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getMessage/${id}`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
     setMessage(reponseMessage.data)
-    console.log(reponseMessage.data)
   }
   useEffect(()=>{
     
     wrap()
 
-    setInterval(()=>{
-      wrap()
-    
-    },5000)
+    let int = setInterval(()=>{
+      wrap()    
+    },1000)
+
+    return ()=>{clearInterval(int)}
   },[])
+
+  const startAnimation = () => {
+    Animated.timing(inputWidth, {
+      toValue: width-80, // Move to -60
+      duration: 300, // Animation duration in ms
+      useNativeDriver: false, // 'left' is not supported by native driver
+    }).start();
+  };
+
+  const endAnimation = () => {
+    Animated.timing(inputWidth, {
+        toValue: width, // Move to -60
+        duration: 300, // Animation duration in ms
+        useNativeDriver: false, // 'left' is not supported by native driver
+      }).start();
+  }
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -66,21 +90,30 @@ export default function SettingsScreen() {
     }, 200)
     setIsFocused(false)
   }, [isFocused]);
+
+  useEffect(()=>{
+    if(messageToSend.length > 0){
+      startAnimation()
+    }
+    else{
+      endAnimation()
+    }
+  },[messageToSend])
   
 
 
   useEffect(()=>{
+    if(message.length >0){
     const wrap = async()=>{
-      if(message.length >0){
+      
         const jwt = await AsyncStorage.getItem("jwt")
         const decoded = jwtDecode(jwt?jwt:"")
         let messages = []
-        console.log(jwt)
-  
+     
         for(let i = 0; i<message.length;i++){
           let b = decoded.email != message[i].author
-          console.log(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${message[i].author}`)
-          console.log(b)
+          
+
           messages.push(
             <View style={{flexDirection: 'row', marginVertical: 5, marginTop: (i-1 == -1 ? 20 : (message[i-1].author == message[i].author ? 0 : 20)), alignSelf: (message[i].author == decoded.email ? 'flex-end' : 'flex-start')}}>
               { !b ? <></>  : ( (i-1 == -1) ? (<Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${message[i].author}.png`}} /> ): ((message[i-1].author == message[i].author ? <></> : <Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${message[i].author}.png`}} />)))}
@@ -90,15 +123,31 @@ export default function SettingsScreen() {
           )
         }
         
-        console.log(messages)
+     
   
         setMessageComponent(messages)
       }
-    }
+    
     wrap()
+    }
 
 
   },[message])
+
+
+
+
+  useEffect(()=>{
+    if(message.length > 0){
+      setTimeout(()=>{
+        if (scrollViewRef.current) {
+          scrollViewRef.current.scrollToEnd({ animated: false });
+        }
+      
+      },200)
+    
+    }
+  },[message.length])
 
 
   return (
@@ -107,17 +156,24 @@ export default function SettingsScreen() {
       resetScrollToCoords={{ x: 0, y: 0 }}
       scrollEnabled={false}
       extraScrollHeight={Platform.OS === 'ios' ? 20 : 0}
+      keyboardShouldPersistTaps='always'
     >
-      <ScrollView
-        style={{width: width, flexDirection: 'column'}}
-        ref={scrollViewRef}
-        contentContainerStyle={{ paddingTop: 10, paddingBottom: 20 }}
-      >
-        {messageComponent}
-        
-      </ScrollView>
+
+      <View style={{height:scrollviewHeight}}>
+        <ScrollView
+          style={{width: width, flexDirection: 'column'}}
+          ref={scrollViewRef}
+          contentContainerStyle={{ paddingTop: 10, paddingBottom: 20}}
+        >
+          {messageComponent}
+          
+        </ScrollView>
+      </View>
+  
       <View style={[styles.writeMessage, _Theme.themeBack, _Theme.themeShadow]}>
+        <Animated.View style={{width:inputWidth}}>
         <TextInput
+            ref={textInputRef}  
             outlineColor={_Theme.themeBouton.backgroundColor}
             activeOutlineColor={_Theme.themeBouton.backgroundColor}
             theme={theme}
@@ -128,7 +184,11 @@ export default function SettingsScreen() {
             style={[styles.input, _Theme.themeBack2, _Theme.themeShadow]}
             textColor={_Theme.themeText.color}
             onPress={() => setIsFocused(true)}
+            onFocus={() => {setIsFocused(true), setScrollviewHeight(ScreenHeight-HEADER_HEIGHT-70-320)}}
+            onBlur={() => {setIsFocused(false), setScrollviewHeight(ScreenHeight-HEADER_HEIGHT-70)}}
         />
+        </Animated.View>
+        <View style={{display:messageToSend.length > 0 ? 'flex' : 'none'}}>
         <IconButton
             mode={'contained'}
             style={{marginHorizontal: 20, backgroundColor: _Theme.themeBouton.backgroundColor}}
@@ -137,6 +197,7 @@ export default function SettingsScreen() {
             size={20}
             onPress={()=>sendMessage()}
         />
+        </View>
       </View>
     </KeyboardAwareScrollView>
   );
@@ -157,7 +218,6 @@ const styles = StyleSheet.create({
   },
   writeMessage: {
     bottom: 0,
-    justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
     width: width,
@@ -169,7 +229,6 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   input: {
-    width: width - 100,
     margin:10,
     borderRadius:2,
     shadowOpacity:0.3,
