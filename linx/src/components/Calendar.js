@@ -39,7 +39,7 @@ const MyCalendar = () => {
     const fetchData = async () => {
       retrieveCookie();
       try {
-        const response = await axios.get('http://localhost/getMoodTracker', { withCredentials: true });
+        const response = await axios.get('http://localhost/infos', { withCredentials: true });
 
         const yearsArray = [];
         const moyArray = [];
@@ -80,26 +80,23 @@ const MyCalendar = () => {
       var decomposedDate = decomposerDate(years[i]);
       if (view === 'month' && date.getDate() === decomposedDate.jour && date.getMonth() === decomposedDate.mois - 1 && date.getFullYear() === decomposedDate.annee) {
         return (
-          <p style={{ backgroundColor: color(moy[i]), textAlign: 'center', margin: 0, padding: 0 }}>{moy[i]}</p>
+          <div style={{ backgroundColor: color(moy[i]), textAlign: 'center', margin: 'auto', padding: '2px', borderRadius: '50%', width: '80%', height: '80%', animation: 'pulse 1s infinite' }}>{moy[i]}</div>
         );
       }
     }
 
     if (isToday) {
-      return <div style={{ backgroundColor: 'transparent' }}></div>;
+      return <div style={{ backgroundColor: 'transparent' }}></div>; // Pour laisser le background de la date d'aujourd'hui transparent
     }
 
     return null;
   };
 
   return (
-    <div style={{ maxWidth: '100%', margin: 'auto' }}>
-      <h2 style={{ textAlign: 'center', marginBottom:'20px' }}>Calendrier</h2>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Calendar
-          tileContent={tileContent}
-        />
-      </div>
+    <div style={{ maxWidth: '400px', margin: 'auto', paddingTop: '20px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', borderRadius: '10px', backgroundColor: '#f8f9fa', padding: '20px' }}>
+      <Calendar
+        tileContent={tileContent}
+      />
     </div>
   );
 };

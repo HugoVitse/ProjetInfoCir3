@@ -77,7 +77,6 @@ const noteMoyMood = [
   10,
 ]
 
-
 export default function CalendarScreen() {
 
   const width = Dimensions.get('window').width;
