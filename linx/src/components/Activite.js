@@ -113,7 +113,7 @@ const Activite = () => {
             adresse: realCustom ? currentAdresse : adresse
           },
           nbinvities: invites,
-          types: type,
+          type: type,
           messages: message,
           date: date.toString()
         };

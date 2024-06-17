@@ -94,9 +94,9 @@ const Account = () => {
   const handleSubmit = async () => {
     try {
       if (pp) {
-        await axios.post('http://localhost/setPicture', { picture: pp, firstName: firstName, lastName: lastName, selectedInterests: selectedInterests, description: description}, { withCredentials: true });
+        await axios.post('http://localhost/updateInfoWeb', { picture: pp, firstName: firstName, lastName: lastName, selectedInterests: selectedInterests, description: description}, { withCredentials: true });
       } else {
-        await axios.post('http://localhost/setPicture', {picture:"", firstName: firstName, lastName: lastName, selectedInterests: selectedInterests, description: description}, { withCredentials: true });
+        await axios.post('http://localhost/updateInfoWeb', {picture:"", firstName: firstName, lastName: lastName, selectedInterests: selectedInterests, description: description}, { withCredentials: true });
       }
       console.log(pp, firstName, lastName, selectedInterests, description)
     } catch (error) {

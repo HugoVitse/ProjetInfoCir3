@@ -2,15 +2,18 @@ import { Link, useFocusEffect, useRouter } from "expo-router";
 import { Text, View, StyleSheet ,Dimensions, Platform} from "react-native";
 import { Avatar } from '@rneui/themed';
 import { useEffect, useState  } from "react";
-import { Button, IconButton, MD3Colors, Modal, RadioButton, Snackbar, TextInput } from "react-native-paper";
+import { Button, IconButton, List, MD3Colors, Modal, RadioButton, Snackbar, TextInput } from "react-native-paper";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
 import Config from '../../config.json'
 import { Checkbox } from 'react-native-paper';
 import { ScrollView } from "react-native-gesture-handler";
-import { ScreenHeight, Slider ,Icon} from "@rneui/base";
+import { ScreenHeight, Slider ,Icon, ScreenWidth, ListItem} from "@rneui/base";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Theme from "@/constants/Theme";
+import RIcon from '@mdi/react';
+import { mdiCalendarMultipleCheck } from '@mdi/js';
+import { evenement } from "@/constants/evenement";
 
 const HEADER_HEIGHT = 100;
 const { width,height } = Dimensions.get('window');
@@ -30,7 +33,12 @@ export default function HomeScreen() {
   const [checked3, setChecked3] = useState('first');
   const [checked4, setChecked4] = useState('first');
   const [text,setText] = useState("")
-
+  const [events,setEvents] = useState<evenement[]>([])
+  const [eventSoonComponent, setEventSoonComponent] = useState<React.JSX.Element[]>([])
+  const [eventPastComponent, setEventPastComponent] = useState<React.JSX.Element[]>([])
+  const [expandedSoon, setExpandedSoon] = useState(true);
+  const [expandedPast, setExpandedPast] = useState(false);
+  const [picture, setPicture] = useState("")
   //snackbar
   const [snack, setSnack] = useState(false);
 
@@ -77,6 +85,11 @@ export default function HomeScreen() {
       const jwt_cookie = await AsyncStorage.getItem("jwt")
       const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
       setFirstLogin(reponse.data.firstLogin)
+      if(reponse.data.image!=null){
+        setPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
+      }
+      const reponseEvents = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getEvents`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      setEvents(reponseEvents.data)
     }
     wrap()
     handleCheckboxPress('Cinéma')
@@ -84,6 +97,52 @@ export default function HomeScreen() {
     
   },[])
 
+  useEffect(()=>{
+    let tmp:React.JSX.Element[] = []
+    let tmp2:React.JSX.Element[] = []
+    if(events.length>0){
+      for(let i = 0; i<events.length;i++){
+        const date = new Date(events[i].date)
+        const today = new Date()
+        if(date>today){
+          tmp.push(
+            <ListItem 
+              key={i}  
+              bottomDivider 
+              style={_Theme.themeBack2}
+              onPress={() => {router.push(`/../chat/${events[i]._id}`)}}
+            >
+              <Avatar title={"ok"} source={{ uri: "" }} />
+              <ListItem.Content style={_Theme.themeBack2}>
+                <ListItem.Title style={_Theme.themeText}>{events[i].activity.title}</ListItem.Title>
+                <ListItem.Subtitle style={_Theme.themeText}>{events[i].date}</ListItem.Subtitle>
+              </ListItem.Content>
+              <ListItem.Chevron style={_Theme.themeText}/>
+            </ListItem>
+          )
+        }
+        else{
+
+          tmp2.push(
+            <ListItem key={i}  bottomDivider>
+              <Avatar title={"ok"} source={{ uri: "" }} />
+              <ListItem.Content>
+                <ListItem.Title>{events[i].activity.title}</ListItem.Title>
+                <ListItem.Subtitle>{events[i].date}</ListItem.Subtitle>
+              </ListItem.Content>
+              <ListItem.Chevron />
+            </ListItem>
+          )
+        }
+        
+      }
+
+      setEventSoonComponent(tmp)
+      setEventPastComponent(tmp2)
+      
+      
+    }
+  },[events])
   useEffect(()=>{
     if(firstLogin){
       showModal()
@@ -99,7 +158,6 @@ export default function HomeScreen() {
     let k = (value2 - 0) / 5; // 0 =>min  && 10 => MAX
     return Math.ceil((1 - k) * start + k * end) % 256;
   };
-  
   
 
   const color = () => {
@@ -145,7 +203,6 @@ export default function HomeScreen() {
     onToggleSnackBar()
   }
 
- 
   
   return (
     <View style={styles.container}>
@@ -157,17 +214,11 @@ export default function HomeScreen() {
           onPress={() => router.push("/../settings")}
           style={styles.settings}
         />
-        {firstLogin?
-        <IconButton
-          icon="form-select"
-          iconColor={_Theme.themeIcon.color}
-          onPress={() => showModal()}
-          style={styles.form}
-        />:""}
         <Text style={[styles.headerText,_Theme.themeText]}>Logo</Text>
         <Avatar
           size={48}
           rounded
+          source={{ uri: picture }}
           icon={{ name: "person", type: "material" }}
           containerStyle={{ backgroundColor: "#bbbec1", position: 'absolute', bottom: 15, right: 15 }}
           onPress={() => router.push("/../profile")}
@@ -175,8 +226,45 @@ export default function HomeScreen() {
       </View>
       
       <View style={[styles.body,_Theme.themeBack2]}>
-        <Text style={_Theme.themeText}>Edit app/index.tsx to edit this screen.</Text>
-        <Link href="@/settings">?</Link>
+        <ScrollView style={{maxHeight:"45%"}}>
+        <ListItem.Accordion
+          content={
+            <>
+              <Icon type='material-community' name="calendar-multiple" size={30} style={_Theme.themeIcon}/>
+              <ListItem.Content style={_Theme.themeBack2}>
+                <ListItem.Title style={_Theme.themeText}> Evénements à venir</ListItem.Title>
+              </ListItem.Content>
+            </>
+          }
+          isExpanded={expandedSoon}
+          onPress={() => {
+            setExpandedSoon(!expandedSoon);
+          }}
+        >
+          {eventSoonComponent}
+          
+        </ListItem.Accordion>
+        </ScrollView>
+        <ScrollView style={{maxHeight:"45%"}}>
+          <ListItem.Accordion
+            content={
+              <>
+                  <Icon type='material-community' name="calendar-multiple-check" size={30} />
+                  <ListItem.Content>
+                    <ListItem.Title> Evenements passés</ListItem.Title>
+                  </ListItem.Content>
+              </>
+            }
+            isExpanded={expandedPast}
+            onPress={() => {
+              setExpandedPast(!expandedPast);
+            }}
+          >
+        
+            {eventPastComponent}
+            
+          </ListItem.Accordion>
+        </ScrollView>
       </View>
       <Modal visible={visible} onDismiss={hideModal} style={{marginTop: HEADER_HEIGHT + 20, maxHeight: ScreenHeight, width: width, padding: 20}}>
         <KeyboardAwareScrollView style={[{ height: ScreenHeight - 300, borderRadius: 20, paddingHorizontal: 50, overflow: 'hidden' }, _Theme.themeBack2]}>
@@ -404,9 +492,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   body: {
+    width:ScreenWidth,
     position: 'relative',
-    justifyContent: 'center',
-    alignItems: 'center',
+    top: HEADER_HEIGHT,
     flex: 1,
   },
   settings: {

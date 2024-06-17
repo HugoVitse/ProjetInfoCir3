@@ -12,7 +12,7 @@ const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => 
 
   return (
     <Container className="bg-theme-inv d-flex h-100 p-3 position-relative">
-      <div className={`bg-theme-inv d-flex w-100 flex-column align-items-start p-3 h-100 ${isOpen ? 'show' : 'fade'}`} id="navbar">
+      <div className={`bg-theme-inv d-flex w-50 flex-column align-items-start p-3 h-100 ${isOpen ? 'show' : 'fade'}`} id="navbar">
         <div className="position-relative">
           <Link to='/' className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-theme-inv text-decoration-none">
             <img
@@ -33,6 +33,10 @@ const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => 
           <MDBListGroupItem tag={Link} action to="/Login" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
           <MDBIcon fas icon="question-circle" className="me-3" />
           Login
+        </MDBListGroupItem>
+        <MDBListGroupItem tag={Link} action to="/Catalogue" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
+          <MDBIcon fas icon="book-open" className="me-3" />
+          Catalogue
         </MDBListGroupItem>
         <MDBListGroupItem tag={Link} action to="/Evenements" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
           <MDBIcon fas icon="book-open" className="me-3" />

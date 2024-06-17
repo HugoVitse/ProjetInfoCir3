@@ -15,12 +15,14 @@ const Home = () => {
   const [basicModal, setBasicModal] = useState(false);
   const toggleOpen = () => setBasicModal(!basicModal);
   const [lastName, setLastName] = useState('');
+  const [email, setemail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [selectedInterests, setSelectedInterests] = useState([]);
   const [events, setEvents] = useState([]);
   const navigate = useNavigate();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [pp, setPp] = useState('');
   const [formData, setFormData] = useState({
     activities: [],
     note: 5,
@@ -88,6 +90,8 @@ const Home = () => {
         setFirstName(response.data.firstName || '');
         setLastName(response.data.lastName || '');
         setSelectedInterests(response.data.activities || []);
+        setemail(response.data.email || '')
+        setPp(response.data.image || '');
         if (response.data.firstLogin) {
           toggleOpen();
         }
@@ -116,8 +120,8 @@ const Home = () => {
             </MDBTypography>
             <hr/>
             {events
-              .filter(event => event.types === interest)
-              .slice(0, 5)
+                .filter(event => event.type === interest && new Date(event.date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0) &&
+                Array.isArray(event.participants) && event.participants.some(participants => participants === email))
               .map((event, index) => (
                 <Link to={`/event/${event.activity.title}/${event._id}`} key={index} className="text-decoration-none"> {/* Assurez-vous que "/event/${event.id}" est l'URL appropriée */}
                   <MDBCardText className="fw-bold mb-2"> 
@@ -131,59 +135,102 @@ const Home = () => {
       </MDBCol>
     ));
   };
+
+  const renderHistorique = () => {
+    return (
+      <MDBCol md="6" className="mb-4">
+        <MDBCard className="text-theme custom-card border border-primary">
+          <MDBCardBody className="p-4 custom-card bg-light">
+            <MDBTypography tag="h4" className="text-primary font-weight-bold">
+              Historique des Événements 
+            </MDBTypography>
+            <hr />
+            <MDBCardText className="fw-bold mb-2">
+              {events
+                .filter(event => new Date(event.date).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) &&
+                Array.isArray(event.participants) && event.participants.some(participants => participants === email))
+                .map((event, index) => (
+                  <div key={index}>
+                    <MDBBadge color="secondary" className="mr-2">Event</MDBBadge>
+                    : {event.activity.title}
+  
+                  </div>
+                ))}
+            </MDBCardText>
+          </MDBCardBody>
+        </MDBCard>
+      </MDBCol>
+    );
+  };  
   
 
   return (
     <div className="flex-grow-1 vh-100">
-      <MDBContainer fluid className="py-5 vh-100 bg-theme" style={{ height: '100%' }}>
-        <MDBRow className="justify-content-center align-items-center h-100">
-          <MDBCol lg="9" xl="7" className='w-100'>
-            <header style={{
-              position: 'relative',
-              backgroundImage: 'url(https://78.media.tumblr.com/f254105ae6672e6252d171badfe14299/tumblr_mhiz6jgJ7N1rag9fdo1_500.gif)', // Example GIF URL, replace with your own
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              height: '50vh',
-              width: '100%',
-              color: 'white'
+      <MDBContainer fluid className="py-3 vh-100 bg-theme" style={{ height: '100%' }}>
+      <MDBRow className="justify-content-center align-items-center h-100">
+        <MDBCol lg="9" xl="7" className='w-100'>
+        <header style={{
+            position: 'relative',
+            backgroundImage: 'url(https://78.media.tumblr.com/f254105ae6672e6252d171badfe14299/tumblr_mhiz6jgJ7N1rag9fdo1_500.gif)', // Replace with your own GIF URL
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            height: '50vh',
+            width: '100%',
+            color: 'white',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center',
+            padding: '20px',
+            borderRadius: '15px'
+          }}>
+            <div style={{
+              position: 'absolute',
+              bottom: '10px',
+              right: '10px',
+              textAlign: 'right'
             }}>
-              <div style={{
-                position: 'absolute',
-                bottom: '10px',
-                right: '10px',
-                textAlign: 'right'
-              }}>
-                <h1><strong>ÇA VA CHAUFFER</strong></h1>
-                <p>Nos modèles pour tout changer cet été.</p>
+              <h1 style={{ fontSize: '3rem', marginBottom: '10px' }}><strong>ÇA VA CHAUFFER</strong></h1>
+              <p style={{ fontSize: '1.5rem', marginBottom: '20px' }}>Nos modèles pour tout changer cet été.</p>
+            </div>
+          </header>
+
+          <MDBCard className="mb-4 custom-card">
+            <MDBCardBody className="p-4 text-white custom-card" style={{ background: 'linear-gradient(135deg, #3494E6, #EC6EAD)', borderRadius: '15px' }}>
+              <div className="d-flex align-items-center justify-content-between mb-3">
                 <div>
-                  <button style={{ marginRight: '10px' }}>Acheter</button>
-                  <button>Enfant</button>
+                  <h2 className="fw-bold mb-1" style={{ fontSize: '1.5rem', color: 'white' }}>
+                    Bienvenue sur Linx
+                  </h2>
+                  <p className="mb-0" style={{ fontSize: '1.1rem' }}>
+                    Bonjour {firstName} {lastName} !
+                  </p>
+                </div>
+                <div>
+                  <img src= {"http://localhost/"+pp} alt="Avatar" style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover' }} />
                 </div>
               </div>
-            </header>
-            <MDBCard className="mb-4 custom-card">
-              <MDBCardBody className="p-4 text-black custom-card">
-                <MDBCardText className="lead fw-normal mb-1" style={{ fontSize: '1.2rem', color: 'var(--primary-color)' }}>
-                  Bonjour {firstName} {lastName} ! Bienvenue sur Linx
-                </MDBCardText>
-              </MDBCardBody>
-            </MDBCard>
+            </MDBCardBody>
+          </MDBCard>
 
-            <MDBRow className="mt-4">
-              <MDBCol md="6" className="mb-4" style={{ pointerEvents: 'none' }}>
-                <MDBCard className="custom-card">
-                  <MDBCardBody className="p-4 text-theme custom-card">
-                    <MDBTypography tag="h5" > <strong>Prochains événements</strong></MDBTypography>
-                    <hr />
-                    <MDBCardText>Contenu des prochains événements</MDBCardText>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-              {renderInterestCards()}
-            </MDBRow>
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>
+          <section style={{ marginTop: '20px', marginBottom: '20px' }}>
+            <h2 style={{ textAlign: 'center', fontSize: '2rem', color: 'var(--primary-color)' }}>
+              Événements à venir
+            </h2>
+            <p style={{ textAlign: 'center', fontSize: '1.2rem' }}>
+              Découvrez vos activités en fonction de vos intérêts et de vos inscriptions !
+            </p>
+          </section>
+
+          <MDBRow className="mt-4">
+            {renderInterestCards()}
+            {renderHistorique()}
+          </MDBRow>
+        </MDBCol>
+      </MDBRow>
+    </MDBContainer>
+
 
       {/* Pop-up Questionnaire !!! */}
       <MDBModal open={basicModal} onClose={() => setBasicModal(false)} tabIndex='-1'>

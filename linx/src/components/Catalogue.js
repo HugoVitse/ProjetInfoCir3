@@ -100,7 +100,7 @@ const Catalogue = () => {
     };
 
     return (
-        <MDBContainer className="mt-4 mb-4 bg-theme contourpage" style={{marginLeft:'-24'}}>
+        <MDBContainer className="mt-4 mb-4 bg-theme" style={{marginLeft:'-24'}}>
             <MDBInput
                 label="Rechercher une activité"
                 type="text"
@@ -191,7 +191,7 @@ const Catalogue = () => {
                     </MDBCard>
                     <div className="custom-popup-buttons">
                         <MDBBtn color='secondary' className="custom-btn custom-btn-secondary" onClick={closePopup}>Fermer</MDBBtn>
-                        <MDBBtn color='primary' className="custom-btn custom-btn-primary" onClick={Activite}>Créer un événement</MDBBtn>
+                        <MDBBtn color='primary' className="custom-btn custom-btn-primary" onClick={Activite}>S'inscrire à l'activité</MDBBtn>
                     </div>
                 </div>
             )}
