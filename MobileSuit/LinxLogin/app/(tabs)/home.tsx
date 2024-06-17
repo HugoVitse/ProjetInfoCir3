@@ -1,7 +1,7 @@
 import { Link, useFocusEffect, useRouter } from "expo-router";
 import { Text, View, StyleSheet ,Dimensions, Platform} from "react-native";
 import { Avatar } from '@rneui/themed';
-import { useEffect, useState  } from "react";
+import { useCallback, useEffect, useState  } from "react";
 import { Button, IconButton, List, MD3Colors, Modal, RadioButton, Snackbar, TextInput } from "react-native-paper";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
@@ -39,6 +39,7 @@ export default function HomeScreen() {
   const [expandedSoon, setExpandedSoon] = useState(true);
   const [expandedPast, setExpandedPast] = useState(false);
   const [picture, setPicture] = useState("")
+  const [notif,setNotif] = useState(false)
   //snackbar
   const [snack, setSnack] = useState(false);
 
@@ -80,12 +81,14 @@ export default function HomeScreen() {
     });
   };
 
-  useEffect(()=>{
+  useFocusEffect(useCallback(() => {
     const wrap = async()=>{
       const jwt_cookie = await AsyncStorage.getItem("jwt")
       const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      setNotif(reponse.data.friendRequests.length>0)
       setFirstLogin(reponse.data.firstLogin)
       if(reponse.data.image!=null){
+        setPicture("")
         setPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
       }
       const reponseEvents = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getEvents`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
@@ -95,7 +98,7 @@ export default function HomeScreen() {
     handleCheckboxPress('Cinéma')
     handleCheckboxPress('Jeux vidéos')
     
-  },[])
+  },[]))
 
   useEffect(()=>{
     let tmp:React.JSX.Element[] = []
@@ -104,15 +107,16 @@ export default function HomeScreen() {
       for(let i = 0; i<events.length;i++){
         const date = new Date(events[i].date)
         const today = new Date()
-        if(date>today){
+        if(date.getDate() >= today.getDate() && date.getMonth() >= today.getMonth() && date.getFullYear() >= today.getFullYear()){
           tmp.push(
             <ListItem 
+              containerStyle={[_Theme.themeBack2]}
               key={i}  
               bottomDivider 
               style={_Theme.themeBack2}
               onPress={() => {router.push(`/../chat/${events[i]._id}`)}}
             >
-              <Avatar title={"ok"} source={{ uri: "" }} />
+              <Avatar title={"ok"} source={{ uri: `${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${events[i].host}.png` }} />
               <ListItem.Content style={_Theme.themeBack2}>
                 <ListItem.Title style={_Theme.themeText}>{events[i].activity.title}</ListItem.Title>
                 <ListItem.Subtitle style={_Theme.themeText}>{events[i].date}</ListItem.Subtitle>
@@ -124,13 +128,18 @@ export default function HomeScreen() {
         else{
 
           tmp2.push(
-            <ListItem key={i}  bottomDivider>
-              <Avatar title={"ok"} source={{ uri: "" }} />
-              <ListItem.Content>
-                <ListItem.Title>{events[i].activity.title}</ListItem.Title>
-                <ListItem.Subtitle>{events[i].date}</ListItem.Subtitle>
+            <ListItem
+                key={i}  
+                bottomDivider 
+                containerStyle={[_Theme.themeBack2]}
+                style={[_Theme.themeBack2]}
+                onPress={() => {router.push(`/../chat/${events[i]._id}`)}}>
+              <Avatar title={"ok"} source={{ uri: `${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${events[i].host}.png` }}  />
+              <ListItem.Content style={_Theme.themeBack2}>
+                <ListItem.Title style={_Theme.themeText}>{events[i].activity.title}</ListItem.Title>
+                <ListItem.Subtitle style={_Theme.themeText}>{events[i].date}</ListItem.Subtitle>
               </ListItem.Content>
-              <ListItem.Chevron />
+              <ListItem.Chevron style={_Theme.themeText}/>
             </ListItem>
           )
         }
@@ -143,11 +152,12 @@ export default function HomeScreen() {
       
     }
   },[events])
-  useEffect(()=>{
+
+  useFocusEffect(useCallback(() => {
     if(firstLogin){
       showModal()
     }
-  },[firstLogin])
+  },[firstLogin,router]))
 
   const interpolate = (start: number, end: number) => {
     let k = (value - 0) / 1000; // 0 =>min  && 10 => MAX
@@ -209,7 +219,7 @@ export default function HomeScreen() {
     
       <View style={[styles.header,_Theme.themeBack,_Theme.themeShadow]}>
         <IconButton
-          icon="cog"
+          icon={notif?"bell-badge":"bell"}
           iconColor={_Theme.themeIcon.color}
           onPress={() => router.push("/../settings")}
           style={styles.settings}
@@ -228,9 +238,11 @@ export default function HomeScreen() {
       <View style={[styles.body,_Theme.themeBack2]}>
         <ScrollView style={{maxHeight:"45%"}}>
         <ListItem.Accordion
+          containerStyle={[_Theme.themeBack2]}  
+          icon={ <Icon color={_Theme.themeIcon.color} type='material-community' name="menu-up" size={30} />}
           content={
             <>
-              <Icon type='material-community' name="calendar-multiple" size={30} style={_Theme.themeIcon}/>
+              <Icon color={_Theme.themeIcon.color} type='material-community' name="calendar-multiple" size={30} />
               <ListItem.Content style={_Theme.themeBack2}>
                 <ListItem.Title style={_Theme.themeText}> Evénements à venir</ListItem.Title>
               </ListItem.Content>
@@ -247,11 +259,13 @@ export default function HomeScreen() {
         </ScrollView>
         <ScrollView style={{maxHeight:"45%"}}>
           <ListItem.Accordion
+            containerStyle={[_Theme.themeBack2]}
+            icon={ <Icon color={_Theme.themeIcon.color} type='material-community' name="menu-up" size={30} />}
             content={
               <>
-                  <Icon type='material-community' name="calendar-multiple-check" size={30} />
-                  <ListItem.Content>
-                    <ListItem.Title> Evenements passés</ListItem.Title>
+                  <Icon color={_Theme.themeIcon.color} type='material-community' name="calendar-multiple-check" size={30}  />
+                  <ListItem.Content style={_Theme.themeBack2}>
+                    <ListItem.Title style={_Theme.themeText}> Evenements passés</ListItem.Title>
                   </ListItem.Content>
               </>
             }

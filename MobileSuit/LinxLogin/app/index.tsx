@@ -1,7 +1,7 @@
 import React , {useState,useEffect} from 'react';
 import {Link, useRouter} from 'expo-router'
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, useColorScheme, View } from 'react-native';
 import { Input,Icon } from 'react-native-elements';
 import {Image,Text} from 'react-native'
 import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
@@ -16,6 +16,7 @@ const TextInputExample = () => {
   const [jwt,setJwt] = useState('');
   const [isjwt,setisjwt] = useState(-1)
   const [tentativeLogin,setTentativeLogin] = useState(false)
+  const [dol,setTheme] = useState(useColorScheme())
 
   const [islogin,setLogin] = useState(-1)
 
@@ -60,6 +61,7 @@ const TextInputExample = () => {
       _retrieveData('jwt');
       console.log(jwt)
     }
+
     wrap()
   }, []);
 
@@ -70,6 +72,10 @@ const TextInputExample = () => {
     }
 
   },[jwt])
+
+  useEffect(()=>{
+    console.log(dol)
+  },[dol])
 
   useEffect(()=>{
     if(isjwt==0){
@@ -135,7 +141,7 @@ const TextInputExample = () => {
 
 
       <Image
-        source={require('../assets/images/logo.png')}
+        source={dol==='light'? require('../assets/images/logo.png'):require('../assets/images/logoWhite.png')}
         style={styles.image}
       />
       

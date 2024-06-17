@@ -33,11 +33,11 @@ export default function RootLayout() {
       >
         <Stack.Screen options={{headerShown:false}} name="index" />
         <Stack.Screen options={{headerShown:false}} name="register" />
-        <Stack.Screen name="chat/[id]" options={{ title: "Chat de l'évènement" }}/>
+        <Stack.Screen name="chat/[id]" options={{ title: "Chat de l'évènement" , headerShown:false}}/>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }}/>
         <Stack.Screen name="profile" options={{ headerShown: false }}/>
         <Stack.Screen name="editProfile" options={{ title: "Modifier le profil" }}/>
-        <Stack.Screen name="settings" options={{ title: "Paramètres" }}/>
+        <Stack.Screen name="settings" options={{ headerShown:false }}/>
         <Stack.Screen name="+not-found" />
       </Stack>
     </GestureHandlerRootView>

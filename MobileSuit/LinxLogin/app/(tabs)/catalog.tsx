@@ -1,9 +1,9 @@
 import { Avatar } from "@rneui/themed";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { Text, View, StyleSheet, Dimensions,Modal,Image, Platform } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton,MD3Colors, Card, Button, ActivityIndicator, PaperProvider, Portal ,TextInput} from "react-native-paper";
-import React, { useState , useEffect } from "react";
+import React, { useState , useEffect, useCallback } from "react";
 import axios from 'axios'
 import Config from '../../config.json'
 import {activitie} from '../../constants/activities'
@@ -31,6 +31,7 @@ export default function CatalogScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [text, setText] = useState("");
   const [type, setType] = useState();
+  const [notif,setNotif] = useState(false)
 
 
   const onChange = (event:any, selectedDate:any) => {
@@ -84,18 +85,21 @@ export default function CatalogScreen() {
     }
   };
 
-  useEffect(()=>{
-    const getActivities = async() => {
-      const jwt_cookie = await AsyncStorage.getItem("jwt")
-      const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-      setPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
-      const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/activities`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-      setActivities(response.data)
-      setIsLoaded(true)
-      
-    }
-    getActivities()
-  } ,[])
+  useFocusEffect(
+    useCallback(()=>{
+      const getActivities = async() => {
+        const jwt_cookie = await AsyncStorage.getItem("jwt")
+        const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+        setPicture("")
+        setPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
+        setNotif(reponse.data.friendRequests.length>0)
+        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/activities`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+        setActivities(response.data)
+        setIsLoaded(true)
+        
+      }
+      getActivities()
+  } ,[]))
 
   useEffect(()=>{
     console.log(modalVisible)
@@ -190,7 +194,7 @@ export default function CatalogScreen() {
       </Modal>
       <View style={[styles.header,_Theme.themeBack,_Theme.themeShadow]}>
         <IconButton
-          icon="cog"
+          icon={notif?"bell-badge":"bell"}
           iconColor={_Theme.themeIcon.color}
           onPress={() => router.push("/../settings")}
           style={styles.settings}

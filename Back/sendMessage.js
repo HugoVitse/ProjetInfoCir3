@@ -30,12 +30,18 @@ async function sendMessage(req,res){
 
             const findOneResult = await collection.findOne({_id:oid})
 
-            if(findOneResult == null || findOneResult.chat == null){
+            if(findOneResult == null){
                 res.status(508).send()
                 return
             }
             else{
-                const updateResult = await collection.findOneAndUpdate({_id:oid},{$push:{chat:{author:decoded.email,message:message}}})
+                if(findOneResult.chat == null){
+                    const updateResult = await collection.findOneAndUpdate({_id:oid},{$set:{chat:[{author:decoded.email,message:message}]}})
+                }
+                else{
+                    const updateResult = await collection.findOneAndUpdate({_id:oid},{$push:{chat:{author:decoded.email,message:message}}})
+                }
+                
                 res.send("ok")
                 return
             }

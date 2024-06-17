@@ -1,9 +1,9 @@
 import { Avatar } from "@rneui/themed";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { Text, View, StyleSheet, Dimensions, SafeAreaView, Animated, Modal,Image, Platform } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, MD3Colors, Card, Button, ActivityIndicator, Dialog, Drawer, TextInput, Menu, Divider, Provider, PaperProvider, List } from "react-native-paper";
-import { useState , useEffect, useRef } from "react";
+import { useState , useEffect, useRef, useCallback } from "react";
 import axios from 'axios'
 import Config from '../../config.json'
 import {evenement} from '../../constants/evenement'
@@ -39,6 +39,8 @@ const slideData = [
   }
 ]
 
+const maxLegnth = 40
+
 export default function CatalogScreen() {
   const router = useRouter();
   const [evenements,setEvenements] = useState<evenement[]>([])
@@ -70,6 +72,7 @@ export default function CatalogScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [text, setText] = useState("");
   const [showAndroid, setshowAndroid] = useState(false)
+  const [notif,setNotif] = useState(false)
 
   const googlekey = "AIzaSyAOpVdDvYUvbIB_u_d6k_HVfw13_Vux0K0"
 
@@ -174,34 +177,38 @@ export default function CatalogScreen() {
     const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/createEvenement`,data, {headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
     console.log(response)
     setModalVisible(!modalVisible)
+    getActivities()
+  }
+  const getActivities = async() => {
+    const jwt_cookie = await AsyncStorage.getItem("jwt")
+    const decoded = jwtDecode(jwt_cookie?jwt_cookie:"")
+    console.log(decoded)
+    const email = 'email'in decoded?decoded.email:""
+    setJwt(typeof(email)=="string"?email:"")
+    const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/evenements`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+    setEvenements(response.data)
+    setIsLoaded(true)
+    const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+    setPicture("")
+    setPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
+    setNotif(reponse.data.friendRequests.length>0)
+    const tmp = []
+    for(let i=0;i<response.data.length;i++){
+      if(reponse.data.activities.includes(response.data[i].type)) {
+        tmp.push(response.data[i])
+      }
+    }
+    console.log(tmp)
+    setEvenementsRecommandes(tmp)
   }
 
-  useEffect(()=>{
-    const getActivities = async() => {
-      const jwt_cookie = await AsyncStorage.getItem("jwt")
-      const decoded = jwtDecode(jwt_cookie?jwt_cookie:"")
-      console.log(decoded)
-      const email = 'email'in decoded?decoded.email:""
-      setJwt(typeof(email)=="string"?email:"")
-      const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/evenements`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-      setEvenements(response.data)
-      setIsLoaded(true)
-      const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-      setPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
-      const tmp = []
-      for(let i=0;i<response.data.length;i++){
-        if(reponse.data.activities.includes(evenements[i].type)) {
-          tmp.push(evenements[i])
-        }
-      }
-      console.log(tmp)
-      setEvenementsRecommandes(tmp)
-    }
+  useFocusEffect(useCallback(()=>{
+    
     getActivities()
 
   
 
-  } ,[])
+  },[]))
 
   useEffect(()=>{
     if(coords.length>0){
@@ -232,8 +239,8 @@ export default function CatalogScreen() {
                       setActualIndex(i)
                       showDialog()
                     }}
-                    title={'Test Marker'}
-                    description={'This is a description of the marker'}
+                    title={evenements[i].activity.title}
+                    description={evenements[i].activity.description.length>maxLegnth?`${evenements[i].activity.description.substring(0,maxLegnth-3)}...`: evenements[i].activity.description}
                   />)
             }
             setMarkers(tmp)
@@ -394,7 +401,7 @@ export default function CatalogScreen() {
      
       <View style={[styles.header,_Theme.themeBack,_Theme.themeShadow]}>
         <IconButton
-          icon="cog"
+          icon={notif?"bell-badge":"bell"}
           iconColor={_Theme.themeIcon.color}
           onPress={() => router.push("/../settings")}
           style={styles.settings}

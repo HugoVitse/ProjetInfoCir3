@@ -158,11 +158,7 @@ body {
 
 @keyframes slideInLeft {
   from {
-<<<<<<< HEAD
     transform: translateX(-50%); /* Départ de la gauche */
-=======
-    transform: translateX(-80%); /* Départ de la gauche */
->>>>>>> origin/Yass
   }
   to {
     transform: translateX(0); /* Arrivée à la position initiale */
@@ -174,11 +170,7 @@ body {
     transform: translateX(0); /* Départ de la position initiale */
   }
   to {
-<<<<<<< HEAD
     transform: translateX(-50%); /* Sortie vers la gauche */
-=======
-    transform: translateX(-80%); /* Sortie vers la gauche */
->>>>>>> origin/Yass
   }
 }
 
@@ -188,11 +180,7 @@ body {
   top: 0;
   left: 0;
   bottom: 0;
-<<<<<<< HEAD
   width: 35%;
-=======
-  width: 15%;
->>>>>>> origin/Yass
   animation: slideInLeft 0.5s forwards;
 }
 
@@ -205,11 +193,7 @@ body {
 }
 
 .custom-modal {
-<<<<<<< HEAD
   width: 60% !important;
-=======
-  width: 100% !important;
->>>>>>> origin/Yass
 }
 
 
@@ -267,7 +251,6 @@ body {
 /* Fin Catalogue */
 
 
-<<<<<<< HEAD
 /* App.css */
 
 
@@ -284,14 +267,3 @@ body {
   display: none;
 }
 
-=======
-.contourpage {
-  margin-left: 3%;
-}
-
-/* Calendar */
-
-
-
-/* Fin caldendar */
->>>>>>> origin/Yass

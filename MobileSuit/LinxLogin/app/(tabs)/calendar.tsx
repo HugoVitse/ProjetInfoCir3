@@ -1,8 +1,8 @@
-import { useRouter } from "expo-router";
-import { Text, View, StyleSheet, Dimensions, SafeAreaView, TouchableOpacity} from "react-native";
+import { useFocusEffect, useRouter } from "expo-router";
+import { Text, View, StyleSheet, Dimensions, SafeAreaView, TouchableOpacity,Image, useColorScheme} from "react-native";
 import { Avatar, Slider, Icon } from '@rneui/themed';
 import { IconButton, MD3Colors, Button, Modal, Portal, PaperProvider  } from "react-native-paper";
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import RadarChart from '@/components/SpiderGraph';
 import Carousel, { Pagination, ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useSharedValue } from "react-native-reanimated";
@@ -93,6 +93,8 @@ export default function CalendarScreen() {
   const [moodCalendar,setMoodCalendar] = useState({})
   const [alreadyFill,setalreadyFill] = useState(false)
   const [picutre,setPicture] = useState('')
+  const [notif,setNotif] = useState(false)
+  const [dol,setTheme] = useState(useColorScheme())
   const [radarData, setRadarData] = useState([
     {
       Sommeil: 0,
@@ -162,10 +164,10 @@ export default function CalendarScreen() {
     }
 
 
-    const day = today.getDay()
+    const day = (today.getDay()-1+7)%7
     const days = [today.toDateString()]
-
-    for(let i=1; i<day;i++){
+    for(let i=0; i<=day;i++){
+      console.log("ok"+i)
       let d = new Date(`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()-i}`)
       days.push(d.toDateString())
     }
@@ -176,13 +178,16 @@ export default function CalendarScreen() {
     }
  
 
+
     let dayWeek = [0,0,0,0,0,0,0]
 
-    for(let i=0;i<day;i++){
+    for(let i=0;i<=day;i++){
       if(moodTracker.length-1-i >=0){
         const d = new Date(moodTracker[moodTracker.length-1-i].date)
+        
         if(days.indexOf(d.toDateString()) != -1){
-          dayWeek[d.getDay()-1] = moodTracker[moodTracker.length-1-i].average
+          console.log("ok"+((d.getDay()-1+7)%7))
+          dayWeek[(d.getDay()-1+7)%7] = moodTracker[moodTracker.length-1-i].average
         }
       }
 
@@ -233,17 +238,22 @@ export default function CalendarScreen() {
     return `rgb(${r},${g},${b})`;
   };
 
-  useEffect(()=>{
-
-    const wrap_picture = async()=>{
-      const jwt_cookie = await AsyncStorage.getItem('jwt')
-      const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-      setPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
-    }
-    wrap_picture()
+  useFocusEffect(
+    useCallback(()=>{
+      console.log("ok")
+      const wrap_picture = async()=>{
+        const jwt_cookie = await AsyncStorage.getItem('jwt')
+        const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+        setNotif(reponse.data.friendRequests.length>0)
+        setPicture("")
+        setPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
+      }
+      wrap_picture()
+      
+      wrap()
+    },[]))
     
-    wrap()
-  },[])
+  
 
 
 
@@ -307,9 +317,6 @@ export default function CalendarScreen() {
         />
       case 'calendar':
         return <Calendar
-          onDayPress={day => {
-            console.log('selected day', day);
-          }}
           hideExtraDays={true}
           firstDay={1}
           disableAllTouchEventsForDisabledDays={true}
@@ -329,12 +336,12 @@ export default function CalendarScreen() {
       <View style={styles.container}>
         <View style={[styles.header, _Theme.themeBack, _Theme.themeShadow]}>
           <IconButton
-            icon="cog"
+            icon={notif?"bell-badge":"bell"}
             iconColor={_Theme.themeIcon.color}
             onPress={() => router.push("/../settings")}
             style={styles.settings}
           />
-          <Text style={[styles.headerText, _Theme.themeText]}>Logo</Text>
+          <Image style={styles.logo} source={dol==='light'?require("../../assets/images/logo.png"):require("../../assets/images/logoWhite.png")}/>
           <Avatar
             size={48}
             rounded
@@ -592,6 +599,13 @@ const styles = StyleSheet.create({
     bottom: 0,
     height: 2,
     backgroundColor: 'blue',
+  },
+  logo: {
+    marginBottom:50,
+    width: 150,
+    transform:'scale(0.6)',
+    top:40,
+    height: 115,
   },
   slide: {
     flex: 1,

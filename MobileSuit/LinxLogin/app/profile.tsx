@@ -24,6 +24,11 @@ import { jwtDecode } from "jwt-decode";
 const HEADER_HEIGHT = 200;
 const { width } = Dimensions.get('window');
 
+type _item = {
+  id: string;
+  title: string;
+}
+
 const slideData = [
   {
     id: '1',
@@ -63,18 +68,28 @@ export default function ProfileScreen() {
   const [text,setText] = useState("")
   const [disabledValid, setDisabledValid] = useState(true)
   const [searchQuery, setSearchQuery] = useState('');
-  const [allUsers,setAllUsers] = useState([])
-  const [needle,setNeedle] = useState({})
+  const [allUsers,setAllUsers] = useState<user[]>([])
+  const [needle,setNeedle] = useState<user>({
+    firstName:"",
+    lastName:"",
+    dateOfBirth:"",
+    email:"",
+    image:"",
+    friends:[],
+    friendRequests:[]
+  })
   const [initialInfos, setInitialInfos] = useState<user>({
     firstName:"",
     lastName:"",
     dateOfBirth:"",
     email:"",
-    image:""
+    image:"",
+    friends:[],
+    friendRequests:[]
   })
   const [newPicture,setNewPicture] = useState("")
-  const [friendList,setFriendList] = useState([])
-  const [friendListComp,setFriendListComp] = useState([])
+  const [friendList,setFriendList] = useState<user[]>([])
+  const [friendListComp,setFriendListComp] = useState<React.JSX.Element[]>([])
 
   const interpolate = (start: number, end: number) => {
     let k = (value - 0) / 1000; // 0 =>min  && 10 => MAX
@@ -144,10 +159,18 @@ export default function ProfileScreen() {
     hideModal()
   }
 
-  const searchFriend = async(text)=>{
+  const searchFriend = async(text:string)=>{
     const jwt = await AsyncStorage.getItem("jwt")
-    const decode = jwtDecode(jwt)
-    let needle = {}
+    const decode:user = jwtDecode(jwt?jwt:"")
+    let needle:user = {
+      firstName:"",
+      lastName:"",
+      dateOfBirth:"",
+      email:"",
+      image:"",
+      friends:[],
+      friendRequests:[]
+    }
     for(let i=0; i<allUsers.length; i++){
       let b = !('friends' in allUsers[i])
       let c = !('friendRequests' in allUsers[i])
@@ -260,6 +283,7 @@ export default function ProfileScreen() {
     setSearchQuery("")
     const allUsers = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
     setAllUsers(allUsers.data)
+    searchFriend("")
   }
 
   const handleCheckboxPress = (activity:any) => {
@@ -282,7 +306,7 @@ export default function ProfileScreen() {
       carouselRef.current.scrollTo({ index, animated: true });
     }
   };
-  const renderSwitch = (item: { type: any; content: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined; }) => {
+  const renderSwitch = (item: _item) => {
     {switch(item.title) {
       case 'friendList': 
         return  <List.Section>
@@ -298,7 +322,7 @@ export default function ProfileScreen() {
                   onChangeText={(text) => {setSearchQuery(text),searchFriend(text)}}
                   value={searchQuery}
                 />  
-                {Object.keys(needle).length >0 ? (<List.Item style={{top:50}} right={()=> <IconButton icon="account-plus"  iconColor={_Theme.themeIcon.color}      onPress={()=>{sendFriendRequest()}}     style={{top:10}} ></IconButton>}  title={`${needle.firstName} ${needle.lastName}` }  left={() => <Avatar.Image size={70} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${needle.email}.png`}} /> } /> ): <></>}
+                {needle.firstName.length > 0 ? (<List.Item style={{top:50}} right={()=> <IconButton icon="account-plus"  iconColor={_Theme.themeIcon.color}      onPress={()=>{sendFriendRequest()}}     style={{top:10}} ></IconButton>}  title={`${needle.firstName} ${needle.lastName}` }  left={() => <Avatar.Image size={70} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${needle.email}.png`}} /> } /> ): <></>}
           </>
         )
                
@@ -825,6 +849,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   buttonContainer: {
+    marginTop:10,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',

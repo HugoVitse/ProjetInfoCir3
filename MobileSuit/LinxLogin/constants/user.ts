@@ -3,5 +3,7 @@ export type user = {
     email:string;
     lastName:string;
     dateOfBirth:string;
-    image:string
+    image:string;
+    friends:string[],
+    friendRequests:string[],
 };
