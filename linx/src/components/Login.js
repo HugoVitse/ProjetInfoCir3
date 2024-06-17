@@ -5,6 +5,7 @@ import { MDBContainer, MDBCol, MDBInput, MDBBtn, MDBCard, MDBCardBody, MDBRow, M
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
+import Config from '../config.json';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -41,12 +42,12 @@ const Login = () => {
     setLoading(true); // Set loading state
 
     try {
-      const response = await axios.post('http://localhost/login', { email, password }, { withCredentials: true });
+      const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/login`, { email, password }, { withCredentials: true });
       console.log(response.data);
       console.log(response.status);
       if (response.status === 200) {
         // Redirection vers la page d'accueil
-        window.location.href = '/'; // Redirection vers la page d'accueil
+         window.location.href = '/'; // Redirection vers la page d'accueil
       } else {
         console.log(response.status);
         setError('Invalid email or password');

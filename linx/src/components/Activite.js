@@ -12,11 +12,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
 import { AutoComplete } from 'primereact/autocomplete';
+import Config from '../config.json'
 
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 
 import dayjs, { Dayjs } from 'dayjs';
-import Config from '../config.json'
 
 const interestsList = [
     'Cinéma', 'Attractions', 'Animaux', 'Théâtre', 'Danse', 'Manga/Anime', 'Séries', 'Échecs',

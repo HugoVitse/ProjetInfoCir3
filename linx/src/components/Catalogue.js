@@ -9,6 +9,7 @@ import {
 } from 'mdb-react-ui-kit';
 import axios from 'axios';
 import Config from '../config.json';
+;
 
 const Catalogue = () => {
     const [showPopup, setShowPopup] = useState(false);

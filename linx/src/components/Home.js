@@ -10,6 +10,8 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
+import Config from '../config.json';
+
 
 const Home = () => {
   const [basicModal, setBasicModal] = useState(false);
@@ -48,7 +50,7 @@ const Home = () => {
     setError('');
     setLoading(true);
     try {
-      await axios.post('http://localhost/fillquestionnaire', formData, { withCredentials: true });
+      await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/fillquestionnaire`, formData, { withCredentials: true });
       toggleOpen();
     } catch (error) {
       console.error('Error:', error);
@@ -86,7 +88,7 @@ const Home = () => {
     const fnc = async () => {
       retrieveCookie();
       try {
-        const response = await axios.get('http://localhost/infos', { withCredentials: true });
+        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { withCredentials: true });
         setFirstName(response.data.firstName || '');
         setLastName(response.data.lastName || '');
         setSelectedInterests(response.data.activities || []);
@@ -96,7 +98,7 @@ const Home = () => {
           toggleOpen();
         }
 
-        const eventsResponse = await axios.get('http://localhost/evenements', { withCredentials: true });
+        const eventsResponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/evenements`, { withCredentials: true });
         setEvents(eventsResponse.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -115,12 +117,12 @@ const Home = () => {
       <MDBCol md="6" className="mb-4" key={index}>
         <MDBCard className="text-theme custom-card border border-primary">
           <MDBCardBody className="p-4 custom-card bg-light">
-            <MDBTypography tag="h4" className="text-primary font-weight-bold">
+            <MDBTypography tag="h4" className="tex  t-primary font-weight-bold">
               {interest}
             </MDBTypography>
             <hr/>
             {events
-                .filter(event => event.type === interest && new Date(event.date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0) &&
+              .filter(event => event.type === interest && new Date(event.date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0) &&
                 Array.isArray(event.participants) && event.participants.some(participants => participants === email))
               .map((event, index) => (
                 <Link to={`/event/${event.activity.title}/${event._id}`} key={index} className="text-decoration-none"> {/* Assurez-vous que "/event/${event.id}" est l'URL appropriée */}

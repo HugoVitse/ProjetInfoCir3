@@ -30,16 +30,13 @@ const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => 
             <MDBIcon fas icon="home" className="me-3" />
             Home
           </MDBListGroupItem>
-          <MDBListGroupItem tag={Link} action to="/Login" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
-          <MDBIcon fas icon="question-circle" className="me-3" />
-          Login
-        </MDBListGroupItem>
+          
         <MDBListGroupItem tag={Link} action to="/Catalogue" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
           <MDBIcon fas icon="book-open" className="me-3" />
           Catalogue
         </MDBListGroupItem>
         <MDBListGroupItem tag={Link} action to="/Evenements" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
-          <MDBIcon fas icon="book-open" className="me-3" />
+          <MDBIcon fas icon="fas fa-calendar" className="me-3" />
           Evenements
         </MDBListGroupItem>
         <MDBListGroupItem tag={Link} action to="/Account" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
@@ -47,8 +44,12 @@ const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => 
           Profil
         </MDBListGroupItem>
         <MDBListGroupItem tag={Link} action to="/MoodTracker" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
-          <MDBIcon fas icon="book" className="me-3" />
+          <MDBIcon fas icon="fas fa-chart-column" className="me-3" />
           Moodtracker
+        </MDBListGroupItem>
+        <MDBListGroupItem tag={Link} action to="/Notif" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
+          <MDBIcon fas icon="fas fa-bell" className="me-3" />
+          Notifications
         </MDBListGroupItem>
         <MDBBtn onClick={logout} style={{ background: 'linear-gradient(135deg, #00c6ff, #0072ff)' }}>Logout</MDBBtn>
         </MDBListGroup>

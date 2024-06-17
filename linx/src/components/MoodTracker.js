@@ -10,6 +10,8 @@ import Calendar from './Calendar';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import '../css/MoodTracker.css';
+import Config from '../config.json';
+
 
 const MoodTracker = () => {
   const [formData, setFormData] = useState({
@@ -30,6 +32,8 @@ const MoodTracker = () => {
   const [energ, setEnerg] = useState([]);
   const [moral, setMoral] = useState([]);
   const [add, setAdd] = useState([]);
+  const [startDate, setstartDate] = useState([]);
+  const [endDate, setendDate] = useState([]);
   const [avera, setaverag] = useState([]);
   const [ind, setInd] = useState(0);
   const radarChartRef = useRef(null);
@@ -81,7 +85,7 @@ const MoodTracker = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost/FillMoodTracker', formData, { withCredentials: true });
+      await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/FillMoodTracker`, formData, { withCredentials: true });
       setFormData({
         sleepQuality: 0,
         stressLevel: 0,
@@ -111,7 +115,7 @@ const MoodTracker = () => {
     const fetchData = async () => {
   retrieveCookie();
   try {
-    const response = await axios.get('http://localhost/infos', { withCredentials: true });
+    const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { withCredentials: true });
     const yearsArray = [];
     const sleepArray = [];
     const stressArray = [];
@@ -238,6 +242,9 @@ const MoodTracker = () => {
     const ctx = barChartRef.current.getContext('2d');
     const currentDayOfWeek = getDayOfWeek(years[ind]);
     const { startDate, endDate } = getThisWeekDates();
+    setstartDate(startDate);
+    setendDate(endDate);
+
     
     const filledData = fillMissingDays(avera, startDate, endDate);
   
@@ -307,13 +314,13 @@ const MoodTracker = () => {
               </div>
             </MDBCarouselItem>
             <MDBCarouselItem className="w-100 d-flex flex-column justify-content-center align-items-center text-theme" itemId={2}>
-              <h5 className="mb-4">MoodBoard du jour :</h5>
+              <h5 className="mb-4">MoodBoard du jour : {years[ind]}</h5>
               <div className="text-center text-theme-inv bg-light d-flex justify-content-center" style={{ width: '95%', height: '50vh' }}>
                 <canvas ref={radarChartRef} id="radarChart"></canvas>
               </div>
             </MDBCarouselItem>
             <MDBCarouselItem className="w-100 d-flex flex-column justify-content-center align-items-center text-theme" itemId={3}>
-              <h5 className="mb-4">MoodBoard de la Semaine</h5>
+              <h5 className="mb-4">MoodBoard de la Semaine : Du {startDate} au {endDate}</h5>
               <div className="text-theme-inv bg-light" style={{ width: '100%', height: '50vh' }}>
                 <canvas ref={barChartRef} id="barChart"></canvas>
               </div>

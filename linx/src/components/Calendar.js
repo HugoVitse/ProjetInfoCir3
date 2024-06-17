@@ -4,6 +4,7 @@ import 'react-calendar/dist/Calendar.css';
 import { jwtDecode } from "jwt-decode";
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import Config from '../config.json'
 import { useNavigate } from 'react-router-dom';
 
 const MyCalendar = () => {
@@ -39,7 +40,7 @@ const MyCalendar = () => {
     const fetchData = async () => {
       retrieveCookie();
       try {
-        const response = await axios.get('http://localhost/infos', { withCredentials: true });
+        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { withCredentials: true });
 
         const yearsArray = [];
         const moyArray = [];

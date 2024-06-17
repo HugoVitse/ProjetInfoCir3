@@ -5,6 +5,7 @@ import {
 } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import axios from 'axios';
+import Config from '../config.json';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost/register', formData);
+      const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/register`, formData);
       console.log(response.data);
       navigate('/Login');
 

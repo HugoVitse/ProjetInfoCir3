@@ -12,6 +12,8 @@ import Evenements from './components/Evenements';
 import MoodTracker from './components/MoodTracker';
 import Friends from './components/Friends';
 import Messagerie from './components/Messagerie';
+import Notif from './components/Notif';
+
 
 import { MDBContainer, MDBCard, MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
@@ -65,6 +67,7 @@ function App() {
             <Route path="/Evenements" element={<Evenements />} />
             <Route path="/MoodTracker" element={<MoodTracker />} />
             <Route path="/Friends" element={<Friends />} />
+            <Route path="/Notif" element={<Notif />} />
             <Route path="/event/:activityName/:idEvent" element={<Messagerie />} />
           </Routes>
         </MDBCard>

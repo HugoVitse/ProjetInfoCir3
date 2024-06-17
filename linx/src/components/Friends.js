@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { MDBContainer, MDBListGroup, MDBInputGroup, MDBListGroupItem, MDBInput, MDBBtn } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Config from '../config.json';
 
 const Friends = () => {
   const [lastName, setLastName] = useState('');
@@ -16,6 +17,7 @@ const Friends = () => {
   const [email, setEmail] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [users, setUsers] = useState([]);
+  const [sentFriendRequests, setSentFriendRequests] = useState([]); // État pour gérer les demandes d'amis envoyées
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,7 +34,7 @@ const Friends = () => {
     const fetchData = async () => {
       retrieveCookie();
       try {
-        const response = await axios.get('http://localhost/infos', { withCredentials: true });
+        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { withCredentials: true });
         setFirstName(response.data.firstName || '');
         setLastName(response.data.lastName || '');
         setDescription(response.data.description || '');
@@ -45,7 +47,7 @@ const Friends = () => {
 
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost/getAllUsers', { withCredentials: true });
+        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`, { withCredentials: true });
         setUsers(response.data || []);
       } catch (error) {
         console.error('Erreur lors de la récupération des utilisateurs :', error);
@@ -56,15 +58,15 @@ const Friends = () => {
     fetchUsers();
   }, [navigate]);
 
-  const addFriend = async (friendEmail) => {
+  const sendFriendRequest = async (friendEmail) => {
     try {
-      const response = await axios.post('http://localhost/addFriend', { email: friendEmail }, { withCredentials: true });
+      const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/friendRequests`, { email: friendEmail }, { withCredentials: true });
       if (response.status === 200) {
-        // Mettre à jour localement la liste des amis si l'ajout côté serveur réussit
-        setFriends(prevFriends => [...prevFriends, friendEmail]);
+        // Mettre à jour localement les demandes d'amis envoyées si l'ajout côté serveur réussit
+        setSentFriendRequests(prevRequests => [...prevRequests, friendEmail]);
       }
     } catch (error) {
-      console.error('Erreur lors de l\'ajout de l\'ami :', error);
+      console.error('Erreur lors de l\'envoi de la demande d\'ami :', error);
     }
   };
 
@@ -119,9 +121,14 @@ const Friends = () => {
               <h5>{`${user.firstName} ${user.lastName}`}</h5>
               {/* Ajoutez ici d'autres détails de l'utilisateur si nécessaire */}
             </div>
-            {!friends.includes(user.email) && (
-              <MDBBtn color="primary" onClick={() => addFriend(user.email)}>
+            {!friends.includes(user.email) && !sentFriendRequests.includes(user.email) && (
+              <MDBBtn color="primary" onClick={() => sendFriendRequest(user.email)}>
                 Ajouter
+              </MDBBtn>
+            )}
+            {sentFriendRequests.includes(user.email) && (
+              <MDBBtn color="secondary" disabled>
+                Demande d'ami envoyée
               </MDBBtn>
             )}
           </div>
