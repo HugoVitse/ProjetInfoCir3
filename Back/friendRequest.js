@@ -24,15 +24,13 @@ async function friendRequests(req,res){
             const searchMail = req.body.email
         
             const findOneResult = await collection.findOne({'email': email});
-
-            if('friendRequests' in findOneResult){
-
+            if(Object.keys(findOneResult).includes('friendRequests')){
                 if(findOneResult.friendRequests.includes(searchMail)){
                     res.send()
                     return
                 }
 
-                const findOneResult = await collection.findOneAndUpdate({'email': searchMail},{$push:{friendRequests:email}});
+                const findOneResult2 = await collection.findOneAndUpdate({'email': searchMail},{$push:{friendRequests:email}});
                 res.send()
                 return
             }

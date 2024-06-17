@@ -56,12 +56,12 @@ const Friends = () => {
     fetchUsers();
   }, [navigate]);
 
-  const addFriend = async (email) => {
+  const addFriend = async (friendEmail) => {
     try {
-      const response = await axios.post('http://localhost/addFriend', { email }, { withCredentials: true });
+      const response = await axios.post('http://localhost/addFriend', { email: friendEmail }, { withCredentials: true });
       if (response.status === 200) {
         // Mettre à jour localement la liste des amis si l'ajout côté serveur réussit
-        setFriends(prevFriends => [...prevFriends, email]);
+        setFriends(prevFriends => [...prevFriends, friendEmail]);
       }
     } catch (error) {
       console.error('Erreur lors de l\'ajout de l\'ami :', error);

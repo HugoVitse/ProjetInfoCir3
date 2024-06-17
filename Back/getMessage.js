@@ -30,11 +30,17 @@ async function getMessage(req,res){
             const findOneResult = await collection.findOne({_id:oid})
             console.log(findOneResult.chat)
             if(findOneResult == null || findOneResult.chat == null){
-                res.send([])
+                res.send({
+                    participants:findOneResult.participants,
+                    chat:[]
+                })
                 return
             }
             else{
-                res.send(findOneResult.chat)
+                res.send({
+                    chat:findOneResult.chat,
+                    participants:findOneResult.participants
+                })
                 return
             }
 
