@@ -1,15 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MDBIcon, MDBListGroup, MDBListGroupItem, MDBBtn } from 'mdb-react-ui-kit';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { Container } from '@mui/material';
+import axios from 'axios';
+import Config from '../config.json';
+import Notif from './Notif'; // Importer le composant Notif
 
 const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => {
+  const [hasNotifications, setHasNotifications] = useState(false); // État local pour suivre les notifications non lues
+
+  // Fonction pour mettre à jour l'état des notifications dans NavBar
+  const updateNotificationStatus = (hasNotifications) => {
+    setHasNotifications(hasNotifications);
+  };
+
+  // Effet pour initialiser les données et surveiller les changements
+  useEffect(() => {
+    const fetchData = async () => {
+      const jwt = Cookies.get("jwt");
+      try {
+        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { headers: { Cookie: `jwt=${jwt}` }, withCredentials: true });
+        console.log('Data received from API:', response.data);
+        // Mettre à jour l'état local des notifications
+        setHasNotifications(response.data.friendRequests && response.data.friendRequests.length > 0);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []); // Ce useEffect ne dépend pas de updateNotificationStatus, donc pas besoin de le passer en dépendance
+
+  // Fonction pour déconnecter l'utilisateur
   const logout = () => {
     Cookies.set("jwt", "");
     window.location.reload();
   };
 
+  // Rendu du composant NavBar
   return (
     <Container className="bg-theme-inv d-flex h-100 p-3 position-relative">
       <div className={`bg-theme-inv d-flex w-50 flex-column align-items-start p-3 h-100 ${isOpen ? 'show' : 'fade'}`} id="navbar">
@@ -30,28 +58,27 @@ const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => 
             <MDBIcon fas icon="home" className="me-3" />
             Home
           </MDBListGroupItem>
-          
-        <MDBListGroupItem tag={Link} action to="/Catalogue" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
-          <MDBIcon fas icon="book-open" className="me-3" />
-          Catalogue
-        </MDBListGroupItem>
-        <MDBListGroupItem tag={Link} action to="/Evenements" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
-          <MDBIcon fas icon="fas fa-calendar" className="me-3" />
-          Evenements
-        </MDBListGroupItem>
-        <MDBListGroupItem tag={Link} action to="/Account" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
-          <MDBIcon fas icon="address-book" className="me-3" />
-          Profil
-        </MDBListGroupItem>
-        <MDBListGroupItem tag={Link} action to="/MoodTracker" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
-          <MDBIcon fas icon="fas fa-chart-column" className="me-3" />
-          Moodtracker
-        </MDBListGroupItem>
-        <MDBListGroupItem tag={Link} action to="/Notif" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
-          <MDBIcon fas icon="fas fa-bell" className="me-3" />
-          Notifications
-        </MDBListGroupItem>
-        <MDBBtn onClick={logout} style={{ background: 'linear-gradient(135deg, #00c6ff, #0072ff)' }}>Logout</MDBBtn>
+          <MDBListGroupItem tag={Link} action to="/Catalogue" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
+            <MDBIcon fas icon="book-open" className="me-3" />
+            Catalogue
+          </MDBListGroupItem>
+          <MDBListGroupItem tag={Link} action to="/Evenements" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
+            <MDBIcon fas icon="fas fa-calendar" className="me-3" />
+            Evenements
+          </MDBListGroupItem>
+          <MDBListGroupItem tag={Link} action to="/Account" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
+            <MDBIcon fas icon="address-book" className="me-3" />
+            Profil
+          </MDBListGroupItem>
+          <MDBListGroupItem tag={Link} action to="/MoodTracker" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
+            <MDBIcon fas icon="fas fa-chart-column" className="me-3" />
+            Moodtracker
+          </MDBListGroupItem>
+          <MDBListGroupItem tag={Link} action to="/Notif" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
+            <MDBIcon fas icon={ hasNotifications ? "fas fa-bell" : "fas fa-bell-slash"} className="me-3" />
+            Notifications
+          </MDBListGroupItem>
+          <MDBBtn onClick={logout} style={{ background: 'linear-gradient(135deg, #00c6ff, #0072ff)' }}>Logout</MDBBtn>
         </MDBListGroup>
         <hr className="border-secondary w-100" />
         <div className="text-center w-100">

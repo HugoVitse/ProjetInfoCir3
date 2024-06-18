@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MDBContainer, MDBListGroup, MDBInputGroup, MDBListGroupItem, MDBInput, MDBBtn } from 'mdb-react-ui-kit';
+import { MDBContainer, MDBListGroup, MDBInputGroup, MDBListGroupItem, MDBInput, MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
@@ -70,6 +70,18 @@ const Friends = () => {
     }
   };
 
+  const acceptFriendRequest = async (friendEmail) => {
+    try {
+      const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/acceptFriendRequest`, { email: friendEmail }, { withCredentials: true });
+      if (response.status === 200) {
+        // Mettre à jour localement la liste des amis en retirant l'utilisateur accepté
+        setFriends(prevFriends => prevFriends.filter(friend => friend !== friendEmail));
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'acceptation de la demande d\'ami :', error);
+    }
+  };
+
   const renderUsers = () => {
     // Filtrer les amis et les autres utilisateurs
     let friendsList = [];
@@ -110,25 +122,31 @@ const Friends = () => {
       }
 
       return userList.map((user) => (
-        <MDBListGroupItem key={user._id}>
+        <MDBListGroupItem key={user._id} className={friends.includes(user.email) ? 'friend-item' : ''}>
           <div className="d-flex align-items-center">
             <img
               src={`http://localhost/${user.profileImage}`}
               alt={`${user.firstName} ${user.lastName}`}
               style={{ width: '50px', height: '50px', borderRadius: '50%' }}
             />
-            <div className="ms-3">
+            <div className="m-3">
               <h5>{`${user.firstName} ${user.lastName}`}</h5>
               {/* Ajoutez ici d'autres détails de l'utilisateur si nécessaire */}
             </div>
             {!friends.includes(user.email) && !sentFriendRequests.includes(user.email) && (
               <MDBBtn color="primary" onClick={() => sendFriendRequest(user.email)}>
+                <MDBIcon icon="user-plus" className="me-2" />
                 Ajouter
               </MDBBtn>
             )}
             {sentFriendRequests.includes(user.email) && (
               <MDBBtn color="secondary" disabled>
                 Demande d'ami envoyée
+              </MDBBtn>
+            )}
+            {friends.includes(user.email) && (
+              <MDBBtn color="success" onClick={() => acceptFriendRequest(user.email)}>
+                Accepter
               </MDBBtn>
             )}
           </div>

@@ -1,50 +1,10 @@
 [
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-tissus/3192898-1-fre-FR/Atelier-tissus_equipment_image_lead_child.jpg",
-    "name": "Atelier tissus",
-    "type": "Stage et atelier",
-    "description": "DIY accessoires, customisation, réparation (Ados, Adultes)",
-    "date": "Jusqu'au 21 juin 2024",
-    "adresse": "12bis rue de Thionville 59000 Lille"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-guidee-de-l-ancien-hospice-gantois6/3265061-1-fre-FR/Visite-guidee-de-l-ancien-Hospice-Gantois_equipment_image_lead_child.jpg",
     "name": "Visite guidee de l ancien Hospice Gantois",
     "type": "Visite",
     "description": "Visite guidée de l'ancien Hospice Gantois de Lille proposée par l'Association du Musée Hospitalier Régional de Lille.",
     "date": "Jusqu'au 24 septembre 2024",
-    "adresse": "224 rue Pierre Mauroy"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/gala-d-etoiles3/3304396-1-fre-FR/GALA-D-ETOILES_equipment_image_lead_child.jpg",
-    "name": "GALA D ETOILES",
-    "type": "Spectacle",
-    "description": "SAISON 14",
-    "date": "Jusqu'au 22 juin 2024",
-    "adresse": "777 pont de Flandres, 59777 LILLE0328144777"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/ecole-robotique-algora-lille/3365309-1-fre-FR/Ecole-Robotique-ALGORA-LILLE_equipment_image_lead_child.jpg",
-    "name": "Ecole Robotique ALGORA LILLE",
-    "type": "Stage et atelier",
-    "description": "L’ADEP propose de mettre en place des ateliers ludiques et concrets permettant aux jeunes d’apprendre à programmer et faire bouger des robots qu’i...",
-    "date": "Jusqu'au 26 juin 2024",
-    "adresse": "67 appartement 1 rue de Flandre 59000 Lille0686562470"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/ateliers-graines-d-architectes/3387015-1-fre-FR/Ateliers-Graines-d-Architectes_equipment_image_lead_child.jpg",
-    "name": "Ateliers Graines d Architectes",
-    "type": "Stage et atelier",
-    "description": "Ateliers jeune public (7/13ans) autour de l'architecture et la ville",
-    "date": "Jusqu'au 19 juin 2024",
-    "adresse": "292 Rue Camille Guérin, 59800 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/exposition-la-reconversion-du-patrimoine-hospitalier-lillois2/3436212-1-fre-FR/Exposition-La-reconversion-du-patrimoine-hospitalier-lillois_equipment_image_lead_child.jpg",
-    "name": "Exposition La reconversion du patrimoine hospitalier lillois",
-    "type": "Exposition",
-    "description": "Exposition réalisée par l’Association du Musée Hospitalier Régional de Lille.",
-    "date": "Jusqu'au 29 octobre 2024",
     "adresse": "224 rue Pierre Mauroy"
   },
   {
@@ -93,14 +53,6 @@
     "type": "Exposition",
     "description": "Exposition de la résidence de territoire de Bakonet Jackonet",
     "date": "Jusqu'au 13 juillet 2024",
-    "adresse": "86 rue des Meuniers 59 000 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/residence-de-territoire-de-jeremy-moncheaux/3463152-1-fre-FR/Residence-de-territoire-de-Jeremy-Moncheaux_equipment_image_lead_child.jpg",
-    "name": "Residence de territoire de Jeremy Moncheaux",
-    "type": "",
-    "description": "Résidence de l'artiste Jérémy Moncheaux",
-    "date": "Jusqu'au 10 juillet 2024",
     "adresse": "86 rue des Meuniers 59 000 Lille"
   },
   {
@@ -316,7 +268,7 @@
     "name": "Rendez vous au jardin des Passereaux",
     "type": "Nature / environnement",
     "description": "Animations autour de la nature",
-    "date": "Jusqu'au 18 juin 2024",
+    "date": "Du 31 mai au 18 juin 2024",
     "adresse": "208 rue des Bois Blancs"
   },
   {
@@ -334,14 +286,6 @@
     "description": "Venez découvrir une sélection de travaux issus des ateliers de photographie du CAPV !",
     "date": "Du 2 au 29 juin 2024",
     "adresse": "4 rue des Sarrazins"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/la-chauve-souris/3492389-1-fre-FR/La-Chauve-Souris_equipment_image_lead_child.jpg",
-    "name": "La Chauve Souris",
-    "type": "Spectacle",
-    "description": "Un opéra pétillant",
-    "date": "Du 4 au 17 juin 2024",
-    "adresse": "Place du Théâtre"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/concours-quartiers-fleuris-2024/3515361-1-fre-FR/Concours-Quartiers-fleuris-2024_equipment_image_lead_child.jpg",
@@ -432,14 +376,6 @@
     "adresse": "tripostal lille"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/l-expo-collective-du-photo-club-de-lille/3458297-1-fre-FR/L-expo-collective-du-photo-club-de-Lille_equipment_image_lead_child.jpg",
-    "name": "L expo collective du photo club de Lille",
-    "type": "Exposition",
-    "description": "Les membres du PhotoClub de Lille Exposent leurs Séries",
-    "date": "Jusqu'au 09 juillet 2024",
-    "adresse": "Place Erasme de Rotterdam Lomme"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/sainte-face-makis-yalenios/3494031-1-fre-FR/Sainte-Face-Makis-YALENIOS_equipment_image_lead_child.jpg",
     "name": "Sainte Face Makis YALENIOS",
     "type": "Exposition",
@@ -464,36 +400,12 @@
     "adresse": "avenue du 42e régiment, Lille+33 (0)359 579 400"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/conference-les-amis-des-musees-de-lille5/3471129-1-fre-FR/Conference-Les-Amis-des-Musees-de-Lille_equipment_image_lead_child.jpg",
-    "name": "Conference Les Amis des Musees de Lille",
-    "type": "Rencontre / conférence / débat",
-    "description": "Lundi 17 juin à 17h30",
-    "date": "Le 17 juin 2024",
-    "adresse": "32, rue de la Monnaie 59000 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/inclusion-des-personnes-lgbtqia-en-milieu-professionnel/3493412-1-fre-FR/Inclusion-des-personnes-LGBTQIA-en-milieu-professionnel_equipment_image_lead_child.jpg",
-    "name": "Inclusion des personnes LGBTQIA en milieu professionnel",
-    "type": "Rencontre / conférence / débat",
-    "description": "Table ronde sur l'inclusion des personnes LGBTQIA+ en milieu professionnel",
-    "date": "Le 17 juin 2024",
-    "adresse": "Place Augustin Laurent, Lille"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/portes-ouvertes-au-faubourg-des-musiques/3508447-1-fre-FR/Portes-Ouvertes-au-Faubourg-des-Musiques_equipment_image_lead_child.jpg",
     "name": "Portes Ouvertes au Faubourg des Musiques",
     "type": "Visite",
     "description": "Découvrez la diversité musicale du Faubourg des Musiques",
     "date": "Du 17 au 20 juin 2024",
     "adresse": "15 Avenue Verhaeren 59000 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/raphael-godeau-claire-marchal-damasiewicz-kasprzyk-lesiak-invite-peter-orins/3510048-1-fre-FR/Raphael-Godeau-Claire-Marchal-Damasiewicz-Kasprzyk-Lesiak-invite-Peter-Orins_equipment_image_lead_child.jpg",
-    "name": "Raphael Godeau Claire Marchal Damasiewicz Kasprzyk Lesiak invite Peter Orins",
-    "type": "Concert",
-    "description": ".",
-    "date": "Le 17 juin 2024",
-    "adresse": "250 bis boulevard Victor Hugo, 59000 Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/nos-balades-de-l-ete/3516178-1-fre-FR/Nos-balades-de-l-ete_equipment_image_lead_child.jpg",
@@ -512,20 +424,20 @@
     "adresse": "32 rue de la Monnaie, 59800 Lille"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/conference-les-amis-des-musees-de-lille7/3517001-1-fre-FR/Conference-Les-Amis-des-Musees-de-Lille_equipment_image_lead_child.jpg",
-    "name": "Conference Les Amis des Musees de Lille",
-    "type": "Rencontre / conférence / débat",
-    "description": "Lundi 17 juin à 17h30",
-    "date": "Le 17 juin 2024",
-    "adresse": "32 rue de la Monnaie, 59800 Lille"
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/semaine-portes-ouvertes/3527767-1-fre-FR/Semaine-Portes-Ouvertes_equipment_image_lead_child.jpg",
+    "name": "Semaine Portes Ouvertes",
+    "type": "Stage et atelier",
+    "description": "Semaine Portes Ouvertes",
+    "date": "Du 17 au 19 juin 2024",
+    "adresse": "38 rue d'Anvers, Lille"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/tea-time-le-plaisir-de-l-anglais-a-la-bibliotheque12/3494866-1-fre-FR/Tea-Time-le-plaisir-de-l-anglais-a-la-bibliotheque_equipment_image_lead_child.jpg",
-    "name": "Tea Time le plaisir de l anglais a la bibliotheque",
-    "type": "",
-    "description": "La lecture accessible en Version Originale.",
-    "date": "Le 18 juin 2024",
-    "adresse": "18 Rue Bourjembois, 59000 Lille"
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/semaine-portes-ouvertes2/3527808-1-fre-FR/Semaine-portes-ouvertes_equipment_image_lead_child.jpg",
+    "name": "Semaine portes ouvertes",
+    "type": "Stage et atelier",
+    "description": "Semaine Portes Ouvertes",
+    "date": "Du 17 au 19 juin 2024",
+    "adresse": "38 rue d'Anvers, Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/table-ronde-l-invisibilite-des-femmes-dans-la-culture/3508488-1-fre-FR/TABLE-RONDE-L-invisibilite-des-femmes-dans-la-culture_equipment_image_lead_child.jpg",
@@ -566,14 +478,6 @@
     "description": "Jam Session Jazz et Atelier Vocal",
     "date": "Le 18 juin 2024",
     "adresse": "250 bis Boulevard Victor Hugo 59000 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/je-reussis-mon-projet-solaire-photovoltaique4/3461951-1-fre-FR/Je-reussis-mon-projet-solaire-photovoltaique_equipment_image_lead_child.jpg",
-    "name": "Je reussis mon projet solaire photovoltaique",
-    "type": "",
-    "description": "L’énergie solaire, ça fonctionne même dans notre région !",
-    "date": "Le 19 juin 2024",
-    "adresse": "7 bis rue Racine 59000 Lille03 59 00 03 59"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-pedagogique-collections-permanentes/3471170-1-fre-FR/Visite-pedagogique-Collections-permanentes_equipment_image_lead_child.jpg",
@@ -718,14 +622,6 @@
     "description": "À l’occasion de la journée mondiale des réfugié·es, Kubra Khademi invite les femmes qui le souhaitent à la rejoindre au cours d’une marche d’une j...",
     "date": "Le 20 juin 2024",
     "adresse": "70 rue des sarrazins"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/les-grandes-gamelles-cantine-solidaire-ouverte-a-tous2/3418688-1-fre-FR/Les-Grandes-Gamelles-cantine-solidaire-ouverte-a-tous_equipment_image_lead_child.jpg",
-    "name": "Les Grandes Gamelles cantine solidaire ouverte a tous",
-    "type": "",
-    "description": "Les Grandes Gamelles investissent la Cuisine Commune de Chaud Bouillon toutes les deux semaines pour un moment convivial autour d'un menu unique p...",
-    "date": "Du 20 juin au 18 juillet 2024",
-    "adresse": "70 passage de l'Internationale, Lille06 09 11 63 64"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/side-step-visite-avec-senor-karo/3508652-1-fre-FR/SIDE-STEP-Visite-avec-Senor-Karo_equipment_image_lead_child.jpg",
@@ -952,28 +848,12 @@
     "adresse": "34 rue du Long Pot"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/gala-d-etoiles-saison-14/3301881-1-fre-FR/GALA-D-ETOILES-Saison-14_equipment_image_lead_child.jpg",
-    "name": "GALA D ETOILES Saison 1",
-    "type": "Spectacle",
-    "description": "Une succession de ballets pour découvrir quelques-uns des grands danseurs de la scène actuelle : Étoiles, solistes de l’Opéra de Paris, artistes i...",
-    "date": "Le 22 juin 2024",
-    "adresse": "777 pont de Flandres, 59777 LILLE0328144777"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/univershifte-2024/3491034-1-fre-FR/UniverShifte-2024_equipment_image_lead_child.jpg",
     "name": "UniverShifte 202",
     "type": "Rencontre / conférence / débat",
     "description": "2 jours pour mettre le cap vers un futur soutenable",
     "date": "Du 22 au 23 juin 2024",
     "adresse": "60 boulevard Vauban, 59800 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/repair-cafe-ne-jetez-rien-reparez-tout8/3461992-1-fre-FR/Repair-Cafe-ne-jetez-rien-reparez-tout_equipment_image_lead_child.jpg",
-    "name": "Repair Cafe ne jetez rien reparez tout",
-    "type": "Stage et atelier",
-    "description": "La Maison de l’Habitat Durable organise son Repair Café",
-    "date": "Le 22 juin 2024",
-    "adresse": "7 bis rue Racine 59000 Lille03 59 00 03 59"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/decouvertes-nature-fives/3476290-1-fre-FR/Decouvertes-nature-Fives_equipment_image_lead_child.jpg",
@@ -1062,6 +942,14 @@
     "description": "En collaboration avec le Centre D'arts Plastiques et Visuels de Lille",
     "date": "Du 22 juin au 6 juillet 2024",
     "adresse": "4 rue des Sarrazins03 20 54 71 84"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/after-music/3527849-1-fre-FR/After-Music_equipment_image_lead_child.jpg",
+    "name": "After Music",
+    "type": "Fête / festival",
+    "description": "MUSIC / FOOD / DRINKS / COCKTAILS / PERFORMER ",
+    "date": "Du 22 au 23 juin 2024",
+    "adresse": "74 rue Jacquemars Giélée"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/le-quai-des-artistes-15-edition/3487394-1-fre-FR/Le-Quai-des-artistes-15-edition_equipment_image_lead_child.jpg",
@@ -1262,6 +1150,14 @@
     "description": "En collaboration avec Latitudes Contemporaines",
     "date": "Le 27 juin 2024",
     "adresse": "70 rue des sarrazins"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/tous-au-tire-laine-fete-les-pratiques-amateures/3527890-1-fre-FR/Tous-au-Tire-Laine-fete-les-pratiques-amateures_equipment_image_lead_child.jpg",
+    "name": "Tous au Tire Laine fete les pratiques amateures",
+    "type": "Concert",
+    "description": "Avec le Faubourg des Musiques, Messiê Forró et l’Ecole de l’Oralité du Tire-Laine !",
+    "date": "Le 27 juin 2024",
+    "adresse": "50 rue de Thumesnil 59000 Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/losing-it-samaa-wakim-et-samar-haddad-king/3512723-1-fre-FR/LOSING-IT-Samaa-Wakim-et-Samar-Haddad-King_equipment_image_lead_child.jpg",
@@ -1592,20 +1488,20 @@
     "adresse": "25/27 Place Louise de Béttignies 59 000 Lille"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/les-petits-labos/3520309-1-fre-FR/Les-petits-labos_equipment_image_lead_child.jpg",
-    "name": "Les petits labos",
-    "type": "Stage et atelier",
-    "description": "Les squelettes",
-    "date": "Le 03 juillet 2024",
-    "adresse": "32-34 rue Edouard Delesalle"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/olympiades-culturelles-escrime-et-litterature2/3511921-1-fre-FR/Olympiades-culturelles-Escrime-et-litterature_equipment_image_lead_child.jpg",
     "name": "Olympiades culturelles Escrime et litterature",
     "type": "Spectacle",
     "description": "Spectacle d’escrime artistique « Botte Noire »",
     "date": "Le 03 juillet 2024",
     "adresse": "134 rue de l'Abbé Aerts 59 000 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/les-petits-labos/3520309-1-fre-FR/Les-petits-labos_equipment_image_lead_child.jpg",
+    "name": "Les petits labos",
+    "type": "Stage et atelier",
+    "description": "Les squelettes",
+    "date": "Le 03 juillet 2024",
+    "adresse": "32-34 rue Edouard Delesalle"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/le-temps-des-histoires8/3517236-1-fre-FR/Le-temps-des-histoires_equipment_image_lead_child.jpg",
@@ -2248,6 +2144,14 @@
     "adresse": "Place du concert Lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-famille-dessine-ton-sceau3/3527931-1-fre-FR/Atelier-famille-Dessine-ton-sceau_equipment_image_lead_child.jpg",
+    "name": "Atelier famille Dessine ton sceau",
+    "type": "Stage et atelier",
+    "description": "Un sceau : qu’est-ce que c’est ? A quoi sert-il ? Venez le découvrir en famille (enfants à partir de 6 ans), aux Archives municipales de Lille (Hô...",
+    "date": "Le 19 juillet 2024",
+    "adresse": "59033 Pl. Augustin Laurent, 59800 Lille"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/les-petits-labos5/3520749-1-fre-FR/Les-petits-labos_equipment_image_lead_child.jpg",
     "name": "Les petits labos",
     "type": "Stage et atelier",
@@ -2472,6 +2376,14 @@
     "adresse": "Place du concert Lille"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-famille-dessine-ton-sceau4/3527978-1-fre-FR/Atelier-famille-Dessine-ton-sceau_equipment_image_lead_child.jpg",
+    "name": "Atelier famille Dessine ton sceau",
+    "type": "Stage et atelier",
+    "description": "Un sceau : qu’est-ce que c’est ? A quoi sert-il ? Venez le découvrir en famille (enfants à partir de 6 ans) aux Archives municipales de Lille (Hôt...",
+    "date": "Le 09 août 2024",
+    "adresse": "59033 Pl. Augustin Laurent, 59800 Lille"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-guidee-collections-permanentes14/3498703-1-fre-FR/Visite-guidee-Collections-permanentes_equipment_image_lead_child.jpg",
     "name": "Visite guidee Collections permanentes",
     "type": "Visite",
@@ -2608,6 +2520,14 @@
     "adresse": "Place Rihour"
   },
   {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-famille-dessine-ton-sceau5/3528019-1-fre-FR/Atelier-famille-Dessine-ton-sceau_equipment_image_lead_child.jpg",
+    "name": "Atelier famille Dessine ton sceau",
+    "type": "Stage et atelier",
+    "description": "Un sceau : qu’est-ce que c’est ? A quoi sert-il ? Venez le découvrir en famille (enfants à partir de 6 ans) aux Archives municipales de Lille (Hôt...",
+    "date": "Le 30 août 2024",
+    "adresse": "59033 Pl. Augustin Laurent, 59800 Lille"
+  },
+  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/dj-farid-dj-sebti/3516607-1-fre-FR/Dj-Farid-DJ-Sebti_equipment_image_lead_child.jpg",
     "name": "Dj Farid DJ Sebti",
     "type": "",
@@ -2670,14 +2590,6 @@
     "description": "Wazemmes, du village au quartier",
     "date": "Le 08 septembre 2024",
     "adresse": "place Philippe de Girard, Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/electric-test-days-tour-de-france-des-mobilites-electriques/3434099-1-fre-FR/Electric-Test-Days-tour-de-France-des-mobilites-electriques_equipment_image_lead_child.jpg",
-    "name": "Electric Test Days tour de France des mobilites electriques",
-    "type": "Salon / foire",
-    "description": "Electric Test Days : Lille accueille le tour de France des mobilités électriques",
-    "date": "Le 08 septembre 2024",
-    "adresse": "261 Boulevard de Tournai"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/balade-sonore/3506310-1-fre-FR/Balade-sonore_equipment_image_lead_child.jpg",
