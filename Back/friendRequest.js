@@ -24,7 +24,9 @@ async function friendRequests(req,res){
             const searchMail = req.body.email
         
             const findOneResult = await collection.findOne({'email': email});
+            console.log(Object.keys(findOneResult))
             if(Object.keys(findOneResult).includes('friendRequests')){
+                console.log("ok")
                 if(findOneResult.friendRequests.includes(searchMail)){
                     res.send()
                     return

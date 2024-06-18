@@ -13,11 +13,14 @@ import { ScreenHeight } from '@rneui/base';
 import { user } from '@/constants/user';
 import {message} from '@/constants/message';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import ImageColors, { getColors } from 'react-native-image-colors'
 
 const { width } = Dimensions.get('window')
 
 const HEADER_HEIGHT = 100;
 const drawerWidth = 75
+
+
 
 export default function SettingsScreen() {
   const { id } = useLocalSearchParams();
@@ -38,6 +41,7 @@ export default function SettingsScreen() {
   const rightDecal =  useState(new Animated.Value(-drawerWidth*4 - 10))[0];
   const [drawerDeployed, setDrawerDeployed] = useState(false)
   const [active, setActive] = useState('');
+  const [allUsers, setAllUsers] = useState<user[]>([])
 
   const router = useRouter();
 
@@ -72,12 +76,19 @@ export default function SettingsScreen() {
     
     wrap()
 
+    const wrapAllUsers = async()=>{
+      const jwt_cookie = await AsyncStorage.getItem("jwt")
+      const reponseUsers = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`, {headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      setAllUsers(reponseUsers.data)
+    }
+    wrapAllUsers()
+
     let int = setInterval(()=>{
       wrap()    
     },1000)
 
     return ()=>{clearInterval(int)}
-  },[router])
+  },[])
 
 
   const startAnimation = () => {
@@ -131,46 +142,58 @@ export default function SettingsScreen() {
       endAnimation()
     }
   },[messageToSend])
+
   
 
 
   useEffect(()=>{
-    if(message.length >0){
-    const wrap = async()=>{
-      
-        const jwt = await AsyncStorage.getItem("jwt")
-        const decoded:user = jwtDecode(jwt?jwt:"")
-        let messages = []
-     
-        for(let i = 0; i<message.length;i++){
-          let b = decoded.email != message[i].author
-          
-
-          messages.push(
-            <View style={{flexDirection: 'row', marginVertical: 5, marginTop: (i-1 == -1 ? 20 : (message[i-1].author == message[i].author ? 0 : 20)), alignSelf: (message[i].author == decoded.email ? 'flex-end' : 'flex-start')}}>
-              { !b ? <></>  : ( (i-1 == -1) ? (<Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${message[i].author}.png`}} /> ): ((message[i-1].author == message[i].author ? <></> : <Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${message[i].author}.png`}} />)))}
-              <View style={[styles.messages, (message[i].author == decoded.email ? _Theme.themeBackMyMessage : _Theme.themeBackMessage), (i-1 == -1 ? {} : (message[i-1].author == message[i].author ? (message[i].author == decoded.email ? {marginRight: 40} : {marginLeft: 40}) : {}))]}><Text style={ _Theme.themeText}>{message[i].message}</Text></View>
-              { b ? <></>  : ( (i-1 == -1) ? (<Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${message[i].author}.png`}} /> ): ((message[i-1].author == message[i].author ? <></> : <Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${message[i].author}.png`}} />)))}
-            </View>
-          )
-        }
+    if(message.length >0 && allUsers.length > 0){
+      const wrap = async()=>{
         
-     
-  
-        setMessageComponent(messages)
-      }
+          const jwt = await AsyncStorage.getItem("jwt")
+          const decoded:user = jwtDecode(jwt?jwt:"")
+          let messages = []
+      
     
-    wrap()
-    setTimeout(()=>{
-      if (scrollViewRef.current) {
-        scrollViewRef.current.scrollToEnd({ animated: false });
-      }
+          for(let i = 0; i<message.length;i++){
+            let b = decoded.email != message[i].author
+
+            let user = allUsers.find((user) => user.email == message[i].author)
+
+            // let colori = await ImageColors.getColors(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${message[i].author}.png`)
+            // let color = colori.platform == 'android' ? colori.dominant : (colori.platform==='ios'?colori.background:"black")
+            let color = 'black'
+            const r = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getColor`,{email:message[i].author},{headers:{Cookie:`jwt=${jwt}`},withCredentials:false})
+            color = r.data
+        
+            // const colors = await ImageColors.getColors(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${message[i].author}.png`)
+            
+
+            messages.push(
+              <View style={{flexDirection: 'row', marginVertical: 5, marginTop: (i-1 == -1 ? 20 : (message[i-1].author == message[i].author ? 0 : 20)), alignSelf: (message[i].author == decoded.email ? 'flex-end' : 'flex-start')}}>
+                { !b ? <></>  : ( (i-1 == -1) ? (<Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${user?.image}`}} /> ): ((message[i-1].author == message[i].author ? <></> : <Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${user?.image}`}} />)))}
+                <View style={[styles.messages, (message[i].author == decoded.email ? _Theme.themeBackMyMessage : _Theme.themeBackMessage), (i-1 == -1 ? {} : (message[i-1].author == message[i].author ? (message[i].author == decoded.email ? {marginRight: 40} : {marginLeft: 40}) : {}))]}><Text style={[{marginBottom:5, color:color,fontWeight:'bold', textShadowColor:"black", textShadowRadius:1.9, textShadowOffset:{width:0,height:0.3}}]}>{user?.firstName}</Text><Text style={ _Theme.themeText}>{message[i].message}</Text></View>
+                { b ? <></>  : ( (i-1 == -1) ? (<Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${user?.image}`}} /> ): ((message[i-1].author == message[i].author ? <></> : <Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${user?.image}`}} />)))}
+              </View>
+            )
+          }
+          
+      
     
-    },200)
+          setMessageComponent(messages)
+        }
+      
+      wrap()
+      setTimeout(()=>{
+        if (scrollViewRef.current) {
+          scrollViewRef.current.scrollToEnd({ animated: false });
+        }
+      
+      },200)
     }
 
 
-  },[message])
+  },[message,allUsers])
 
 
 
@@ -304,6 +327,24 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     zIndex: 1,
+  },
+  outline: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 20,
+    color: 'white', // Couleur du texte intérieur
+  },
+  outlineText: {
+    position: 'absolute',
+    textAlign: 'center',
+    color: 'black', // Couleur du contour
+    // Définissez ici d'autres styles pour le contour (par exemple, borderWidth, borderColor, textShadowColor, etc.)
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 1,
   },
   input: {
     margin:10,

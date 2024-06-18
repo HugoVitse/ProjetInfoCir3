@@ -1,7 +1,7 @@
 import React , {useState,useEffect} from 'react';
 import {Link, useRouter} from 'expo-router'
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { ImageBackground, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { ImageBackground, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, useColorScheme, View } from 'react-native';
 import { Input,Icon } from 'react-native-elements';
 import {TextInput,Button,ActivityIndicator,MD2Colors} from 'react-native-paper'
 import {Image,Text} from 'react-native'
@@ -12,6 +12,7 @@ import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/d
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { setShouldAnimateExitingForTag } from 'react-native-reanimated/lib/typescript/reanimated2/core';
 import Config from '../config.json'
+import Theme from '@/constants/Theme';
 
 const RegisterScreen = () => {
   const [show, setShow] = useState(false);
@@ -39,7 +40,7 @@ const RegisterScreen = () => {
   const [confirmPass, onChangeconfirmPass] = useState('');
   const [nom, onChangeNom] = useState('');
   const [prenom, onChangePrenom] = useState('');
-
+  const [dol,setTheme] = useState(useColorScheme())
 
 
 
@@ -49,6 +50,8 @@ const RegisterScreen = () => {
   const [islogin,setLogin] = useState(-1)
 
   const router = useRouter();
+
+  const _Theme = Theme()
 
   const _storeData = async (key:string,data:string) => {
     try {
@@ -107,7 +110,7 @@ const RegisterScreen = () => {
     setisdate(isdate+1)
   },[date])
 
-  const image = require("../assets/images/back.png")
+  const image = dol==='light'?require("../assets/images/back.png"):require("../assets/images/backsombre.png")
   const register = async() => {
     const url = `${Config.scheme}://${Config.urlapi}:${Config.portapi}/register`;
     const data = {
@@ -164,43 +167,46 @@ const RegisterScreen = () => {
        
 
         <Image
-          source={require('../assets/images/logo.png')}
+          source={dol==='light'?require("../assets/images/logo.png"):require("../assets/images/logoWhite.png")}
           style={styles.image}
         />
       
 
         <TextInput
-          outlineColor={colorMain}
-          activeOutlineColor={colorMain}
+          outlineColor={_Theme.themeBouton.backgroundColor}
+          activeOutlineColor={_Theme.themeBouton.backgroundColor}
           theme={theme}
           label="Prénom"
           placeholder='Entrez votre prénom...'
           left={<TextInput.Icon icon="account" />}
           mode='outlined'
-          style={styles.input}
+          textColor={_Theme.themeText.color}
+          style={[styles.input,_Theme.themeBack2]}
           onChangeText={onChangePrenom}
         />
         <TextInput
-          outlineColor={colorMain}
-          activeOutlineColor={colorMain}
+          outlineColor={_Theme.themeBouton.backgroundColor}
+          activeOutlineColor={_Theme.themeBouton.backgroundColor}
           theme={theme}
           label="Nom"
           placeholder='Entrez votre nom...'
           left={<TextInput.Icon icon="account-outline" />}
           mode='outlined'
-          style={styles.input}
+          textColor={_Theme.themeText.color}
+          style={[styles.input,_Theme.themeBack2]}
           onChangeText={onChangeNom}
         />
        
         <TextInput
-          outlineColor={colorMain}
-          activeOutlineColor={colorMain}
+          outlineColor={_Theme.themeBouton.backgroundColor}
+          activeOutlineColor={_Theme.themeBouton.backgroundColor}
           theme={theme}
           label="Date de naissance"
           placeholder='Entrez votre date de naissance...'
           left={<TextInput.Icon icon="calendar" />}
           mode='outlined'
-          style={styles.input}
+          textColor={_Theme.themeText.color}
+          style={[styles.input,_Theme.themeBack2]}
           value={isdate>1?date.toDateString():""}
           onFocus={showDatepicker}
           onBlur={hideDatepicker}
@@ -218,48 +224,51 @@ const RegisterScreen = () => {
         />
       )}
         <TextInput
-          outlineColor={colorMain}
-          activeOutlineColor={colorMain}
+          outlineColor={_Theme.themeBouton.backgroundColor}
+          activeOutlineColor={_Theme.themeBouton.backgroundColor}
           theme={theme}
           label="Email"
           placeholder='Entrez votre email...'
           left={<TextInput.Icon icon="email" />}
           mode='outlined'
-          style={styles.input}
+          textColor={_Theme.themeText.color}
+          style={[styles.input,_Theme.themeBack2]}
           onChangeText={onChangeEmail}
         />
 
         <TextInput
-          outlineColor={colorMain}
-          activeOutlineColor={colorMain}
+          outlineColor={_Theme.themeBouton.backgroundColor}
+          activeOutlineColor={_Theme.themeBouton.backgroundColor}
           theme={theme}
           secureTextEntry={true}
           label="Mot de passe"
           placeholder='Entrez votre mot de passe...'
           left={<TextInput.Icon icon="lock-open" />}
           mode='outlined'
-          style={styles.input}
+          textColor={_Theme.themeText.color}
+          style={[styles.input,_Theme.themeBack2]}
           onChangeText={onChangePassword}
         />
         <TextInput
-          outlineColor={colorMain}
-          activeOutlineColor={colorMain}
+          outlineColor={_Theme.themeBouton.backgroundColor}
+          activeOutlineColor={_Theme.themeBouton.backgroundColor}
           theme={theme}
           secureTextEntry={true}
           label="Confirmation mot de passe"
           placeholder='Entrez à nouveau votre mot de passe...'
           left={<TextInput.Icon icon="lock" />}
           mode='outlined'
-          style={styles.input}
+          textColor={_Theme.themeText.color}
+          style={[styles.input,_Theme.themeBack2]}
           onChangeText={onChangeconfirmPass}
         />
 
-    <Button buttonColor={colorMain} icon="account-check" mode='contained-tonal' onPress={register} style={{marginTop:10,width:200}}>
+    <Button buttonColor={_Theme.themeBouton.backgroundColor} icon="account-check" mode='contained-tonal' onPress={register} style={{marginTop:10,width:200}}>
       Inscription
     </Button> 
     <View style={styles.horizontal}>
-      <Text>Déjà membre ?</Text>
-      <Link style={styles.link} href='..'> Connectez-vous </Link>
+      <Text style={[_Theme.themeText]}>Déjà membre ?</Text>
+      <Link style={[styles.link,{color:_Theme.themeBouton.backgroundColor}]} href='..'> Connectez-vous </Link>
     </View>
     <Text style={{color:'red'}}> {err}</Text>
    

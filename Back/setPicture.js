@@ -24,8 +24,9 @@ async function setPicture(req,res){
             const picture = req.body.picture.substring(22,req.body.picture.length)
             console.log(picture)
 
+       
         
-            const outputFile = path.join(__dirname, `profile_pictures/${email}.png`);
+            const outputFile = path.join(__dirname, `profile_pictures/${email}.${req.body.mime.split('/')[1]}`);
 
             // Écrire les données de l'image dans le fichier
             fs.writeFile(outputFile, picture, 'base64', (err) => {
@@ -37,7 +38,7 @@ async function setPicture(req,res){
             
         
   
-            const findOneResult = await collection.findOneAndUpdate({'email': email},{$set:{image:`profile_pictures/${email}.png`}});
+            const findOneResult = await collection.findOneAndUpdate({'email': email},{$set:{image:`profile_pictures/${email}.${req.body.mime.split('/')[1]}`}});
             
         
             

@@ -1,19 +1,22 @@
 import { Link, useFocusEffect, useRouter } from "expo-router";
-import { Text, View, StyleSheet ,Dimensions, Platform} from "react-native";
+import { Text, View, StyleSheet ,Dimensions, Platform, Animated} from "react-native";
 import { Avatar } from '@rneui/themed';
 import { useCallback, useEffect, useState  } from "react";
-import { Button, IconButton, List, MD3Colors, Modal, RadioButton, Snackbar, TextInput } from "react-native-paper";
+import { Button, Dialog, IconButton, List, MD3Colors, Modal, PaperProvider, Portal, RadioButton, Snackbar, TextInput } from "react-native-paper";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
 import Config from '../../config.json'
 import { Checkbox } from 'react-native-paper';
-import { ScrollView } from "react-native-gesture-handler";
+import { RectButton, ScrollView } from "react-native-gesture-handler";
 import { ScreenHeight, Slider ,Icon, ScreenWidth, ListItem} from "@rneui/base";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Theme from "@/constants/Theme";
 import RIcon from '@mdi/react';
 import { mdiCalendarMultipleCheck } from '@mdi/js';
 import { evenement } from "@/constants/evenement";
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { jwtDecode } from "jwt-decode";
+import { user } from "@/constants/user";
 
 const HEADER_HEIGHT = 100;
 const { width,height } = Dimensions.get('window');
@@ -21,17 +24,19 @@ const { width,height } = Dimensions.get('window');
 export default function HomeScreen() {
   const router = useRouter();
   const [visible, setVisible] = useState(false);
-
+  const [visibleD, setVisibleD] = useState(false);
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const [firstLogin,setFirstLogin] = useState(false)
+  const [sOd, setSOd] = useState('');
   const [value, setValue] = useState(0);
   const [value2, setValue2] = useState(0);
   const [checked1, setChecked1] = useState('first');
   const [checked2, setChecked2] = useState('first');
   const [checked3, setChecked3] = useState('first');
   const [checked4, setChecked4] = useState('first');
+  const [host,setHost] = useState("")
   const [text,setText] = useState("")
   const [events,setEvents] = useState<evenement[]>([])
   const [eventSoonComponent, setEventSoonComponent] = useState<React.JSX.Element[]>([])
@@ -40,6 +45,8 @@ export default function HomeScreen() {
   const [expandedPast, setExpandedPast] = useState(false);
   const [picture, setPicture] = useState("")
   const [notif,setNotif] = useState(false)
+  const [idToSoD,setidToSoD] = useState("")
+  const [me, setMe] = useState("")
   //snackbar
   const [snack, setSnack] = useState(false);
 
@@ -48,6 +55,9 @@ export default function HomeScreen() {
   const onDismissSnackBar = () => setSnack(false);
 
   const containerStyle = {backgroundColor: 'white', padding: 20};
+  const showDialog = () => setVisibleD(true);
+
+  const hideDialog = () => setVisibleD(false);
 
   const _Theme = Theme();
 
@@ -101,6 +111,15 @@ export default function HomeScreen() {
   },[]))
 
   useEffect(()=>{
+    const wrap = async()=>{
+      const jwt_cookie = await AsyncStorage.getItem("jwt")
+      const decode:user = jwtDecode(jwt_cookie?jwt_cookie:"")
+      setMe(decode.email)
+    }
+    wrap()
+  },[])
+
+  useEffect(()=>{
     let tmp:React.JSX.Element[] = []
     let tmp2:React.JSX.Element[] = []
     if(events.length>0){
@@ -109,6 +128,8 @@ export default function HomeScreen() {
         const today = new Date()
         if(date.getDate() >= today.getDate() && date.getMonth() >= today.getMonth() && date.getFullYear() >= today.getFullYear()){
           tmp.push(
+            <Swipeable id={`${events[i]._id}/${events[i].host}`} dragOffsetFromLeftEdge={0} renderLeftActions={renderLeftActions}>
+
             <ListItem 
               containerStyle={[_Theme.themeBack2]}
               key={i}  
@@ -123,6 +144,7 @@ export default function HomeScreen() {
               </ListItem.Content>
               <ListItem.Chevron style={_Theme.themeText}/>
             </ListItem>
+            </Swipeable>
           )
         }
         else{
@@ -213,8 +235,71 @@ export default function HomeScreen() {
     onToggleSnackBar()
   }
 
+  const desinscription = async() => {
+    const jwt_cookie = await AsyncStorage.getItem("jwt")
+    const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/ParticipantDelete`,{id:idToSoD},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+    console.log(response.data)
+    hideDialog()
+    const reponseEvents = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getEvents`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+    setEvents(reponseEvents.data)
+  }
+
+  const supprimerEvent = async() => {
+    const jwt_cookie = await AsyncStorage.getItem("jwt")
+    console.log("ok")
+    const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/EventDelete`,{id:idToSoD},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+    console.log(response.data)
+    hideDialog()
+    const reponseEvents = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getEvents`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+    setEvents(reponseEvents.data)
+
+  }
+  // (progress, dragX) => {
+  //   const trans = dragX.interpolate({
+  //     inputRange: [0, 50, 100, 101],
+  //     outputRange: [-20, 0, 0, 1],
+  //   });
+  //   return (
+  //     <RectButton style={styles.leftAction} onPress={this.close}>
+  //       <Animated.Text
+  //         style={[
+  //           styles.actionText,
+  //           {
+  //             transform: [{ translateX: trans }],
+  //           },
+  //         ]}>
+  //         Archive
+  //       </Animated.Text>
+  //     </RectButton>
+  //   );
+
+  const renderLeftActions = (progress:any, dragX:any,event:any) => {
+    console.log(event.props.id)
+    const _id = event.props.id.split("/")[0]
+    setidToSoD(_id)
+    const host = event.props.id.split("/")[1]
+    setHost(host)
+    return (
+      <RectButton style={{width:"30%",backgroundColor:me==host?"red":"orange",     justifyContent:'center',          alignItems:'center',}} onPress={()=>{showDialog()}}>
+        <Animated.Text
+          style={[
+          
+            {
+            
+              color: 'black',
+ 
+              textAlign:'center',
+            },
+          ]}>
+          {me==host?"Supprimer":"Se désinscrire"}
+        </Animated.Text>
+      </RectButton>
+    );
+  };
+
   
   return (
+    <PaperProvider>
     <View style={styles.container}>
     
       <View style={[styles.header,_Theme.themeBack,_Theme.themeShadow]}>
@@ -234,6 +319,18 @@ export default function HomeScreen() {
           onPress={() => router.push("/../profile")}
         />
       </View>
+      <Portal>
+        <Dialog visible={visibleD} onDismiss={hideDialog}>
+          <Dialog.Title> {me==host?"Supprimer":"Desinscription"}</Dialog.Title>
+          <Dialog.Content>
+            <Text>Etes-vous sur ?</Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={()=>{sOd=="Supprimer"?supprimerEvent():desinscription()}}>Oui</Button>
+            <Button onPress={hideDialog}>Annuler</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
       
       <View style={[styles.body,_Theme.themeBack2]}>
         <ScrollView style={{maxHeight:"45%"}}>
@@ -477,6 +574,7 @@ export default function HomeScreen() {
         Questionnaire rempli !
       </Snackbar>
     </View>
+    </PaperProvider>
   );
 }
 const colorMain = '#99c3ff'

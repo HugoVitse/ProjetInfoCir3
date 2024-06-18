@@ -7,7 +7,7 @@ const path = require('path')
 const app = express()
 app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());
-var whitelist = ['http://localhost:3000',undefined /** other domains if any */ ]
+var whitelist = ['https://localhost:3000',undefined /** other domains if any */ ]
 var corsOptions = {
   credentials: true,
   origin: function(origin, callback) {
@@ -46,8 +46,10 @@ const friendRequests = require('./friendRequest')
 const getMessage = require('./getMessage')
 const updateInfoWeb = require('./updateInfoWeb')
 const acceptFriendRequest = require('./acceptFriendRequest')
-
-
+const ParticipantDelete = require('./ParticipantDelete')
+const getColor = require('./getColor')
+const EventDelete = require('./EventDelete')
+const denyFriendRequest = require('./denyFriendRequest')
 
 async function serv(){
 
@@ -88,22 +90,28 @@ async function serv(){
   app.post('/friendRequests',friendRequests)
   app.post('/updateInfoWeb',updateInfoWeb)
   app.post('/acceptFriendRequest',acceptFriendRequest)
-
+  app.post('/getColor',getColor)
+  app.post('/ParticipantDelete',ParticipantDelete)
+  app.post('/EventDelete',EventDelete)
+  app.post('/denyFriendRequest',denyFriendRequest)
 
   console.log(path.join(__dirname, 'profile_pictures'))
 
   app.use('/profile_pictures',express.static(path.join(__dirname, 'profile_pictures')));
 
- 
-  https.createServer(
-      {
-          key: fs.readFileSync("ssl/private.key"),
-          cert: fs.readFileSync("ssl/certificate.crt"),
-      },
-      app
-  ).listen(port, () => {
+  app.listen(80, () => {
       console.log(`serever is runing at port ${port}`);
   })
+  // https.createServer(
+  //     {
+  //         key: fs.readFileSync("ssl/private.key"),
+  //         cert: fs.readFileSync("ssl/certificate.crt"),
+  //         ca: fs.readFileSync("ssl/ca_bundle.crt")
+  //     },
+  //     app
+  // ).listen(port, () => {
+  //     console.log(`serever is runing at port ${port}`);
+  // })
     
 }
 

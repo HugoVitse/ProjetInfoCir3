@@ -26,7 +26,8 @@ async function getAllUsers(req,res){
                 lastName: 1,    // Inclure le champ "email"
                 email: 1,
                 friends:1,
-                friendRequests:1
+                friendRequests:1,
+                image:1
 
               };
         

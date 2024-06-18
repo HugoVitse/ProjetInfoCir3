@@ -14,9 +14,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "config":{
+      "config": {
         "googleMapsApiKey": "AIzaSyAOpVdDvYUvbIB_u_d6k_HVfw13_Vux0K0"
-      }
+      },
+      "bundleIdentifier": "com.bwift.LinxLogin"
     },
     "android": {
       "adaptiveIcon": {

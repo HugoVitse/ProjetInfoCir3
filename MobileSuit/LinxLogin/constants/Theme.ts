@@ -7,6 +7,7 @@ export default function Theme() {
         themeBack: colorScheme === 'light' ? styles1.lightThemeBack : styles1.darkThemeBack,
         themeBack2: colorScheme === 'light' ? styles1.lightThemeBack2 : styles1.darkThemeBack2,
         themeText: colorScheme === 'light' ? styles1.lightThemeText : styles1.darkThemeText,
+        themeName: colorScheme === 'light' ? styles1.lightThemeName : styles1.darkThemeName,
         themeShadow: colorScheme === 'light' ? styles1.lightThemeShadow : styles1.darkThemeShadow,
         themeIcon: colorScheme === 'light' ? styles1.lightThemeIcon : styles1.darkThemeIcon,
         themeBouton: colorScheme === 'light' ? styles1.lightThemeBouton : styles1.darkThemeBouton,
@@ -33,6 +34,9 @@ const styles1 = StyleSheet.create ({
   },
   lightThemeText: {
     color: 'black'
+  },
+  lightThemeName: {
+    color: '#51adf6'
   },
   lightThemeShadow: {
     borderColor: 'white',
@@ -80,6 +84,9 @@ const styles1 = StyleSheet.create ({
   },
   darkThemeText: {
     color: 'white'
+  },
+  darkThemeName: {
+    color: '#51adf6'
   },
   darkThemeShadow: {
     borderColor: '#3c434b',

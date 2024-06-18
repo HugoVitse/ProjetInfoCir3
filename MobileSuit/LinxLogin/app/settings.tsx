@@ -1,11 +1,15 @@
 import { Stack, useRouter } from 'expo-router';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Animated } from 'react-native';
 import Theme from '@/constants/Theme';
 import { useEffect, useState } from 'react';
 import axios from 'axios'
 import Config from '../config.json'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Avatar, IconButton, List } from 'react-native-paper';
+import { IconButton, List } from 'react-native-paper';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { RectButton } from 'react-native-gesture-handler';
+import { Button, ListItem } from '@rneui/base';
+import { Avatar } from '@rneui/themed';
 
 const HEADER_HEIGHT = 100
 
@@ -13,9 +17,18 @@ export default function SettingsScreen() {
   const _Theme = Theme()
   const [friendRequests, setFriendRequests] = useState([])
   const [friendRequestListComp, setFriendRequestListComp] = useState<React.JSX.Element[]>([])
+  const [email, setEmail] = useState("")
 
   const router = useRouter()
 
+  
+
+  const denyFriendRequest  = async(email:string)=>{
+    const jwt_cookie = await AsyncStorage.getItem("jwt")
+    const r = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/denyFriendRequest`,{email:email},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+    const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+    setFriendRequests(response.data.friendRequests)
+  }
   const acceptFriendRequest  = async(email:string)=>{
 
     const data  = {
@@ -46,7 +59,30 @@ export default function SettingsScreen() {
       let tmp = []
       for(let i=0; i<friendRequests.length;i++){
         tmp.push(
-          <List.Item right={()=> <IconButton icon="account-plus"  iconColor={_Theme.themeIcon.color}    onPress={()=>{acceptFriendRequest(friendRequests[i])}}     style={{top:10}} ></IconButton>}  title={`${friendRequests[i]}` }  left={() => <Avatar.Image size={70} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${friendRequests[i]}.png`}} />} />
+         
+         
+             <ListItem.Swipeable 
+              containerStyle={[_Theme.themeBack2]}
+              key={i}  
+              bottomDivider 
+              style={_Theme.themeBack2}
+              onPress={() => {}}
+              leftContent={(reset) => (
+                <Button
+                  title="Supprimer"
+                  onPress={() => {reset();denyFriendRequest(friendRequests[i])}}
+                  icon={{ name: 'delete', color: 'white' }}
+                  buttonStyle={{ minHeight: '100%', backgroundColor: 'red' }}
+                />
+              )}
+            >
+              
+              <Avatar title={"ok"} source={{ uri: `` }} />
+              <Text> {friendRequests[i]}</Text>
+              <IconButton icon="account-plus"  iconColor={_Theme.themeIcon.color}    onPress={()=>{acceptFriendRequest(friendRequests[i])}}     style={{top:10}} ></IconButton>
+            </ListItem.Swipeable>
+    
+
         )
       }
 
@@ -69,9 +105,9 @@ export default function SettingsScreen() {
         
       </View>
     <View style={[styles.container, _Theme.themeBack2]}>
-      <List.Section>
+      <ListItem style={[{width:"100%"},_Theme.themeBack2]}>
         {friendRequestListComp}
-      </List.Section>
+      </ListItem>
     </View>
     </>
   );

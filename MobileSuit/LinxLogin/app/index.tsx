@@ -9,6 +9,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RootStackParamList } from '@/constants/type';
 import {TextInput,Button,ActivityIndicator, HelperText} from 'react-native-paper'
 import Config from '../config.json'
+import Theme from '@/constants/Theme';
+import axios from 'axios';
 
 const TextInputExample = () => {
   const [password, onChangePassword] = useState('');
@@ -23,6 +25,8 @@ const TextInputExample = () => {
   const [error,setError] = useState(false)
   
   const router = useRouter();
+
+  const _Theme = Theme()
 
   const _storeData = async (key:string,data:string) => {
     try {
@@ -96,15 +100,16 @@ const TextInputExample = () => {
     }
     
     // Await the response from the GET request
-    
+    console.log(url)
     const reponse = await fetch(url,{
       method: 'POST',
       headers: {
         "Accept": 'application/json',
         "Content-Type": 'application/json',
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     },);
+    console.log(reponse)
     console.log(reponse.status)
     if(reponse.status != 200){
       setError(true)
@@ -134,64 +139,65 @@ const TextInputExample = () => {
   return (
     
     <KeyboardAvoidingView
-      style={styles.view}
+      style={[styles.view,_Theme.themeBack2]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-
-
-
-      <Image
-        source={dol==='light'? require('../assets/images/logo.png'):require('../assets/images/logoWhite.png')}
-        style={styles.image}
-      />
-      
-     
-           
-      <TextInput
-          outlineColor={colorMain}
-          activeOutlineColor={colorMain}
-          theme={theme}
-          label="Email"
-          placeholder='Entrez votre email...'
-          left={<TextInput.Icon icon="email" />}
-          mode='outlined'
-          style={styles.input}
-          onChangeText={onChangeEmail}
-      />
-
-
       
 
+
+        <Image
+          source={dol==='light'?require("../assets/images/logo.png"):require("../assets/images/logoWhite.png")}
+          style={styles.image}
+        />
+        
+      
+            
         <TextInput
-          outlineColor={colorMain}
-          activeOutlineColor={colorMain}
-          theme={theme}
-          secureTextEntry={true}
-          label="Mot de passe"
-          placeholder='Entrez votre mot de passe...'
-          left={<TextInput.Icon icon="lock-open" />}
-          mode='outlined'
-          style={styles.input}
-          onChangeText={onChangePassword}
+            outlineColor={_Theme.themeBouton.backgroundColor}
+            activeOutlineColor={_Theme.themeBouton.backgroundColor}
+            textColor={_Theme.themeText.color}
+            theme={theme}
+            label="Email"
+            placeholder='Entrez votre email...'
+            left={<TextInput.Icon icon="email" />}
+            mode='outlined'
+            style={[styles.input,_Theme.themeBack2]}
+            onChangeText={onChangeEmail}
         />
 
-        <View>
-          <HelperText type="error" visible={error}>
-            Adresse email ou mot de passe invalide
-          </HelperText>
-        </View>
+
+        
+
+          <TextInput
+            outlineColor={_Theme.themeBouton.backgroundColor}
+            activeOutlineColor={_Theme.themeBouton.backgroundColor}
+            textColor={_Theme.themeText.color}
+            theme={theme}
+            secureTextEntry={true}
+            label="Mot de passe"
+            placeholder='Entrez votre mot de passe...'
+            left={<TextInput.Icon icon="lock-open" />}
+            mode='outlined'
+            style={[styles.input,_Theme.themeBack2]}
+            onChangeText={onChangePassword}
+          />
+
+          <View>
+            <HelperText type="error" visible={error}>
+              Adresse email ou mot de passe invalide
+            </HelperText>
+          </View>
+  
+
+        <Button  buttonColor={_Theme.themeBouton.backgroundColor} icon="login" mode='contained-tonal' onPress={login} style={{marginTop:10,width:200}}>
+          Connexion
+        </Button> 
+        
+      <View style={styles.horizontal}>
+        <Text style={[_Theme.themeText]}>Pas encore membre ?</Text>
+        <Link style={[styles.link,{color:_Theme.themeBouton.backgroundColor}]}  href="register"> Inscrivez-vous </Link>
+      </View>
  
-
-      <Button buttonColor={colorMain} icon="login" mode='contained-tonal' onPress={login} style={{marginTop:10,width:200}}>
-        Connexion
-      </Button> 
-      
-    <View style={styles.horizontal}>
-      <Text>Pas encore membre ?</Text>
-      <Link style={styles.link}  href="register"> Inscrivez-vous </Link>
-    </View>
-
-    
     </KeyboardAvoidingView>
     
   );

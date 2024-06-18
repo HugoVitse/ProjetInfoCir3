@@ -20,6 +20,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Icon, ScreenHeight, Slider } from "@rneui/base";
 import { useSharedValue } from "react-native-reanimated";
 import { jwtDecode } from "jwt-decode";
+import { ScrollView } from "react-native-gesture-handler";
 
 const HEADER_HEIGHT = 200;
 const { width } = Dimensions.get('window');
@@ -69,6 +70,7 @@ export default function ProfileScreen() {
   const [disabledValid, setDisabledValid] = useState(true)
   const [searchQuery, setSearchQuery] = useState('');
   const [allUsers,setAllUsers] = useState<user[]>([])
+  const [mimeType,setMimeType] = useState("")
   const [needle,setNeedle] = useState<user>({
     firstName:"",
     lastName:"",
@@ -199,7 +201,8 @@ export default function ProfileScreen() {
     setProfilFic(newPicture)
     setModalVisible(!modalVisible)
     const data = {
-      picture:newPicture
+      picture:newPicture,
+      mime:mimeType
     }
     const jwt_token = await AsyncStorage.getItem("jwt")
     
@@ -219,6 +222,9 @@ export default function ProfileScreen() {
 
     
     if (!result.canceled) {
+      
+     
+      setMimeType(result.assets[0].mimeType?result.assets[0].mimeType:"")
       const base64 = await FileSystem.readAsStringAsync(result.assets[0].uri, { encoding: 'base64' });
       setNewPicture(`data:image/png;base64,${base64}`);
       setDisabledValid(false)
@@ -309,9 +315,12 @@ export default function ProfileScreen() {
   const renderSwitch = (item: _item) => {
     {switch(item.title) {
       case 'friendList': 
-        return  <List.Section>
-                  {friendListComp}
-                </List.Section>
+        return(
+        <ScrollView>
+          <List.Section>
+            {friendListComp}
+          </List.Section>
+        </ScrollView>  )
       case 'searchFriend': 
         return  (
           <>
