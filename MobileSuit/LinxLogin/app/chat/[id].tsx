@@ -183,10 +183,9 @@ export default function SettingsScreen() {
 
             messages.push(
               <View style={{flexDirection: 'row', marginVertical: 5, marginTop: (i-1 == -1 ? 20 : (message[i-1].author == message[i].author ? 0 : 20)), alignSelf: (message[i].author == decoded.email ? 'flex-end' : 'flex-start')}}>
-                { !b ? <></>  : ( (i-1 == -1) ? (  <TouchableOpacity onPress={()=>{router.push("..")}}> <Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${user?.image}`}} /></TouchableOpacity> ): ((message[i-1].author == message[i].author ? <></> : <TouchableOpacity onPress={()=>{router.push("..")}}><Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${user?.image}`}} /></TouchableOpacity>)))}
+                { !b ? <></>  : ( (i-1 == -1) ? (  <TouchableOpacity onPress={()=>{router.push("..")}}> <Avatar.Image  size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${user?.image}`}} /></TouchableOpacity> ): ((message[i-1].author == message[i].author ? <></> : <TouchableOpacity onPress={()=>{router.push("..")}}><Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${user?.image}`}} /></TouchableOpacity>)))}
                 <View style={[styles.messages, (message[i].author == decoded.email ? _Theme.themeBackMyMessage : _Theme.themeBackMessage), (i-1 == -1 ? {} : (message[i-1].author == message[i].author ? (message[i].author == decoded.email ? {marginRight: 40} : {marginLeft: 40}) : {}))]}><Text style={[{marginBottom:5, color:color,fontWeight:'bold', textShadowColor:"black", textShadowRadius:1.9, textShadowOffset:{width:0,height:0.3}}]}>{user?user.firstName:""}</Text><Text style={ _Theme.themeText}>{message[i].message}</Text></View>
-                { b ? <></>  : ( (i-1 == -1) ? (   <Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${user?.image}`}} /> ): ((message[i-1].author == message[i].author ? <></> : <TouchableOpacity onPress={()=>{router.push("..")}}><Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${user?.image}`}} /> </TouchableOpacity>)))}
-              </View>
+                <TouchableOpacity onPress={()=>{router.push("..")}}><Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/`}} /> </TouchableOpacity>              </View>
             )
           }
           
