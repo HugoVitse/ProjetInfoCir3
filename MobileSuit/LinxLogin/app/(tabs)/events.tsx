@@ -1,6 +1,6 @@
 import { Avatar } from "@rneui/themed";
 import { useFocusEffect, useRouter } from "expo-router";
-import { Text, View, StyleSheet, Dimensions, SafeAreaView, Animated, Modal,Image, Platform } from "react-native";
+import { Text, View, StyleSheet, Dimensions, SafeAreaView, Animated, Modal,Image, Platform, useColorScheme } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, MD3Colors, Card, Button, ActivityIndicator, Dialog, Drawer, TextInput, Menu, Divider, Provider, PaperProvider, List } from "react-native-paper";
 import { useState , useEffect, useRef, useCallback } from "react";
@@ -73,6 +73,7 @@ export default function CatalogScreen() {
   const [text, setText] = useState("");
   const [showAndroid, setshowAndroid] = useState(false)
   const [notif,setNotif] = useState(false)
+  const [dol,setTheme] = useState(useColorScheme())
 
   const googlekey = "AIzaSyAOpVdDvYUvbIB_u_d6k_HVfw13_Vux0K0"
 
@@ -448,7 +449,7 @@ export default function CatalogScreen() {
         
    
         
-        <Text style={[styles.headerText,_Theme.themeText]}>Logo</Text>
+        <Image style={styles.logo} source={dol==='light'?require("../../assets/images/logo.png"):require("../../assets/images/logoWhite.png")}/>
         <Avatar
           size={48}
           rounded
@@ -762,5 +763,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  logo: {
+    marginBottom:50,
+    width: 150,
+    transform:'scale(0.6)',
+    top:40,
+    height: 115,
   },
 });

@@ -1,5 +1,5 @@
 import { Link, useFocusEffect, useRouter } from "expo-router";
-import { Text, View, StyleSheet ,Dimensions, Platform, Animated} from "react-native";
+import {Image, Text, View, StyleSheet ,Dimensions, Platform, Animated, useColorScheme} from "react-native";
 import { Avatar } from '@rneui/themed';
 import { useCallback, useEffect, useState  } from "react";
 import { Button, Dialog, IconButton, List, MD3Colors, Modal, PaperProvider, Portal, RadioButton, Snackbar, TextInput } from "react-native-paper";
@@ -45,6 +45,7 @@ export default function HomeScreen() {
   const [expandedPast, setExpandedPast] = useState(false);
   const [picture, setPicture] = useState("")
   const [notif,setNotif] = useState(false)
+  const [dol,setTheme] = useState(useColorScheme())
   const [idToSoD,setidToSoD] = useState("")
   const [me, setMe] = useState("")
   //snackbar
@@ -316,7 +317,8 @@ export default function HomeScreen() {
           onPress={() => router.push("/../settings")}
           style={styles.settings}
         />
-        <Text style={[styles.headerText,_Theme.themeText]}>Logo</Text>
+        <Image style={styles.logo} source={dol==='light'?require("../../assets/images/logo.png"):require("../../assets/images/logoWhite.png")}/>
+
         <Avatar
           size={48}
           rounded
@@ -615,6 +617,13 @@ const styles = StyleSheet.create({
     position: 'relative',
     top: HEADER_HEIGHT,
     flex: 1,
+  },
+  logo: {
+    marginBottom:50,
+    width: 150,
+    transform:'scale(0.6)',
+    top:40,
+    height: 115,
   },
   settings: {
     position: 'absolute', 

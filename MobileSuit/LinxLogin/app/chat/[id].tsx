@@ -1,9 +1,9 @@
-import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import { Stack, useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { View, Text, StyleSheet, Dimensions, KeyboardAvoidingView, Platform, TouchableOpacity, Animated, Keyboard } from 'react-native';
 import Theme from '@/constants/Theme';
 import { Avatar, Drawer, IconButton, Portal, Provider, TextInput } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
@@ -19,6 +19,11 @@ const { width } = Dimensions.get('window')
 
 const HEADER_HEIGHT = 100;
 const drawerWidth = 75
+
+type colorPseudo = {
+  user:string,
+  color:string
+}
 
 
 
@@ -42,6 +47,10 @@ export default function SettingsScreen() {
   const [drawerDeployed, setDrawerDeployed] = useState(false)
   const [active, setActive] = useState('');
   const [allUsers, setAllUsers] = useState<user[]>([])
+  const [int, setInt] = useState<NodeJS.Timeout>()
+  const [myEmail, setMyEmail] = useState("")
+  const [colorPseudos, setColorPseudos] = useState<colorPseudo[]>([])
+
 
   const router = useRouter();
 
@@ -72,23 +81,42 @@ export default function SettingsScreen() {
     setMessage(reponseMessage.data.chat)
     setParticipants(reponseMessage.data.participants)
   }
-  useEffect(()=>{
+  useFocusEffect( useCallback(()=>{
     
     wrap()
 
     const wrapAllUsers = async()=>{
       const jwt_cookie = await AsyncStorage.getItem("jwt")
+      const jwt_decode:any = jwtDecode(jwt_cookie?jwt_cookie:"")
+      setMyEmail(jwt_decode.email)
       const reponseUsers = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`, {headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
       setAllUsers(reponseUsers.data)
+
+      const reponseMessage = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getMessage/${id}`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+
+      const part = reponseMessage.data.participants
+      let colors = []
+
+      for(let i = 0; i<part.length;i++){
+        const colori = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getColor`,{email:part[i]},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+        colors.push({
+          user:part[i],
+          color:colori.data
+        })
+      }
+
+      setColorPseudos(colors)
     }
     wrapAllUsers()
 
-    let int = setInterval(()=>{
+    let _int = setInterval(()=>{
       wrap()    
     },1000)
 
-    return ()=>{clearInterval(int)}
-  },[])
+    setInt(_int)
+
+    return ()=>{clearInterval(_int)}
+  },[]))
 
 
   const startAnimation = () => {
@@ -169,23 +197,23 @@ export default function SettingsScreen() {
     
           for(let i = 0; i<message.length;i++){
             let b = decoded.email != message[i].author
-
+            console.log(b)
             let user = allUsers.find((user) => user.email == message[i].author)
 
-            // let colori = await ImageColors.getColors(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${message[i].author}.png`)
-            // let color = colori.platform == 'android' ? colori.dominant : (colori.platform==='ios'?colori.background:"black")
-            let color = 'black'
-            const r = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getColor`,{email:message[i].author},{headers:{Cookie:`jwt=${jwt}`},withCredentials:false})
-            color = r.data
+           
+            let color = colorPseudos.find((color) => color.user == message[i].author)?.color
+           
         
             // const colors = await ImageColors.getColors(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${message[i].author}.png`)
             
-
+            let tmp;
+    
             messages.push(
               <View style={{flexDirection: 'row', marginVertical: 5, marginTop: (i-1 == -1 ? 20 : (message[i-1].author == message[i].author ? 0 : 20)), alignSelf: (message[i].author == decoded.email ? 'flex-end' : 'flex-start')}}>
-                { !b ? <></>  : ( (i-1 == -1) ? (  <TouchableOpacity onPress={()=>{router.push("..")}}> <Avatar.Image  size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${user?.image}`}} /></TouchableOpacity> ): ((message[i-1].author == message[i].author ? <></> : <TouchableOpacity onPress={()=>{router.push("..")}}><Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${user?.image}`}} /></TouchableOpacity>)))}
+                { ( b && ( ((i-1 > 0) && (message[i-1].author != message[i].author))  || (i-1 < 0) )) ?  ( <TouchableOpacity onPress={()=>{clearInterval(int);router.push(`friends/${message[i].author}`)}}><Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${user?.image}`}} /></TouchableOpacity>):<></>}
                 <View style={[styles.messages, (message[i].author == decoded.email ? _Theme.themeBackMyMessage : _Theme.themeBackMessage), (i-1 == -1 ? {} : (message[i-1].author == message[i].author ? (message[i].author == decoded.email ? {marginRight: 40} : {marginLeft: 40}) : {}))]}><Text style={[{marginBottom:5, color:color,fontWeight:'bold', textShadowColor:"black", textShadowRadius:1.9, textShadowOffset:{width:0,height:0.3}}]}>{user?user.firstName:""}</Text><Text style={ _Theme.themeText}>{message[i].message}</Text></View>
-                <TouchableOpacity onPress={()=>{router.push("..")}}><Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/`}} /> </TouchableOpacity>              </View>
+                { ( !b && ( ((i-1 > 0) && (message[i-1].author != message[i].author) ) || (i-1 < 0)) ) ?  ( <TouchableOpacity onPress={()=>{clearInterval(int);router.push(`friends/${message[i].author}`)}}><Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${user?.image}`}} /></TouchableOpacity>):<></>}
+              </View>
             )
           }
           
@@ -195,12 +223,7 @@ export default function SettingsScreen() {
         }
       
       wrap()
-      setTimeout(()=>{
-        if (scrollViewRef.current) {
-          scrollViewRef.current.scrollToEnd({ animated: false });
-        }
-      
-      },200)
+    
     }
 
 
@@ -290,7 +313,7 @@ export default function SettingsScreen() {
                             <Drawer.Item
                                 key={index}
                                 label={emailToName(participant)}
-                                right={() => <TouchableOpacity onPress={()=>{router.push("..")}}><Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${emailToPicture(participant)}`}} /></TouchableOpacity>}
+                                right={() => <TouchableOpacity onPress={()=>{router.push(participant==myEmail?'profile':`friends/${participant}`)}}><Avatar.Image size={30} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${emailToPicture(participant)}`}} /></TouchableOpacity>}
                                 active={active === index.toString()}
                                 onPress={
                                     () => {

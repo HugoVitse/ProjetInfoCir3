@@ -32,7 +32,9 @@ export default function EditScreen() {
     lastName:"",
     dateOfBirth:"",
     email:"",
-    image:""
+    image:"",
+    friendRequests:[],
+    friends:[]
   })
 
   const _Theme = Theme()
