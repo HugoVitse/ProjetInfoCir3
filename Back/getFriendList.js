@@ -12,23 +12,27 @@ async function getFriendList(req,res){
     }
     else{
         try{
-            
+
 
             const token =  req.cookies.jwt
             const decoded = jwt.verify(token, config_serv.secretJWT);
-            const email = decoded.email     
-        
+            const email = decoded.email
+
+            const bol = req.body.bol
+            const emailBody = req.body.email
+
             const database = connect_db.client.db(config.dbName);
             const collection = database.collection(config.users);
-        
-        
-            const findOneResult = await collection.findOne({'email': email});
+
+
+
+
+            const findOneResult = await collection.findOne({'email': bol?email:emailBody});
 
             if('friends' in findOneResult){
 
                 const friends = findOneResult.friends
                 const friendList = []
-
                 for (let i = 0; i < friends.length; i++){
                     const friend = await collection.findOne({'email': friends[i]})
                     friendList.push({

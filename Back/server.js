@@ -46,6 +46,7 @@ const friendRequests = require('./friendRequest')
 const getMessage = require('./getMessage')
 const updateInfoWeb = require('./updateInfoWeb')
 const acceptFriendRequest = require('./acceptFriendRequest')
+const getFriendInfos = require('./getFriendInfos')
 
 
 
@@ -83,11 +84,12 @@ async function serv(){
   app.get('/getEvents',getEvents)
   app.get('/getMessage/:id',getMessage)
   app.post('/sendMessage',sendMessage)
-  app.get('/getFriendList',getFriendList)
+  app.post('/getFriendList',getFriendList)
   app.get('/getAllUsers',getAllUsers)
   app.post('/friendRequests',friendRequests)
   app.post('/updateInfoWeb',updateInfoWeb)
   app.post('/acceptFriendRequest',acceptFriendRequest)
+  app.post('/getFriendInfos',getFriendInfos)
 
 
   console.log(path.join(__dirname, 'profile_pictures'))

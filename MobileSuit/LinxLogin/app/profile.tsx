@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { Image, Text, View, StyleSheet, Dimensions, TouchableOpacity, SafeAreaView } from "react-native";
+import { Image, Text, View, StyleSheet, Dimensions, TouchableOpacity, SafeAreaView, ScrollView } from "react-native";
 import { Avatar, Checkbox, List, PaperProvider, Portal, RadioButton, Searchbar } from 'react-native-paper';
 import { useEffect, useRef, useState } from 'react';
 import { IconButton,TextInput, MD3Colors, Modal, Button, Dialog, HelperText, ActivityIndicator } from "react-native-paper";
@@ -20,6 +20,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Icon, ScreenHeight, Slider } from "@rneui/base";
 import { useSharedValue } from "react-native-reanimated";
 import { jwtDecode } from "jwt-decode";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const HEADER_HEIGHT = 200;
 const { width } = Dimensions.get('window');
@@ -151,7 +152,7 @@ export default function ProfileScreen() {
       placeType: checked3,
       budget: checked4,
       description: text,
-      travelDistance: 25,
+      travelDistance: value2,
     }
     console.log(data)
     const jwt_cookie = await AsyncStorage.getItem("jwt");
@@ -269,6 +270,11 @@ export default function ProfileScreen() {
   },[camVisible])
 
   const [visible, setVisible] = useState(false);
+  const [visibleLogout, setVisibleLogout] = useState(false);
+
+  const showDialogLogout = () => setVisibleLogout(true);
+  
+  const hideDialogLogout = () => setVisibleLogout(false);
 
   const showDialog = () => setVisible(true);
 
@@ -322,7 +328,7 @@ export default function ProfileScreen() {
                   onChangeText={(text) => {setSearchQuery(text),searchFriend(text)}}
                   value={searchQuery}
                 />  
-                {needle.firstName.length > 0 ? (<List.Item style={{top:50}} right={()=> <IconButton icon="account-plus"  iconColor={_Theme.themeIcon.color}      onPress={()=>{sendFriendRequest()}}     style={{top:10}} ></IconButton>}  title={`${needle.firstName} ${needle.lastName}` }  left={() => <Avatar.Image size={70} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${needle.email}.png`}} /> } /> ): <></>}
+                {needle.firstName.length > 0 ? (<List.Item style={{top:50}} right={()=> <IconButton icon="account-plus"  iconColor={_Theme.themeIcon.color} onPress={()=>{sendFriendRequest()}} style={{top:10}} ></IconButton>} title={`${needle.firstName} ${needle.lastName}`} left={() => <Avatar.Image size={70} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${needle.email}.png`}} /> } /> ): <></>}
           </>
         )
                
@@ -337,24 +343,43 @@ export default function ProfileScreen() {
       setInitialInfos(reponse.data)
       setNewPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
       setProfilFic(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
-      const friendListReq = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getFriendList`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      const friendListReq = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getFriendList`,{email:"",bol:true}, {headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
       setFriendList(friendListReq.data)
       const allUsers = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-      console.log(allUsers.data)
       setAllUsers(allUsers.data)
+
+      let tmp:any = []
+      for(let i = 0; i <activities.length; i++){
+        reponse.data.activities.includes(activities[i])?tmp[activities[i]] = true:tmp[activities[i]] = false
+      }
+      setCheckedState(tmp)
+
+      setValue(reponse.data.note*100)
+
+      setChecked1(reponse.data.groupSize)
+
+      setChecked2(reponse.data.preferredTime)
+
+      setChecked3(reponse.data.placeType)
+
+      setChecked4(reponse.data.budget)
+
+      setText(reponse.data.description)
+
+      setValue2(reponse.data.travelDistance)
     }
     wrap()
   },[])
 
   useEffect(()=>{
-
-  },[])
+    console.log("ok")
+  },[value])
 
   useEffect(()=>{
     if(friendList.length>0){
       let tmpcomp = []
       for (let i=0; i< friendList.length; i++){
-        tmpcomp.push(<List.Item key={i} title={`${friendList[i].firstName} ${friendList[i].lastName}` }  left={() => <Avatar.Image size={80} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${friendList[i].email}.png`}} />  } />)
+        tmpcomp.push(<List.Item key={i} title={`${friendList[i].firstName} ${friendList[i].lastName}` } onPress={() => {router.push(`friends/${friendList[i].email}`)}}  left={() => <Avatar.Image size={80} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${friendList[i].email}.png`}} />  } />)
       }
       setFriendListComp(tmpcomp)
     }
@@ -413,9 +438,15 @@ export default function ProfileScreen() {
           
           <Text style={[styles.headerText, _Theme.themeText]}>{`${initialInfos.firstName} ${initialInfos.lastName}`}</Text>
           <IconButton
+            icon="logout"
+            iconColor={_Theme.themeIcon.color}
+            onPress={showDialogLogout}
+            style={styles.logout}
+          />
+          <IconButton
             icon="account-edit"
             iconColor={_Theme.themeIcon.color}
-            onPress={/*() => router.push("editProfile")*/showDialog}
+            onPress={showDialog}
             style={styles.edit}
           />
           <IconButton
@@ -427,7 +458,7 @@ export default function ProfileScreen() {
         </View>
         
         <View style={[styles.body, _Theme.themeBack2]}>
-        <SafeAreaView style={styles.buttonContainer}>
+          <SafeAreaView style={styles.buttonContainer}>
             {slideData.map((slide, index) => (
               <TouchableOpacity key={slide.id} onPress={() => handlePress(index)} style={styles.button}>
                 <Text style={[styles.buttonText, _Theme.themeText, valueC === slide.title && styles.selectedButtonText]}>
@@ -437,7 +468,7 @@ export default function ProfileScreen() {
             ))}
             {/* <Animated.View style={[styles.underline, { left: underlineAnim, width: width / slideData.length }]} /> */}
           </SafeAreaView>
-        <Carousel
+          <Carousel
             ref={carouselRef}
             loop={false}
             width={width}
@@ -454,10 +485,13 @@ export default function ProfileScreen() {
               setValueC(slideData[index].title);
             }}
             renderItem={({ item }) => (
-              <View style={[styles.slide,item.title=='friendList'?{flex:1}:{}]}>
-               
-                {renderSwitch(item)}
-              </View>
+              <GestureHandlerRootView>
+                <KeyboardAwareScrollView contentContainerStyle={styles.slide}>
+                  <View style={ item.title=='friendList'?{flex:1}:{} }>
+                    {renderSwitch(item)}
+                  </View>
+                </KeyboardAwareScrollView>
+              </GestureHandlerRootView>
             )}
           />
           <Pagination.Basic
@@ -468,17 +502,6 @@ export default function ProfileScreen() {
             containerStyle={{ gap: 10, top: 42, position: 'absolute' }}
             onPress={onPressPagination}
           />
-          
-          <Button
-            mode="elevated"
-            style={{
-              width: width - 40,
-              borderRadius: 0,
-            }}
-            onPress={logout}
-          >
-            Logout
-          </Button>
         </View>
         <Portal>
           <Modal
@@ -513,7 +536,7 @@ export default function ProfileScreen() {
           <Dialog style={{backgroundColor: _Theme.themeBack2.backgroundColor}} visible={visible} onDismiss={hideDialog}>
               
               <Dialog.Icon icon="alert" color={_Theme.themeIcon.color}/>
-              <Dialog.Title style={_Theme.themeText}>Entrez votre mot de passe</Dialog.Title>
+              <Dialog.Title style={[_Theme.themeText, {textAlign: 'center'}]}>Entrez votre mot de passe</Dialog.Title>
               <Dialog.Content>
                 <TextInput
                   outlineColor={_Theme.themeBouton.backgroundColor}
@@ -546,191 +569,213 @@ export default function ProfileScreen() {
               </Dialog.Actions>
           </Dialog>
         </Portal>
+        <Portal>
+          <Dialog style={{backgroundColor: _Theme.themeBack2.backgroundColor}} visible={visibleLogout} onDismiss={hideDialogLogout}>
+              
+              <Dialog.Icon icon="alert" color={_Theme.themeIcon.color}/>
+              <Dialog.Title style={[_Theme.themeText, {textAlign: 'center'}]}>Se déconnecter ?</Dialog.Title>
+              <Dialog.Content>
+                <Button  
+                  buttonColor={_Theme.themeBouton.backgroundColor}
+                  textColor={_Theme.themeBouton.color}
+                  icon="logout" 
+                  mode="contained" 
+                  onPress={logout}
+                >
+                  Confirmer
+                </Button>
+              </Dialog.Content>
+              <Dialog.Actions>
+                <Button textColor={_Theme.themeBouton.backgroundColor} onPress={hideDialogLogout}>Retour</Button>
+              </Dialog.Actions>
+          </Dialog>
+        </Portal>
+        <Portal>
+          <Modal visible={visibleQ} onDismiss={hideModal} style={{marginTop: 0, maxHeight: ScreenHeight, width: width - 40, left: 20, paddingVertical: 20 }}>
+            <KeyboardAwareScrollView style={[{ height: ScreenHeight - 300, borderRadius: 20, paddingHorizontal: 30, overflow: 'hidden' }, _Theme.themeBack2]}>
+              <Text style={[{ marginVertical: 20, fontSize: 20, textAlign: 'center' }, _Theme.themeText]}>Questionnaire d'Inscription</Text>
+              <Text style={[{ marginBottom: 20, textDecorationLine: 'underline' }, _Theme.themeText]}>Quelles activités aimez-vous ?</Text>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={{ flex: 1 }}>
+                  {leftColumn.map((activity: any) => (
+                    <View key={activity} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                      <Checkbox
+                        status={checkedState[activity] ? 'checked' : 'unchecked'}
+                        onPress={() => handleCheckboxPress(activity)}
+                      />
+                      <Text style={_Theme.themeText}>{activity}</Text>
+                    </View>
+                  ))}
+                </View>
+                <View style={{ flex: 1 }}>
+                  {rightColumn.map((activity: any) => (
+                    <View key={activity} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                      <Checkbox
+                        status={checkedState[activity] ? 'checked' : 'unchecked'}
+                        onPress={() => handleCheckboxPress(activity)}
+                      />
+                      <Text style={_Theme.themeText}>{activity}</Text>
+                    </View>
+                  ))}
+                </View>
+              </View>
+              <Text style={[{ marginTop: 20, textDecorationLine: 'underline' }, _Theme.themeText]}>Notez votre état actuel :</Text>
+              <Slider
+                value={value}
+                style={{ margin: 20 }}
+                onValueChange={setValue}
+                maximumValue={1000}
+                minimumValue={0}
+                step={1}
+                allowTouchTrack
+                trackStyle={{ height: 5, backgroundColor: 'transparent' }}
+                thumbStyle={{ height: 20, width: 20, backgroundColor: 'transparent' }}
+                thumbProps={{
+                  children: (
+                    <Icon
+                      name="heartbeat"
+                      type="font-awesome"
+                      size={20}
+                      reverse
+                      containerStyle={{ bottom: 20, right: 20 }}
+                      color={color()}
+                    />
+                  ),
+                }}
+              />
+              <Text style={[{ marginVertical: 20, textDecorationLine: 'underline' }, _Theme.themeText]}>Préférez-vous les activités en petit ou en grand groupe ?</Text>
+              <View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                  <RadioButton
+                    value="petitcomite"
+                    status={checked1 === 'petitcommite' ? 'checked' : 'unchecked'}
+                    onPress={() => setChecked1('petitcommite')}
+                  />
+                  <Text style={_Theme.themeText}>Petit groupe</Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                  <RadioButton
+                    value="grandcomite"
+                    status={checked1 === 'grandcomite' ? 'checked' : 'unchecked'}
+                    onPress={() => setChecked1('grandcomite')}
+                  />
+                  <Text style={_Theme.themeText}>Grand groupe</Text>
+                </View>
+              </View>
+              <Text style={[{ marginVertical: 20, textDecorationLine: 'underline' }, _Theme.themeText]}>Quel moment de la journée préférez-vous pour les sorties ?</Text>
+              <View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                  <RadioButton
+                    value="morning"
+                    status={checked2 === 'morning' ? 'checked' : 'unchecked'}
+                    onPress={() => setChecked2('morning')}
+                  />
+                  <Text style={_Theme.themeText}>Matin</Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                  <RadioButton
+                    value="afternoon"
+                    status={checked2 === 'afternoon' ? 'checked' : 'unchecked'}
+                    onPress={() => setChecked2('afternoon')}
+                  />
+                  <Text style={_Theme.themeText}>Après-midi</Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                  <RadioButton
+                    value="evening"
+                    status={checked2 === 'evening' ? 'checked' : 'unchecked'}
+                    onPress={() => setChecked2('evening')}
+                  />
+                  <Text style={_Theme.themeText}>Soir</Text>
+                </View>
+              </View>
+              <Text style={[{ marginVertical: 20, textDecorationLine: 'underline' }, _Theme.themeText]}>Préférez-vous les activités en intérieur ou en extérieur ?</Text>
+              <View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                  <RadioButton
+                    value="indoor"
+                    status={checked3 === 'indoor' ? 'checked' : 'unchecked'}
+                    onPress={() => setChecked3('indoor')}
+                  />
+                  <Text style={_Theme.themeText}>Intérieur</Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                  <RadioButton
+                    value="outdoor"
+                    status={checked3 === 'outdoor' ? 'checked' : 'unchecked'}
+                    onPress={() => setChecked3('outdoor')}
+                  />
+                  <Text style={_Theme.themeText}>Extérieur</Text>
+                </View>
+              </View>
+              <Text style={[{ marginVertical: 20, textDecorationLine: 'underline' }, _Theme.themeText]}>Quel est votre budget pour les sorties ?</Text>
+              <View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                  <RadioButton
+                    value="low"
+                    status={checked4 === 'low' ? 'checked' : 'unchecked'}
+                    onPress={() => setChecked4('low')}
+                  />
+                  <Text style={_Theme.themeText}>Bas</Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                  <RadioButton
+                    value="medium"
+                    status={checked4 === 'medium' ? 'checked' : 'unchecked'}
+                    onPress={() => setChecked4('medium')}
+                  />
+                  <Text style={_Theme.themeText}>Moyen</Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                  <RadioButton
+                    value="high"
+                    status={checked4 === 'high' ? 'checked' : 'unchecked'}
+                    onPress={() => setChecked4('high')}
+                  />
+                  <Text style={_Theme.themeText}>Elevé</Text>
+                </View>
+              </View>
+              <Text style={[{ marginVertical: 20, textDecorationLine: 'underline' }, _Theme.themeText]}>Decrivez-vous</Text>
+              <TextInput
+                label="Description"
+                value={text}
+                mode='outlined'
+                style={_Theme.themeBack2}
+                outlineColor='white'
+                activeOutlineColor={_Theme.themeBouton2.borderColor}
+                onChangeText={text => setText(text)}
+              />
+              <Text style={[{ marginVertical: 20, textDecorationLine: 'underline' }, _Theme.themeText]}>Quelle est la distance maximale que vous êtes prêt(e) à parcourir pour une sortie ? (en km)</Text>
+              <Slider
+                value={value2}
+                style={{ margin: 20 }}
+                onValueChange={setValue2}
+                maximumValue={5}
+                minimumValue={0}
+                step={1}
+                allowTouchTrack
+                trackStyle={{ height: 5, backgroundColor: 'transparent' }}
+                thumbStyle={{ height: 20, width: 20, backgroundColor: 'transparent' }}
+                thumbProps={{
+                  children: (
+                    <Icon
+                      name="car"
+                      type="font-awesome"
+                      size={20}
+                      reverse
+                      containerStyle={{ bottom: 20, right: 20 }}
+                      color={color2()}
+                    />
+                  ),
+                }}
+              />
+              <Button mode='contained' buttonColor={_Theme.themeBouton.backgroundColor} style={{ marginBottom: 20 }} onPress={remplirForm}>
+                Finaliser
+              </Button>
+            </KeyboardAwareScrollView>
+          </Modal>
+        </Portal>
       </View>
-      <Modal visible={visibleQ} onDismiss={hideModal} style={{marginTop: HEADER_HEIGHT + 20, maxHeight: ScreenHeight, width: width, padding: 20}}>
-        <KeyboardAwareScrollView style={[{ height: ScreenHeight - 300, borderRadius: 20, paddingHorizontal: 50, overflow: 'hidden' }, _Theme.themeBack2]}>
-          <Text style={[{ marginVertical: 20, fontSize: 20 }, _Theme.themeText]}>Questionnaire d'Inscription</Text>
-          <Text style={[{ marginBottom: 20, textDecorationLine: 'underline' }, _Theme.themeText]}>Quelles activités aimez-vous ?</Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <View style={{ flex: 1 }}>
-              {leftColumn.map((activity: any) => (
-                <View key={activity} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-                  <Checkbox
-                    status={checkedState[activity] ? 'checked' : 'unchecked'}
-                    onPress={() => handleCheckboxPress(activity)}
-                  />
-                  <Text style={_Theme.themeText}>{activity}</Text>
-                </View>
-              ))}
-            </View>
-            <View style={{ flex: 1 }}>
-              {rightColumn.map((activity: any) => (
-                <View key={activity} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-                  <Checkbox
-                    status={checkedState[activity] ? 'checked' : 'unchecked'}
-                    onPress={() => handleCheckboxPress(activity)}
-                  />
-                  <Text style={_Theme.themeText}>{activity}</Text>
-                </View>
-              ))}
-            </View>
-          </View>
-          <Text style={[{ marginTop: 20, textDecorationLine: 'underline' }, _Theme.themeText]}>Notez votre état actuel :</Text>
-          <Slider
-            value={value}
-            style={{ margin: 20 }}
-            onValueChange={setValue}
-            maximumValue={1000}
-            minimumValue={0}
-            step={1}
-            allowTouchTrack
-            trackStyle={{ height: 5, backgroundColor: 'transparent' }}
-            thumbStyle={{ height: 20, width: 20, backgroundColor: 'transparent' }}
-            thumbProps={{
-              children: (
-                <Icon
-                  name="heartbeat"
-                  type="font-awesome"
-                  size={20}
-                  reverse
-                  containerStyle={{ bottom: 20, right: 20 }}
-                  color={color()}
-                />
-              ),
-            }}
-          />
-          <Text style={[{ marginVertical: 20, textDecorationLine: 'underline' }, _Theme.themeText]}>Préférez-vous les activités en petit ou en grand groupe ?</Text>
-          <View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-              <RadioButton
-                value="petitcomite"
-                status={checked1 === 'petitcommite' ? 'checked' : 'unchecked'}
-                onPress={() => setChecked1('petitcommite')}
-              />
-              <Text style={_Theme.themeText}>Petit groupe</Text>
-            </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-              <RadioButton
-                value="grandcomite"
-                status={checked1 === 'grandcomite' ? 'checked' : 'unchecked'}
-                onPress={() => setChecked1('grandcomite')}
-              />
-              <Text style={_Theme.themeText}>Grand groupe</Text>
-            </View>
-          </View>
-          <Text style={[{ marginVertical: 20, textDecorationLine: 'underline' }, _Theme.themeText]}>Quel moment de la journée préférez-vous pour les sorties ?</Text>
-          <View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-              <RadioButton
-                value="morning"
-                status={checked2 === 'morning' ? 'checked' : 'unchecked'}
-                onPress={() => setChecked2('morning')}
-              />
-              <Text style={_Theme.themeText}>Matin</Text>
-            </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-              <RadioButton
-                value="afternoon"
-                status={checked2 === 'afternoon' ? 'checked' : 'unchecked'}
-                onPress={() => setChecked2('afternoon')}
-              />
-              <Text style={_Theme.themeText}>Après-midi</Text>
-            </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-              <RadioButton
-                value="evening"
-                status={checked2 === 'evening' ? 'checked' : 'unchecked'}
-                onPress={() => setChecked2('evening')}
-              />
-              <Text style={_Theme.themeText}>Soir</Text>
-            </View>
-          </View>
-          <Text style={[{ marginVertical: 20, textDecorationLine: 'underline' }, _Theme.themeText]}>Préférez-vous les activités en intérieur ou en extérieur ?</Text>
-          <View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-              <RadioButton
-                value="indoor"
-                status={checked3 === 'indoor' ? 'checked' : 'unchecked'}
-                onPress={() => setChecked3('indoor')}
-              />
-              <Text style={_Theme.themeText}>Intérieur</Text>
-            </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-              <RadioButton
-                value="outdoor"
-                status={checked3 === 'outdoor' ? 'checked' : 'unchecked'}
-                onPress={() => setChecked3('outdoor')}
-              />
-              <Text style={_Theme.themeText}>Extérieur</Text>
-            </View>
-          </View>
-          <Text style={[{ marginVertical: 20, textDecorationLine: 'underline' }, _Theme.themeText]}>Quel est votre budget pour les sorties ?</Text>
-          <View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-              <RadioButton
-                value="low"
-                status={checked4 === 'low' ? 'checked' : 'unchecked'}
-                onPress={() => setChecked4('low')}
-              />
-              <Text style={_Theme.themeText}>Bas</Text>
-            </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-              <RadioButton
-                value="medium"
-                status={checked4 === 'medium' ? 'checked' : 'unchecked'}
-                onPress={() => setChecked4('medium')}
-              />
-              <Text style={_Theme.themeText}>Moyen</Text>
-            </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-              <RadioButton
-                value="high"
-                status={checked4 === 'high' ? 'checked' : 'unchecked'}
-                onPress={() => setChecked4('high')}
-              />
-              <Text style={_Theme.themeText}>Elevé</Text>
-            </View>
-          </View>
-          <Text style={[{ marginVertical: 20, textDecorationLine: 'underline' }, _Theme.themeText]}>Decrivez-vous</Text>
-          <TextInput
-            label="Description"
-            value={text}
-            mode='outlined'
-            style={_Theme.themeBack2}
-            outlineColor='white'
-            activeOutlineColor={_Theme.themeBouton2.borderColor}
-            onChangeText={text => setText(text)}
-          />
-          <Text style={[{ marginVertical: 20, textDecorationLine: 'underline' }, _Theme.themeText]}>Quelle est la distance maximale que vous êtes prêt(e) à parcourir pour une sortie ? (en km)</Text>
-          <Slider
-            value={value2}
-            style={{ margin: 20 }}
-            onValueChange={setValue2}
-            maximumValue={5}
-            minimumValue={0}
-            step={1}
-            allowTouchTrack
-            trackStyle={{ height: 5, backgroundColor: 'transparent' }}
-            thumbStyle={{ height: 20, width: 20, backgroundColor: 'transparent' }}
-            thumbProps={{
-              children: (
-                <Icon
-                  name="car"
-                  type="font-awesome"
-                  size={20}
-                  reverse
-                  containerStyle={{ bottom: 20, right: 20 }}
-                  color={color2()}
-                />
-              ),
-            }}
-          />
-          <Button mode='contained' buttonColor={_Theme.themeBouton.backgroundColor} style={{ marginBottom: 20 }} onPress={remplirForm}>
-            Finaliser
-          </Button>
-        </KeyboardAwareScrollView>
-      </Modal>
-
     </PaperProvider>
     
   );
@@ -765,8 +810,8 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   slide: {
-    justifyContent: 'center',
     alignItems: 'center',
+    flex: 1
   },
   slideTitle: {
     fontSize: 24,
@@ -792,14 +837,19 @@ const styles = StyleSheet.create({
     width: '90%', // Ajustez la largeur en fonction de vos préférences
     marginBottom: 24, // Espace après chaque champ de saisie
   },
-  edit: {
+  logout: {
     position: 'absolute', 
     right: 10,
     top: 30
   },
+  edit: {
+    position: 'absolute', 
+    right: 50,
+    top: 30
+  },
   form: {
     position: 'absolute', 
-    right: 40,
+    right: 90,
     top: 30
   },
   popUp: {
