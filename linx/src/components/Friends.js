@@ -70,18 +70,6 @@ const Friends = () => {
     }
   };
 
-  const acceptFriendRequest = async (friendEmail) => {
-    try {
-      const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/acceptFriendRequest`, { email: friendEmail }, { withCredentials: true });
-      if (response.status === 200) {
-        // Mettre à jour localement la liste des amis en retirant l'utilisateur accepté
-        setFriends(prevFriends => prevFriends.filter(friend => friend !== friendEmail));
-      }
-    } catch (error) {
-      console.error('Erreur lors de l\'acceptation de la demande d\'ami :', error);
-    }
-  };
-
   const renderUsers = () => {
     // Filtrer les amis et les autres utilisateurs
     let friendsList = [];
@@ -142,11 +130,6 @@ const Friends = () => {
             {sentFriendRequests.includes(user.email) && (
               <MDBBtn color="secondary" disabled>
                 Demande d'ami envoyée
-              </MDBBtn>
-            )}
-            {friends.includes(user.email) && (
-              <MDBBtn color="success" onClick={() => acceptFriendRequest(user.email)}>
-                Accepter
               </MDBBtn>
             )}
           </div>

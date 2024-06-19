@@ -12,15 +12,9 @@ import axios from 'axios';
 import Config from '../config.json';
 
 const Evenements = () => {
-    const [showPopup, setShowPopup] = useState(false);
-    const [selectedCard, setSelectedCard] = useState(null);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [sortOrder, setSortOrder] = useState('asc');
-    const [sortCriteria, setSortCriteria] = useState('date');
     const navigate = useNavigate();
-    const [evenements, setEvenements] = useState([]);
     const [selectedInterests, setSelectedInterests] = useState([]);
-    const [Activities, setActivities] = useState([]);
+    const [Activitiess, setActivities] = useState([]);
     const [actualIndex, setActualIndex] = useState(0);
     const [initialZoom, setInitialZoom] = useState("13");
     const [jwt, setJwt] = useState("");
@@ -33,18 +27,9 @@ const Evenements = () => {
     const mapRef = useRef(null);
     const pingRef = useRef(null);
 
-    const openPopup = (title, description, img, date) => {
-        setSelectedCard({ title, description, img, date });
-        setShowPopup(true);
-    };
-
-    const closePopup = () => {
-        setShowPopup(false);
-    };
-
     const inscription = async () => {
         const data = {
-            id: evenements[actualIndex]._id
+            id: Activitiess[actualIndex]._id
         };
         try {
             const reponse = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/EventRegister`, data, { withCredentials: true });
@@ -65,18 +50,7 @@ const Evenements = () => {
             }
         }
     };
-
-    const Activite = () => {
-        navigate('/Activite', {
-            state: {
-                cardTitle: selectedCard.title,
-                cardDescription: selectedCard.description,
-                cardImg: selectedCard.img,
-                cardDate: selectedCard.date
-            }
-        });
-    };
-
+    
     const retrieveCookie = () => {
         const token = Cookies.get("jwt");
         if (!token) {
@@ -99,12 +73,13 @@ const Evenements = () => {
             if (!retrieveCookie()) return;
 
             try {
-                const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/evenements`, { withCredentials: true });
-                setEvenements(response.data);
-
-                const responses = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { withCredentials: true });
+                const responses = await axios.get('http://localhost/infos', { withCredentials: true });
                 setSelectedInterests(responses.data.activities || []);
                 console.log(responses.data.activities);
+
+                const eventsResponse = await axios.get('http://localhost/evenements', { withCredentials: true });
+                setActivities(eventsResponse.data.filter(activity => new Date(activity.date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0)));
+                console.log(eventsResponse.data);
 
             } catch (error) {
                 console.error('Error fetching activities', error);
@@ -144,33 +119,20 @@ const Evenements = () => {
 
     useEffect(() => {
         const wrap = async () => {
-            if (evenements.length > 0) {
-                const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(evenements[0].activity.adresse)}&key=${googlekey}`);
+            if (Activitiess.length > 0) {
+                const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(Activitiess[0].activity.adresse)}&key=${googlekey}`);
                 setlatlong(response.data.results[0].geometry.location);
             }
-
-            const eventsResponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/evenements`, { withCredentials: true });
-            setActivities(eventsResponse.data);
-            console.log(eventsResponse.data);
-
         };
         wrap();
 
-    }, [evenements]);
-
-    const handleSortOrderChange = (order) => {
-        setSortOrder(order);
-    };
-
-    const handleSortCriteriaChange = (criteria) => {
-        setSortCriteria(criteria);
-    };
+    }, [Activitiess]);
 
     const selectedBtn = async (e) => {
         const ide = e.target.id;
         setActualIndex(ide);
         setInitialZoom("13");
-        const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(evenements[ide].activity.adresse)}&key=${googlekey}`);
+        const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(Activitiess[ide].activity.adresse)}&key=${googlekey}`);
         setlatlong(response.data.results[0].geometry.location);
     };
 
@@ -190,39 +152,47 @@ const Evenements = () => {
     return (
         <MDBRow className='mx-0 vh-100'>
             <MDBCol size='4' className='vh-100' style={{ borderBottom: "2px solid black" }}>
-                <MDBRow style={{ height: "7%", borderBottom: "2px solid black" }}>
-                    <MDBCol size='9' className='vh-20'>
-                    </MDBCol>
-                    <MDBCol size='3' className='vh-20 d-flex align-items-center justify-content-center'>
-                        <MDBDropdown>
-                            <MDBDropdownToggle floating><MDBIcon fab icon='plus' /></MDBDropdownToggle>
-                            <MDBDropdownMenu>
-                                <MDBDropdownItem link onClick={customEvent} >Créer un évènement personnalisé</MDBDropdownItem>
-                                <MDBDropdownItem link onClick={() => { navigate("/Catalogue") }}>Choisir une activité dans le catalog</MDBDropdownItem>
-                            </MDBDropdownMenu>
-                        </MDBDropdown>
-                    </MDBCol>
-                </MDBRow>
+                <MDBRow style={{ height: "7%", borderBottom: "2px solid black", alignItems: 'center', backgroundColor: '#f8f9fa' }}>
+                <MDBCol size='9' className='d-flex align-items-center'>
+                    <h4 className="text-primary font-weight-bold mb-0">Créer un événement</h4>
+                </MDBCol>
+                <MDBCol size='3' className='d-flex align-items-center justify-content-center'>
+                    <MDBDropdown>
+                        <MDBDropdownToggle floating className="custom-btn-primary text-theme-inv">
+                            <MDBIcon icon='plus' />
+                        </MDBDropdownToggle>
+                        <MDBDropdownMenu className="bg-white shadow rounded">
+                            <MDBDropdownItem link onClick={customEvent} className="text-primary d-flex align-items-center">
+                                <MDBIcon icon="pencil-alt" className="me-2" />Créer un événement personnalisé
+                            </MDBDropdownItem>
+                            <MDBDropdownItem link onClick={() => { navigate("/Catalogue") }} className="text-primary d-flex align-items-center">
+                                <MDBIcon icon="book" className="me-2" />Choisir une activité dans le catalogue
+                            </MDBDropdownItem>
+                        </MDBDropdownMenu>
+                    </MDBDropdown>
+                </MDBCol>
+            </MDBRow>
+
+
                 <MDBRow className='recommendations' style={{ maxHeight: 'calc(100vh - 22rem)', overflowY: 'auto'}}>
                     <h6 className='text-center mt-3 mb-2'>Recommandations</h6>
                     <MDBCol className='vh-80'>
-                        {Activities
-                            .filter((activity) => selectedInterests.includes(activity.type) && new Date(activity.date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0))
+                        {Activitiess
+                            .filter((activity) => selectedInterests.includes(activity.type))
                             .map((activity, index) => (
-                                <MDBBtn key={`rec-${index}`} id={index} onClick={selectedBtn} style={{width:"100%",marginTop:"10px"}}>{activity.activity.title}</MDBBtn>
+                                <MDBBtn className="custom-btn-primary" key={`rec-${index}`} id={index} onClick={selectedBtn} style={{width:"100%",marginTop:"10px"}}>{activity.activity.title}</MDBBtn>
                             ))}
                     </MDBCol>
                 </MDBRow>
 
-                <hr className='mb-3'/>
+                <hr className='barreHr mb-3'/>
 
                 <MDBRow className='recommendations' style={{ maxHeight: 'calc(100vh - 18rem)', overflowY: 'auto' }}>
                     <h6 className='text-center mb-2'>Liste</h6>
                     <MDBCol className='vh-80'>
-                        {Activities
-                            .filter(activity => new Date(activity.date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0))
+                        {Activitiess
                             .map((activity, index) => (
-                                <MDBBtn key={`list-${index}`} id={index} onClick={selectedBtn} style={{width:"100%",marginTop:"10px"}}>{activity.activity.title}</MDBBtn>
+                                <MDBBtn className="custom-btn-primary" key={`list-${index}`} id={index} onClick={selectedBtn} style={{width:"100%",marginTop:"10px"}}>{activity.activity.title}</MDBBtn>
                             ))}
                     </MDBCol>
                 </MDBRow>
@@ -244,7 +214,7 @@ const Evenements = () => {
                 }}>
                     <MDBRipple rippleColor='light' rippleTag='div' className='bg-image hover-overlay'>
                         <MDBCardImage 
-                            src={evenements[actualIndex] ? evenements[actualIndex].activity.image : ""} 
+                            src={Activitiess[actualIndex] ? Activitiess[actualIndex].activity.image : ""} 
                             fluid alt='Event Image' 
                             style={{ borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}
                         />
@@ -252,25 +222,18 @@ const Evenements = () => {
                             <div className='mask' style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
                         </a>
                     </MDBRipple>
-                    <MDBCardBody style={{ textAlign: 'center' }}>
-                        <MDBCardTitle>{evenements[actualIndex] ? evenements[actualIndex].activity.title : ""}</MDBCardTitle>
+                    <MDBCardBody>
+                        <MDBCardTitle>{Activitiess[actualIndex]?Activitiess[actualIndex].activity.title:""}</MDBCardTitle>
                         <MDBCardText>
-                            {evenements[actualIndex] ? evenements[actualIndex].activity.description : ""}
+                            {Activitiess[actualIndex]?Activitiess[actualIndex].activity.description:""}
                         </MDBCardText>
                         <MDBCardText>
-                            {evenements[actualIndex] && evenements[actualIndex].participants.indexOf(jwt.email) !== -1 ? "Vous êtes déjà inscrits" : ""}
+                            {Activitiess[actualIndex]?(Activitiess[actualIndex].participants.indexOf(jwt.email)==-1?"":"Vous êtes déjà inscrits"):""}
                         </MDBCardText>
                         <MDBCardText>
-                            {evenements[actualIndex] && evenements[actualIndex].participants.length >= (parseInt(evenements[actualIndex].nbinvities) + 1) ? "Evenement complet" : ""}
+                            {Activitiess[actualIndex]?(Activitiess[actualIndex].participants.length >= (parseInt(Activitiess[actualIndex].nbinvities) +1)?"Evenement complet":""):""}
                         </MDBCardText>
-                        <MDBBtn 
-                            color="primary" 
-                            disabled={evenements[actualIndex] && (evenements[actualIndex].participants.indexOf(jwt.email) !== -1 || evenements[actualIndex].participants.length >= (parseInt(evenements[actualIndex].nbinvities) + 1))}
-                            onClick={toggleOpen}
-                            style={{ marginTop: '10px' }}
-                        >
-                            S'inscrire
-                        </MDBBtn>
+                        <MDBBtn disabled={Activitiess[actualIndex]?((Activitiess[actualIndex].participants.indexOf(jwt.email)!=-1  || Activitiess[actualIndex].participants.length >= (parseInt(Activitiess[actualIndex].nbinvities) +1))?true:false):false} onClick={toggleOpen}>S'inscrire</MDBBtn>
                     </MDBCardBody>
                 </MDBCard>
             </MDBCol>
@@ -282,7 +245,7 @@ const Evenements = () => {
                             <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
                         </MDBModalHeader>
                         <MDBModalBody>
-                            <MDBCardText>{`Voulez-vous vraiment vous inscrire à l'activité : ${evenements[actualIndex] ? evenements[actualIndex].activity.title : ""}`}</MDBCardText>
+                            <MDBCardText>{`Voulez-vous vraiment vous inscrire à l'activité : ${Activitiess[actualIndex] ? Activitiess[actualIndex].activity.title : ""}`}</MDBCardText>
                             {error.length > 0 ? <MDBCardText style={{ color: "#ff3333" }}>{error}</MDBCardText> : ""}
                         </MDBModalBody>
 
@@ -295,7 +258,7 @@ const Evenements = () => {
                     </MDBModalContent>
                 </MDBModalDialog>
             </MDBModal>
-        </MDBRow>
+        </MDBRow>   
     );
 };
 

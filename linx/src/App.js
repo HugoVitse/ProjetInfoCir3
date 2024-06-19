@@ -66,7 +66,7 @@ function App() {
           </div>
         </div>
         <div style={mainContentStyle}>
-          <MDBCard className="h-100">
+          <MDBCard className="h-100 bg-theme">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/Login" element={<Login />} />
