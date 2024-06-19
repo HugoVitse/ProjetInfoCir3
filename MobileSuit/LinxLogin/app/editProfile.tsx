@@ -1,6 +1,6 @@
 import { Link, Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, KeyboardAvoidingView, Platform,Image } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, Platform,Image, Dimensions } from 'react-native';
 import {Button ,HelperText,Icon,IconButton,TextInput} from 'react-native-paper'
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -8,9 +8,12 @@ import axios from 'axios'
 import Config from '../config.json'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {user} from '../constants/user'
+import Theme from '@/constants/Theme';
+
+const { width } = Dimensions.get('window')
 
 export default function EditScreen() {
-  
+
   const [show, setShow] = useState(false);
   const [showDate,setShowDate] = useState(false)
   const router = useRouter();
@@ -31,6 +34,8 @@ export default function EditScreen() {
     email:"",
     image:""
   })
+
+  const _Theme = Theme()
   
   const onChange = (event:any, selectedDate:any) => {
     const currentDate = selectedDate || date;
@@ -113,7 +118,7 @@ export default function EditScreen() {
       scrollEnabled
       extraScrollHeight={Platform.OS === 'ios' ? 20 : 0}
     >
-      <View style={styles.inner}>
+      <View style={[styles.inner, _Theme.themeBack2]}>
 
         <Image
             source={require('../assets/images/edit.png')}
@@ -121,38 +126,41 @@ export default function EditScreen() {
           />
       <TextInput
           value={prenom}
-          outlineColor={colorMain}
-          activeOutlineColor={colorMain}
+          outlineColor={_Theme.themeBouton.color}
+          activeOutlineColor={_Theme.themeBouton2.color}
           theme={theme}
           label="Prénom"
           placeholder='Entrez votre prénom...'
-          left={<TextInput.Icon icon="account" />}
+          left={<TextInput.Icon icon="account" color={_Theme.themeText.color} />}
           mode='outlined'
-          style={styles.input}
+          style={[styles.input, _Theme.themeBack2]}
+          textColor={_Theme.themeText.color}
           onChangeText={onChangePrenom}
         />
         <TextInput
           value={nom}
-          outlineColor={colorMain}
-          activeOutlineColor={colorMain}
+          outlineColor={_Theme.themeBouton.color}
+          activeOutlineColor={_Theme.themeBouton2.color}
           theme={theme}
           label="Nom"
           placeholder='Entrez votre nom...'
-          left={<TextInput.Icon icon="account-outline" />}
+          left={<TextInput.Icon icon="account-outline" color={_Theme.themeText.color} />}
           mode='outlined'
-          style={styles.input}
+          style={[styles.input, _Theme.themeBack2]}
+          textColor={_Theme.themeText.color}
           onChangeText={onChangeNom}
         />
        
         <TextInput
-          outlineColor={colorMain}
-          activeOutlineColor={colorMain}
+          outlineColor={_Theme.themeBouton.color}
+          activeOutlineColor={_Theme.themeBouton2.color}
           theme={theme}
           label="Date de naissance"
           placeholder='Entrez votre date de naissance...'
-          left={<TextInput.Icon icon="calendar" />}
+          left={<TextInput.Icon icon="calendar" color={_Theme.themeText.color} />}
           mode='outlined'
-          style={styles.input}
+          style={[styles.input, _Theme.themeBack2]}
+          textColor={_Theme.themeText.color}
           value={isdate>1?date.toDateString():date.toDateString()}
           onFocus={showDatepicker}
           onBlur={hideDatepicker}
@@ -165,47 +173,52 @@ export default function EditScreen() {
             setShowDate(true)
           }}
           mode="date"
+          style={_Theme.themeBack2}
+          textColor={_Theme.themeText.color}
           display="default"
           onChange={onChange}
         />
       )}
         <TextInput
           value={email}
-          outlineColor={colorMain}
-          activeOutlineColor={colorMain}
+          outlineColor={_Theme.themeBouton.color}
+          activeOutlineColor={_Theme.themeBouton2.color}
           theme={theme}
           label="Email"
           placeholder='Entrez votre email...'
-          left={<TextInput.Icon icon="email" />}
+          left={<TextInput.Icon icon="email" color={_Theme.themeText.color} />}
           mode='outlined'
-          style={styles.input}
+          style={[styles.input, _Theme.themeBack2]}
+          textColor={_Theme.themeText.color}
           onChangeText={onChangeEmail}
         />
 
         <TextInput
           value={password}
-          outlineColor={colorMain}
-          activeOutlineColor={colorMain}
+          outlineColor={_Theme.themeBouton.color}
+          activeOutlineColor={_Theme.themeBouton2.color}
           theme={theme}
           secureTextEntry={true}
           label="Mot de passe"
           placeholder='Entrez votre nouveau mot de passe...'
-          left={<TextInput.Icon icon="lock-open" />}
+          left={<TextInput.Icon icon="lock-open" color={_Theme.themeText.color} />}
           mode='outlined'
-          style={styles.input}
+          style={[styles.input, _Theme.themeBack2]}
+          textColor={_Theme.themeText.color}
           onChangeText={onChangePassword}
         />
         <TextInput
           value={confirmPass}
-          outlineColor={colorMain}
-          activeOutlineColor={colorMain}
+          outlineColor={_Theme.themeBouton.color}
+          activeOutlineColor={_Theme.themeBouton2.color}
           theme={theme}
           secureTextEntry={true}
           label="Confirmation mot de passe"
           placeholder='Entrez à nouveau votre mot de passe...'
-          left={<TextInput.Icon icon="lock" />}
+          left={<TextInput.Icon icon="lock" color={_Theme.themeText.color} />}
           mode='outlined'
-          style={styles.input}
+          style={[styles.input, _Theme.themeBack2]}
+          textColor={_Theme.themeText.color}
           onChangeText={onChangeconfirmPass}
         />
   
@@ -215,14 +228,15 @@ export default function EditScreen() {
         </HelperText>
       </View> 
       <View style={styles.horizontal}>
-        
-         <Button buttonColor={colorMain} mode='contained-tonal' onPress={reset} style={{marginRight:30,width:"15%"}}>
-         <Icon
-            source="reload"
-            size={20}
-          />
-        </Button> 
-        <Button buttonColor={colorMain} icon="account-check" mode='contained-tonal' onPress={update} style={{marginLeft:30,width:"75%"}}>
+        <IconButton 
+          icon="reload" 
+          size={26} 
+          containerColor={_Theme.themeBouton.backgroundColor} 
+          iconColor={_Theme.themeBouton.color} mode='contained' 
+          onPress={reset} 
+          style={{width:"20%"}}
+        /> 
+        <Button buttonColor={_Theme.themeBouton.backgroundColor} textColor={_Theme.themeBouton.color} icon="account-check" mode='contained' onPress={update} style={{width:"60%"}}>
           Valider
         </Button> 
       </View>
@@ -245,11 +259,9 @@ const theme = {
 
 const styles = StyleSheet.create({
   input: {
-    backgroundColor:'white',
     width:350,
     margin:0,
     borderRadius:2,
-    shadowColor:'black',
     shadowOpacity:0.3,
     shadowRadius:3,
     shadowOffset:{
@@ -268,9 +280,11 @@ const styles = StyleSheet.create({
   },
   horizontal: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     padding: 10,
-
+    width: width - 100,
+    zIndex: 5
   },
   scrollViewContent: {
     flexGrow: 1,

@@ -40,6 +40,12 @@
   color: var(--text-color-inv)!important;
 }
 
+.barreHr{
+  border-color: var(--text-color);
+  margin-bottom: '3rem';
+  border-bottom: '5px solid';
+}
+
 .custom-btn {
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
@@ -180,7 +186,8 @@ body {
   top: 0;
   left: 0;
   bottom: 0;
-  width: 25%;
+  right:0;
+  width: 30%;
   animation: slideInLeft 0.5s forwards;
 }
 
@@ -267,3 +274,20 @@ body {
   display: none;
 }
 
+.user-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.user-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.user-info {
+  flex-grow: 1;
+}

@@ -18,7 +18,7 @@ async function EventRegister(req,res){
             console.log(decoded)
             const email = decoded.email     
             const database = connect_db.client.db(config.dbName);
-            const collection = database.collection(config.evenements);
+            const collection = database.collection(config   .evenements);
 
             const id_event = req.body.id
             console.log(email)

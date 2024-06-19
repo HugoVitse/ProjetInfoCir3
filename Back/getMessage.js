@@ -8,6 +8,7 @@ const { ObjectId } = require('mongodb');
 
 async function getMessage(req,res){
 
+   
     const cookies = req.cookies
     console.log(cookies)
     if(!('jwt' in cookies)){
@@ -22,12 +23,19 @@ async function getMessage(req,res){
             const database = connect_db.client.db(config.dbName);
             const collection = database.collection(config.evenements);
         
+        
             const id = req.params.id
             var oid = new ObjectId(id)
 
             const findOneResult = await collection.findOne({_id:oid})
-
-            res.send(findOneResult)
+            if(findOneResult == null || findOneResult.chat == null){
+                res.send([])
+                return
+            }
+            else{
+                res.send(findOneResult.chat)
+                return
+            }
         }
         catch(err){
             console.log(err)

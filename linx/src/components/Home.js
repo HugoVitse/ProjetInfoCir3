@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardText,
+  MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardText, MDBIcon,
   MDBTypography, MDBRadio, MDBRange, MDBModalFooter, MDBBtn, MDBModalTitle,
   MDBCheckbox, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalBody,MDBBadge
 } from 'mdb-react-ui-kit';
@@ -23,6 +23,7 @@ const Home = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [pp, setPp] = useState('');
+  const [id, setid] = useState('');
   const [formData, setFormData] = useState({
     activities: [],
     note: 5,
@@ -109,6 +110,53 @@ const Home = () => {
     return (Object.values(formData).every(value => value !== '' && value !== undefined)&&
     formData.activities.length > 0);
   }
+  
+  useEffect(() => {
+    const fnc1 = async () => {
+      DeleteEvent(id);
+      DeleteParticipant(id);
+    };
+    fnc1();
+  }, []);
+  
+  const DeleteEvent = (id) => {
+    setid(id); 
+    handleEventDelete(id);
+  };
+
+  const DeleteParticipant = (id) => {
+    setid(id); 
+    handleParticipantDelete(id);
+  };
+  
+  const handleParticipantDelete = async (id) => {
+    setError('');
+    setLoading(true);
+    try {
+      await axios.post('http://localhost/ParticipantDelete', {id: id}, { withCredentials: true });
+      window.location.reload();
+    } catch (error) {
+      console.error('Error:', error);
+      setError('An error occurred. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEventDelete = async (id) => {
+    setError('');
+    setLoading(true);
+    console.log(id)
+    try {
+      await axios.post('http://localhost/EventDelete', {id: id}, { withCredentials: true });
+      window.location.reload();
+    } catch (error) {
+      console.error('Error:', error);
+      setError('An error occurred. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const renderInterestCards = () => {
     return selectedInterests.map((interest, index) => (
@@ -118,17 +166,22 @@ const Home = () => {
             <MDBTypography tag="h4" className="text-primary font-weight-bold">
               {interest}
             </MDBTypography>
-            <hr/>
+            <hr />
             {events
-                .filter(event => event.type === interest && new Date(event.date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0) &&
+              .filter(event => event.type === interest && new Date(event.date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0) &&
                 Array.isArray(event.participants) && event.participants.some(participants => participants === email))
               .map((event, index) => (
-                <Link to={`/event/${event.activity.title}/${event._id}`} key={index} className="text-decoration-none"> {/* Assurez-vous que "/event/${event.id}" est l'URL appropriée */}
-                  <MDBCardText className="fw-bold mb-2"> 
-                    <MDBBadge color="secondary" className="mr-2">Event</MDBBadge>
-                    : {event.activity.title}
-                  </MDBCardText>
-                </Link>
+                <div key={index} className="d-flex justify-content-between align-items-center mb-2">
+                  <Link to={`/event/${event.activity.title}/${event._id}`} className="text-decoration-none">
+                    <MDBCardText className="fw-bold">
+                      <MDBBadge color="secondary" className="mr-2">Event</MDBBadge>
+                      : {event.activity.title}
+                    </MDBCardText>
+                  </Link>
+                  {event.host === email 
+                    ? <button onClick={() => DeleteEvent(event._id)} className="btn btn-danger">Supprimer</button> 
+                    : <button onClick={() => DeleteParticipant(event._id)} className="btn btn-danger">Se désinscrire</button>}
+                </div>
               ))}
           </MDBCardBody>
         </MDBCard>
@@ -151,7 +204,7 @@ const Home = () => {
                 Array.isArray(event.participants) && event.participants.some(participants => participants === email))
                 .map((event, index) => (
                   <div key={index}>
-                    <MDBBadge color="secondary" className="mr-2">Event</MDBBadge>
+                    <MDBBadge color="secondary">Event</MDBBadge>
                     : {event.activity.title}
   
                   </div>

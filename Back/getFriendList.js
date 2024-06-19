@@ -4,7 +4,7 @@ const config_serv = require('./configServ')
 const jwt = require('jsonwebtoken');
 const connect_db = require('./connect_db')
 
-async function getInfos(req,res){
+async function getFriendList(req,res){
     const cookies = req.cookies
     if(!('jwt' in cookies)){
         res.status(500).send()
@@ -23,7 +23,28 @@ async function getInfos(req,res){
         
         
             const findOneResult = await collection.findOne({'email': email});
-            res.send(findOneResult)
+
+            if('friends' in findOneResult){
+
+                const friends = findOneResult.friends
+                const friendList = []
+
+                for (let i = 0; i < friends.length; i++){
+                    const friend = await collection.findOne({'email': friends[i]})
+                    friendList.push({
+                        email: friend.email,
+                        firstName: friend.firstName,
+                        lastName: friend.lastName,
+                        activities: friend.activities
+                    })
+                }
+                res.send(friendList)
+                return
+            }
+            else{
+                res.send([])
+                return
+            }
         }
         catch(err){
             console.log(err)
@@ -34,4 +55,4 @@ async function getInfos(req,res){
 
 }
 
-module.exports = getInfos
+module.exports = getFriendList

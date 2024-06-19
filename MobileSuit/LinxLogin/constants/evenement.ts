@@ -5,6 +5,7 @@ export type evenement = {
         description:string;
         adresse:string
     }  ,
+    type:string;
     date:string;
     nbinvities:string;
     host:string;

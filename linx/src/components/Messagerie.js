@@ -5,7 +5,7 @@ import {
 } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import { useParams } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode'; // Import from 'jwt-decode' instead of 'jwt-decode'
+import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -17,99 +17,100 @@ const Messagerie = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [chat, setChat] = useState([]);
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState([]);
 
   const retrieveCookie = () => {
     const token = Cookies.get('jwt');
-    try {
-      const decodedToken = jwtDecode(token);
-      setEmail(decodedToken.email);
-    } catch (error) {
-      console.error('Error decoding token:', error);
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        setEmail(decodedToken.email);
+      } catch (error) {
+        console.error('Error decoding token:', error);
+        navigate('/Login');
+      }
+    } else {
       navigate('/Login');
     }
   };
 
   const getUserInfo = async (email) => {
     try {
-      const response = await axios.get(`http://localhost/getInfosEmail/${email}`, { withCredentials: true });
-      return {
-        firstName: response.data.firstName || '',
-        lastName: response.data.lastName || '',
-        pp: response.data.image || ''
-      };
+      const response = await axios.get(`http://localhost/getAllUsers`, { withCredentials: true });
+      const usr = response.data.find(user => user.email === email);
+      if (usr) {
+        return {
+          firstName: usr.firstName || '',
+          lastName: usr.lastName || '',
+          pp: `profile_pictures/${usr.email}.png` || ''
+        };
+      }
+      return {};
     } catch (error) {
       console.error(`Error fetching user info for ${email}:`, error);
       return {};
     }
   };
 
-  const updateMessageTypes = (messages, email) => {
-    return messages.map(message => ({
-      ...message,
-      type: message.sender === email ? 'sent' : 'received'
-    }));
-  };
-
-  const setChatWithUserInfo = async (messages, email) => {
-    const updatedMessages = updateMessageTypes(messages, email);
-    const chatWithUserInfo = [];
-
-    for (const message of updatedMessages) {
-      const user = await getUserInfo(message.sender); // Fetch user info for each message sender
-      chatWithUserInfo.push({
+  const setChatWithUserInfo = async (messages) => {
+    const chatWithUserInfo = await Promise.all(messages.map(async (message) => {
+      const user = await getUserInfo(message.author);
+      return {
         ...message,
         fn: user.firstName,
         ln: user.lastName,
         pp: user.pp
-      });
-    }
-
+      };
+    }));
     return chatWithUserInfo;
   };
+  
 
   useEffect(() => {
     const fetchData = async () => {
       retrieveCookie();
-      try {
-        const response = await axios.get(`http://localhost/getMessage/${idEvent}`, { withCredentials: true });
-        const updatedMessages = updateMessageTypes(response.data.messages, email);
-        const chatWithUserInfo = await setChatWithUserInfo(updatedMessages, email);
-        setMessages(updatedMessages);
-        setChat(chatWithUserInfo);
+      if (email) {
+        try {
+          setTimeout(async() => {
+            const response = await axios.get(`http://localhost/getMessage/${idEvent}`, { withCredentials: true });
+            const chatWithUserInfo = await setChatWithUserInfo(response.data);
+            setChat(chatWithUserInfo);
+          }, 1500);
 
-        setUserInfo(
-          await Promise.all(
-            response.data.participants.map(async participant => {
-              const userInfo = await getUserInfo(participant);
-              return {
-                email: participant,
-                userInfo: {
-                  firstName: userInfo.firstName,
-                  lastName: userInfo.lastName,
-                  pp: userInfo.pp
-                }
-              };
-            })
-          )
-        );
+          const responses = await axios.get(`http://localhost/getEvents`, { withCredentials: true });
+          const usr = responses.data.find(activite => activite.activity.title === decodeURIComponent(activityName));
+          console.log(usr);
 
-      } catch (error) {
-        console.error('Error fetching data:', error);
+          const userInfoList = await Promise.all(usr.participants.map(async (participant) => {
+            const userInfo = await getUserInfo(participant);
+            return {
+              email: participant,
+              userInfo: {
+                firstName: userInfo.firstName,
+                lastName: userInfo.lastName,
+                pp: userInfo.pp
+              }
+            };
+          }));
+
+          setUserInfo(userInfoList);
+
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
       }
     };
 
     fetchData();
-  }, [email, idEvent]);
+  }, [email, chat]);
 
   const sendMessage = async () => {
-    if (newMessage.trim()) {
-      const updatedMessages = [...messages, { text: newMessage, sender: email, type: 'sent' }];
-      setMessages(updatedMessages);
-      setNewMessage('');
+    if (newMessage.trim()){
       try {
-        await axios.post('http://localhost/setMessagerie', { id: idEvent, messages: updatedMessages }, { withCredentials: true });
-        window.location.reload();
+        await axios.post('http://localhost/sendMessage', {id: idEvent, message: newMessage}, { withCredentials: true });
+        const updatedMessages = [...messages, {author: email, message: newMessage }];
+        setMessages(updatedMessages);
+        setNewMessage('');
       } catch (error) {
         console.error('Error sending message:', error);
       }
@@ -127,22 +128,22 @@ const Messagerie = () => {
             <MDBCardBody style={{ maxHeight: '70vh', overflowY: 'scroll' }}>
               <div className="message-list" style={{ marginBottom: '20px' }}>
                 {chat.map((message, index) => (
-                  <MDBCardText key={index} className={`message ${message.type === 'sent' ? 'text-end' : 'text-start'}`}>
-                    <div className={`d-flex align-items-center ${message.type === 'sent' ? 'justify-content-end' : 'justify-content-start'}`}>
-                      {message.type === 'received' && (
+                  <MDBCardText key={index} className={`message ${message.author === email ? 'text-end' : 'text-start'}`}>
+                    <div className={`d-flex align-items-center ${message.author === email ? 'justify-content-end' : 'justify-content-start'}`}>
+                      {message.author !== email && (
                         <img
                           src={`http://localhost/${message.pp}`}
                           alt={`${message.fn}'s profile`}
                           style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }}
                         />
                       )}
-                      <div className={`message-bubble ${message.type === 'sent' ? 'bg-primary text-white' : 'bg-light text-dark'} p-2 rounded`} style={{ maxWidth: '70%' }}>
+                      <div className={`message-bubble ${message.author === email ? 'bg-primary text-white' : 'bg-light text-dark'} p-2 rounded`} style={{ maxWidth: '70%' }}>
                         <div className="message-content">
                           <strong>{message.fn} {message.ln}</strong>
-                          <p className="mb-0">{message.text}</p>
+                          <p className="mb-0">{message.message}</p>
                         </div>
                       </div>
-                      {message.type === 'sent' && (
+                      {message.author === email && (
                         <img
                           src={`http://localhost/${message.pp}`}
                           alt={`${message.fn}'s profile`}
@@ -172,10 +173,10 @@ const Messagerie = () => {
                 Participants
               </MDBTypography>
               <MDBListGroup light className='mb-4'>
-                <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                  {userInfo ? (
-                    userInfo.map((info, index) => (
-                      <div key={index} className='d-flex align-items-center'>
+                {userInfo.length > 0 ? (
+                  userInfo.map((info, index) => (
+                    <MDBListGroupItem key={index} className='d-flex justify-content-between align-items-center'>
+                      <div className='d-flex align-items-center'>
                         <img
                           src={`http://localhost/${info.userInfo.pp}`}
                           alt={`${info.userInfo.firstName}'s profile`}
@@ -187,11 +188,11 @@ const Messagerie = () => {
                           <p className='text-muted mb-0'>{info.email}</p>
                         </div>
                       </div>
-                    ))
-                  ) : (
-                    <li>No users available</li>
-                  )}
-                </MDBListGroupItem>
+                    </MDBListGroupItem>
+                  ))
+                ) : (
+                  <MDBListGroupItem>No users available</MDBListGroupItem>
+                )}
               </MDBListGroup>
             </MDBCardBody>
           </MDBCard>

@@ -21,6 +21,7 @@ async function getMoodTracker(req,res){
             const database = connect_db.client.db(config.dbName);
             const collection = database.collection(config.moodTracker);
         
+        
             const findOneResult = await collection.findOne({'email': email});
             res.send(findOneResult)
         }

@@ -25,6 +25,7 @@ const port = 443
 
 const fillQuestionnaire = require("./fillQuestionnaire")
 const FillMoodTracker = require("./FillMoodTracker")
+const sendMessage = require('./sendMessage')
 const verifyPassword = require("./verifyPassword")
 const setDaily = require("./setDaily")
 const scrapActivities = require('./scrapActivities')
@@ -34,14 +35,19 @@ const login = require('./login')
 const register = require('./register')
 const getInfos = require('./getInfos')
 const updateInfos = require('./updateInfos')
-const setPicture = require('./setPicture')
+const setPicture = require('./updateInfoWeb')
 const createEvenement = require('./createEvenement')
 const EventRegister = require('./EventRegister')
+const ParticipantDelete = require('./ParticipantDelete')
 const getEvents = require('./getEvents')
 const getMoodTracker = require('./getMoodTracker')
-const setMessagerie = require('./setMessagerie')
+const getFriendList = require('./getFriendList')
+const getAllUsers = require('./getAllUsers')
+const friendRequests = require('./friendRequest')
 const getMessage = require('./getMessage')
-const getInfosEmail = require('./getInfosEmail')
+const updateInfoWeb = require('./updateInfoWeb')
+const EventDelete = require('./EventDelete')
+
 
 
 
@@ -49,6 +55,9 @@ async function serv(){
 
 
   await connect_db.ConnectDB();
+
+    
+  
 
   app.get("/",(req,res)=>{
       console.log("ok")
@@ -73,10 +82,16 @@ async function serv(){
   app.post('/createEvenement',createEvenement)
   app.get('/evenements',evenements)
   app.post('/EventRegister',EventRegister)
+  app.post('/ParticipantDelete',ParticipantDelete)
   app.get('/getEvents',getEvents)
-  app.post('/setMessagerie',setMessagerie)
   app.get('/getMessage/:id',getMessage)
-  app.get('/getInfosEmail/:email',getInfosEmail)
+  app.post('/sendMessage',sendMessage)
+  app.get('/getFriendList',getFriendList)
+  app.get('/getAllUsers',getAllUsers)
+  app.post('/friendRequests',friendRequests)
+  app.post('/updateInfoWeb',updateInfoWeb)
+  app.post('/EventDelete',EventDelete)
+
 
 
   console.log(path.join(__dirname, 'profile_pictures'))

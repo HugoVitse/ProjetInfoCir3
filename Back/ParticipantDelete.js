@@ -1,13 +1,11 @@
+const connect_db = require('./connect_db')
 const config_serv = require('./configServ')
 const config = require('./configDB')
 const jwt = require('jsonwebtoken');
-const axios = require("axios")
-const connect_db = require('./connect_db')
+const ObjectId = require('mongodb').ObjectId
 
-async function getEvents(req,res){
-
+async function ParticipantDelete(req,res){
     const cookies = req.cookies
-    console.log(cookies)
     if(!('jwt' in cookies)){
         res.status(500).send()
         return
@@ -15,22 +13,22 @@ async function getEvents(req,res){
     else{
         try{
             const token =  req.cookies.jwt
+            console.log(token)
             const decoded = jwt.verify(token, config_serv.secretJWT);
-
+            console.log(decoded)
+            const email = decoded.email     
             const database = connect_db.client.db(config.dbName);
             const collection = database.collection(config.evenements);
-        
-            const findOneResult = await collection.find({}).toArray();
 
-            let tmp = []
+            const id_event = req.body.id
+            console.log(email)
+            const new_id = new ObjectId(`${id_event}`)
 
-            for(let i = 0; i < findOneResult.length; i++){
-                if(findOneResult[i].participants.includes(decoded.email)){
-                    tmp.push(findOneResult[i])
-                }
-            }
+            const updateResult = await collection.findOneAndUpdate({_id:new_id},{$pull:{participants:email}});
 
-            res.status(200).send(tmp)
+            console.log(updateResult)
+
+            res.send("ok")
         }
         catch(err){
             console.log(err)
@@ -38,8 +36,7 @@ async function getEvents(req,res){
             return
         }
     }
-
-
+  
 }
 
-module.exports = getEvents;
+module.exports = ParticipantDelete

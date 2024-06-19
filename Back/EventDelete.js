@@ -2,8 +2,9 @@ const connect_db = require('./connect_db')
 const config_serv = require('./configServ')
 const config = require('./configDB')
 const jwt = require('jsonwebtoken');
+const ObjectId = require('mongodb').ObjectId
 
-async function createEvenement(req,res){
+async function EventDelete(req,res){
     const cookies = req.cookies
     if(!('jwt' in cookies)){
         res.status(500).send()
@@ -15,21 +16,17 @@ async function createEvenement(req,res){
             console.log(token)
             const decoded = jwt.verify(token, config_serv.secretJWT);
             console.log(decoded)
-            const email = decoded.email     
+            const email = decoded.email
             const database = connect_db.client.db(config.dbName);
-            const collection = database.collection(config.evenements);
+            const collection = database.collection(config   .evenements);
 
-            const pre_event = req.body
-            const event = {
-                ...pre_event,
-                host:email,
-                participants:[email],
-                chat:[]
-            }
-        
-        
-            const findOneResult = await collection.insertOne(event);
+            const id_event = req.body.id
+            console.log(email)
+            const new_id = new ObjectId(`${id_event}`)
 
+            const updateResult = await collection.findOneAndDelete({_id:new_id});
+
+            console.log(updateResult)
 
             res.send("ok")
         }
@@ -39,7 +36,7 @@ async function createEvenement(req,res){
             return
         }
     }
-  
+
 }
 
-module.exports = createEvenement
+module.exports = EventDelete

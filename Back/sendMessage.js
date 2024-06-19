@@ -3,8 +3,10 @@ const config = require('./configDB')
 const jwt = require('jsonwebtoken');
 const axios = require("axios")
 const connect_db = require('./connect_db')
+const { ObjectId } = require('mongodb');
 
-async function getEvents(req,res){
+
+async function sendMessage(req,res){
 
     const cookies = req.cookies
     console.log(cookies)
@@ -20,17 +22,21 @@ async function getEvents(req,res){
             const database = connect_db.client.db(config.dbName);
             const collection = database.collection(config.evenements);
         
-            const findOneResult = await collection.find({}).toArray();
+            const id = req.body.id
+            const message = req.body.message
+            var oid = new ObjectId(id)
 
-            let tmp = []
+            const findOneResult = await collection.findOne({_id:oid})
 
-            for(let i = 0; i < findOneResult.length; i++){
-                if(findOneResult[i].participants.includes(decoded.email)){
-                    tmp.push(findOneResult[i])
-                }
+            if(findOneResult == null || findOneResult.chat == null){
+                res.status(508).send()
+                return
             }
-
-            res.status(200).send(tmp)
+            else{
+                const updateResult = await collection.findOneAndUpdate({_id:oid},{$push:{chat:{author:decoded.email,message:message}}})
+                res.send("ok")
+                return
+            }
         }
         catch(err){
             console.log(err)
@@ -42,4 +48,4 @@ async function getEvents(req,res){
 
 }
 
-module.exports = getEvents;
+module.exports = sendMessage;

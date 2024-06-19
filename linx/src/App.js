@@ -10,8 +10,11 @@ import Catalogue from './components/Catalogue';
 import Activite from './components/Activite';
 import Evenements from './components/Evenements';
 import MoodTracker from './components/MoodTracker';
+import Friends from './components/Friends';
+import Notif from './components/Notif';
 import Messagerie from './components/Messagerie';
-import { MDBContainer, MDBCard } from 'mdb-react-ui-kit';
+
+import { MDBContainer, MDBCard, MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import './css/App.css';
 import { Modal, Ripple, initMDB } from "mdb-ui-kit";
@@ -20,8 +23,9 @@ initMDB({ Modal, Ripple });
 
 function App() {
   const [theme, setTheme] = useState('light');
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // Ajout de isOpen
 
+  
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme);
@@ -41,6 +45,7 @@ function App() {
     setIsOpen(!isOpen);
   };
 
+
   const mainContentStyle = {
     flex: 1,
     display: 'flex',
@@ -53,7 +58,7 @@ function App() {
   return (
     <Router>
       <MDBContainer fluid className="vh-100 p-0 d-flex">
-        <div className={`modal show ${isOpen ? '' : 'fade'}`} id="navbar" tabIndex="-1" aria-labelledby="navbarLabel" aria-hidden="true">
+      <div className={`modal show ${isOpen ? '' : 'fade'}`} id="navbar" tabIndex="-1" aria-labelledby="navbarLabel" aria-hidden="true">
           <div className="modal-dialog modal-start modal-fullscreen custom-modal">
             <div className="modal-content">
               <NavBar toggleTheme={toggleTheme} handleModalToggle={handleModalToggle} theme={theme} isOpen={isOpen} />
@@ -61,7 +66,7 @@ function App() {
           </div>
         </div>
         <div style={mainContentStyle}>
-          <MDBCard className="h-100">
+          <MDBCard className="h-100 bg-theme">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/Login" element={<Login />} />
@@ -72,6 +77,8 @@ function App() {
               <Route path="/Activite" element={<Activite />} />
               <Route path="/Evenements" element={<Evenements />} />
               <Route path="/MoodTracker" element={<MoodTracker />} />
+              <Route path="/Friends" element={<Friends />} />
+              <Route path="/Notif" element={<Notif />} />
               <Route path="/event/:activityName/:idEvent" element={<Messagerie />} />
             </Routes>
           </MDBCard>

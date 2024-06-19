@@ -2,12 +2,16 @@ import { useRouter } from "expo-router";
 import { Text, View, StyleSheet, Dimensions, SafeAreaView, TouchableOpacity} from "react-native";
 import { Avatar, Slider, Icon } from '@rneui/themed';
 import { IconButton, MD3Colors, Button, Modal, Portal, PaperProvider  } from "react-native-paper";
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import RadarChart from '@/components/SpiderGraph';
 import Carousel, { Pagination, ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useSharedValue } from "react-native-reanimated";
-import {Calendar, LocaleConfig} from 'react-native-calendars';
+import {Calendar, LocaleConfig } from 'react-native-calendars';
 import Theme from '@/constants/Theme';
+import Config from '../../config.json';
+import axios from 'axios'
+import { BarChart } from "react-native-chart-kit";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { useThemeColor } from '@/hooks/useThemeColor';
 // import { Colors } from '@/constants/Colors';
 
@@ -43,13 +47,13 @@ const slideData = [
     id: '1',
     title: 'Quotidien',
     content: 'Contenu Quotidien',
-    type: 'chart'
+    type: 'radarChart'
   },
   {
     id: '2',
     title: 'Hebdomadaire',
     content: 'Contenu Hebdomadaire',
-    type: 'text'
+    type: 'barChart'
   },
   {
     id: '3',
@@ -86,8 +90,136 @@ export default function CalendarScreen() {
   const [valueSocial, setValueSocial] = useState(0);
   const [valueMoral, setValueMoral] = useState(0);
   const [valueNutrition, setValueNutrition] = useState(0);
+  const [moodCalendar,setMoodCalendar] = useState({})
+  const [alreadyFill,setalreadyFill] = useState(false)
+  const [picutre,setPicture] = useState('')
+  const [radarData, setRadarData] = useState([
+    {
+      Sommeil: 0,
+      Sport: 0,
+      Alimentation: 0,
+      Social: 0,
+      Moral: 0,
+    },
+  ]) // [sommeil, sport, alimentation, social, moral
+  const [barData, setBarData] = useState({
+    labels: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+    datasets: [
+      {
+        data: [0, 0, 0, 0, 0, 0, 0 ]
+      }
+    ]
+  })
+  var todayDate = new Date();
+  todayDate.toString();
+  var todayDay = todayDate.getDate()
+  var todayMonth = todayDate.getMonth() + 1
+  var todayYear = todayDate.getFullYear()
 
   const _Theme = Theme()
+
+  const wrap = async()=>{
+    const today = new Date()
+  
+    const jwt_cookie = await AsyncStorage.getItem('jwt')
+    const mood = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getMoodTracker`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+    const moodTracker = mood.data.moodTrackerData
+    let tmp = {}
+
+    for(let i=0;i< moodTracker.length;i++){
+      const date = new Date(moodTracker[i].date).toLocaleDateString().split('/')
+      const actualDate = `${date[2]}-${date[1]}-${date[0]}` 
+      tmp = {
+        ...tmp,
+        [actualDate]: {
+          selected: true,
+          marked: true,
+          selectedColor: color(moodTracker[i].average)
+        }
+      }
+    }
+
+    console.log(tmp)
+    setMoodCalendar(tmp)
+    const lastQuestionnaire = moodTracker[moodTracker.length-1]
+    const dateLastQuestionnaire = new Date(lastQuestionnaire.date)
+    console.log(today.getDay())
+    if(dateLastQuestionnaire.toDateString() == today.toDateString()){
+
+      setalreadyFill(true)
+      setRadarData(
+        [
+          {
+            Sommeil: lastQuestionnaire.sleepLevel/10,
+            Sport: lastQuestionnaire.sportLevel/10,
+            Alimentation: lastQuestionnaire.eatLevel/10,
+            Social: lastQuestionnaire.socialLevel/10,
+            Moral: lastQuestionnaire.moralLevel/10,
+          },
+        ]
+      )
+
+    }
+
+
+    const day = today.getDay()
+    const days = [today.toDateString()]
+
+    for(let i=1; i<day;i++){
+      let d = new Date(`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()-i}`)
+      days.push(d.toDateString())
+    }
+
+ 
+    for(let i=0;i<days.length;i++){
+      console.log(days[i])
+    }
+ 
+
+    let dayWeek = [0,0,0,0,0,0,0]
+
+    for(let i=0;i<day;i++){
+      if(moodTracker.length-1-i >=0){
+        const d = new Date(moodTracker[moodTracker.length-1-i].date)
+        if(days.indexOf(d.toDateString()) != -1){
+          dayWeek[d.getDay()-1] = moodTracker[moodTracker.length-1-i].average
+        }
+      }
+
+    }
+
+    console.log(dayWeek)
+  
+    setBarData({
+      labels: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+      datasets: [
+        {
+          data: dayWeek
+        }
+      ]
+    })
+    
+  }
+
+  const sendQuestionnaire = async() => {
+    const data = {
+      sleepLevel: valueSommeil,
+      sportLevel: valueSport,
+      socialLevel: valueSocial,
+      moralLevel: valueMoral,
+      eatLevel : valueNutrition,
+      date: new Date().toDateString(),
+      average: (valueSommeil + valueSport + valueSocial + valueMoral + valueNutrition) / 5
+    }
+
+    console.log(data)
+
+    const jwt_cookie = await AsyncStorage.getItem('jwt')
+
+    const reponse = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/FillMoodTracker`, data,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+
+    wrap()
+  }
 
   const interpolate = (start: number, end: number, value: number) => {
     let k = (value - 0) / 10; // 0 =>min  && 10 => MAX
@@ -101,63 +233,19 @@ export default function CalendarScreen() {
     return `rgb(${r},${g},${b})`;
   };
 
-  const moodCalendar = {
-    '2024-06-11': {
-      selected: true,
-      marked: true,
-      selectedColor: color(noteMoyMood[0])
-    },
-    '2024-06-12': {
-      selected: true,
-      marked: true,
-      selectedColor: color(noteMoyMood[1])
-    },
-    '2024-06-13': {
-      selected: true,
-      marked: true,
-      selectedColor: color(noteMoyMood[2])
-    },
-    '2024-06-14': {
-      selected: true,
-      marked: true,
-      selectedColor: color(noteMoyMood[3])
-    },
-    '2024-06-15': {
-      selected: true,
-      marked: true,
-      selectedColor: color(noteMoyMood[4])
-    },
-    '2024-06-16': {
-      selected: true,
-      marked: true,
-      selectedColor: color(noteMoyMood[5])
-    },
-    '2024-06-17': {
-      selected: true,
-      marked: true,
-      selectedColor: color(noteMoyMood[6])
-    },
-    '2024-06-18': {
-      selected: true,
-      marked: true,
-      selectedColor: color(noteMoyMood[7])
-    },
-    '2024-06-19': {
-      selected: true,
-      marked: true,
-      selectedColor: color(noteMoyMood[8])
-    },
-    '2024-06-20': {
-      selected: true,
-      marked: true,
-      selectedColor: color(noteMoyMood[9])
-    },
-    '2024-06-21': {
-      selected: true,
-      marked: true,
-      selectedColor: color(noteMoyMood[10])
-    },
-  }  
+  useEffect(()=>{
+
+    const wrap_picture = async()=>{
+      const jwt_cookie = await AsyncStorage.getItem('jwt')
+      const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      setPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
+    }
+    wrap_picture()
+    
+    wrap()
+  },[])
+
+
 
   const onPressPagination = (index: number) => {
     carouselRef.current?.scrollTo({
@@ -177,20 +265,37 @@ export default function CalendarScreen() {
     {switch(item.type) {
       case 'text': 
         return <Text style={[styles.slideContent, _Theme.themeText]}>{item.content}</Text>
-      case 'chart': 
+      case 'barChart': 
+        return <BarChart
+          style={{borderRadius: 8, elevation: 3, marginTop: 20 }}
+          data={barData}
+          width={width - 40}
+          height={320}
+          fromZero={true}
+          yAxisLabel=""
+          yAxisSuffix=""
+          chartConfig={{
+            backgroundGradientFrom: _Theme.themeBack.backgroundColor,
+            backgroundGradientTo: _Theme.themeBack2.backgroundColor,
+            decimalPlaces: 2, // optional, defaults to 2dp
+            color: (opacity = 1) => `rgba(33, 150, 243, ${opacity})`,
+            labelColor: (opacity = 1) => _Theme.themeTextRadar.color,
+            propsForVerticalLabels: {
+              translateX: -20
+            },
+            propsForHorizontalLabels: {
+              translateX: 10
+            },
+          }}
+          verticalLabelRotation={30}
+          
+        />
+      case 'radarChart': 
         return <RadarChart
           graphSize={400}
           scaleCount={10}
           numberInterval={2}
-          data={[
-            {
-              Sommeil: 0.7,
-              Sport: 1,
-              Alimentation: 0.9,
-              Social: 0.67,
-              Moral: 0.8,
-            },
-          ]}
+          data={radarData}
           options={{
             graphShape: 1,
             showAxis: false,
@@ -208,9 +313,13 @@ export default function CalendarScreen() {
           hideExtraDays={true}
           firstDay={1}
           disableAllTouchEventsForDisabledDays={true}
-          style={[{width: width-40, marginTop: 20}, _Theme.themeCalendar]}
+          style={[{width: width-40, borderRadius: 8, elevation: 3, marginTop: 20}, _Theme.themeCalendar]}
           markedDates={moodCalendar}
-          theme={{calendarBackground: _Theme.themeCalendar.backgroundColor, monthTextColor: _Theme.themeCalendar.color}}
+          theme={{
+            calendarBackground: _Theme.themeCalendar.backgroundColor, 
+            monthTextColor: _Theme.themeCalendar.color,
+            todayTextColor: _Theme.themeTextRadar.color,
+          }}
         />
     }}
   }
@@ -229,6 +338,7 @@ export default function CalendarScreen() {
           <Avatar
             size={48}
             rounded
+            source={{ uri: picutre}}
             icon={{ name: "person", type: "material" }}
             containerStyle={{ backgroundColor: "#bbbec1", position: 'absolute', bottom: 8, right: 15 }}
             onPress={() => router.push("/../profile")}
@@ -246,8 +356,8 @@ export default function CalendarScreen() {
             {/* <Animated.View style={[styles.underline, { left: underlineAnim, width: width / slideData.length }]} /> */}
           </SafeAreaView>
           <View style={{top: 40, zIndex:2}}>
-            <Button mode="contained" onPress={() => {setModalVisible(true); console.log("pressed")}} style={_Theme.themeBouton} textColor={_Theme.themeBouton.color}>
-              Questionnaire du jour
+            <Button contentStyle={{flexDirection: 'row-reverse'}} icon={alreadyFill?"check":""} mode="contained" disabled={alreadyFill} onPress={() => {setModalVisible(true);}} style={_Theme.themeBouton} textColor={_Theme.themeBouton.color}>
+              {alreadyFill?"Questionnaire rempli":"Questionnaire du jour"}  
             </Button>
           </View>
           <Portal>
@@ -375,7 +485,7 @@ export default function CalendarScreen() {
                 mode="contained" 
                 onPress={() => {
                   setModalVisible(false); 
-                  console.log("pressed"); 
+                  sendQuestionnaire()
                 }}
                 style={_Theme.themeBouton}
                 textColor={_Theme.themeBouton.color}

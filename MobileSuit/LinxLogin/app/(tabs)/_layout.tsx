@@ -4,6 +4,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Theme from '@/constants/Theme';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function TabLayout() {
   
@@ -41,7 +42,7 @@ export default function TabLayout() {
           options={{
             title: 'Evènements',
             tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+              <MaterialIcons name={focused?"event":"event"} size={24} color={color} />  
             ),
           }}
         />
