@@ -131,11 +131,13 @@ const Messagerie = () => {
                   <MDBCardText key={index} className={`message ${message.author === email ? 'text-end' : 'text-start'}`}>
                     <div className={`d-flex align-items-center ${message.author === email ? 'justify-content-end' : 'justify-content-start'}`}>
                       {message.author !== email && (
-                        <img
-                          src={`http://localhost/${message.pp}`}
-                          alt={`${message.fn}'s profile`}
-                          style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }}
-                        />
+                        <a href={`/Account/${encodeURIComponent(message.author)}`}>
+                          <img
+                            src={`http://localhost/${message.pp}`}
+                            alt={`${message.fn}'s profile`}
+                            style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }}
+                          />
+                        </a>
                       )}
                       <div className={`message-bubble ${message.author === email ? 'bg-primary text-white' : 'bg-light text-dark'} p-2 rounded`} style={{ maxWidth: '70%' }}>
                         <div className="message-content">
@@ -144,11 +146,13 @@ const Messagerie = () => {
                         </div>
                       </div>
                       {message.author === email && (
-                        <img
-                          src={`http://localhost/${message.pp}`}
-                          alt={`${message.fn}'s profile`}
-                          style={{ width: '40px', height: '40px', borderRadius: '50%', marginLeft: '10px' }}
-                        />
+                        <a href={`/Account/${encodeURIComponent(message.author)}`}>
+                          <img
+                            src={`http://localhost/${message.pp}`}
+                            alt={`${message.fn}'s profile`}
+                            style={{ width: '40px', height: '40px', borderRadius: '50%', marginLeft: '10px' }}
+                          />
+                        </a>
                       )}
                     </div>
                   </MDBCardText>
@@ -177,12 +181,14 @@ const Messagerie = () => {
                   userInfo.map((info, index) => (
                     <MDBListGroupItem key={index} className='d-flex justify-content-between align-items-center'>
                       <div className='d-flex align-items-center'>
-                        <img
-                          src={`http://localhost/${info.userInfo.pp}`}
-                          alt={`${info.userInfo.firstName}'s profile`}
-                          style={{ width: '45px', height: '45px', borderRadius: '50%' }}
-                          className='me-3'
-                        />
+                        <a href={`/Account/${encodeURIComponent(info.email)}`}>
+                          <img
+                            src={`http://localhost/${info.userInfo.pp}`}
+                            alt={`${info.userInfo.firstName}'s profile`}
+                            style={{ width: '45px', height: '45px', borderRadius: '50%' }}
+                            className='me-3'
+                          />
+                        </a>
                         <div>
                           <p className='fw-bold mb-1'>{info.userInfo.firstName} {info.userInfo.lastName}</p>
                           <p className='text-muted mb-0'>{info.email}</p>

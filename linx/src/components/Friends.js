@@ -17,7 +17,7 @@ const Friends = () => {
   const [email, setEmail] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [users, setUsers] = useState([]);
-  const [sentFriendRequests, setSentFriendRequests] = useState([]); // État pour gérer les demandes d'amis envoyées
+  const [sentFriendRequests, setSentFriendRequests] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {

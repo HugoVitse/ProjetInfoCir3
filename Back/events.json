@@ -264,14 +264,6 @@
     "adresse": "70 rue des sarrazins"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/rendez-vous-au-jardin-des-passereaux2/3511397-1-fre-FR/Rendez-vous-au-jardin-des-Passereaux_equipment_image_lead_child.jpg",
-    "name": "Rendez vous au jardin des Passereaux",
-    "type": "Nature / environnement",
-    "description": "Animations autour de la nature",
-    "date": "Du 31 mai au 18 juin 2024",
-    "adresse": "208 rue des Bois Blancs"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-touristique-insolite-dans-le-centre-de-lille/3490236-1-fre-FR/Visite-touristique-insolite-dans-le-centre-de-Lille_equipment_image_lead_child.jpg",
     "name": "Visite touristique insolite dans le centre de Lille",
     "type": "Visite",
@@ -438,70 +430,6 @@
     "description": "Semaine Portes Ouvertes",
     "date": "Du 17 au 19 juin 2024",
     "adresse": "38 rue d'Anvers, Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/table-ronde-l-invisibilite-des-femmes-dans-la-culture/3508488-1-fre-FR/TABLE-RONDE-L-invisibilite-des-femmes-dans-la-culture_equipment_image_lead_child.jpg",
-    "name": "TABLE RONDE L invisibilite des femmes dans la culture",
-    "type": "Rencontre / conférence / débat",
-    "description": "Dans cette table ronde les invité·es discuterons des notions d'invisibilisation et du gaslighting des femmes dans le secteur culturel.",
-    "date": "Le 18 juin 2024",
-    "adresse": "le grand sud lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/hatched-ensemble/3490911-1-fre-FR/Hatched-Ensemble_equipment_image_lead_child.jpg",
-    "name": "Hatched Ensemble",
-    "type": "Spectacle",
-    "description": "La chorégraphe et activiste Mamela Nyamza invite 12 performeur·ses à revisiter l’une de ses premières pièces solos : \"HATCHED ENSEMBLE\".",
-    "date": "Le 18 juin 2024",
-    "adresse": "50 rue de l'Europe, 59000 LILLE"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/concert-direction-d-orchestre3/3502497-1-fre-FR/Concert-direction-d-orchestre_equipment_image_lead_child.jpg",
-    "name": "Concert direction d orchestre",
-    "type": "Cinéma - projection",
-    "description": "Concert",
-    "date": "Le 18 juin 2024",
-    "adresse": "Place du concert 59000 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/hatched-ensemble-mamela-nyamza/3508529-1-fre-FR/HATCHED-ENSEMBLE-Mamela-Nyamza_equipment_image_lead_child.jpg",
-    "name": "HATCHED ENSEMBLE Mamela Nyamza",
-    "type": "Spectacle",
-    "description": "Ce spectacle de danse mêle les codes de la danse classique et des danses traditionnelles pour interroger les normes présentes dans ce domaine.",
-    "date": "Le 18 juin 2024",
-    "adresse": "le grand sud lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/jam-session8/3517042-1-fre-FR/Jam-Session_equipment_image_lead_child.jpg",
-    "name": "Jam Session",
-    "type": "Concert",
-    "description": "Jam Session Jazz et Atelier Vocal",
-    "date": "Le 18 juin 2024",
-    "adresse": "250 bis Boulevard Victor Hugo 59000 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-pedagogique-collections-permanentes/3471170-1-fre-FR/Visite-pedagogique-Collections-permanentes_equipment_image_lead_child.jpg",
-    "name": "Visite pedagogique Collections permanentes",
-    "type": "Visite",
-    "description": "Mercredi 19 juin à 15h",
-    "date": "Le 19 juin 2024",
-    "adresse": "32, rue de la Monnaie 59000 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/des-ateliers-numeriques-pour-les-adultes-a-la-bibliotheque-de-lille8/3494989-1-fre-FR/Des-ateliers-numeriques-pour-les-adultes-a-la-bibliotheque-de-Lille_equipment_image_lead_child.jpg",
-    "name": "Des ateliers numeriques pour les adultes a la bibliotheque de Lille",
-    "type": "Stage et atelier",
-    "description": "Rencontre numérique pour adulte \"Les applis de randonnée\"",
-    "date": "Le 19 juin 2024",
-    "adresse": "32 rue Edouard Delesalle 59000 Lille06 16 23 48 91"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-concert-opera3/3505422-1-fre-FR/Visite-concert-Opera_equipment_image_lead_child.jpg",
-    "name": "Visite concert Opera",
-    "type": "Visite",
-    "description": "Les notes joyeuses, récital",
-    "date": "Le 19 juin 2024",
-    "adresse": "place du théâtre Lille03 59 57 94 00"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/musicvideoart-!-monsters-of-rock-les-pochettes-cultes-projection-documentaire-et-quizz-avec-heure-exquise/3490952-1-fre-FR/MUSICVIDEOART-!-Monsters-of-rock-les-pochettes-cultes-projection-documentaire-et-Quizz-avec-Heure-Exquise_equipment_image_lead_child.jpg",
@@ -717,15 +645,7 @@
     "type": "",
     "description": "plateau Skuuurt All Stars et showcase de Samir Flynn",
     "date": "Le 21 juin 2024",
-    "adresse": "17 Bd Jean-Baptiste Lebas, 59800 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/vibrez-a-la-fete-de-la-musique-avec-les-etablissements-d-enseignement-artistique-de-la-ville-de-lille-et-les-associations/3518388-1-fre-FR/Vibrez-a-la-Fete-de-la-musique-avec-les-etablissements-d-enseignement-artistique-de-la-Ville-de-Lille-et-les-associations_equipment_image_lead_child.jpg",
-    "name": "Vibrez a la Fete de la musique avec les etablissements d enseignement artistique de la Ville de Lille et les associations",
-    "type": "Concert",
-    "description": "Joignez-vous à nous pour célébrer la Fête de la Musique le vendredi 21 juin !",
-    "date": "Le 21 juin 2024",
-    "adresse": "Place du concert Lille"
+    "adresse": "17 boulevard Jean-Baptiste Lebas"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/atelier-participatif-steelpan/3524973-1-fre-FR/Atelier-participatif-Steelpan_equipment_image_lead_child.jpg",
@@ -734,6 +654,14 @@
     "description": "Dans la cadre de la Fête de la musique",
     "date": "Le 21 juin 2024",
     "adresse": "Bd Jean-Baptiste Lebas, 59000 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/vibrez-a-la-fete-de-la-musique-avec-les-etablissements-d-enseignement-artistique-de-la-ville-de-lille-et-les-associations/3518388-1-fre-FR/Vibrez-a-la-Fete-de-la-musique-avec-les-etablissements-d-enseignement-artistique-de-la-Ville-de-Lille-et-les-associations_equipment_image_lead_child.jpg",
+    "name": "Vibrez a la Fete de la musique avec les etablissements d enseignement artistique de la Ville de Lille et les associations",
+    "type": "Concert",
+    "description": "Joignez-vous à nous pour célébrer la Fête de la Musique le vendredi 21 juin !",
+    "date": "Le 21 juin 2024",
+    "adresse": "Place du concert Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/voisins-en-fetes/3482775-1-fre-FR/Voisins-en-Fetes_equipment_image_lead_child.jpg",
@@ -854,6 +782,14 @@
     "description": "2 jours pour mettre le cap vers un futur soutenable",
     "date": "Du 22 au 23 juin 2024",
     "adresse": "60 boulevard Vauban, 59800 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/portes-ouvertes-a-la-caserne-des-sapeurs-pompiers-de-lille-malus/3528247-1-fre-FR/Portes-ouvertes-a-la-caserne-des-sapeurs-pompiers-de-Lille-Malus_equipment_image_lead_child.jpg",
+    "name": "Portes ouvertes a la caserne des sapeurs pompiers de Lille Malus",
+    "type": "Visite",
+    "description": "Pour la première fois, la caserne des sapeurs-pompiers de Lille-Centre ouvre ses portes à tous ! Rendez-vous le samedi 22 juin, de 9h30 à 19h30.",
+    "date": "Le 22 juin 2024",
+    "adresse": "14 rue de Malus Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/decouvertes-nature-fives/3476290-1-fre-FR/Decouvertes-nature-Fives_equipment_image_lead_child.jpg",
@@ -1584,14 +1520,6 @@
     "adresse": "74 boulevard Carnot Lille03 62 26 08 30"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/savon-de-plantes/3518470-1-fre-FR/Savon-de-Plantes_equipment_image_lead_child.jpg",
-    "name": "Savon de Plantes",
-    "type": "Nature / environnement",
-    "description": "Créez le votre !",
-    "date": "Le 05 juillet 2024",
-    "adresse": "286, rue du Jardin des Plantes"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/dessine-ton-crossover/3520350-1-fre-FR/Dessine-ton-crossover_equipment_image_lead_child.jpg",
     "name": "Dessine ton crossover",
     "type": "Stage et atelier",
@@ -1606,6 +1534,14 @@
     "description": "Ce festival invite les habitant·e·s à découvrir des installations uniques : des cabanes imaginées par des collectifs d’architectes, d’urbanistes p...",
     "date": "Du 5 au 07 juillet 2024",
     "adresse": "292 Rue Camille Guérin, 59800 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/savon-de-plantes/3518470-1-fre-FR/Savon-de-Plantes_equipment_image_lead_child.jpg",
+    "name": "Savon de Plantes",
+    "type": "Nature / environnement",
+    "description": "Créez le votre !",
+    "date": "Le 05 juillet 2024",
+    "adresse": "306 Rue du Jardin des Plantes, 59000 Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/mix-myself-and-i-de-fin-de-saison/3515891-1-fre-FR/Mix-Myself-and-I-de-fin-de-saison_equipment_image_lead_child.jpg",
@@ -2382,6 +2318,14 @@
     "description": "Un sceau : qu’est-ce que c’est ? A quoi sert-il ? Venez le découvrir en famille (enfants à partir de 6 ans) aux Archives municipales de Lille (Hôt...",
     "date": "Le 09 août 2024",
     "adresse": "59033 Pl. Augustin Laurent, 59800 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/initiation-salsa-avec-sabor-latino/3528318-1-fre-FR/Initiation-Salsa-avec-Sabor-Latino_equipment_image_lead_child.jpg",
+    "name": "Initiation Salsa avec Sabor Latino",
+    "type": "",
+    "description": "Dans le cadre de ses festivités estivales, la Maison Folie Moulins vous invite à poursuivre la folie lors d'une initiation Salsa avec Sabor Latino !",
+    "date": "Le 09 août 2024",
+    "adresse": "47 rue d'Arras Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/visite-guidee-collections-permanentes14/3498703-1-fre-FR/Visite-guidee-Collections-permanentes_equipment_image_lead_child.jpg",

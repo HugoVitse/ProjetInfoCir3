@@ -14,7 +14,8 @@ import Friends from './components/Friends';
 import Notif from './components/Notif';
 import Messagerie from './components/Messagerie';
 
-import { MDBContainer, MDBCard, MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
+import axios from 'axios';
+import { MDBContainer, MDBCard } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import './css/App.css';
 import { Modal, Ripple, initMDB } from "mdb-ui-kit";
@@ -23,13 +24,23 @@ initMDB({ Modal, Ripple });
 
 function App() {
   const [theme, setTheme] = useState('light');
-  const [isOpen, setIsOpen] = useState(false); // Ajout de isOpen
-
+  const [isOpen, setIsOpen] = useState(false);
+  const [users, setUsers] = useState([]);
   
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme);
     document.body.className = savedTheme === 'dark' ? 'dark-theme' : 'light-theme';
+
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get(`http://localhost/getAllUsers`, { withCredentials: true });
+        setUsers(response.data || []);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des utilisateurs :', error);
+      }
+    };
+    fetchUsers();
   }, []);
 
   const toggleTheme = () => {
@@ -45,7 +56,6 @@ function App() {
     setIsOpen(!isOpen);
   };
 
-
   const mainContentStyle = {
     flex: 1,
     display: 'flex',
@@ -58,7 +68,7 @@ function App() {
   return (
     <Router>
       <MDBContainer fluid className="vh-100 p-0 d-flex">
-      <div className={`modal show ${isOpen ? '' : 'fade'}`} id="navbar" tabIndex="-1" aria-labelledby="navbarLabel" aria-hidden="true">
+        <div className={`modal show ${isOpen ? '' : 'fade'}`} id="navbar" tabIndex="-1" aria-labelledby="navbarLabel" aria-hidden="true">
           <div className="modal-dialog modal-start modal-fullscreen custom-modal">
             <div className="modal-content">
               <NavBar toggleTheme={toggleTheme} handleModalToggle={handleModalToggle} theme={theme} isOpen={isOpen} />
@@ -72,7 +82,7 @@ function App() {
               <Route path="/Login" element={<Login />} />
               <Route path="/Register" element={<Register />} />
               <Route path="/Admin" element={<Admin />} />
-              <Route path="/Account" element={<Account />} />
+              <Route path="/Account/:emailurl" element={<Account users={users} />} />
               <Route path="/Catalogue" element={<Catalogue />} />
               <Route path="/Activite" element={<Activite />} />
               <Route path="/Evenements" element={<Evenements />} />
@@ -80,6 +90,7 @@ function App() {
               <Route path="/Friends" element={<Friends />} />
               <Route path="/Notif" element={<Notif />} />
               <Route path="/event/:activityName/:idEvent" element={<Messagerie />} />
+              <Route path="*" element={<Home />} />
             </Routes>
           </MDBCard>
         </div>
