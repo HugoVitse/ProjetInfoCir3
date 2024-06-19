@@ -101,13 +101,18 @@ function Friends(id: any) {
   },[])
 
   useEffect(()=>{
-    if(friendList.length>0){
-      let tmpcomp = []
-      for (let i=0; i< friendList.length; i++){
-        tmpcomp.push(<List.Item key={i} title={`${friendList[i].firstName} ${friendList[i].lastName}` } onPress={() => {router.push(`friends/${friendList[i].email}`)}}  left={() => <Avatar.Image size={80} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${friendList[i].email}.png`}} />  } />)
+    const wrap = async()=>{
+      if(friendList.length>0){
+        const jwt = await AsyncStorage.getItem("jwt")
+        const myEmail: any = jwtDecode(jwt?jwt:"")
+        let tmpcomp = []
+        for (let i=0; i< friendList.length; i++){
+          tmpcomp.push(<List.Item key={i} title={`${friendList[i].firstName} ${friendList[i].lastName}` } onPress={() => {friendList[i].email==myEmail.email ? router.push('profile') : router.push(`friends/${friendList[i].email}`)}}  left={() => <Avatar.Image size={80} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${friendList[i].email}.png`}} />  } />)
+        }
+        setFriendListComp(tmpcomp)
       }
-      setFriendListComp(tmpcomp)
     }
+    wrap()
   },[friendList])
 
   return (

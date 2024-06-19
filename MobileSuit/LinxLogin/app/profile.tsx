@@ -1,9 +1,12 @@
-import { useRouter } from "expo-router";
-import { Image, Text, View, StyleSheet, Dimensions, TouchableOpacity, SafeAreaView, ScrollView } from "react-native";
+import * as React from 'react';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useRouter, router } from "expo-router";
+import { Text, View, StyleSheet, Dimensions, TouchableOpacity, SafeAreaView, ScrollView } from "react-native";
 import { Avatar, Checkbox, List, PaperProvider, Portal, RadioButton, Searchbar } from 'react-native-paper';
-import { useEffect, useRef, useState } from 'react';
-import { IconButton,TextInput, MD3Colors, Modal, Button, Dialog, HelperText, ActivityIndicator } from "react-native-paper";
-import { CameraView, useCameraPermissions } from 'expo-camera';
+import { useEffect, useState } from 'react';
+import { IconButton,TextInput, Modal, Button, Dialog, HelperText, ActivityIndicator } from "react-native-paper";
+import { useCameraPermissions } from 'expo-camera';
 import { CameraType } from "expo-camera/build/legacy/Camera.types";
 import axios from 'axios'
 import Config from '../config.json'
@@ -11,19 +14,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { user } from "@/constants/user";
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
-import Carousel, {
-  ICarouselInstance,
-  Pagination,
-} from "react-native-reanimated-carousel";
 import Theme from "@/constants/Theme";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Icon, ScreenHeight, Slider } from "@rneui/base";
 import { useSharedValue } from "react-native-reanimated";
 import { jwtDecode } from "jwt-decode";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const HEADER_HEIGHT = 200;
 const { width } = Dimensions.get('window');
+
+const Tab = createMaterialTopTabNavigator();
 
 type _item = {
   id: string;
@@ -42,6 +42,190 @@ const slideData = [
 ]
 
 
+
+function Informations(id: any) {
+
+  const _Theme = Theme()
+
+  const [TastesView,setTastesView] = useState<React.JSX.Element[]>([])
+  const activities = [
+    'Cinéma', 'Attractions', 'Animaux', 'Théâtre', 'Danse',
+    'Manga/Anime', 'Séries', 'Échecs', 'Moto', 'Lecture',
+    'Jeux vidéos', 'Musique', 'BD/Comics', 'Voyager', 'Musées',
+    'Sortir entre amis', 'Sport', 'Nourriture', 'La mode'
+  ];
+
+  const [text,setText] = useState("")
+  const [checkedState, setCheckedState] = useState(
+    activities.reduce((acc:any, activity) => {
+      acc[activity] = false;
+      return acc;
+    }, {})
+  );
+
+  useEffect(()=>{
+    const wrap = async()=>{
+      const jwt_cookie = await AsyncStorage.getItem("jwt")
+      const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+
+      let tmp:any = []
+      for(let i = 0; i <activities.length; i++){
+        reponse.data.activities.includes(activities[i])?tmp[activities[i]] = true:tmp[activities[i]] = false
+      }
+      setCheckedState(tmp)
+
+      setText(reponse.data.description)
+    }
+    wrap()
+  },[])
+
+
+
+  useEffect(() => {
+      let tmpview = []
+      for(let i=0; i<activities.length; i++){
+        if(checkedState[activities[i]] == true) {
+          tmpview.push(<View style={[{borderRadius: 20, padding: 10, margin: 5}, _Theme.themeBackMessage]}><Text style={_Theme.themeText}>{activities[i]}</Text></View>)
+        }
+      }
+
+      setTastesView(tmpview)
+    
+  }, [checkedState])
+
+  return (
+    <View style={[{flex: 1}, _Theme.themeBack2]}>
+      <ScrollView contentContainerStyle={{ alignItems: 'center'}}>
+        <Text style={[_Theme.themeText, {margin: 10}]}>{text}</Text>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', margin: 10, justifyContent: 'center'}}>
+          {TastesView}
+        </View>
+      </ScrollView>
+    </View>
+  );
+}
+
+
+
+function Friends() {
+  const _Theme = Theme()
+  
+  const [friendList,setFriendList] = useState<user[]>([])
+  const [friendListComp,setFriendListComp] = useState<React.JSX.Element[]>([])
+
+  useEffect(()=>{
+    const wrap = async()=>{
+      const jwt_cookie = await AsyncStorage.getItem("jwt")
+      const friendListReq = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getFriendList`,{email:"",bol:true}, {headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      setFriendList(friendListReq.data)
+    }
+    wrap()
+  },[])
+
+  useEffect(()=>{
+    if(friendList.length>0){
+      let tmpcomp = []
+      for (let i=0; i< friendList.length; i++){
+        tmpcomp.push(<List.Item key={i} title={`${friendList[i].firstName} ${friendList[i].lastName}` } onPress={() => {router.push(`friends/${friendList[i].email}`)}}  left={() => <Avatar.Image size={80} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${friendList[i].email}.png`}} />  } />)
+      }
+      setFriendListComp(tmpcomp)
+    }
+  },[friendList])
+
+  return (
+    <View style={[{flex: 1}, _Theme.themeBack2]}>
+      <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+        <List.Section>
+          {friendListComp}
+        </List.Section>
+      </ScrollView>
+    </View>
+  );
+}
+
+
+function Search() {
+  const _Theme = Theme()
+  
+  const [searchQuery, setSearchQuery] = useState('');
+  const [allUsers,setAllUsers] = useState<user[]>([])
+  
+  const [needle,setNeedle] = useState<user>({
+    firstName:"",
+    lastName:"",
+    dateOfBirth:"",
+    email:"",
+    image:"",
+    friends:[],
+    friendRequests:[]
+  })
+
+  const sendFriendRequest = async()=>{
+    const jwt_cookie = await AsyncStorage.getItem("jwt")
+    console.log("ok")
+    const reponse = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/friendRequests`,{email:needle.email},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+    console.log(reponse.data)
+    setSearchQuery("")
+    const allUsers = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+    setAllUsers(allUsers.data)
+    searchFriend("")
+  }
+
+  const searchFriend = async(text:string)=>{
+    const jwt = await AsyncStorage.getItem("jwt")
+    const decode:user = jwtDecode(jwt?jwt:"")
+    let needle:user = {
+      firstName:"",
+      lastName:"",
+      dateOfBirth:"",
+      email:"",
+      image:"",
+      friends:[],
+      friendRequests:[]
+    }
+    for(let i=0; i<allUsers.length; i++){
+      let b = !('friends' in allUsers[i])
+      let c = !('friendRequests' in allUsers[i])
+      if(!b){
+        b = allUsers[i].friends.indexOf(decode.email)==-1
+      }
+      if(!c){
+        c = allUsers[i].friendRequests.indexOf(decode.email)==-1
+      }
+      if(allUsers[i].email != decode.email && allUsers[i].email == text && c && b){
+        needle = allUsers[i]
+        console.log("ok")
+        break
+      }
+    }
+    console.log(needle)
+    setNeedle(needle)
+
+  }
+
+  useEffect(()=>{
+    const wrap = async()=>{
+      const jwt_cookie = await AsyncStorage.getItem("jwt")
+      const allUsers = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      setAllUsers(allUsers.data)
+    }
+    wrap()
+  },[])
+
+  return (
+    <View style={[{flex: 1}, _Theme.themeBack2]}>
+      <ScrollView contentContainerStyle={{ alignItems: 'center', marginTop:50 }}>
+        <Searchbar
+          style={{width:width-40}}
+          placeholder="Search"
+          onChangeText={(text) => {setSearchQuery(text),searchFriend(text)}}
+          value={searchQuery}
+        />  
+        {needle.firstName.length > 0 ? (<List.Item style={{marginTop: 50}} right={() => <IconButton icon="account-plus" iconColor={_Theme.themeIcon.color} onPress={() => {sendFriendRequest()}} style={{top: 10}} />} title={`${needle.firstName} ${needle.lastName}`} left={() => <Avatar.Image size={70} source={{uri: `${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${needle.email}.png`}} />} />) : null}
+      </ScrollView>
+    </View>
+  );
+}
 
 
 export default function ProfileScreen() {
@@ -64,21 +248,10 @@ export default function ProfileScreen() {
   const [checked3, setChecked3] = useState('first');
   const [checked4, setChecked4] = useState('first');
   const [valueC, setValueC] = useState(slideData[0].title);
-  const carouselRef = useRef<ICarouselInstance>(null);
   const progress = useSharedValue<number>(0);
   const [text,setText] = useState("")
   const [disabledValid, setDisabledValid] = useState(true)
-  const [searchQuery, setSearchQuery] = useState('');
-  const [allUsers,setAllUsers] = useState<user[]>([])
-  const [needle,setNeedle] = useState<user>({
-    firstName:"",
-    lastName:"",
-    dateOfBirth:"",
-    email:"",
-    image:"",
-    friends:[],
-    friendRequests:[]
-  })
+  const [mimeType,setMimeType] = useState("")
   const [initialInfos, setInitialInfos] = useState<user>({
     firstName:"",
     lastName:"",
@@ -89,8 +262,6 @@ export default function ProfileScreen() {
     friendRequests:[]
   })
   const [newPicture,setNewPicture] = useState("")
-  const [friendList,setFriendList] = useState<user[]>([])
-  const [friendListComp,setFriendListComp] = useState<React.JSX.Element[]>([])
 
   const interpolate = (start: number, end: number) => {
     let k = (value - 0) / 1000; // 0 =>min  && 10 => MAX
@@ -160,39 +331,6 @@ export default function ProfileScreen() {
     hideModal()
   }
 
-  const searchFriend = async(text:string)=>{
-    const jwt = await AsyncStorage.getItem("jwt")
-    const decode:user = jwtDecode(jwt?jwt:"")
-    let needle:user = {
-      firstName:"",
-      lastName:"",
-      dateOfBirth:"",
-      email:"",
-      image:"",
-      friends:[],
-      friendRequests:[]
-    }
-    for(let i=0; i<allUsers.length; i++){
-      let b = !('friends' in allUsers[i])
-      let c = !('friendRequests' in allUsers[i])
-      if(!b){
-        b = allUsers[i].friends.indexOf(decode.email)==-1
-      }
-      if(!c){
-        c = allUsers[i].friendRequests.indexOf(decode.email)==-1
-      }
-      if(allUsers[i].email != decode.email && allUsers[i].email == text && c && b){
-        needle = allUsers[i]
-        console.log("ok")
-        break
-      }
-    }
-    console.log(needle)
-    setNeedle(needle)
-
-  }
-
-
   const _Theme = Theme()
 
   const setPhoto = async() => {
@@ -200,7 +338,8 @@ export default function ProfileScreen() {
     setProfilFic(newPicture)
     setModalVisible(!modalVisible)
     const data = {
-      picture:newPicture
+      picture:newPicture,
+      mime:mimeType
     }
     const jwt_token = await AsyncStorage.getItem("jwt")
     
@@ -220,6 +359,9 @@ export default function ProfileScreen() {
 
     
     if (!result.canceled) {
+      
+     
+      setMimeType(result.assets[0].mimeType?result.assets[0].mimeType:"")
       const base64 = await FileSystem.readAsStringAsync(result.assets[0].uri, { encoding: 'base64' });
       setNewPicture(`data:image/png;base64,${base64}`);
       setDisabledValid(false)
@@ -280,61 +422,12 @@ export default function ProfileScreen() {
 
   const hideDialog = () => setVisible(false);
 
-  const sendFriendRequest = async()=>{
-
-    const jwt_cookie = await AsyncStorage.getItem("jwt")
-    console.log("ok")
-    const reponse = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/friendRequests`,{email:needle.email},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-    console.log(reponse.data)
-    setSearchQuery("")
-    const allUsers = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-    setAllUsers(allUsers.data)
-    searchFriend("")
-  }
-
   const handleCheckboxPress = (activity:any) => {
     setCheckedState({
       ...checkedState,
       [activity]: !checkedState[activity],
     });
   };
-
-  const onPressPagination = (index: number) => {
-    carouselRef.current?.scrollTo({
-      count: index - progress.value,
-      animated: true,
-    });
-  };
-
-  const handlePress = (index: number) => {
-    setValueC(slideData[index].title);
-    if (carouselRef.current) {
-      carouselRef.current.scrollTo({ index, animated: true });
-    }
-  };
-  const renderSwitch = (item: _item) => {
-    {switch(item.title) {
-      case 'friendList': 
-        return  <List.Section>
-                  {friendListComp}
-                </List.Section>
-      case 'searchFriend': 
-        return  (
-          <>
-
-                <Searchbar
-                  style={{width:width-40,top:50}}
-                  placeholder="Search"
-                  onChangeText={(text) => {setSearchQuery(text),searchFriend(text)}}
-                  value={searchQuery}
-                />  
-                {needle.firstName.length > 0 ? (<List.Item style={{top:50}} right={()=> <IconButton icon="account-plus"  iconColor={_Theme.themeIcon.color} onPress={()=>{sendFriendRequest()}} style={{top:10}} ></IconButton>} title={`${needle.firstName} ${needle.lastName}`} left={() => <Avatar.Image size={70} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${needle.email}.png`}} /> } /> ): <></>}
-          </>
-        )
-               
-    }
-    }
-  }
 
   useEffect(()=>{
     const wrap = async()=>{
@@ -343,10 +436,6 @@ export default function ProfileScreen() {
       setInitialInfos(reponse.data)
       setNewPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
       setProfilFic(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
-      const friendListReq = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getFriendList`,{email:"",bol:true}, {headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-      setFriendList(friendListReq.data)
-      const allUsers = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-      setAllUsers(allUsers.data)
 
       let tmp:any = []
       for(let i = 0; i <activities.length; i++){
@@ -374,16 +463,6 @@ export default function ProfileScreen() {
   useEffect(()=>{
     console.log("ok")
   },[value])
-
-  useEffect(()=>{
-    if(friendList.length>0){
-      let tmpcomp = []
-      for (let i=0; i< friendList.length; i++){
-        tmpcomp.push(<List.Item key={i} title={`${friendList[i].firstName} ${friendList[i].lastName}` } onPress={() => {router.push(`friends/${friendList[i].email}`)}}  left={() => <Avatar.Image size={80} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${friendList[i].email}.png`}} />  } />)
-      }
-      setFriendListComp(tmpcomp)
-    }
-  },[friendList])
  
   const logout = async() =>{
     await AsyncStorage.setItem("jwt","")
@@ -422,14 +501,6 @@ export default function ProfileScreen() {
             onPress={router.back}
             style={styles.buttonBack}
           />
-          {/* <Avatar
-            size={80}
-            rounded
-            icon={{ name: "person", type: "material" }}
-            containerStyle={{ backgroundColor: "#bbbec1", top: 10 }}
-            onPress={() => setModalVisible(true)}
-            
-          > */}
           <TouchableOpacity onPress={()=>{setModalVisible(true)}}>
             <Avatar.Image size={80} source={{uri:profilePic}} />
           </TouchableOpacity>
@@ -456,53 +527,20 @@ export default function ProfileScreen() {
             style={styles.form}
           />
         </View>
-        
-        <View style={[styles.body, _Theme.themeBack2]}>
-          <SafeAreaView style={styles.buttonContainer}>
-            {slideData.map((slide, index) => (
-              <TouchableOpacity key={slide.id} onPress={() => handlePress(index)} style={styles.button}>
-                <Text style={[styles.buttonText, _Theme.themeText, valueC === slide.title && styles.selectedButtonText]}>
-                  {slide.title}
-                </Text>
-              </TouchableOpacity>
-            ))}
-            {/* <Animated.View style={[styles.underline, { left: underlineAnim, width: width / slideData.length }]} /> */}
-          </SafeAreaView>
-          <Carousel
-            ref={carouselRef}
-            loop={false}
-            width={width}
-            autoPlay={false}
-            data={slideData}
-            onProgressChange={progress}
-            scrollAnimationDuration={500}
-            // onScrollStart={() => {
-            //   const index = slideData.findIndex(slide => slide.title === value);
-            //   animateUnderline(index);
-            // }}
-            onSnapToItem={(index) => {
-              console.log('current index:', index);
-              setValueC(slideData[index].title);
+        <SafeAreaProvider>
+          <Tab.Navigator
+            screenOptions={{
+              tabBarActiveTintColor: _Theme.themeText.color,
+              tabBarLabelStyle: { fontSize: 12 },
+              tabBarStyle: { backgroundColor: _Theme.themeBack.backgroundColor },
+              tabBarIndicatorStyle: {backgroundColor: _Theme.themeBouton.backgroundColor}
             }}
-            renderItem={({ item }) => (
-              <GestureHandlerRootView>
-                <KeyboardAwareScrollView contentContainerStyle={styles.slide}>
-                  <View style={ item.title=='friendList'?{flex:1}:{} }>
-                    {renderSwitch(item)}
-                  </View>
-                </KeyboardAwareScrollView>
-              </GestureHandlerRootView>
-            )}
-          />
-          <Pagination.Basic
-            progress={progress}
-            data={slideData}
-            dotStyle={{..._Theme.themePagination, borderRadius: 0, width:(width-30)/2, height: 3}}
-            activeDotStyle={_Theme.themePagination2}
-            containerStyle={{ gap: 10, top: 42, position: 'absolute' }}
-            onPress={onPressPagination}
-          />
-        </View>
+          >
+            <Tab.Screen name="Informations" component={Informations} />
+            <Tab.Screen name="Amis" component={Friends} />
+            <Tab.Screen name="Rechercher" component={Search} />
+          </Tab.Navigator>
+        </SafeAreaProvider>
         <Portal>
           <Modal
             visible={modalVisible}
@@ -826,12 +864,6 @@ const styles = StyleSheet.create({
     top: 24,
     color: 'black',
     fontSize: 20,
-  },
-  body: {
-    position: 'relative',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
   },
   inputContainer: {
     width: '90%', // Ajustez la largeur en fonction de vos préférences
