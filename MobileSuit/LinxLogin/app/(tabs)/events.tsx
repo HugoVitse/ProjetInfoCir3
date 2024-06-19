@@ -180,13 +180,20 @@ export default function CatalogScreen() {
     getActivities()
   }
   const getActivities = async() => {
+    const today = new Date();
     const jwt_cookie = await AsyncStorage.getItem("jwt")
     const decoded = jwtDecode(jwt_cookie?jwt_cookie:"")
     console.log(decoded)
     const email = 'email'in decoded?decoded.email:""
     setJwt(typeof(email)=="string"?email:"")
     const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/evenements`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-    setEvenements(response.data)
+    let event_tmp = []
+    for(let i=0;i<response.data.length;i++){
+      if(new Date(response.data[i].date)>=today) {
+        event_tmp.push(response.data[i])
+      }
+    }
+    setEvenements(event_tmp)
     setIsLoaded(true)
     const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
     setPicture("")
@@ -194,7 +201,7 @@ export default function CatalogScreen() {
     setNotif(reponse.data.friendRequests.length>0)
     const tmp = []
     for(let i=0;i<response.data.length;i++){
-      if(reponse.data.activities.includes(response.data[i].type)) {
+      if(reponse.data.activities.includes(response.data[i].type) && new Date(response.data[i].date)>=today) {
         tmp.push(response.data[i])
       }
     }
@@ -223,25 +230,34 @@ export default function CatalogScreen() {
         if(evenements.length>0){
             let tmp = []
             let coords = []
+            const today = new Date();
+            const jwt_cookie = await AsyncStorage.getItem("jwt")
+            const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
             for(let i = 0; i<evenements.length;i++){
-                const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(evenements[i].activity.adresse)}&key=${googlekey}`);
-                coords.push({
-                    lat:response.data.results[0].geometry.location.lat,
-                    long:response.data.results[0].geometry.location.lng
-                })
-                tmp.push(<Marker
-                    tappable={true}
-                    coordinate={{
-                      latitude: response.data.results[0].geometry.location.lat,
-                      longitude: response.data.results[0].geometry.location.lng,
-                    }}
-                    onPress={()=>{
-                      setActualIndex(i)
-                      showDialog()
-                    }}
-                    title={evenements[i].activity.title}
-                    description={evenements[i].activity.description.length>maxLegnth?`${evenements[i].activity.description.substring(0,maxLegnth-3)}...`: evenements[i].activity.description}
-                  />)
+                if(new Date(evenements[i].date)>=today){
+                  
+               
+                  const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(evenements[i].activity.adresse)}&key=${googlekey}`);
+                  coords.push({
+                      lat:response.data.results[0].geometry.location.lat,
+                      long:response.data.results[0].geometry.location.lng
+                  })
+                  tmp.push(<Marker
+                      pinColor={reponse.data.activities.includes(evenements[i].type)?"gold":"red" }
+                      
+                      tappable={true}
+                      coordinate={{
+                        latitude: response.data.results[0].geometry.location.lat,
+                        longitude: response.data.results[0].geometry.location.lng,
+                      }}
+                      onPress={()=>{
+                        setActualIndex(i)
+                        showDialog()
+                      }}
+                      title={evenements[i].activity.title}
+                      description={evenements[i].activity.description.length>maxLegnth?`${evenements[i].activity.description.substring(0,maxLegnth-3)}...`: evenements[i].activity.description}
+                    />)
+                }
             }
             setMarkers(tmp)
             setCoords(coords)
@@ -449,6 +465,7 @@ export default function CatalogScreen() {
                 <ScrollView style={{height:"30%"}}>
                 {
                      evenementsRecommandes.map((evenement,index) => {
+                        
                         return(
                             <Drawer.Item
                                 key={index}

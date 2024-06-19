@@ -50,6 +50,7 @@ const ParticipantDelete = require('./ParticipantDelete')
 const getColor = require('./getColor')
 const EventDelete = require('./EventDelete')
 const denyFriendRequest = require('./denyFriendRequest')
+const deleteFriend = require('./deleteFriend')
 
 async function serv(){
 
@@ -94,6 +95,9 @@ async function serv(){
   app.post('/ParticipantDelete',ParticipantDelete)
   app.post('/EventDelete',EventDelete)
   app.post('/denyFriendRequest',denyFriendRequest)
+  app.post('/deleteFriend',deleteFriend)
+
+
 
   console.log(path.join(__dirname, 'profile_pictures'))
 

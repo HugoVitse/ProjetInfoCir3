@@ -4,7 +4,7 @@ import { Avatar } from '@rneui/themed';
 import { useCallback, useEffect, useState  } from "react";
 import { Button, Dialog, IconButton, List, MD3Colors, Modal, PaperProvider, Portal, RadioButton, Snackbar, TextInput } from "react-native-paper";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios'
+import axios, { all } from 'axios'
 import Config from '../../config.json'
 import { Checkbox } from 'react-native-paper';
 import { RectButton, ScrollView } from "react-native-gesture-handler";
@@ -120,59 +120,66 @@ export default function HomeScreen() {
   },[])
 
   useEffect(()=>{
-    let tmp:React.JSX.Element[] = []
-    let tmp2:React.JSX.Element[] = []
-    if(events.length>0){
-      for(let i = 0; i<events.length;i++){
-        const date = new Date(events[i].date)
-        const today = new Date()
-        if(date.getDate() >= today.getDate() && date.getMonth() >= today.getMonth() && date.getFullYear() >= today.getFullYear()){
-          tmp.push(
-            <Swipeable id={`${events[i]._id}/${events[i].host}`} dragOffsetFromLeftEdge={0} renderLeftActions={renderLeftActions}>
+    const wrap = async() => {
+      const jwt_cookie = await AsyncStorage.getItem("jwt")
+      const allUsers = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`,{headers:{Cookie:`jwt=${jwt_cookie}`}, withCredentials:false})
+      let tmp:React.JSX.Element[] = []
+      let tmp2:React.JSX.Element[] = []
+      if(events.length>0){
+        for(let i = 0; i<events.length;i++){
+          console.log(allUsers.data.find((user:user)=>user.email ==events[i].host))
+          const date = new Date(events[i].date)
+          const today = new Date()
+          if(date.getDate() >= today.getDate() && date.getMonth() >= today.getMonth() && date.getFullYear() >= today.getFullYear()){
+            tmp.push(
+              <Swipeable id={`${events[i]._id}/${events[i].host}`} dragOffsetFromLeftEdge={0} renderLeftActions={renderLeftActions}>
 
-            <ListItem 
-              containerStyle={[_Theme.themeBack2]}
-              key={i}  
-              bottomDivider 
-              style={_Theme.themeBack2}
-              onPress={() => {router.push(`/../chat/${events[i]._id}`)}}
-            >
-              <Avatar title={"ok"} source={{ uri: `${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${events[i].host}.png` }} />
-              <ListItem.Content style={_Theme.themeBack2}>
-                <ListItem.Title style={_Theme.themeText}>{events[i].activity.title}</ListItem.Title>
-                <ListItem.Subtitle style={_Theme.themeText}>{events[i].date}</ListItem.Subtitle>
-              </ListItem.Content>
-              <ListItem.Chevron style={_Theme.themeText}/>
-            </ListItem>
-            </Swipeable>
-          )
-        }
-        else{
-
-          tmp2.push(
-            <ListItem
+              <ListItem 
+                containerStyle={[_Theme.themeBack2]}
                 key={i}  
                 bottomDivider 
-                containerStyle={[_Theme.themeBack2]}
-                style={[_Theme.themeBack2]}
-                onPress={() => {router.push(`/../chat/${events[i]._id}`)}}>
-              <Avatar title={"ok"} source={{ uri: `${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${events[i].host}.png` }}  />
-              <ListItem.Content style={_Theme.themeBack2}>
-                <ListItem.Title style={_Theme.themeText}>{events[i].activity.title}</ListItem.Title>
-                <ListItem.Subtitle style={_Theme.themeText}>{events[i].date}</ListItem.Subtitle>
-              </ListItem.Content>
-              <ListItem.Chevron style={_Theme.themeText}/>
-            </ListItem>
-          )
-        }
-        
-      }
+                style={_Theme.themeBack2}
+                onPress={() => {router.push(`/../chat/${events[i]._id}`)}}
+              >
+                <Avatar title={"ok"} source={{ uri: `${Config.scheme}://${Config.urlapi}:${Config.portapi}/${allUsers.data.find((user:user)=>user.email ==events[i].host).image  }` }} />
+                <ListItem.Content style={_Theme.themeBack2}>
+                  <ListItem.Title style={_Theme.themeText}>{events[i].activity.title}</ListItem.Title>
+                  <ListItem.Subtitle style={_Theme.themeText}>{events[i].date}</ListItem.Subtitle>
+                </ListItem.Content>
+                <ListItem.Chevron style={_Theme.themeText}/>
+              </ListItem>
+              </Swipeable>
+            )
+          }
+          else{
 
-      setEventSoonComponent(tmp)
-      setEventPastComponent(tmp2)
+            tmp2.push(
+              <ListItem
+                  key={i}  
+                  bottomDivider 
+                  containerStyle={[_Theme.themeBack2]}
+                  style={[_Theme.themeBack2]}
+                  onPress={() => {router.push(`/../chat/${events[i]._id}`)}}>
+                <Avatar title={"ok"} source={{ uri: `${Config.scheme}://${Config.urlapi}:${Config.portapi}/${allUsers.data.find((user:user)=>user.email ==events[i].host).image  }` }}  />
+                <ListItem.Content style={_Theme.themeBack2}>
+                  <ListItem.Title style={_Theme.themeText}>{events[i].activity.title}</ListItem.Title>
+                  <ListItem.Subtitle style={_Theme.themeText}>{events[i].date}</ListItem.Subtitle>
+                </ListItem.Content>
+                <ListItem.Chevron style={_Theme.themeText}/>
+              </ListItem>
+            )
+          }
+          
+        }
+
+        setEventSoonComponent(tmp)
+        setEventPastComponent(tmp2)
+     }
       
       
     }
+
+    wrap()
   },[events])
 
   useFocusEffect(useCallback(() => {
