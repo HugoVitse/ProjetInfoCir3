@@ -4,10 +4,9 @@ import {
   MDBTypography, MDBBtn, MDBInput
 } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Messagerie = () => {

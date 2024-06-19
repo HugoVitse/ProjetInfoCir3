@@ -6,7 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
-const Account = ({ users }) => {
+const Account = () => {
   const { emailurl } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const [lastName, setLastName] = useState('');
@@ -22,6 +22,7 @@ const Account = ({ users }) => {
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const retrieveCookie = () => {
@@ -33,38 +34,45 @@ const Account = ({ users }) => {
       }
     };
 
-    const fetchData = async () => {
-      retrieveCookie();
-      try {
-        const response = await axios.get('http://localhost/infos', { withCredentials: true });
-        console.log('Data received from API:', response.data);
-        setEmail(response.data.email || '');
-        setFirstName(response.data.firstName || '');
-        setLastName(response.data.lastName || '');
-        setDescription(response.data.description || '');
-        setSelectedInterests(response.data.activities || []);
-        setInitialInterests(response.data.activities || []);
-        setProfileImage(response.data.image || null);
-        setFriends(response.data.friends || []);
-        if (response.data.dateOfBirth) {
-          const calculatedAge = calculateAge(new Date(response.data.dateOfBirth));
-          setAge(calculatedAge);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, [emailurl, navigate]);
+    const fetchUsers = async () => {
 
-  useEffect(() => {
-    // Vérifier si emailurl correspond à un utilisateur existant
-    const foundUser = users.find(user => user.email === emailurl);
-    if (!foundUser) {
-      // Rediriger vers la page d'accueil si l'utilisateur n'existe pas
-      navigate('/');
-    }
-  }, [emailurl, navigate, users]);
+      retrieveCookie();
+        try {
+          const response = await axios.get(`http://localhost/getAllUsers`, { withCredentials: true });
+
+          if (emailurl.length > 0 && response.data.length > 0) {
+            // Find the user by email
+            const foundUser = response.data.find(user => user.email === emailurl);
+            console.log(foundUser);
+            
+            if (!foundUser) {
+              navigate('/');
+            } else {
+              setUsers(foundUser);
+              setEmail(foundUser.email || '');
+              setFirstName(foundUser.firstName || '');
+              setLastName(foundUser.lastName || '');
+              setDescription(foundUser.description || '');
+              setSelectedInterests(foundUser.activities || []);
+              setInitialInterests(foundUser.activities || []);
+              setProfileImage(foundUser.image || null);
+              setFriends(foundUser.friends || []);
+              
+              // Calculate and set the age if date of birth is available
+              if (foundUser.dateOfBirth) {
+                const calculatedAge = calculateAge(new Date(foundUser.dateOfBirth));
+                setAge(calculatedAge);
+              }
+            }
+          }
+          
+        } catch (error) {
+          console.error('Erreur lors de la récupération des utilisateurs :', error);
+        }
+      };
+
+    fetchUsers();
+  }, [emailurl, navigate]);
 
   const calculateAge = (dateOfBirth) => {
     const today = new Date();
