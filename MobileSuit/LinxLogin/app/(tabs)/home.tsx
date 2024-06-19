@@ -133,7 +133,7 @@ export default function HomeScreen() {
           const today = new Date()
           if(date.getDate() >= today.getDate() && date.getMonth() >= today.getMonth() && date.getFullYear() >= today.getFullYear()){
             tmp.push(
-              <Swipeable id={`${events[i]._id}/${events[i].host}`} dragOffsetFromLeftEdge={0} renderLeftActions={renderLeftActions}>
+              <Swipeable  dragOffsetFromLeftEdge={0}  renderLeftActions={(progress:any, dragX:any,event:any)=>{return renderLeftActions(events[i]._id,events[i].host)}}>
 
               <ListItem 
                 containerStyle={[_Theme.themeBack2]}
@@ -281,12 +281,10 @@ export default function HomeScreen() {
   //     </RectButton>
   //   );
 
-  const renderLeftActions = (progress:any, dragX:any,event:any) => {
-    console.log(event.props.id)
-    const _id = event.props.id.split("/")[0]
-    setidToSoD(_id)
-    const host = event.props.id.split("/")[1]
+  const renderLeftActions = (id:string,host:string) => {
+    console.log(host)
     setHost(host)
+    setidToSoD(id)
     return (
       <RectButton style={{width:"30%",backgroundColor:me==host?"red":"orange",     justifyContent:'center',          alignItems:'center',}} onPress={()=>{showDialog()}}>
         <Animated.Text

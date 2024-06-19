@@ -13,8 +13,6 @@ import { ScreenHeight } from '@rneui/base';
 import { user } from '@/constants/user';
 import {message} from '@/constants/message';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import ImageColors, { getColors } from 'react-native-image-colors'
-
 const { width } = Dimensions.get('window')
 
 const HEADER_HEIGHT = 100;

@@ -39,7 +39,8 @@ async function getFriendList(req,res){
                         email: friend.email,
                         firstName: friend.firstName,
                         lastName: friend.lastName,
-                        activities: friend.activities
+                        activities: friend.activities,
+                        image: friend.image
                     })
                 }
                 res.send(friendList)

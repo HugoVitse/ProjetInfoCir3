@@ -24,9 +24,9 @@ async function deleteFriend(req,res){
         
       
 
-            const findOneUpdateResult = await collection.findOneAndUpdate({'email':email},{$pull:{friends:emailFriend}})
+            const findOneUpdateResult = await collection.findOneAndUpdate({'email':email},{$pull:{friends:emailFriend}}, { returnDocument: 'after' })
             const findOneUpdateResult2 = await collection.findOneAndUpdate({'email':emailFriend},{$pull:{friends:email}})
-            res.send()
+            res.send(findOneUpdateResult.friends)
             return
         }
 
