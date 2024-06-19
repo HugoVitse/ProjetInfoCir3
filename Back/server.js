@@ -51,6 +51,9 @@ const getColor = require('./getColor')
 const EventDelete = require('./EventDelete')
 const denyFriendRequest = require('./denyFriendRequest')
 const deleteFriend = require('./deleteFriend')
+const getFriendInfos = require('./getFriendInfos')
+
+
 
 async function serv(){
 
@@ -86,7 +89,7 @@ async function serv(){
   app.get('/getEvents',getEvents)
   app.get('/getMessage/:id',getMessage)
   app.post('/sendMessage',sendMessage)
-  app.get('/getFriendList',getFriendList)
+  app.post('/getFriendList',getFriendList)
   app.get('/getAllUsers',getAllUsers)
   app.post('/friendRequests',friendRequests)
   app.post('/updateInfoWeb',updateInfoWeb)
@@ -97,6 +100,7 @@ async function serv(){
   app.post('/denyFriendRequest',denyFriendRequest)
   app.post('/deleteFriend',deleteFriend)
 
+  app.post('/getFriendInfos',getFriendInfos)
 
 
   console.log(path.join(__dirname, 'profile_pictures'))
