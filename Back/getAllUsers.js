@@ -25,7 +25,11 @@ async function getAllUsers(req,res){
                 lastName: 1,
                 email: 1,
                 friends:1,
-                friendRequests:1
+                friendRequests:1,
+                description:1,
+                dateOfBirth:1,
+                activities:1,
+                image:1
               };
             const findOneResult = await collection.find({}, {projection}).toArray();
 

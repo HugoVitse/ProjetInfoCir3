@@ -26,15 +26,14 @@ async function updateInfoWeb(req,res){
             if(req.body.picture.length>0){
                 const picture = req.body.picture.substring(22,req.body.picture.length);
                 console.log(picture);
-                const outputFile = path.join(__dirname, `profile_pictures/${email}.png`);
-                 // Écrire les données de l'image dans le fichier
+                const outputFile = path.join(__dirname, `profile_pictures/${email}.jpg`);
                 fs.writeFile(outputFile, picture, 'base64', (err) => {
                     if (err) {
                         throw err;
                     }
                     console.log(`Image sauvegardée sous : ${outputFile}`);
                 });
-                const findOneResult = await collection.findOneAndUpdate({'email': email},{$set: {'firstName': firstName,'lastName': lastName, 'description': description, 'activities': selectedInterests,image:`profile_pictures/${email}.png`}});
+                const findOneResult = await collection.findOneAndUpdate({'email': email},{$set: {'firstName': firstName,'lastName': lastName, 'description': description, 'activities': selectedInterests,image:`profile_pictures/${email}.jpg`}});
             }
             else{const findOneResult = await collection.findOneAndUpdate({'email': email},{$set: {'firstName': firstName,'lastName': lastName, 'description': description, 'activities': selectedInterests}});}
             

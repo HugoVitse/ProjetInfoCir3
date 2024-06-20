@@ -24,7 +24,6 @@ const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => 
       const jwt = Cookies.get("jwt");
       try {
         const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { headers: { Cookie: `jwt=${jwt}` }, withCredentials: true });
-        console.log('Data received from API:', response.data);
         const decodedToken = jwtDecode(jwt);
         setemail(decodedToken.email);
         console.log(decodedToken.email.slice(0,-11))
