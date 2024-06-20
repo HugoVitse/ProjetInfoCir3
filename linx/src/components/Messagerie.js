@@ -42,7 +42,7 @@ const Messagerie = () => {
         return {
           firstName: usr.firstName || '',
           lastName: usr.lastName || '',
-          pp: `profile_pictures/${usr.email}.png` || ''
+          pp: `profile_pictures/${usr.email}.jpg` || ''
         };
       }
       return {};

@@ -44,7 +44,6 @@ const Account = () => {
         const jwt = Cookies.get("jwt");
         const decodedToken = jwtDecode(jwt);
         const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`, { withCredentials: true });
-        console.log("recup user ok");
         const response1 = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getColor`, {email:decodedToken.email},{ withCredentials: true });
         setColor(response1.data)
         if (emailurl.length > 0 && response.data.length > 0) {
@@ -258,7 +257,6 @@ const Account = () => {
                   />
                 )}
                 {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                {console.log('emailurl:'+emailurl+'emaile:'+email)}
                 {emailurl === email && (isEditing ? (
                   <div className="mt-4 d-flex">
                     <MDBBtn color="black" onClick={handleSaveProfile} style={{ overflow: 'visible', marginRight: '10px' }}>Sauvegarder</MDBBtn>

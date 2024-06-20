@@ -217,10 +217,6 @@ body {
   transition: transform 0.2s;
 }
 
-.custom-card:hover {
-  transform: translateY(-10px);
-}
-
 .custom-card-body {
   padding: 15px;
 }

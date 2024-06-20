@@ -71,7 +71,7 @@ const Notif = ({ updateNotificationStatus }) => {
       <MDBContainer className="py-5">
         <MDBRow className="justify-content-center">
           <MDBCol lg="9" xl="7">
-            <MDBCard className="bg-light text-dark" style={{ maxHeight: '500px', overflowY: 'auto' }}>
+            <MDBCard className="bg-light text-dark vh-100" style={{ maxHeight: '500px', overflowY: 'auto' }}>
               <MDBCardBody className="p-4">
                 <h2 className="text-center mb-4">Notifications</h2>
                 <hr />

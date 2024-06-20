@@ -61,34 +61,42 @@ const EventsPerso = () => {
     <MDBContainer className="mt-5">
         {/* Back button */}
       <div style={{ position: 'fixed', top: '10px', right: '10px'}}>
-        <MDBBtn color="primary" onClick={() => navigate(`/Account/${encodeURIComponent(email)}`)}>
-          <MDBIcon icon="arrow-left" className="me-2" />
-          Retour au profil
-        </MDBBtn>
+      <MDBBtn
+        color="primary"
+        onClick={() => navigate(`/Account/${encodeURIComponent(email)}`)}
+        style={{ width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      >
+        <MDBIcon icon="arrow-left" />
+      </MDBBtn>
       </div>
 
-      <MDBInputGroup className="mb-3 mt-4">
+
+      <MDBInputGroup className="bg-light mb-3" style={{ borderRadius: '35px', overflow: 'hidden', border: 'none' }}>
         <MDBInput
           label="Recherche"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          style={{ borderRadius: '35px', border: 'none' }}
         />
       </MDBInputGroup>
 
       <MDBListGroup>
-        <h3>Historique des Événements Participés</h3>
+        <h3 className='mb-4 text-center'><strong>Historique des Événements Participés</strong></h3>
+        <hr className='mb-4'/>
+        <div style={{ maxHeight: '600px', overflowY: 'auto', width: '75%', margin: '0 auto' }}>
         {events.map(event => (
-          <MDBListGroupItem key={event.id} className="rounded-3 mb-3">
+          <MDBListGroupItem key={event.id} className="bg-theme-nuance text-theme rounded-3 mb-3">
             <div className="d-flex align-items-center justify-content-between">
               <div className="w-75">
                 <h5 className="mb-1">{event.activity.title}</h5>
-                <p className="mb-1">Date: {new Date(event.date).toLocaleDateString()}</p>
-                <p className="mb-1">Adresse: {event.activity.adresse}</p>
+                <p className="text-muted mb-1">Date: {new Date(event.date).toLocaleDateString()}</p>
+                <p className="mb-1"><u>Adresse:</u> {event.activity.adresse}</p>
               </div>
               <img src={event.activity.image} alt="Event" className="img-fluid rounded-start" style={{ maxWidth: '150px', maxHeight: '150px' }} />
             </div>
           </MDBListGroupItem>
         ))}
+        </div>
       </MDBListGroup>
     </MDBContainer>
   );

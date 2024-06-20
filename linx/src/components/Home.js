@@ -165,7 +165,7 @@ const Home = () => {
             <MDBTypography tag="h4" className="text-primary font-weight-bold">
               {interest}
             </MDBTypography>
-            <hr />
+            <hr /> 
             {events
               .filter(event => event.type === interest && new Date(event.date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0) &&
                 Array.isArray(event.participants) && event.participants.some(participants => participants === email))
@@ -223,7 +223,7 @@ const Home = () => {
         <MDBCol lg="9" xl="7" className='w-100'>
         <header style={{
             position: 'relative',
-            backgroundImage: 'url(https://78.media.tumblr.com/f254105ae6672e6252d171badfe14299/tumblr_mhiz6jgJ7N1rag9fdo1_500.gif)', // Replace with your own GIF URL
+            backgroundImage: 'url(https://i.gifer.com/S87H.gif)', // Replace with your own GIF URL
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             height: '50vh',
@@ -260,7 +260,9 @@ const Home = () => {
                   </p>
                 </div>
                 <div>
+                  <Link to={`/Account/${encodeURIComponent(email)}`}>
                   <img src= {"http://localhost/"+pp} alt="Avatar" style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover' }} />
+                  </Link>
                 </div>
               </div>
             </MDBCardBody>
