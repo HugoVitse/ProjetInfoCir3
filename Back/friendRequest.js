@@ -29,16 +29,19 @@ async function friendRequests(req,res){
                 console.log("ok")
                 if(findOneResult.friendRequests.includes(searchMail)){
                     res.send()
+                    console.log("ok1")
                     return
                 }
 
                 const findOneResult2 = await collection.findOneAndUpdate({'email': searchMail},{$push:{friendRequests:email}});
                 res.send()
+                console.log("ok2")
                 return
             }
             else{
                 const findOneResult = await collection.findOneAndUpdate({'email': searchMail},{$set:{friendRequests:[email]}});
                 res.send()
+                console.log("ok3")
                 return
             }
         }

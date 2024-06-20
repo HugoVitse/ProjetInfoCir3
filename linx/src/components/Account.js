@@ -82,7 +82,7 @@ const Account = () => {
     };
 
     fetchUsers();
-  }, [events, navigate]);
+  }, [navigate]);
 
   const calculateAge = (dateOfBirth) => {
     const today = new Date();

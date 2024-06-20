@@ -18,6 +18,8 @@ const Friends = () => {
   const [sentFriendRequests, setSentFriendRequests] = useState([]);
   const navigate = useNavigate();
 
+  
+
   useEffect(() => {
     const retrieveCookie = () => {
       try {
@@ -61,7 +63,7 @@ const Friends = () => {
     fetchUsers();
 
 
-  }, [navigate]);
+  }, [friends, navigate]);
 
   const sendFriendRequest = async (friendEmail) => {
     console.log(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/friendRequests`, { email: friendEmail })
