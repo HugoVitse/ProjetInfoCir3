@@ -429,23 +429,7 @@ export default function CatalogScreen() {
           onPress={drawerDeployed?endAnimation:startAnimation}
           style={styles.drawer}
         />
-        <IconButton
-              icon={"plus"}
-              iconColor={_Theme.themeIcon.color}
-              onPress={openMenu}
-              style={styles.create}
-        />
-         <Menu
-            visible={visibleMenu}
-            onDismiss={closeMenu}
-            style={styles.create}
-            anchor={{x:ScreenWidth-50,y:50}}
-          >
-          <Menu.Item onPress={() => {router.push("catalog");setVisibleMenu(!visibleMenu)}} title="Choisir parmi le catalogue" />
-          <Divider />
-          <Menu.Item onPress={() => {setModalVisible(!modalVisible);setVisibleMenu(!visibleMenu)}} title="Créer un évènement personnalisé" />
-        </Menu>
-
+    
         
    
         
@@ -529,7 +513,30 @@ export default function CatalogScreen() {
             }}
             customMapStyle={mapStyle}>
             {markers}
-        </MapView>
+      </MapView>
+ 
+
+       
+
+        <View style={styles.createMenu}>
+          <Menu
+            visible={visibleMenu}
+            onDismiss={closeMenu}
+            contentStyle={{bottom:100,right:50}}
+            anchorPosition='top'
+            anchor={ <IconButton
+              icon={"plus"}
+              iconColor={_Theme.themeIcon.color}
+              onPress={openMenu}
+              size={40}
+              style={{backgroundColor:_Theme.themeBouton.backgroundColor}}
+          />}
+            >
+            <Menu.Item onPress={() => {router.push("catalog");setVisibleMenu(!visibleMenu)}} title="Choisir parmi le catalogue" />
+            <Divider />
+            <Menu.Item onPress={() => {setModalVisible(!modalVisible);setVisibleMenu(!visibleMenu)}} title="Créer un évènement personnalisé" />
+          </Menu>
+        </View>
       </View>
     </SafeAreaView>
 
@@ -574,6 +581,7 @@ export default function CatalogScreen() {
           </Dialog.Actions>
       </Dialog>
     </View>
+  
   </PaperProvider>
   );
 }
@@ -708,10 +716,10 @@ const styles = StyleSheet.create({
     bottom: 10, 
     left: 50,
   },
-  create: {
-    position: 'absolute', 
-    bottom: 10, 
-    left: 90,
+  createMenu: {
+    position:'absolute',
+    right:10,
+    bottom:200,
   },
   centeredView: {
     padding:40,

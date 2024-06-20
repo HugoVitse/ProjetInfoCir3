@@ -67,7 +67,7 @@ function Informations(id: any) {
     const wrap = async()=>{
       const jwt_cookie = await AsyncStorage.getItem("jwt")
       const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-
+      
       let tmp:any = []
       for(let i = 0; i <activities.length; i++){
         reponse.data.activities.includes(activities[i])?tmp[activities[i]] = true:tmp[activities[i]] = false
@@ -291,6 +291,7 @@ export default function ProfileScreen() {
   const [profilePic, setProfilFic] = useState("");
   const showModal = () => setVisibleQ(true);
   const hideModal = () => setVisibleQ(false);
+  const [colorBack,setColorBack] = useState("")
   const [value, setValue] = useState(0);
   const [value2, setValue2] = useState(0);
   const [checked1, setChecked1] = useState('first');
@@ -302,6 +303,7 @@ export default function ProfileScreen() {
   const [text,setText] = useState("")
   const [disabledValid, setDisabledValid] = useState(true)
   const [mimeType,setMimeType] = useState("")
+  const [realColor, setRealColor] = useState("")
   const [initialInfos, setInitialInfos] = useState<user>({
     firstName:"",
     lastName:"",
@@ -401,6 +403,10 @@ export default function ProfileScreen() {
     const jwt_token = await AsyncStorage.getItem("jwt")
     
     await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/setPicture`,data,{headers:{Cookie:`jwt=${jwt_token}`},withCredentials:false})
+    const jwt_decode:any = jwtDecode(jwt_token?jwt_token:"")
+    const reponseColor = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getColor`,{email:jwt_decode.email},{headers:{Cookie:`jwt=${jwt_token}`},withCredentials:false})
+    console.log('ok'+reponseColor.data)
+    setColorBack(reponseColor.data)
   }
 
   const pickImage = async () => {
@@ -437,6 +443,7 @@ export default function ProfileScreen() {
 
     
     if (!result.canceled) {
+      setMimeType(result.assets[0].mimeType?result.assets[0].mimeType:"")
       const base64 = await FileSystem.readAsStringAsync(result.assets[0].uri, { encoding: 'base64' });
       setNewPicture(`data:image/png;base64,${base64}`);
       setDisabledValid(false)
@@ -483,12 +490,19 @@ export default function ProfileScreen() {
       [activity]: !checkedState[activity],
     });
   };
+  useEffect(()=>{
+    setRealColor(hextoRgb(colorBack,0.5))
+  },[colorBack])
 
   useEffect(()=>{
     const wrap = async()=>{
       const jwt_cookie = await AsyncStorage.getItem("jwt")
       const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
       setInitialInfos(reponse.data)
+      const jwt_decode:any = jwtDecode(jwt_cookie?jwt_cookie:"")
+      const reponseColor = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getColor`,{email:jwt_decode.email},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      console.log('ok'+reponseColor.data)
+      setColorBack(reponseColor.data)
       setNewPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
       setProfilFic(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
 
@@ -543,13 +557,24 @@ export default function ProfileScreen() {
     setFacing(current => (current === CameraType.back ? CameraType.front : CameraType.back));
   }
 
+  function hextoRgb(color:string,opacity:number){
+    let hex = color;
+    let r = parseInt(hex[1]+hex[2], 16);
+    let g = parseInt(hex[3]+hex[4], 16);
+    let b = parseInt(hex[5]+hex[6], 16);
+    return `rgba(${r},${g},${b},${opacity})`
+  }
+
+
+
+
   
   if(isLoading)return(<View  style={{    flex: 1,      justifyContent: 'center',}} ><ActivityIndicator animating={true} color={colorMain} size='large'></ActivityIndicator></View>)
   return (
     
     <PaperProvider>
       <View style={styles.container}>
-        <View style={[styles.header, _Theme.themeBack, _Theme.themeShadow]}>
+        <View style={[styles.header, {backgroundColor:realColor,shadowColor:realColor,shadowOpacity:0.7, shadowRadius:40}]}>
           <IconButton
             icon="arrow-left"
             iconColor={_Theme.themeIcon.color}
@@ -894,7 +919,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: HEADER_HEIGHT,
-    borderBottomWidth: 1,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.5,
     shadowRadius: 2,

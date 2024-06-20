@@ -26,7 +26,7 @@ async function setPicture(req,res){
 
        
         
-            const outputFile = path.join(__dirname, `profile_pictures/${email}.${req.body.mime.split('/')[1]}`);
+            const outputFile = path.join(__dirname, `profile_pictures/${email}.${req.body.mime.split('/')[1]==undefined?'jpeg':req.body.mime.split('/')[1]}`);
 
             // Écrire les données de l'image dans le fichier
             fs.writeFile(outputFile, picture, 'base64', (err) => {
