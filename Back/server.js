@@ -35,10 +35,9 @@ const login = require('./login')
 const register = require('./register')
 const getInfos = require('./getInfos')
 const updateInfos = require('./updateInfos')
-const setPicture = require('./updateInfoWeb')
+const setPicture = require('./setPicture')
 const createEvenement = require('./createEvenement')
 const EventRegister = require('./EventRegister')
-const ParticipantDelete = require('./ParticipantDelete')
 const getEvents = require('./getEvents')
 const getMoodTracker = require('./getMoodTracker')
 const getFriendList = require('./getFriendList')
@@ -46,10 +45,12 @@ const getAllUsers = require('./getAllUsers')
 const friendRequests = require('./friendRequest')
 const getMessage = require('./getMessage')
 const updateInfoWeb = require('./updateInfoWeb')
+const acceptFriendRequest = require('./acceptFriendRequest')
+const ParticipantDelete = require('./ParticipantDelete')
+const getColor = require('./getColor.js')
 const EventDelete = require('./EventDelete')
-
-
-
+const denyFriendRequest = require('./denyFriendRequest')
+const deleteFriend = require('./deleteFriend')
 
 async function serv(){
 
@@ -82,7 +83,6 @@ async function serv(){
   app.post('/createEvenement',createEvenement)
   app.get('/evenements',evenements)
   app.post('/EventRegister',EventRegister)
-  app.post('/ParticipantDelete',ParticipantDelete)
   app.get('/getEvents',getEvents)
   app.get('/getMessage/:id',getMessage)
   app.post('/sendMessage',sendMessage)
@@ -90,22 +90,25 @@ async function serv(){
   app.get('/getAllUsers',getAllUsers)
   app.post('/friendRequests',friendRequests)
   app.post('/updateInfoWeb',updateInfoWeb)
+  app.post('/acceptFriendRequest',acceptFriendRequest)
+  app.post('/getColor',getColor)
+  app.post('/ParticipantDelete',ParticipantDelete)
   app.post('/EventDelete',EventDelete)
-
-
+  app.post('/denyFriendRequest',denyFriendRequest)
+  app.post('/deleteFriend',deleteFriend)
 
   console.log(path.join(__dirname, 'profile_pictures'))
 
   app.use('/profile_pictures',express.static(path.join(__dirname, 'profile_pictures')));
 
-  app.listen(80,()=>{
-      console.log(`serever is runing at port 80`);
+  app.listen(80, () => {
+      console.log(`serever is runing at port ${port}`);
   })
-
   // https.createServer(
   //     {
-  //         key: fs.readFileSync("ssl/key.pem"),
-  //         cert: fs.readFileSync("ssl/cert.pem"),
+  //         key: fs.readFileSync("ssl/private.key"),
+  //         cert: fs.readFileSync("ssl/certificate.crt"),
+  //         ca: fs.readFileSync("ssl/ca_bundle.crt")
   //     },
   //     app
   // ).listen(port, () => {

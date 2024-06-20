@@ -4,7 +4,7 @@ const config_serv = require('./configServ')
 const jwt = require('jsonwebtoken');
 const connect_db = require('./connect_db')
 
-async function friendRequests(req,res){
+async function denyFriendRequest(req,res){
     const cookies = req.cookies
     if(!('jwt' in cookies)){
         res.status(500).send()
@@ -28,16 +28,14 @@ async function friendRequests(req,res){
             if(Object.keys(findOneResult).includes('friendRequests')){
                 console.log("ok")
                 if(findOneResult.friendRequests.includes(searchMail)){
+                    const findOneResult2 = await collection.findOneAndUpdate({'email': email},{$pull:{friendRequests:searchMail}});
                     res.send()
                     return
                 }
 
-                const findOneResult2 = await collection.findOneAndUpdate({'email': searchMail},{$push:{friendRequests:email}});
-                res.send()
-                return
+              
             }
             else{
-                const findOneResult = await collection.findOneAndUpdate({'email': searchMail},{$set:{friendRequests:[email]}});
                 res.send()
                 return
             }
@@ -51,4 +49,4 @@ async function friendRequests(req,res){
 
 }
 
-module.exports = friendRequests
+module.exports = denyFriendRequest

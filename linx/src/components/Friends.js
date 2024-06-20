@@ -11,7 +11,7 @@ import Config from '../config.json';
 const Friends = () => {
   const { emailurl } = useParams();
   const [friends, setFriends] = useState([]);
-  const [profileImage, setProfileImage] = useState(null);
+  const [friendsList, setFriendsList] = useState([]);
   const [email, setEmail] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [users, setUsers] = useState([]);
@@ -29,43 +29,42 @@ const Friends = () => {
       }
     };
 
-    const fetchData = async () => {
-      retrieveCookie();
-      try {
-        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { withCredentials: true });
-        setFriends(response.data.friends.filter(friend => friend.email !== emailurl) || []);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     const fetchUsers = async () => {
       try {
         const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`, { withCredentials: true });
         setUsers(response.data || []);
+
+        const use = response.data.filter(user => user.email === emailurl);        
+        const friend = [];
+
+        // Vérifiez que use[0] est bien un objet
+        if (use[0] && typeof use[0] === 'object') {
+          // Accédez à la propriété friends
+          const friends = use[0].friends;
+
+          if (Array.isArray(friends)) {
+            friends.forEach(friendEmail => {
+              if (friendEmail !== emailurl) {
+                friend.push(friendEmail);
+              }
+            });
+          }
+        }
+        setFriends(friend);
+
       } catch (error) {
         console.error('Erreur lors de la récupération des utilisateurs :', error);
       }
     };
 
-    const pollFriends = async () => {
-      try {
-        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { withCredentials: true });
-        setFriends(response.data.friends.filter(friend => friend.email !== emailurl) || []);
-      } catch (error) {
-        console.error('Erreur lors de la récupération des amis :', error);
-      }
-    };
-
-    fetchData();
+    retrieveCookie();
     fetchUsers();
 
-    const interval = setInterval(pollFriends, 5000); // Poll every 5 seconds
 
-    return () => clearInterval(interval); // Cleanup interval on component unmount
   }, [navigate]);
 
   const sendFriendRequest = async (friendEmail) => {
+    console.log(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/friendRequests`, { email: friendEmail })
     try {
       const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/friendRequests`, { email: friendEmail }, { withCredentials: true });
       if (response.status === 200) {
@@ -100,7 +99,14 @@ const Friends = () => {
       if (friends.includes(user.email)) {
         friendsList.push(user);
       } else {
-        otherUsersList.push(user);
+        const _usr = users.find((usr)=>usr.email==user.email)
+        
+        if(Object.keys(_usr).includes('friendRequests')){
+          if(!_usr.friendRequests.includes(emailurl) ){
+            otherUsersList.push(user);
+          }
+        }
+      
       }
     });
 
@@ -114,6 +120,22 @@ const Friends = () => {
         user.email.toLowerCase().includes(searchTerm.toLowerCase())
       );
     });
+
+
+
+    const filteredOtherUsers = otherUsersList.filter(user => {
+      if (user.email === emailurl) {
+        return false;
+      }
+      return (
+        user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    });
+
+
+    
 
     const renderUserList = (userList) => {
       if (userList.length === 0) {
@@ -190,7 +212,7 @@ const Friends = () => {
           <div className="scrollable-section" style={{ maxHeight: '300px', overflowY: 'auto', marginTop: '20px' }}>
             <MDBListGroup>
               <h3 className="mb-3">Autres utilisateurs</h3>
-              {renderUserList(filteredUsers.filter(user => !friends.includes(user.email) && !sentFriendRequests.includes(user.email)))}
+              {renderUserList(filteredOtherUsers)}
             </MDBListGroup>
           </div>
         )}

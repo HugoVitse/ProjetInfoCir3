@@ -5,6 +5,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import Config from '../config.json';
 
 const Account = () => {
   const { emailurl } = useParams();
@@ -23,6 +24,7 @@ const Account = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
   const [users, setUsers] = useState([]);
+  const [color, setColor] = useState("")
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
@@ -39,8 +41,11 @@ const Account = () => {
     const fetchUsers = async () => {
       retrieveCookie();
       try {
-        const response = await axios.get('http://localhost/getAllUsers', { withCredentials: true });
-
+        const jwt = Cookies.get("jwt");
+        const decodedToken = jwtDecode(jwt);
+        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`, { withCredentials: true });
+        const response1 = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getColor`, {email:decodedToken.email},{ withCredentials: true });
+        setColor(response1.data)
         if (emailurl.length > 0 && response.data.length > 0) {
           const foundUser = response.data.find(user => user.email === emailurl);
           if (!foundUser) {
@@ -71,7 +76,6 @@ const Account = () => {
             Array.isArray(event.participants) &&
             event.participants.some(participant => participant === email);
         }));
-
       } catch (error) {
         console.error('Erreur lors de la récupération des utilisateurs :', error);
       }
@@ -105,7 +109,7 @@ const Account = () => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
-    if (file && file.type === 'image/jpeg') {
+    if (file && file.type === 'image/jpeg') {  // Accept only JPEG images
       reader.onloadend = () => {
         setProfileImage(reader.result);
         setErrorMessage('');
@@ -165,7 +169,7 @@ const Account = () => {
   
   const InterestsComponent = ({ interestsList, selectedInterests, isEditing, handleAddInterest, handleRemoveInterest }) => {
     const interestsPerRow = 4;
-    const boxWidth = 100 / interestsPerRow - 2 * 10;
+    const boxWidth = 100 / interestsPerRow - 2 * 10; // Adjusting for margins
   
     return (
       <MDBListGroupItem className="font-italic" style={{ padding: '20px', backgroundColor: 'bg-theme-nuance', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
@@ -173,7 +177,6 @@ const Account = () => {
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '10px' }}>
           {interestsList.map(interest => {
             const isSelected = selectedInterests.includes(interest);
-            const isInitialSelected = initialInterests.includes(interest);
   
             if (isEditing || isSelected) {
               return (
@@ -190,11 +193,11 @@ const Account = () => {
                     borderRadius: '10px',
                     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                     transition: 'transform 0.2s',
-                    cursor: 'pointer'
+                    cursor: isEditing ? 'pointer' : 'default'
                   }}
                   onClick={() => isEditing ? isSelected ? handleRemoveInterest(interest) : handleAddInterest(interest) : null}
                 >
-                  {isEditing && (
+                  {isEditing ? (
                     <>
                       <input
                         type="checkbox"
@@ -204,8 +207,7 @@ const Account = () => {
                       />
                       <label>{interest}</label>
                     </>
-                  )}
-                  {!isEditing && isSelected && (
+                  ) : (
                     <span style={{ fontWeight: 'bold', color: 'text-theme' }}>{interest}</span>
                   )}
                 </div>
@@ -217,20 +219,21 @@ const Account = () => {
         </div>
         <style jsx>{`
           .interest-item:hover {
-            transform: scale(1.05);
+            transform: ${isEditing ? 'scale(1.05)' : 'none'};
           }
         `}</style>
       </MDBListGroupItem>
     );
   };
   
+  // Composant Account principal
   return (
     <div className="bg-theme text-theme">
       <MDBContainer className="py-5 h-100">
         <MDBRow className="justify-content-center align-items-center h-100">
           <MDBCol lg="9" xl="7">
             <MDBCard className='bg-theme text-theme'>
-              <div className="bg-theme-inv text-theme-inv rounded-top text-white d-flex flex-row" style={{ height: '200px' }}>
+              <div className="text-light rounded-top text-white d-flex flex-row" style={{ height: '200px', backgroundColor: color, textShadow: 'black 4px 0 10px'}}>
               <div className="ms-4 mt-4 d-flex flex-column" style={{ width: '150px' }}>
                 <label htmlFor="profile-image">
                   <div style={{ width: '150px', height: '150px', marginBottom:'20px' }}>
@@ -281,13 +284,13 @@ const Account = () => {
               <div className="p-1 ">
                 <div className="d-flex justify-content-end text-center py-1">
                   <div>
-                    <Link to={`/EventsPerso/${encodeURIComponent(emailurl)}`} className='text-theme'>
+                  <Link to={`/EventsPerso/${encodeURIComponent(emailurl)}`} className='text-theme'>
                       <MDBCardText className="mb-1 h5"><strong>{events.length}</strong></MDBCardText>
                       <MDBCardText className="small text-muted mb-0"><strong>Events</strong></MDBCardText>
                     </Link>
                   </div>
                   <div className=" px-3" style={{color:'red'}}>
-                    <Link to={`/Friends/${encodeURIComponent(emailurl)}`} className='text-theme'>
+                  <Link to={`/Friends/${encodeURIComponent(emailurl)}`} className='text-theme'>
                       <MDBCardText className="mb-1 h5"><strong>{friends.length}</strong></MDBCardText>
                       <MDBCardText className="small text-muted mb-0"><strong>Amis</strong></MDBCardText>
                     </Link>
@@ -328,4 +331,4 @@ const Account = () => {
   );
   };
   
-  export default Account;
+  export default Account;  
