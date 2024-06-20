@@ -32,10 +32,12 @@ export default function CatalogScreen() {
   const [text, setText] = useState("");
   const [type, setType] = useState();
   const [notif,setNotif] = useState(false)
+  const [showAndroid, setshowAndroid] = useState(false)
   const [dol,setTheme] = useState(useColorScheme())
 
 
   const onChange = (event:any, selectedDate:any) => {
+    setshowAndroid(false)
     const currentDate = selectedDate || date;
     setDate(currentDate);
   };
@@ -140,15 +142,18 @@ export default function CatalogScreen() {
         visible={modalVisible}
        >
         <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
-          <View style={styles.modalView}>
+          <View style={[styles.modalView, _Theme.themeBack2]}>
             <KeyboardAwareScrollView contentContainerStyle={styles.centeredView}>
           
-            <Text style={styles.modalText}>{activities[actualIndex]?activities[actualIndex].name:""}</Text>
-            <Text style={styles.modalText}>{activities[actualIndex]?activities[actualIndex].description:""}</Text>
+            <Text style={[{fontWeight: 'bold', fontSize: 20}, styles.modalText, _Theme.themeText]}>{activities[actualIndex]?activities[actualIndex].name:""}</Text>
+            <Text style={[styles.modalText, _Theme.themeText]}>{activities[actualIndex]?activities[actualIndex].description:""}</Text>
             <Image source={{uri:activities[actualIndex]?activities[actualIndex].image:""}} style={{width:"80%",height:"40%"}}></Image>
-            <View style={styles.horizontal}>
-              <Text style={{justifyContent:'center',alignItems:'center',flex:1}}>Nombre d'invités</Text>
+            <View style={[styles.horizontal, _Theme.themeBack2]}>
+              <Text style={[{justifyContent:'center',alignItems:'center',flex:1},  _Theme.themeText]}>Nombre d'invités</Text>
               <TextInput
+                outlineColor={_Theme.themeBouton.backgroundColor}
+                activeOutlineColor={_Theme.themeBouton.backgroundColor}
+                style={_Theme.themeBack2}
                 label="Invités"
                 mode="outlined"
                 value={text}
@@ -156,35 +161,50 @@ export default function CatalogScreen() {
                 onChangeText={text => setText(text)}
               />
             </View>
-            <View style={styles.horizontal}>
-              <Text style={{justifyContent:'center',alignItems:'center',flex:1}}>Date de l'évènement</Text>
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={date}
-                mode="date"
-                display="default"
-                onChange={onChange}
-              />
+            <View style={[_Theme.themeBack2,styles.horizontal]}>
+              <Text style={[{justifyContent:'center',alignItems:'center',flex:1}, _Theme.themeText]}>Date de l'évènement</Text>
+              {Platform.OS === 'ios' && (
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode="date"
+                    onChange={onChange}
+                  />)}
+                  {Platform.OS === 'android' && (<>
+                    <Button mode={'text'} onPress={()=>setshowAndroid(!showAndroid)} textColor={_Theme.themeText.color}>{date.toDateString()}</Button>
+                    {showAndroid && (
+                      <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode="date"
+                        onChange={onChange}
+                      />
+                    )}
+                    </>
+                  )}
              
             </View>
-            <Text style={{left:0,width:"100%",padding:10}}>Catégorie</Text>
+            <Text style={[{left:0,width:"100%",padding:10}, _Theme.themeText]}>Catégorie</Text>
             <Picker
-              style={{width:"100%",justifyContent:"center",height:Platform.OS=='ios'?200:40}}
+              style={[{width:"100%",justifyContent:"center",height:Platform.OS=='ios'?200:40}, _Theme.themeBack2]}
+              selectionColor={_Theme.themeText.color}
+              itemStyle={_Theme.themeBack2}
+              dropdownIconColor={_Theme.themeIcon.color}
               selectedValue={type}
               onValueChange={(itemValue, itemIndex) =>
                 setType(itemValue)
               }>
               {types.map((type,index) => {
                 return(
-                  <Picker.Item key={index} label={type} value={type} />
+                  <Picker.Item key={index} label={type} value={type} color={_Theme.themeText.color} style={_Theme.themeBack2}/>
                 )
               })}
             </Picker>
             <View style={{ width:'100%', justifyContent:'space-between',   padding:10,    flexDirection: 'row',}}>
-              <Button onPress={()=>{setModalVisible(!modalVisible)}} mode="contained" style={[_Theme.themeBouton]}>
+              <Button onPress={()=>{setModalVisible(!modalVisible)}} mode="outlined" style={_Theme.themeBouton2} textColor={_Theme.themeBouton2.color}>
                 Annuler
               </Button>
-              <Button mode="contained" style={[_Theme.themeBouton]} onPress={createEvent}>
+              <Button  mode="contained" style={_Theme.themeBouton} textColor={_Theme.themeBouton.color} onPress={createEvent}>
                 Creer
               </Button>
             </View>

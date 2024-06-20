@@ -1,5 +1,5 @@
 {
-    "urlapi":"172.20.10.3",
+    "urlapi":"192.168.30.77",
     "portapi":80,
     "scheme":"http"
 }

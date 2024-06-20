@@ -22,6 +22,7 @@ import {Picker} from '@react-native-picker/picker';
 
 const HEADER_HEIGHT = 100;
 const { width } = Dimensions.get('window');
+const height = Dimensions.get('window').height;
 const drawerWidth = 75
 
 const slideData = [
@@ -286,7 +287,9 @@ export default function CatalogScreen() {
                 <View style={styles.horizontal}>
                   <Text style={[{justifyContent:'center',alignItems:'center',flex:1}, _Theme.themeText]}>Titre</Text>
                   <TextInput
-                    style={{width:"80%"}}
+                    outlineColor={_Theme.themeBouton.backgroundColor}
+                    activeOutlineColor={_Theme.themeBouton.backgroundColor}
+                    style={[{width:"80%"},_Theme.themeBack2]}
                     label="Titre"
                     mode="outlined"
                     value={title}
@@ -295,7 +298,9 @@ export default function CatalogScreen() {
                 </View>
                 <Text style={[{left:0,width:"100%",padding:10}, _Theme.themeText]}>Description</Text>
                 <TextInput
-                  style={{width:"100%"}}
+                  outlineColor={_Theme.themeBouton.backgroundColor}
+                  activeOutlineColor={_Theme.themeBouton.backgroundColor}
+                  style={[{width:"100%"},_Theme.themeBack2]}
                   label="Titre"
                   mode="outlined"
                   value={description}
@@ -303,7 +308,9 @@ export default function CatalogScreen() {
                 />
                 <Text style={[{left:0,width:"100%",padding:10}, _Theme.themeText]}>Adresse</Text>
                 <TextInput
-                  style={{width:"100%",height:70}}
+                  outlineColor={_Theme.themeBouton.backgroundColor}
+                  activeOutlineColor={_Theme.themeBouton.backgroundColor}
+                  style={[{width:"100%",height:70},_Theme.themeBack2]}
                   label="Titre"
                   mode="outlined"
                   value={propsAdresse}
@@ -354,6 +361,9 @@ export default function CatalogScreen() {
                 <View style={[styles.horizontal, _Theme.themeBack2]}>
                   <Text style={[{justifyContent:'center',alignItems:'center',flex:1}, _Theme.themeText]}>Nombre d'invités</Text>
                   <TextInput
+                    outlineColor={_Theme.themeBouton.backgroundColor}
+                    activeOutlineColor={_Theme.themeBouton.backgroundColor}
+                    style={_Theme.themeBack2}
                     label="Invités"
                     mode="outlined"
                     value={text}
@@ -518,11 +528,11 @@ export default function CatalogScreen() {
 
        
 
-        <View style={styles.createMenu}>
+        <View style={[styles.createMenu, { bottom:Platform.OS=='ios'?190:130 }]}>
           <Menu
             visible={visibleMenu}
             onDismiss={closeMenu}
-            contentStyle={{bottom:100,right:50}}
+            contentStyle={{bottom:Platform.OS=='ios'?100:70, right:50}}
             anchorPosition='top'
             anchor={ <IconButton
               icon={"plus"}
@@ -719,7 +729,6 @@ const styles = StyleSheet.create({
   createMenu: {
     position:'absolute',
     right:10,
-    bottom:200,
   },
   centeredView: {
     padding:40,
