@@ -6,9 +6,12 @@ import { Container } from '@mui/material';
 import axios from 'axios';
 import Config from '../config.json';
 import Notif from './Notif'; // Importer le composant Notif
+import { jwtDecode } from 'jwt-decode';
+
 
 const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => {
   const [hasNotifications, setHasNotifications] = useState(false); // État local pour suivre les notifications non lues
+  const [email, setemail] = useState('');
 
   // Fonction pour mettre à jour l'état des notifications dans NavBar
   const updateNotificationStatus = (hasNotifications) => {
@@ -22,6 +25,9 @@ const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => 
       try {
         const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { headers: { Cookie: `jwt=${jwt}` }, withCredentials: true });
         console.log('Data received from API:', response.data);
+        const decodedToken = jwtDecode(jwt);
+        setemail(decodedToken.email);
+        console.log(decodedToken.email.slice(0,-11))
         // Mettre à jour l'état local des notifications
         setHasNotifications(response.data.friendRequests && response.data.friendRequests.length > 0);
       } catch (error) {
@@ -66,7 +72,7 @@ const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => 
             <MDBIcon fas icon="fas fa-calendar" className="me-3" />
             Evenements
           </MDBListGroupItem>
-          <MDBListGroupItem tag={Link} action to="/Account" className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
+          <MDBListGroupItem tag={Link} action to={`/Account/${encodeURIComponent(email)}`} className="d-flex align-items-center bg-theme-inv text-theme-inv border-0">
             <MDBIcon fas icon="address-book" className="me-3" />
             Profil
           </MDBListGroupItem>

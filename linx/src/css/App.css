@@ -8,6 +8,8 @@
   --primary-color: #89cdf5;
   --secondary-color: #5806bde7;
   --btn-color: pink;
+  --noir-nuance:#EEEEEE;
+  --noir-nuance2:#ffffff;
 }
 
 /* Dark Theme */
@@ -20,6 +22,8 @@
   --primary-color: #5806bde7;
   --secondary-color: #89cdf5;
   --btn-color: pink;
+  --noir-nuance: #212020;
+  --noir-nuance2: #444444;
 }
 
 
@@ -290,4 +294,12 @@ body {
 
 .user-info {
   flex-grow: 1;
+}
+
+.bg-theme-nuance {
+  background-color: var(--noir-nuance);
+}
+
+.bg-theme-nuance2 {
+  background-color: var(--noir-nuance2);
 }

@@ -4,7 +4,7 @@ const config_serv = require('./configServ')
 const jwt = require('jsonwebtoken');
 const connect_db = require('./connect_db');
 
-async function getAllUsers(req,res){
+async function getFriendInfos(req,res){
     const cookies = req.cookies
     if(!('jwt' in cookies)){
         res.status(500).send()
@@ -20,22 +20,20 @@ async function getAllUsers(req,res){
         
             const database = connect_db.client.db(config.dbName);
             const collection = database.collection(config.users);
-
             const projection = {
                 firstName: 1,     // Inclure le champ "name"
                 lastName: 1,    // Inclure le champ "email"
                 email: 1,
                 friends:1,
                 friendRequests:1,
-                image:1,
-                dateOfBirth:1,
-                description:1,
-                activities:1
+                activities: 1,
+                description: 1,
+                image: 1,
+
               };
         
-        
-            const findOneResult = await collection.find({}, {projection}).toArray();
-            
+            const findOneResult = await collection.findOne({email: req.body.email}, {projection});
+            console.log(findOneResult)
             res.send(findOneResult)
         }
         catch(err){
@@ -47,4 +45,4 @@ async function getAllUsers(req,res){
 
 }
 
-module.exports = getAllUsers
+module.exports = getFriendInfos

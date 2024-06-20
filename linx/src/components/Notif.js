@@ -42,7 +42,8 @@ const Notif = ({ updateNotificationStatus }) => {
 
     try {
       await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/acceptFriendRequest`, data, { headers: { Cookie: `jwt=${jwt}` }, withCredentials: true });
-      fetchData();
+      // Mettre à jour l'état local
+      setFriendRequests(friendRequests.filter(request => request !== email));
     } catch (error) {
       console.error('Error accepting friend request:', error);
     }
@@ -53,8 +54,9 @@ const Notif = ({ updateNotificationStatus }) => {
     const jwt = Cookies.get("jwt");
 
     try {
-      await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/rejectFriendRequest`, data, { headers: { Cookie: `jwt=${jwt}` }, withCredentials: true });
-      fetchData();
+      await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/denyFriendRequest`, data, { headers: { Cookie: `jwt=${jwt}` }, withCredentials: true });
+      // Mettre à jour l'état local
+      setFriendRequests(friendRequests.filter(request => request !== email));
     } catch (error) {
       console.error('Error rejecting friend request:', error);
     }
@@ -74,17 +76,17 @@ const Notif = ({ updateNotificationStatus }) => {
                 <h2 className="text-center mb-4">Notifications</h2>
                 <hr />
                 <br></br>
-                <h4 className='center'><i class="far fa-envelope"></i> Vous avez {friendRequests.length} {friendRequests.length === 1 ? 'notification' : 'notifications'}</h4>
+                <h4 className='center'><i className="far fa-envelope"></i> Vous avez {friendRequests.length} {friendRequests.length === 1 ? 'notification' : 'notifications'}</h4>
                 {friendRequests.length === 0 ? (
                   <p className="text-center">Aucune nouvelle notification</p>
                 ) : (
                   friendRequests.map((request, index) => {
                     const userDetails = getUserDetails(request);
                     return (
-                      <div key={index} className="mb-3 d-flex align-items-center" style={{backgroundColor:'white', borderRadius:'15px', margin:'5%', padding:'2%'}}>
+                      <div key={index} className="mb-3 d-flex align-items-center" style={{ backgroundColor: 'white', borderRadius: '15px', margin: '5%', padding: '2%' }}>
                         {userDetails.profileImage && (
                           <img
-                            src={`http://localhost/${userDetails.profileImage}`}
+                            src={`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${userDetails.email}.png`}
                             alt={`${userDetails.firstName} ${userDetails.lastName}`}
                             style={{ width: '50px', height: '50px', borderRadius: '50%' }}
                           />

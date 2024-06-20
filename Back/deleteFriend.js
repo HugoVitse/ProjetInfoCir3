@@ -2,9 +2,9 @@ const config = require('./configDB')
 const hash_password = require('./hash_password')
 const config_serv = require('./configServ')
 const jwt = require('jsonwebtoken');
-const connect_db = require('./connect_db');
+const connect_db = require('./connect_db')
 
-async function getAllUsers(req,res){
+async function deleteFriend(req,res){
     const cookies = req.cookies
     if(!('jwt' in cookies)){
         res.status(500).send()
@@ -16,28 +16,20 @@ async function getAllUsers(req,res){
 
             const token =  req.cookies.jwt
             const decoded = jwt.verify(token, config_serv.secretJWT);
-            const email = decoded.email     
+            const email = decoded.email  
+            const emailFriend = req.body.email   
         
             const database = connect_db.client.db(config.dbName);
             const collection = database.collection(config.users);
+        
+      
 
-            const projection = {
-                firstName: 1,     // Inclure le champ "name"
-                lastName: 1,    // Inclure le champ "email"
-                email: 1,
-                friends:1,
-                friendRequests:1,
-                image:1,
-                dateOfBirth:1,
-                description:1,
-                activities:1
-              };
-        
-        
-            const findOneResult = await collection.find({}, {projection}).toArray();
-            
-            res.send(findOneResult)
+            const findOneUpdateResult = await collection.findOneAndUpdate({'email':email},{$pull:{friends:emailFriend}})
+            const findOneUpdateResult2 = await collection.findOneAndUpdate({'email':emailFriend},{$pull:{friends:email}})
+            res.send()
+            return
         }
+
         catch(err){
             console.log(err)
             res.status(502).send()
@@ -47,4 +39,4 @@ async function getAllUsers(req,res){
 
 }
 
-module.exports = getAllUsers
+module.exports = deleteFriend
