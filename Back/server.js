@@ -104,19 +104,19 @@ async function serv(){
 
   app.use('/profile_pictures',express.static(path.join(__dirname, 'profile_pictures')));
 
-  // app.listen(80, () => {
-  //     console.log(`serever is runing at port ${port}`);
-  // })
-  https.createServer(
-      {
-          key: fs.readFileSync("ssl/private.key"),
-          cert: fs.readFileSync("ssl/certificate.crt"),
-          ca: fs.readFileSync("ssl/ca_bundle.crt")
-      },
-      app
-  ).listen(port, () => {
+  app.listen(80, () => {
       console.log(`serever is runing at port ${port}`);
   })
+  // https.createServer(
+  //     {
+  //         key: fs.readFileSync("ssl/private.key"),
+  //         cert: fs.readFileSync("ssl/certificate.crt"),
+  //         ca: fs.readFileSync("ssl/ca_bundle.crt")
+  //     },
+  //     app
+  // ).listen(port, () => {
+  //     console.log(`serever is runing at port ${port}`);
+  // })
     
 }
 
