@@ -3,17 +3,15 @@ import { MDBContainer, MDBListGroup, MDBInputGroup, MDBListGroupItem, MDBInput, 
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Config from '../config.json';
 
+
 const Friends = () => {
-  const [lastName, setLastName] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [age, setAge] = useState(0);
-  const [description, setDescription] = useState('');
+  const { emailurl } = useParams();
   const [friends, setFriends] = useState([]);
-  const [profileImage, setProfileImage] = useState(null);
+  const [friendsList, setFriendsList] = useState([]);
   const [email, setEmail] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [users, setUsers] = useState([]);
@@ -22,10 +20,10 @@ const Friends = () => {
 
   useEffect(() => {
     const retrieveCookie = () => {
-      const token = Cookies.get('jwt');
       try {
-        const decoded = jwtDecode(token);
-        setEmail(decoded.email);
+        const jwt = Cookies.get('jwt');
+        const decodedToken = jwtDecode(jwt);
+        setEmail(decodedToken.email);
       } catch {
         navigate('/Login');
       }
@@ -35,11 +33,7 @@ const Friends = () => {
       retrieveCookie();
       try {
         const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { withCredentials: true });
-        setFirstName(response.data.firstName || '');
-        setLastName(response.data.lastName || '');
-        setDescription(response.data.description || '');
-        setProfileImage(response.data.image || null);
-        setFriends(response.data.friends || []);
+        setFriends(response.data.friends.filter(friend => friend.email !== emailurl) || []);
       } catch (error) {
         console.error(error);
       }
@@ -57,7 +51,7 @@ const Friends = () => {
     const pollFriends = async () => {
       try {
         const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { withCredentials: true });
-        setFriends(response.data.friends || []);
+        setFriends(response.data.friends.filter(friend => friend.email !== emailurl) || []);
       } catch (error) {
         console.error('Erreur lors de la récupération des amis :', error);
       }
@@ -99,19 +93,29 @@ const Friends = () => {
     let otherUsersList = [];
 
     users.forEach(user => {
-      if (user.email === email) {
+      if (user.email === emailurl) {
         return;
       }
 
       if (friends.includes(user.email)) {
         friendsList.push(user);
       } else {
-        otherUsersList.push(user);
+        const _usr = users.find((usr)=>usr.email==user.email)
+        
+        if(Object.keys(_usr).includes('friendRequests')){
+          if(!_usr.friendRequests.includes(emailurl) ){
+      
+            console.log(user.email )
+
+            otherUsersList.push(user);
+          }
+        }
+      
       }
     });
 
     const filteredUsers = users.filter(user => {
-      if (user.email === email) {
+      if (user.email === emailurl) {
         return false;
       }
       return (
@@ -120,6 +124,22 @@ const Friends = () => {
         user.email.toLowerCase().includes(searchTerm.toLowerCase())
       );
     });
+
+
+
+    const filteredOtherUsers = otherUsersList.filter(user => {
+      if (user.email === emailurl) {
+        return false;
+      }
+      return (
+        user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    });
+
+
+    
 
     const renderUserList = (userList) => {
       if (userList.length === 0) {
@@ -141,22 +161,26 @@ const Friends = () => {
             <div className="m-3">
               <h5>{`${user.firstName} ${user.lastName}`}</h5>
             </div>
-            {friends.includes(user.email) && (
-              <MDBBtn color="danger" onClick={() => removeFriend(user.email)} className="ms-auto">
-                <MDBIcon icon="user-minus" className="me-2" />
-                Supprimer l'ami
-              </MDBBtn>
-            )}
-            {!friends.includes(user.email) && !sentFriendRequests.includes(user.email) && (
-              <MDBBtn color="primary" onClick={() => sendFriendRequest(user.email)} className="ms-auto">
-                <MDBIcon icon="user-plus" className="me-2" />
-                Ajouter
-              </MDBBtn>
-            )}
-            {sentFriendRequests.includes(user.email) && !friends.includes(user.email) && (
-              <MDBBtn color="secondary" disabled className="ms-auto">
-                Demande d'ami envoyée
-              </MDBBtn>
+            {emailurl === email && (
+              <>
+                {friends.includes(user.email) && (
+                  <MDBBtn color="danger" onClick={() => removeFriend(user.email)} className="ms-auto">
+                    <MDBIcon icon="user-minus" className="me-2" />
+                    Supprimer l'ami
+                  </MDBBtn>
+                )}
+                {!friends.includes(user.email) && !sentFriendRequests.includes(user.email) && (
+                  <MDBBtn color="primary" onClick={() => sendFriendRequest(user.email)} className="ms-auto">
+                    <MDBIcon icon="user-plus" className="me-2" />
+                    Ajouter
+                  </MDBBtn>
+                )}
+                {sentFriendRequests.includes(user.email) && !friends.includes(user.email) && (
+                  <MDBBtn color="secondary" disabled className="ms-auto">
+                    Demande d'ami envoyée
+                  </MDBBtn>
+                )}
+              </>
             )}
           </div>
         </MDBListGroupItem>
@@ -192,7 +216,7 @@ const Friends = () => {
           <div className="scrollable-section" style={{ maxHeight: '300px', overflowY: 'auto', marginTop: '20px' }}>
             <MDBListGroup>
               <h3 className="mb-3">Autres utilisateurs</h3>
-              {renderUserList(filteredUsers.filter(user => !friends.includes(user.email) && !sentFriendRequests.includes(user.email)))}
+              {renderUserList(filteredOtherUsers)}
             </MDBListGroup>
           </div>
         )}
@@ -204,7 +228,7 @@ const Friends = () => {
     <div>
       {/* Back button */}
       <div style={{ position: 'fixed', top: '10px', right: '10px' }}>
-        <MDBBtn color="primary" onClick={() => navigate('/Account')}>
+        <MDBBtn color="primary" onClick={() => navigate(`/Account/${encodeURIComponent(emailurl)}`)}>
           <MDBIcon icon="arrow-left" className="me-2" />
           Retour au profil
         </MDBBtn>

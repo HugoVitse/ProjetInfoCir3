@@ -25,6 +25,7 @@ const Account = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [users, setUsers] = useState([]);
   const [color, setColor] = useState("")
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
     const retrieveCookie = () => {
@@ -66,13 +67,23 @@ const Account = () => {
             }
           }
         }
+
+        const eventsResponse = await axios.get('http://localhost/evenements', { withCredentials: true });
+        setEvents(eventsResponse.data.filter(event => {
+        const eventDate = new Date(event.date).setHours(0, 0, 0, 0);
+        const today = new Date().setHours(0, 0, 0, 0);
+
+        return eventDate < today &&
+            Array.isArray(event.participants) &&
+            event.participants.some(participant => participant === email);
+        }));
       } catch (error) {
         console.error('Erreur lors de la récupération des utilisateurs :', error);
       }
     };
 
     fetchUsers();
-  }, [emailurl, navigate]);
+  }, [events, navigate]);
 
   const calculateAge = (dateOfBirth) => {
     const today = new Date();
@@ -275,11 +286,13 @@ const Account = () => {
               <div className="p-1 ">
                 <div className="d-flex justify-content-end text-center py-1">
                   <div>
-                    <MDBCardText className="mb-1 h5"><strong>253</strong></MDBCardText>
-                    <MDBCardText className="small text-muted mb-0"><strong>Events</strong></MDBCardText>
+                  <Link to={`/EventsPerso/${encodeURIComponent(emailurl)}`} className='text-theme'>
+                      <MDBCardText className="mb-1 h5"><strong>{events.length}</strong></MDBCardText>
+                      <MDBCardText className="small text-muted mb-0"><strong>Events</strong></MDBCardText>
+                    </Link>
                   </div>
                   <div className=" px-3" style={{color:'red'}}>
-                    <Link to="/Friends" className='text-theme'>
+                  <Link to={`/Friends/${encodeURIComponent(emailurl)}`} className='text-theme'>
                       <MDBCardText className="mb-1 h5"><strong>{friends.length}</strong></MDBCardText>
                       <MDBCardText className="small text-muted mb-0"><strong>Amis</strong></MDBCardText>
                     </Link>

@@ -11,6 +11,7 @@ import Activite from './components/Activite';
 import Evenements from './components/Evenements';
 import MoodTracker from './components/MoodTracker';
 import Friends from './components/Friends';
+import EventsPerso from './components/EventsPerso';
 import Notif from './components/Notif';
 import Messagerie from './components/Messagerie';
 
@@ -25,22 +26,11 @@ initMDB({ Modal, Ripple });
 function App() {
   const [theme, setTheme] = useState('light');
   const [isOpen, setIsOpen] = useState(false);
-  const [users, setUsers] = useState([]);
   
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme);
     document.body.className = savedTheme === 'dark' ? 'dark-theme' : 'light-theme';
-
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get(`http://localhost/getAllUsers`, { withCredentials: true });
-        setUsers(response.data || []);
-      } catch (error) {
-        console.error('Erreur lors de la récupération des utilisateurs :', error);
-      }
-    };
-    fetchUsers();
   }, []);
 
   const toggleTheme = () => {
@@ -82,12 +72,13 @@ function App() {
               <Route path="/Login" element={<Login />} />
               <Route path="/Register" element={<Register />} />
               <Route path="/Admin" element={<Admin />} />
-              <Route path="/Account/:emailurl" element={<Account users={users} />} />
+              <Route path="/Account/:emailurl" element={<Account />} />
               <Route path="/Catalogue" element={<Catalogue />} />
               <Route path="/Activite" element={<Activite />} />
               <Route path="/Evenements" element={<Evenements />} />
               <Route path="/MoodTracker" element={<MoodTracker />} />
-              <Route path="/Friends" element={<Friends />} />
+              <Route path="/Friends/:emailurl" element={<Friends />} />
+              <Route path="/EventsPerso/:email" element={<EventsPerso />} />
               <Route path="/Notif" element={<Notif />} />
               <Route path="/event/:activityName/:idEvent" element={<Messagerie />} />
               <Route path="*" element={<Home />} />
