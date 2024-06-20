@@ -18,6 +18,8 @@ const Friends = () => {
   const [sentFriendRequests, setSentFriendRequests] = useState([]);
   const navigate = useNavigate();
 
+  
+
   useEffect(() => {
     const retrieveCookie = () => {
       try {
@@ -29,45 +31,43 @@ const Friends = () => {
       }
     };
 
-    const fetchData = async () => {
-      retrieveCookie();
-      try {
-        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { withCredentials: true });
-        setFriends(response.data.friends.filter(friend => friend.email !== emailurl) || []);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     const fetchUsers = async () => {
       try {
         const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`, { withCredentials: true });
         setUsers(response.data || []);
+
+        const use = response.data.filter(user => user.email === emailurl);        
+        const friend = [];
+
+        // Vérifiez que use[0] est bien un objet
+        if (use[0] && typeof use[0] === 'object') {
+          // Accédez à la propriété friends
+          const friends = use[0].friends;
+
+          if (Array.isArray(friends)) {
+            friends.forEach(friendEmail => {
+              if (friendEmail !== emailurl) {
+                friend.push(friendEmail);
+              }
+            });
+          }
+        }
+        setFriends(friend);
+
       } catch (error) {
         console.error('Erreur lors de la récupération des utilisateurs :', error);
       }
     };
 
-    const pollFriends = async () => {
-      try {
-        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { withCredentials: true });
-        setFriends(response.data.friends.filter(friend => friend.email !== emailurl) || []);
-      } catch (error) {
-        console.error('Erreur lors de la récupération des amis :', error);
-      }
-    };
-
-    fetchData();
+    retrieveCookie();
     fetchUsers();
 
-    const interval = setInterval(pollFriends, 5000); // Poll every 5 seconds
 
-    return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, [navigate]);
+  }, [friends, navigate]);
 
   const sendFriendRequest = async (friendEmail) => {
+    console.log(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/friendRequests`, { email: friendEmail })
     try {
-      console.log(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/friendRequests`, { email: friendEmail })
       const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/friendRequests`, { email: friendEmail }, { withCredentials: true });
       if (response.status === 200) {
         setSentFriendRequests(prevRequests => [...prevRequests, friendEmail]);
@@ -142,14 +142,14 @@ const Friends = () => {
     const renderUserList = (userList) => {
       if (userList.length === 0) {
         return (
-          <MDBListGroupItem className='bg-theme-nuance text-theme'>
+          <MDBListGroupItem>
             Aucun utilisateur trouvé.
           </MDBListGroupItem>
         );
       }
 
       return userList.map((user) => (
-        <MDBListGroupItem key={user._id} className={friends.includes(user.email) ? 'friend-item bg-theme-nuance text-theme' : 'bg-theme-nuance'}>
+        <MDBListGroupItem key={user._id} className={friends.includes(user.email) ? 'friend-item' : ''}>
           <div className="d-flex align-items-center">
             <img
               src={`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${user.email}.png`}
@@ -162,14 +162,10 @@ const Friends = () => {
             {emailurl === email && (
               <>
                 {friends.includes(user.email) && (
-                  <MDBBtn
-                  color="danger"
-                  onClick={() => removeFriend(user.email)}
-                  className="ms-auto"
-                  style={{ width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                >
-                  <MDBIcon icon="user-minus" style={{ margin: '0' }} />
-                </MDBBtn>
+                  <MDBBtn color="danger" onClick={() => removeFriend(user.email)} className="ms-auto">
+                    <MDBIcon icon="user-minus" className="me-2" />
+                    Supprimer l'ami
+                  </MDBBtn>
                 )}
                 {!friends.includes(user.email) && !sentFriendRequests.includes(user.email) && (
                   <MDBBtn color="primary" onClick={() => sendFriendRequest(user.email)} className="ms-auto">
@@ -193,18 +189,17 @@ const Friends = () => {
       <MDBContainer className="mt-5 p-4" style={{ maxWidth: '800px' }}>
         {/* Page title */}
         <div className="text-center mb-4">
-          <h1><strong>Mes Amis</strong></h1>
+          <h1>Mes Amis</h1>
         </div>
 
         {/* Search input */}
-        <MDBInputGroup className="bg-light mb-3" style={{ borderRadius: '35px', overflow: 'hidden', border: 'none' }}>
-  <MDBInput
-    label="Recherche"
-    value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value)}
-    style={{ borderRadius: '35px', border: 'none' }}
-  />
-</MDBInputGroup>
+        <MDBInputGroup className="mb-3">
+          <MDBInput
+            label="Recherche"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </MDBInputGroup>
 
         {/* Friends list */}
         <div className="scrollable-section" style={{ maxHeight: '300px', overflowY: 'auto' }}>
@@ -231,13 +226,10 @@ const Friends = () => {
     <div>
       {/* Back button */}
       <div style={{ position: 'fixed', top: '10px', right: '10px' }}>
-      <MDBBtn
-        color="primary"
-        onClick={() => navigate(`/Account/${encodeURIComponent(emailurl)}`)}
-        style={{ width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-      >
-        <MDBIcon icon="arrow-left" />
-      </MDBBtn>
+        <MDBBtn color="primary" onClick={() => navigate(`/Account/${encodeURIComponent(emailurl)}`)}>
+          <MDBIcon icon="arrow-left" className="me-2" />
+          Retour au profil
+        </MDBBtn>
       </div>
 
       {renderUsers()}

@@ -28,6 +28,7 @@ const Account = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
+
     const retrieveCookie = () => {
       try {
         const jwt = Cookies.get("jwt");
@@ -66,23 +67,13 @@ const Account = () => {
             }
           }
         }
-
-        const eventsResponse = await axios.get('http://localhost/evenements', { withCredentials: true });
-        setEvents(eventsResponse.data.filter(event => {
-        const eventDate = new Date(event.date).setHours(0, 0, 0, 0);
-        const today = new Date().setHours(0, 0, 0, 0);
-
-        return eventDate < today &&
-            Array.isArray(event.participants) &&
-            event.participants.some(participant => participant === email);
-        }));
       } catch (error) {
         console.error('Erreur lors de la récupération des utilisateurs :', error);
       }
     };
 
     fetchUsers();
-  }, [events, navigate]);
+  }, [navigate]);
 
   const calculateAge = (dateOfBirth) => {
     const today = new Date();
@@ -301,7 +292,7 @@ const Account = () => {
               <MDBCardBody className="p-4">
                 {/* Case à propos de moi */}
                 <div className="mb-4 bg-theme-nuance text-theme text-center" style={{borderRadius:'25px'}}>
-                  <p className="lead fw-normal">À propos de moi</p>
+                  <p className="lead fw-normal"><strong>À propos de moi</strong></p>
                   <div className="p-2 bg-theme-nuance text-theme" style={{borderRadius:'25px'}}>
                     <hr className='barreHr'/>
                     <MDBCardText className="font-italic">

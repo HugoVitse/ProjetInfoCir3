@@ -13,6 +13,7 @@ import MoodTracker from './components/MoodTracker';
 import Friends from './components/Friends';
 import EventsPerso from './components/EventsPerso';
 import Notif from './components/Notif';
+import MobileDownload from './components/MobileDownload';
 import Messagerie from './components/Messagerie';
 
 import axios from 'axios';
@@ -82,6 +83,7 @@ function App() {
               <Route path="/Notif" element={<Notif />} />
               <Route path="/event/:activityName/:idEvent" element={<Messagerie />} />
               <Route path="*" element={<Home />} />
+              <Route path="/MobileDownload" element={<MobileDownload />} />
             </Routes>
           </MDBCard>
         </div>

@@ -8,7 +8,10 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { UserAgent } from "react-useragent";
 import { useNavigate, Link } from "react-router-dom";
+import MobileDownload from './MobileDownload';
+
 
 const Home = () => {
   const [basicModal, setBasicModal] = useState(false);
@@ -23,6 +26,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [pp, setPp] = useState('');
   const [id, setid] = useState('');
+  const [userAgent, setUserAgent] = useState('');
   const [formData, setFormData] = useState({
     activities: [],
     note: 5,
@@ -83,6 +87,8 @@ const Home = () => {
   };
 
   useEffect(() => {
+    const userAgent = Cookies.get("userAgent");
+    console.log("User-Agent:", userAgent || "User-Agent non trouvé");
     const fnc = async () => {
       retrieveCookie();
       try {
@@ -186,44 +192,23 @@ const Home = () => {
         </MDBCard>
       </MDBCol>
     ));
-  };
-
-  const renderHistorique = () => {
-    return (
-      <MDBCol md="6" className="mb-4">
-        <MDBCard className="text-theme custom-card border border-primary">
-          <MDBCardBody className="p-4 custom-card bg-light">
-            <MDBTypography tag="h4" className="text-primary font-weight-bold">
-              Historique des Événements 
-            </MDBTypography>
-            <hr />
-            <MDBCardText className="fw-bold mb-2">
-              {events
-                .filter(event => new Date(event.date).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) &&
-                Array.isArray(event.participants) && event.participants.some(participants => participants === email))
-                .map((event, index) => (
-                  <div key={index}>
-                    <MDBBadge color="secondary">Event</MDBBadge>
-                    : {event.activity.title}
-  
-                  </div>
-                ))}
-            </MDBCardText>
-          </MDBCardBody>
-        </MDBCard>
-      </MDBCol>
-    );
-  };  
+  }; 
   
 
   return (
-    <div className="flex-grow-1 vh-100">
+
+      // Changer la logique ici si tu veux la page pour téléphone (useragent)
+      <UserAgent>
+        {({ ua }) => {
+          return ua.mobile ?  <MobileDownload/>: 
+          <div className="flex-grow-1 vh-100">
+    
       <MDBContainer fluid className="py-3 vh-100 bg-theme" style={{ height: '100%' }}>
       <MDBRow className="justify-content-center align-items-center h-100">
         <MDBCol lg="9" xl="7" className='w-100'>
         <header style={{
             position: 'relative',
-            backgroundImage: 'url(https://i.gifer.com/S87H.gif)', // Replace with your own GIF URL
+            backgroundImage: 'url(https://femmedinfluence.fr/wp-content/uploads/2015/07/desperate-houseiwves-hug-1.gif)', // Replace with your own GIF URL
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             height: '50vh',
@@ -253,6 +238,7 @@ const Home = () => {
               <div className="d-flex align-items-center justify-content-between mb-3">
                 <div>
                   <h2 className="fw-bold mb-1" style={{ fontSize: '1.5rem', color: 'white' }}>
+                  <p>{userAgent}</p>
                     Bienvenue sur Linx
                   </h2>
                   <p className="mb-0" style={{ fontSize: '1.1rem' }}>
@@ -279,7 +265,6 @@ const Home = () => {
 
           <MDBRow className="mt-4">
             {renderInterestCards()}
-            {renderHistorique()}
           </MDBRow>
         </MDBCol>
       </MDBRow>
@@ -396,6 +381,8 @@ const Home = () => {
         </MDBModalDialog>
       </MDBModal>
     </div>
+  }}
+  </UserAgent>
   );
 };
 

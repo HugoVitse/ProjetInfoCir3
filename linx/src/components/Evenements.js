@@ -152,9 +152,9 @@ const Evenements = () => {
     return (
         <MDBRow className='mx-0 vh-100'>
             <MDBCol size='4' className='vh-100' style={{ borderBottom: "2px solid black" }}>
-                <MDBRow style={{ height: "7%", borderBottom: "2px solid black", alignItems: 'center', backgroundColor: '#f8f9fa' }}>
+                <MDBRow className='bg-theme-nuance' style={{ height: "7%", borderBottom: "2px solid black", alignItems: 'center'}}>
                 <MDBCol size='9' className='d-flex align-items-center'>
-                    <h4 className="text-primary font-weight-bold mb-0">Créer un événement</h4>
+                    <h4 className="text-theme font-weight-bold mb-0">Créer un événement</h4>
                 </MDBCol>
                 <MDBCol size='3' className='d-flex align-items-center justify-content-center'>
                     <MDBDropdown>
@@ -175,7 +175,7 @@ const Evenements = () => {
 
 
                 <MDBRow className='recommendations' style={{ maxHeight: 'calc(100vh - 22rem)', overflowY: 'auto'}}>
-                    <h6 className='text-center mt-3 mb-2'>Recommandations</h6>
+                    <h6 className='text-center mt-3 mb-2'><strong>Recommandations</strong></h6>
                     <MDBCol className='vh-80'>
                         {Activitiess
                             .filter((activity) => selectedInterests.includes(activity.type))
@@ -188,7 +188,7 @@ const Evenements = () => {
                 <hr className='barreHr mb-3'/>
 
                 <MDBRow className='recommendations' style={{ maxHeight: 'calc(100vh - 18rem)', overflowY: 'auto' }}>
-                    <h6 className='text-center mb-2'>Liste</h6>
+                    <h6 className='text-center mb-2'><strong>Liste</strong></h6>
                     <MDBCol className='vh-80'>
                         {Activitiess
                             .map((activity, index) => (
@@ -222,7 +222,7 @@ const Evenements = () => {
                             <div className='mask' style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
                         </a>
                     </MDBRipple>
-                    <MDBCardBody>
+                    <MDBCardBody className='bg-theme-nuance text-theme'>
                         <MDBCardTitle>{Activitiess[actualIndex]?Activitiess[actualIndex].activity.title:""}</MDBCardTitle>
                         <MDBCardText>
                             {Activitiess[actualIndex]?Activitiess[actualIndex].activity.description:""}
