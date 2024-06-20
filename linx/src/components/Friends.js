@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MDBContainer, MDBListGroup, MDBInputGroup, MDBListGroupItem, MDBInput, MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -54,8 +54,21 @@ const Friends = () => {
       }
     };
 
+    const pollFriends = async () => {
+      try {
+        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { withCredentials: true });
+        setFriends(response.data.friends || []);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des amis :', error);
+      }
+    };
+
     fetchData();
     fetchUsers();
+
+    const interval = setInterval(pollFriends, 5000); // Poll every 5 seconds
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
   }, [navigate]);
 
   const sendFriendRequest = async (friendEmail) => {
@@ -140,7 +153,7 @@ const Friends = () => {
                 Ajouter
               </MDBBtn>
             )}
-            {sentFriendRequests.includes(user.email) && (
+            {sentFriendRequests.includes(user.email) && !friends.includes(user.email) && (
               <MDBBtn color="secondary" disabled className="ms-auto">
                 Demande d'ami envoyée
               </MDBBtn>
@@ -151,7 +164,13 @@ const Friends = () => {
     };
 
     return (
-      <MDBContainer className="mt-5">
+      <MDBContainer className="mt-5 p-4" style={{ maxWidth: '800px' }}>
+        {/* Page title */}
+        <div className="text-center mb-4">
+          <h1>Mes Amis</h1>
+        </div>
+
+        {/* Search input */}
         <MDBInputGroup className="mb-3">
           <MDBInput
             label="Recherche"
@@ -160,23 +179,37 @@ const Friends = () => {
           />
         </MDBInputGroup>
 
-        <MDBListGroup>
-          <h3>Amis</h3>
-          {renderUserList(searchTerm ? filteredUsers.filter(user => friends.includes(user.email)) : friendsList)}
+        {/* Friends list */}
+        <div className="scrollable-section" style={{ maxHeight: '300px', overflowY: 'auto' }}>
+          <MDBListGroup>
+            <h3 className="mb-3">Amis</h3>
+            {renderUserList(searchTerm ? filteredUsers.filter(user => friends.includes(user.email)) : friendsList)}
+          </MDBListGroup>
+        </div>
 
-          {searchTerm && (
-            <>
-              <h3>Autres utilisateurs</h3>
-              {renderUserList(filteredUsers.filter(user => !friends.includes(user.email)))}
-            </>
-          )}
-        </MDBListGroup>
+        {/* Other users list */}
+        {searchTerm && (
+          <div className="scrollable-section" style={{ maxHeight: '300px', overflowY: 'auto', marginTop: '20px' }}>
+            <MDBListGroup>
+              <h3 className="mb-3">Autres utilisateurs</h3>
+              {renderUserList(filteredUsers.filter(user => !friends.includes(user.email) && !sentFriendRequests.includes(user.email)))}
+            </MDBListGroup>
+          </div>
+        )}
       </MDBContainer>
     );
   };
 
   return (
     <div>
+      {/* Back button */}
+      <div style={{ position: 'fixed', top: '10px', right: '10px' }}>
+        <MDBBtn color="primary" onClick={() => navigate('/Account')}>
+          <MDBIcon icon="arrow-left" className="me-2" />
+          Retour au profil
+        </MDBBtn>
+      </div>
+
       {renderUsers()}
     </div>
   );

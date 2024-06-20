@@ -5,8 +5,9 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import Config from '../config.json';
 
-const Account = ({ users }) => {
+const Account = () => {
   const { emailurl } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const [lastName, setLastName] = useState('');
@@ -22,49 +23,56 @@ const Account = ({ users }) => {
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
+  const [users, setUsers] = useState([]);
+  const [color, setColor] = useState("")
 
   useEffect(() => {
     const retrieveCookie = () => {
-      const token = Cookies.get('jwt');
       try {
-        jwtDecode(token);
+        const jwt = Cookies.get("jwt");
+        const decodedToken = jwtDecode(jwt);
+        setEmail(decodedToken.email);
       } catch {
         navigate('/Login');
       }
     };
 
-    const fetchData = async () => {
+    const fetchUsers = async () => {
       retrieveCookie();
       try {
-        const response = await axios.get('http://localhost/infos', { withCredentials: true });
-        console.log('Data received from API:', response.data);
-        setEmail(response.data.email || '');
-        setFirstName(response.data.firstName || '');
-        setLastName(response.data.lastName || '');
-        setDescription(response.data.description || '');
-        setSelectedInterests(response.data.activities || []);
-        setInitialInterests(response.data.activities || []);
-        setProfileImage(response.data.image || null);
-        setFriends(response.data.friends || []);
-        if (response.data.dateOfBirth) {
-          const calculatedAge = calculateAge(new Date(response.data.dateOfBirth));
-          setAge(calculatedAge);
+        const jwt = Cookies.get("jwt");
+        const decodedToken = jwtDecode(jwt);
+        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`, { withCredentials: true });
+        console.log("recup user ok");
+        const response1 = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getColor`, {email:decodedToken.email},{ withCredentials: true });
+        setColor(response1.data)
+        if (emailurl.length > 0 && response.data.length > 0) {
+          const foundUser = response.data.find(user => user.email === emailurl);
+          if (!foundUser) {
+            navigate('/');
+          } else {
+            setUsers(foundUser);
+            setFirstName(foundUser.firstName || '');
+            setLastName(foundUser.lastName || '');
+            setDescription(foundUser.description || '');
+            setSelectedInterests(foundUser.activities || []);
+            setInitialInterests(foundUser.activities || []);
+            setProfileImage(foundUser.image || null);
+            setFriends(foundUser.friends || []);
+
+            if (foundUser.dateOfBirth) {
+              const calculatedAge = calculateAge(new Date(foundUser.dateOfBirth));
+              setAge(calculatedAge);
+            }
+          }
         }
       } catch (error) {
-        console.error(error);
+        console.error('Erreur lors de la récupération des utilisateurs :', error);
       }
     };
-    fetchData();
-  }, [emailurl, navigate]);
 
-  useEffect(() => {
-    // Vérifier si emailurl correspond à un utilisateur existant
-    const foundUser = users.find(user => user.email === emailurl);
-    if (!foundUser) {
-      // Rediriger vers la page d'accueil si l'utilisateur n'existe pas
-      navigate('/');
-    }
-  }, [emailurl, navigate, users]);
+    fetchUsers();
+  }, [emailurl, navigate]);
 
   const calculateAge = (dateOfBirth) => {
     const today = new Date();
@@ -91,7 +99,7 @@ const Account = ({ users }) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
-    if (file && file.type === 'image/png') {
+    if (file && file.type === 'image/jpeg') {  // Accept only JPEG images
       reader.onloadend = () => {
         setProfileImage(reader.result);
         setErrorMessage('');
@@ -99,18 +107,17 @@ const Account = ({ users }) => {
       };
       reader.readAsDataURL(file);
     } else {
-      setErrorMessage('Veuillez sélectionner un fichier PNG.');
+      setErrorMessage('Veuillez sélectionner un fichier JPG.');
     }
   };
 
   const handleSubmit = async () => {
     try {
       if (pp) {
-        await axios.post('http://localhost/updateInfoWeb', { picture: pp, firstName: firstName, lastName: lastName, selectedInterests: selectedInterests, description: description}, { withCredentials: true });
+        await axios.post('http://localhost/updateInfoWeb', { picture: pp, firstName, lastName, selectedInterests, description }, { withCredentials: true });
       } else {
-        await axios.post('http://localhost/updateInfoWeb', {picture:"", firstName: firstName, lastName: lastName, selectedInterests: selectedInterests, description: description}, { withCredentials: true });
+        await axios.post('http://localhost/updateInfoWeb', { picture: '', firstName, lastName, selectedInterests, description }, { withCredentials: true });
       }
-      console.log(pp, firstName, lastName, selectedInterests, description);
       setInitialInterests(selectedInterests);
     } catch (error) {
       console.error('Error:', error);
@@ -123,16 +130,27 @@ const Account = ({ users }) => {
     setIsEditing(false);
     handleSubmit();
   };
-  
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setFirstName(users.firstName || '');
+    setLastName(users.lastName || '');
+    setDescription(users.description || '');
+    setSelectedInterests(initialInterests || []);
+    setProfileImage(users.image || null);
+    setPp('');
+    setErrorMessage('');
+  };
+
   const handleAddInterest = (interest) => {
     setSelectedInterests([...selectedInterests, interest]);
   };
-  
+
   const handleRemoveInterest = (interest) => {
     const newInterests = selectedInterests.filter(item => item !== interest);
     setSelectedInterests(newInterests);
   };
-  
+
   const interestsList = [
     'Cinéma', 'Attractions', 'Animaux', 'Théâtre', 'Danse', 'Manga/Anime', 'Séries', 'Échecs',
     'Moto', 'Lecture', 'Jeux vidéos', 'Musique', 'BD/Comics', 'Voyager', 'Musées', 'Sortir entre amis',
@@ -149,7 +167,6 @@ const Account = ({ users }) => {
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '10px' }}>
           {interestsList.map(interest => {
             const isSelected = selectedInterests.includes(interest);
-            const isInitialSelected = initialInterests.includes(interest);
   
             if (isEditing || isSelected) {
               return (
@@ -166,11 +183,11 @@ const Account = ({ users }) => {
                     borderRadius: '10px',
                     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                     transition: 'transform 0.2s',
-                    cursor: 'pointer'
+                    cursor: isEditing ? 'pointer' : 'default'
                   }}
                   onClick={() => isEditing ? isSelected ? handleRemoveInterest(interest) : handleAddInterest(interest) : null}
                 >
-                  {isEditing && (
+                  {isEditing ? (
                     <>
                       <input
                         type="checkbox"
@@ -180,8 +197,7 @@ const Account = ({ users }) => {
                       />
                       <label>{interest}</label>
                     </>
-                  )}
-                  {!isEditing && isSelected && (
+                  ) : (
                     <span style={{ fontWeight: 'bold', color: 'text-theme' }}>{interest}</span>
                   )}
                 </div>
@@ -193,7 +209,7 @@ const Account = ({ users }) => {
         </div>
         <style jsx>{`
           .interest-item:hover {
-            transform: scale(1.05);
+            transform: ${isEditing ? 'scale(1.05)' : 'none'};
           }
         `}</style>
       </MDBListGroupItem>
@@ -207,38 +223,46 @@ const Account = ({ users }) => {
         <MDBRow className="justify-content-center align-items-center h-100">
           <MDBCol lg="9" xl="7">
             <MDBCard className='bg-theme text-theme'>
-              <div className="bg-theme-inv text-theme-inv rounded-top text-white d-flex flex-row" style={{ height: '200px' }}>
-                <div className="bgms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
-                  <label htmlFor="profile-image">
+              <div className="text-light rounded-top text-white d-flex flex-row" style={{ height: '200px', backgroundColor: color, textShadow: 'black 4px 0 10px'}}>
+              <div className="ms-4 mt-4 d-flex flex-column" style={{ width: '150px' }}>
+                <label htmlFor="profile-image">
+                  <div style={{ width: '150px', height: '150px', marginBottom:'20px' }}>
                     <MDBCardImage 
-                      src={isEditing ? profileImage : "http://localhost/"+profileImage || "https://via.placeholder.com/150"}
-                      alt="Generic placeholder image" 
-                      className=" mb-2 img-thumbnail" 
+                      src={isEditing ? profileImage : profileImage ? `http://localhost/${profileImage}` : "https://via.placeholder.com/150"}
+                      alt="Profile"
+                      className="mb-1 img-thumbnail"
+                      style={{ width: '150px', height: '150px', objectFit: 'cover', zIndex: '1' }} 
                       fluid 
-                      style={{ width: '150px', height: '150px', objectFit: 'contain', zIndex: '1' }} 
                     />
-                  </label>
+                  </div>
+                </label>
+                {isEditing && (
                   <input
                     id="profile-image"
                     ref={inputRef}
                     type="file"
-                    accept="image/png"
+                    accept="image/jpeg"
                     style={{ display: 'none' }}
                     onChange={handleImageChange}
                   />
-                  {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                  {emailurl === email && (isEditing ? (
-                    <MDBBtn className='mt-4 custom-btn-primary' onClick={handleSaveProfile} style={{ overflow: 'visible' }}>Sauvegarder</MDBBtn>
-                  ) : (
-                    <MDBBtn className='mt-4 custom-btn-primary' onClick={handleEditProfile} style={{ overflow: 'visible' }}>Modifier</MDBBtn>
-                  ))}
+                )}
+                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                {console.log('emailurl:'+emailurl+'emaile:'+email)}
+                {emailurl === email && (isEditing ? (
+                  <div className="mt-4 d-flex">
+                    <MDBBtn color="black" onClick={handleSaveProfile} style={{ overflow: 'visible', marginRight: '10px' }}>Sauvegarder</MDBBtn>
+                    <MDBBtn color="danger" onClick={handleCancelEdit} style={{ overflow: 'visible' }}>Annuler</MDBBtn>
+                  </div>
+                ) : (
+                  <MDBBtn className='mt-4' color="black" onClick={handleEditProfile} style={{ overflow: 'visible' }}>Modifier</MDBBtn>
+                ))}
                 </div>
   
                 {/* Partie Nom/Prénom/Âge */}
-                <div className="ms-3" style={{ marginTop: '140px' }}>
+                <div className="ms-4" style={{ marginTop: '120px' }}>
                   <MDBTypography tag="h5">
-                    {isEditing ? <MDBInput className="mb-2" label="LastName" type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} style={{ marginTop: '-20px', color: 'white' }} /> : lastName} {' '}
-                    {isEditing ? <MDBInput label="FirstName" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} style={{ color: 'white' }} /> : firstName}
+                  {isEditing ? <MDBInput label="LastName" type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} style={{ marginTop: '-40px', color: 'white', marginBottom:'10px' }} /> : lastName} {' '}
+                  {isEditing ? <MDBInput label="FirstName" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} style={{ color: 'white' }} /> : firstName}
                   </MDBTypography>
   
                   <MDBCardText>
@@ -248,7 +272,7 @@ const Account = ({ users }) => {
               </div>
               {/* Fin */}
   
-              <div className="p-4 ">
+              <div className="p-1 ">
                 <div className="d-flex justify-content-end text-center py-1">
                   <div>
                     <MDBCardText className="mb-1 h5"><strong>253</strong></MDBCardText>

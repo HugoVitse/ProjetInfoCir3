@@ -34,7 +34,7 @@ async function updateInfoWeb(req,res){
                     }
                     console.log(`Image sauvegardée sous : ${outputFile}`);
                 });
-                const findOneResult = await collection.findOneAndUpdate({'email': email},{$set: {'firstName': firstName,'lastName': lastName, 'description': description, 'activities': selectedInterests,image:`profile_pictures/${email}.png`}});
+                const findOneResult = await collection.findOneAndUpdate({'email': email},{$set: {'firstName': firstName,'lastName': lastName, 'description': description, 'activities': selectedInterests,image:`profile_pictures/${email}.jpg`}});
             }
             else{const findOneResult = await collection.findOneAndUpdate({'email': email},{$set: {'firstName': firstName,'lastName': lastName, 'description': description, 'activities': selectedInterests}});}
             
