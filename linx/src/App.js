@@ -11,6 +11,7 @@ import Activite from './components/Activite';
 import Evenements from './components/Evenements';
 import MoodTracker from './components/MoodTracker';
 import Friends from './components/Friends';
+import EventsPerso from './components/EventsPerso';
 import Notif from './components/Notif';
 import Messagerie from './components/Messagerie';
 
@@ -76,7 +77,8 @@ function App() {
               <Route path="/Activite" element={<Activite />} />
               <Route path="/Evenements" element={<Evenements />} />
               <Route path="/MoodTracker" element={<MoodTracker />} />
-              <Route path="/Friends" element={<Friends />} />
+              <Route path="/Friends/:emailurl" element={<Friends />} />
+              <Route path="/EventsPerso/:email" element={<EventsPerso />} />
               <Route path="/Notif" element={<Notif />} />
               <Route path="/event/:activityName/:idEvent" element={<Messagerie />} />
               <Route path="*" element={<Home />} />

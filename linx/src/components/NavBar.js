@@ -26,7 +26,6 @@ const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => 
         const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { headers: { Cookie: `jwt=${jwt}` }, withCredentials: true });
         const decodedToken = jwtDecode(jwt);
         setemail(decodedToken.email);
-        console.log(decodedToken.email.slice(0,-11))
         // Mettre à jour l'état local des notifications
         setHasNotifications(response.data.friendRequests && response.data.friendRequests.length > 0);
       } catch (error) {
