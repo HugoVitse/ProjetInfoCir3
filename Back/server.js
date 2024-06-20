@@ -83,7 +83,7 @@ async function serv(){
   app.post('/createEvenement',createEvenement)
   app.get('/evenements',evenements)
   app.post('/EventRegister',EventRegister)
-  app.get('/getEvents',getEvents)
+  app.post('/getEvents',getEvents)
   app.get('/getMessage/:id',getMessage)
   app.post('/sendMessage',sendMessage)
   app.post('/getFriendList',getFriendList)

@@ -102,7 +102,7 @@ export default function HomeScreen() {
         setPicture("")
         setPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
       }
-      const reponseEvents = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getEvents`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      const reponseEvents = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getEvents`,{email:"", bol:true}, {headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
       setEvents(reponseEvents.data)
     }
     wrap()

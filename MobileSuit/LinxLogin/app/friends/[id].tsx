@@ -3,15 +3,16 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { View, Text, Dimensions, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Avatar, IconButton, List, Modal, PaperProvider, Portal, } from 'react-native-paper';
-import { Stack, router, useLocalSearchParams, useRouter } from 'expo-router';
+import { Stack, router, useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import Theme from '@/constants/Theme';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
 import Config from '../../config.json'
 import { jwtDecode } from 'jwt-decode';
 import { user } from '@/constants/user';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { evenement } from "@/constants/evenement";
 
 // import { View, Text, StyleSheet, Dimensions, KeyboardAvoidingView, Platform, TouchableOpacity, Animated, Keyboard, SafeAreaView } from 'react-native';
 
@@ -85,6 +86,53 @@ function Informations(id: any) {
   );
 }
 
+
+function Evenements(id: any) {
+  console.log("evenements")
+  const _Theme = Theme()
+  
+  const [events,setEvents] = useState<evenement[]>([])
+  const [eventPastComponent, setEventPastComponent] = useState<React.JSX.Element[]>([])
+  const [allUsers,setAllUsers] = useState<user[]>([])
+
+  useFocusEffect(
+    useCallback(() => {
+    const wrap = async()=>{
+      const jwt_cookie = await AsyncStorage.getItem("jwt")
+      const reponseEvents = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getEvents`,{email:id.route.params.id, bol:false},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      setEvents(reponseEvents.data)
+      const allUsers = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      setAllUsers(allUsers.data)
+    }
+    wrap()
+  },[]))
+
+  useEffect(()=>{
+    let tmp:React.JSX.Element[] = []
+    if(events.length>0 && allUsers.length > 0){
+      for(let i = 0; i<events.length;i++){
+        const date = new Date(events[i].date)
+        const today = new Date()
+        const user: any = allUsers.find((re) => re.email = events[i].host)
+        if(!(date.getDate() >= today.getDate() && date.getMonth() >= today.getMonth() && date.getFullYear() >= today.getFullYear())){
+          tmp.push(
+            <List.Item key={i} title={`${events[i].activity.title}` } description={`${events[i].date}`} style={{width: width*0.8}} titleStyle={{textAlign: 'center'}} left={() => <Avatar.Image size={80} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${user.image}`}} />  } />
+          )
+        }
+        setEventPastComponent(tmp)
+      }
+    }
+  },[events, allUsers])
+
+  return (
+    <View style={[{flex: 1}, _Theme.themeBack2]}>
+      <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+        {eventPastComponent}
+      </ScrollView>
+    </View>
+  );
+}
+
 function Friends(id: any) {
   const _Theme = Theme()
   
@@ -107,7 +155,7 @@ function Friends(id: any) {
         const myEmail: any = jwtDecode(jwt?jwt:"")
         let tmpcomp = []
         for (let i=0; i< friendList.length; i++){
-          tmpcomp.push(<List.Item key={i} title={`${friendList[i].firstName} ${friendList[i].lastName}` } onPress={() => {friendList[i].email==myEmail.email ? router.push('profile') : router.push(`friends/${friendList[i].email}`)}} left={() => <Avatar.Image size={80} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${friendList[i].image}`}} />  } />)
+          tmpcomp.push(<List.Item key={i} title={`${friendList[i].firstName} ${friendList[i].lastName}` } style={{width: width*0.8}} titleStyle={{textAlign: 'center'}} onPress={() => {friendList[i].email==myEmail.email ? router.push('profile') : router.push(`friends/${friendList[i].email}`)}}  left={() => <Avatar.Image size={80} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${friendList[i].email}.png`}} />  } />)
         }
         setFriendListComp(tmpcomp)
       }
@@ -178,7 +226,7 @@ export default function FriendScreen() {
         <IconButton
             icon="arrow-left"
             iconColor={_Theme.themeIcon.color}
-            onPress={router.back}
+            onPress={() => router.push('profile')}
             style={styles.buttonBack}
         />
         {(myFriends.includes(typeof(id)=='string'?id:"") || allUsers.find((user:user)=>user.email==id)?.friendRequests.includes(myEmail))
@@ -207,6 +255,7 @@ export default function FriendScreen() {
           }}
         >
           <Tab.Screen name="Informations" component={Informations} initialParams={{id: id}} />
+          <Tab.Screen name="Evènements" component={Evenements} initialParams={{id: id}} />
           <Tab.Screen name="Amis" component={Friends} initialParams={{id: id}} />
         </Tab.Navigator>
       </SafeAreaProvider>

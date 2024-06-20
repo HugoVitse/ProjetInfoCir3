@@ -19,7 +19,7 @@ export default function Theme() {
         themeCard: colorScheme === 'light' ? styles1.lightThemeCard : styles1.darkThemeCard,
         themeBackMessage: colorScheme === 'light' ? styles1.lightThemeBackMessage : styles1.darkThemeBackMessage,
         themeBackMyMessage: colorScheme === 'light' ? styles1.lightThemeBackMyMessage : styles1.darkThemeBackMyMessage,
-
+        themeSearchBar: colorScheme === 'light' ? styles1.lightThemeSearchBar : styles1.darkThemeSearchBar
     }
 
     return Theme
@@ -76,6 +76,9 @@ const styles1 = StyleSheet.create ({
   lightThemeBackMyMessage: {
     backgroundColor: '#81c4f8',
   },
+  lightThemeSearchBar: {
+    backgroundColor: 'rgba(206, 210, 212, 1)',
+  },
   darkThemeBack: {
     backgroundColor: '#0d1017'
   },
@@ -128,4 +131,7 @@ const styles1 = StyleSheet.create ({
   darkThemeBackMyMessage: {
     backgroundColor: '#2196f3'
   },
+  darkThemeSearchBar: {
+    backgroundColor: 'rgba(52, 57, 60, 1)',
+  }
 });
