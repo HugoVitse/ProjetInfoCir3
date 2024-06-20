@@ -3,7 +3,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useRouter, router } from "expo-router";
 import { Text, View, StyleSheet, Dimensions, TouchableOpacity, SafeAreaView, ScrollView } from "react-native";
-import { Avatar, Checkbox, List, PaperProvider, Portal, RadioButton, Searchbar } from 'react-native-paper';
+import { Avatar, Checkbox, Divider, List, PaperProvider, Portal, RadioButton, Searchbar } from 'react-native-paper';
 import { useEffect, useState } from 'react';
 import { IconButton,TextInput, Modal, Button, Dialog, HelperText, ActivityIndicator } from "react-native-paper";
 import { useCameraPermissions } from 'expo-camera';
@@ -216,7 +216,7 @@ function Search() {
     <View style={[{flex: 1}, _Theme.themeBack2]}>
       <ScrollView contentContainerStyle={{ alignItems: 'center', marginTop:50 }}>
         <Searchbar
-          style={{width:width-40}}
+          style={{width:width-40, backgroundColor: 'rgba(33,150,243,0.6)'}}
           placeholder="Search"
           onChangeText={(text) => {setSearchQuery(text),searchFriend(text)}}
           value={searchQuery}
@@ -498,7 +498,7 @@ export default function ProfileScreen() {
           <IconButton
             icon="arrow-left"
             iconColor={_Theme.themeIcon.color}
-            onPress={router.back}
+            onPress={() => router.push('home')}
             style={styles.buttonBack}
           />
           <TouchableOpacity onPress={()=>{setModalVisible(true)}}>
@@ -638,6 +638,7 @@ export default function ProfileScreen() {
                   {leftColumn.map((activity: any) => (
                     <View key={activity} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                       <Checkbox
+                        color={_Theme.themeBouton.backgroundColor}
                         status={checkedState[activity] ? 'checked' : 'unchecked'}
                         onPress={() => handleCheckboxPress(activity)}
                       />
@@ -649,6 +650,7 @@ export default function ProfileScreen() {
                   {rightColumn.map((activity: any) => (
                     <View key={activity} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                       <Checkbox
+                        color={_Theme.themeBouton.backgroundColor}
                         status={checkedState[activity] ? 'checked' : 'unchecked'}
                         onPress={() => handleCheckboxPress(activity)}
                       />
@@ -685,6 +687,7 @@ export default function ProfileScreen() {
               <View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                   <RadioButton
+                    color={_Theme.themeBouton.backgroundColor}
                     value="petitcomite"
                     status={checked1 === 'petitcommite' ? 'checked' : 'unchecked'}
                     onPress={() => setChecked1('petitcommite')}
@@ -693,6 +696,7 @@ export default function ProfileScreen() {
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                   <RadioButton
+                    color={_Theme.themeBouton.backgroundColor}
                     value="grandcomite"
                     status={checked1 === 'grandcomite' ? 'checked' : 'unchecked'}
                     onPress={() => setChecked1('grandcomite')}
@@ -704,6 +708,7 @@ export default function ProfileScreen() {
               <View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                   <RadioButton
+                    color={_Theme.themeBouton.backgroundColor}
                     value="morning"
                     status={checked2 === 'morning' ? 'checked' : 'unchecked'}
                     onPress={() => setChecked2('morning')}
@@ -712,6 +717,7 @@ export default function ProfileScreen() {
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                   <RadioButton
+                    color={_Theme.themeBouton.backgroundColor}
                     value="afternoon"
                     status={checked2 === 'afternoon' ? 'checked' : 'unchecked'}
                     onPress={() => setChecked2('afternoon')}
@@ -720,6 +726,7 @@ export default function ProfileScreen() {
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                   <RadioButton
+                    color={_Theme.themeBouton.backgroundColor}
                     value="evening"
                     status={checked2 === 'evening' ? 'checked' : 'unchecked'}
                     onPress={() => setChecked2('evening')}
@@ -731,6 +738,7 @@ export default function ProfileScreen() {
               <View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                   <RadioButton
+                    color={_Theme.themeBouton.backgroundColor}
                     value="indoor"
                     status={checked3 === 'indoor' ? 'checked' : 'unchecked'}
                     onPress={() => setChecked3('indoor')}
@@ -739,6 +747,7 @@ export default function ProfileScreen() {
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                   <RadioButton
+                    color={_Theme.themeBouton.backgroundColor}
                     value="outdoor"
                     status={checked3 === 'outdoor' ? 'checked' : 'unchecked'}
                     onPress={() => setChecked3('outdoor')}
@@ -750,6 +759,7 @@ export default function ProfileScreen() {
               <View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                   <RadioButton
+                    color={_Theme.themeBouton.backgroundColor}
                     value="low"
                     status={checked4 === 'low' ? 'checked' : 'unchecked'}
                     onPress={() => setChecked4('low')}
@@ -758,6 +768,7 @@ export default function ProfileScreen() {
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                   <RadioButton
+                    color={_Theme.themeBouton.backgroundColor}
                     value="medium"
                     status={checked4 === 'medium' ? 'checked' : 'unchecked'}
                     onPress={() => setChecked4('medium')}
@@ -766,6 +777,7 @@ export default function ProfileScreen() {
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                   <RadioButton
+                    color={_Theme.themeBouton.backgroundColor}
                     value="high"
                     status={checked4 === 'high' ? 'checked' : 'unchecked'}
                     onPress={() => setChecked4('high')}
@@ -807,7 +819,7 @@ export default function ProfileScreen() {
                   ),
                 }}
               />
-              <Button mode='contained' buttonColor={_Theme.themeBouton.backgroundColor} style={{ marginBottom: 20 }} onPress={remplirForm}>
+              <Button mode='contained' buttonColor={_Theme.themeBouton.backgroundColor} textColor={_Theme.themeText.color} style={{ marginBottom: 20 }} onPress={remplirForm}>
                 Finaliser
               </Button>
             </KeyboardAwareScrollView>
