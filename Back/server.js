@@ -63,15 +63,12 @@ async function serv(){
     
   
 
-  app.get("/",(req,res)=>{
-      console.log("ok")
-      res.send("ta gueule")
-  })
+  app.use(express.static(path.join(__dirname, '../linx/build')));
 
-  app.get("/test", (req,res)=>{
-      res.cookie("test","hein")
-      res.send("ok")
-  })
+  app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, '../linx/build', 'index.html'));
+  });
+
   app.post('/login', login)
   app.post('/register', register)
   app.get('/activities', activities)
@@ -107,19 +104,19 @@ async function serv(){
 
   app.use('/profile_pictures',express.static(path.join(__dirname, 'profile_pictures')));
 
-  app.listen(80, () => {
-      console.log(`serever is runing at port ${port}`);
-  })
-  // https.createServer(
-  //     {
-  //         key: fs.readFileSync("ssl/private.key"),
-  //         cert: fs.readFileSync("ssl/certificate.crt"),
-  //         ca: fs.readFileSync("ssl/ca_bundle.crt")
-  //     },
-  //     app
-  // ).listen(port, () => {
+  // app.listen(80, () => {
   //     console.log(`serever is runing at port ${port}`);
   // })
+  https.createServer(
+      {
+          key: fs.readFileSync("ssl/private.key"),
+          cert: fs.readFileSync("ssl/certificate.crt"),
+          ca: fs.readFileSync("ssl/ca_bundle.crt")
+      },
+      app
+  ).listen(port, () => {
+      console.log(`serever is runing at port ${port}`);
+  })
     
 }
 
