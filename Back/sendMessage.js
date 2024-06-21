@@ -8,7 +8,6 @@ const { ObjectId } = require('mongodb');
 
 async function sendMessage(req,res){
 
-   
     const cookies = req.cookies
     console.log(cookies)
     if(!('jwt' in cookies)){
@@ -23,30 +22,21 @@ async function sendMessage(req,res){
             const database = connect_db.client.db(config.dbName);
             const collection = database.collection(config.evenements);
         
-        
             const id = req.body.id
             const message = req.body.message
             var oid = new ObjectId(id)
 
             const findOneResult = await collection.findOne({_id:oid})
 
-            if(findOneResult == null){
+            if(findOneResult == null || findOneResult.chat == null){
                 res.status(508).send()
                 return
             }
             else{
-                if(findOneResult.chat == null){
-                    const updateResult = await collection.findOneAndUpdate({_id:oid},{$set:{chat:[{author:decoded.email,message:message}]}})
-                }
-                else{
-                    const updateResult = await collection.findOneAndUpdate({_id:oid},{$push:{chat:{author:decoded.email,message:message}}})
-                }
-                
+                const updateResult = await collection.findOneAndUpdate({_id:oid},{$push:{chat:{author:decoded.email,message:message}}})
                 res.send("ok")
                 return
             }
-
-         
         }
         catch(err){
             console.log(err)

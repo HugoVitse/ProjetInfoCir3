@@ -196,194 +196,196 @@ const Home = () => {
   
 
   return (
-
-      // Changer la logique ici si tu veux la page pour téléphone (useragent)
-      <UserAgent>
-        {({ ua }) => {
-          return ua.mobile ?  <MobileDownload/>: 
-          <div className="flex-grow-1 vh-100">
-    
-      <MDBContainer fluid className="py-3 vh-100 bg-theme" style={{ height: '100%' }}>
-      <MDBRow className="justify-content-center align-items-center h-100">
-        <MDBCol lg="9" xl="7" className='w-100'>
-        <header style={{
-            position: 'relative',
-            backgroundImage: 'url(https://femmedinfluence.fr/wp-content/uploads/2015/07/desperate-houseiwves-hug-1.gif)', // Replace with your own GIF URL
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            height: '50vh',
-            width: '100%',
-            color: 'white',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            textAlign: 'center',
-            padding: '20px',
-            borderRadius: '15px'
-          }}>
-            <div style={{
-              position: 'absolute',
-              bottom: '10px',
-              right: '10px',
-              textAlign: 'right'
-            }}>
-              <h1 style={{ fontSize: '3rem', marginBottom: '10px' }}><strong>ÇA VA CHAUFFER</strong></h1>
-              <p style={{ fontSize: '1.5rem', marginBottom: '20px' }}>Nos modèles pour tout changer cet été.</p>
-            </div>
-          </header>
-
-          <MDBCard className="mb-4 custom-card">
-            <MDBCardBody className="p-4 text-white custom-card" style={{ background: 'linear-gradient(135deg, #3494E6, #EC6EAD)', borderRadius: '15px' }}>
-              <div className="d-flex align-items-center justify-content-between mb-3">
-                <div>
-                  <h2 className="fw-bold mb-1" style={{ fontSize: '1.5rem', color: 'white' }}>
-                  <p>{userAgent}</p>
-                    Bienvenue sur Linx
-                  </h2>
-                  <p className="mb-0" style={{ fontSize: '1.1rem' }}>
-                    Bonjour {firstName} {lastName} !
-                  </p>
-                </div>
-                <div>
-                  <Link to={`/Account/${encodeURIComponent(email)}`}>
-                  <img src= {"http://localhost/"+pp} alt="Avatar" style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover' }} />
-                  </Link>
-                </div>
-              </div>
-            </MDBCardBody>
-          </MDBCard>
-
-          <section style={{ marginTop: '20px', marginBottom: '20px' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '2rem', color: 'var(--primary-color)' }}>
-              Événements à venir
-            </h2>
-            <p style={{ textAlign: 'center', fontSize: '1.2rem' }}>
-              Découvrez vos activités en fonction de vos intérêts et de vos inscriptions !
-            </p>
-          </section>
-
-          <MDBRow className="mt-4">
-            {renderInterestCards()}
-          </MDBRow>
-        </MDBCol>
-      </MDBRow>
-    </MDBContainer>
-
-
-      {/* Pop-up Questionnaire !!! */}
-      <MDBModal open={basicModal} onClose={() => setBasicModal(false)} tabIndex='-1'>
-        <MDBModalDialog size="xl" className="vh-80">
-          <MDBModalContent>
-            <MDBModalHeader>
-              <MDBModalTitle>Questionnaire</MDBModalTitle>
-              <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
-            </MDBModalHeader>
-
-            <MDBModalBody>
-              <MDBRow className="w-100">
-                <MDBCol md="10" lg="8" className="mx-auto">
-                  <MDBCard>
-                    <MDBCardBody className="p-5">
-                      <h3 className="text-center mb-4">Questionnaire</h3>
-                      <div className="mb-4">
-                        <label className="form-label">Quelles activités aimez-vous ?</label>
-                        {['Cinéma', 'Attractions', 'Animaux', 'Théâtre', 'Danse', 'Manga/Anime', 'Séries', 'Échecs', 'Moto', 'Lecture', 'Jeux vidéos', 'Musique', 'BD/Comics', 'Voyager', 'Musées', 'Sortir entre amis', 'Sport', 'Nourriture', 'La mode'].map((activity) => (
-                          <MDBCheckbox
-                            key={activity}
-                            label={activity}
-                            id={activity.toLowerCase()}
-                            onChange={() => handleCheckboxChange(activity)}
-                          />
-                        ))}
+    <UserAgent>
+      {({ ua }) => {
+        return ua.mobile ? <MobileDownload /> :
+          <div className="vh-100 d-flex flex-column">
+            <MDBContainer fluid className="py-3" style={{ overflowY: 'auto' }}>
+              <MDBRow className="justify-content-center align-items-center">
+                <MDBCol lg="8" className="mb-4">
+                  <header style={{
+                    backgroundImage: 'url(https://femmedinfluence.fr/wp-content/uploads/2015/07/desperate-houseiwves-hug-1.gif)',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    height: '40vh',
+                    borderRadius: '15px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    color: 'white',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}>
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '10px',
+                      right: '10px',
+                      textAlign: 'right',
+                      background: 'rgba(0, 0, 0, 0.5)',
+                      padding: '10px',
+                      borderRadius: '10px'
+                    }}>
+                      <h1 style={{ fontSize: '3rem', marginBottom: '10px' }}><strong>ÇA VA CHAUFFER</strong></h1>
+                      <p style={{ fontSize: '1.5rem', marginBottom: '0' }}>Nos modèles pour tout changer cet été.</p>
+                    </div>
+                  </header>
+                </MDBCol>
+              </MDBRow>
+  
+              <MDBRow className="justify-content-center align-items-center mb-4">
+                <MDBCol lg="8">
+                  <MDBCard className="mb-4" style={{ borderRadius: '15px', backgroundColor: 'rgba(255, 255, 255, 0.9)' }}>
+                    <MDBCardBody className="p-4 d-flex justify-content-between align-items-center">
+                      <div>
+                        <h2 className="fw-bold mb-1" style={{ fontSize: '1.5rem' }}>Bienvenue sur Linx</h2>
+                        <p className="mb-0" style={{ fontSize: '1.1rem' }}>Bonjour {firstName} {lastName} !</p>
                       </div>
-
-                      <div className="mb-4">
-                        <label className="form-label">Notez votre état actuel :</label>
-                        <MDBRange
-                          defaultValue={10}
-                          min="1"
-                          max="10"
-                          step="1"
-                          id="note"
-                          value={formData.note}
-                          onChange={(e) => handleInputChange('note', e.target.value)}
-                        />
+                      <div>
+                        <Link to={`/Account/${encodeURIComponent(email)}`}>
+                          <img src={"http://localhost/" + pp} alt="Avatar" style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover' }} />
+                        </Link>
                       </div>
-
-                      <div className="mb-4">
-                        <label className="form-label">Préférez-vous les activités en petit ou en grand groupe ?</label>
-                        <MDBRadio name="groupSize" label="Petit groupe" id="petitcomite" value="petitcomite" onChange={(e) => handleRadioChange('groupSize', e.target.value)} />
-                        <MDBRadio name="groupSize" label="Grand groupe" id="grandcomite" value="grandcomite" onChange={(e) => handleRadioChange('groupSize', e.target.value)} />
-                      </div>
-
-                      <div className="mb-4">
-                        <label className="form-label">Quel moment de la journée préférez-vous pour les sorties ?</label>
-                        <MDBRadio name="preferredTime" label="Matin" id="morning" value="morning" onChange={(e) => handleRadioChange('preferredTime', e.target.value)} />
-                        <MDBRadio name="preferredTime" label="Après-midi" id="afternoon" value="afternoon" onChange={(e) => handleRadioChange('preferredTime', e.target.value)} />
-                        <MDBRadio name="preferredTime" label="Soir" id="evening" value="evening" onChange={(e) => handleRadioChange('preferredTime', e.target.value)} />
-                      </div>
-
-                      <div className="mb-4">
-                        <label className="form-label">Préférez-vous les activités en intérieur ou en extérieur ?</label>
-                        <MDBRadio name="placeType" label="Intérieur" id="indoor" value="indoor" onChange={(e) => handleRadioChange('placeType', e.target.value)} />
-                        <MDBRadio name="placeType" label="Extérieur" id="outdoor" value="outdoor" onChange={(e) => handleRadioChange('placeType', e.target.value)} />
-                      </div>
-
-                      <div className="mb-4">
-                        <label className="form-label">Quel est votre budget pour les sorties ?</label>
-                        <MDBRadio name="budget" label="Bas" id="low" value="low" onChange={(e) => handleRadioChange('budget', e.target.value)} />
-                        <MDBRadio name="budget" label="Moyen" id="medium" value="medium" onChange={(e) => handleRadioChange('budget', e.target.value)} />
-                        <MDBRadio name="budget" label="Élevé" id="high" value="high" onChange={(e) => handleRadioChange('budget', e.target.value)} />
-                      </div>
-
-                      <div className="mb-4">
-                        <label className="form-label">Donner une description pour votre profile :</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="description"
-                          value={formData.description}
-                          onChange={(e) => handleInputChange('description', e.target.value)}
-                        />
-                      </div>
-
-                      <div className="mb-4">
-                        <label className="form-label">Quelle est la distance maximale que vous êtes prêt(e) à parcourir pour une sortie ? (en km)</label>
-                        <MDBRange
-                          defaultValue={25}
-                          min="0"
-                          max="100"
-                          step="25"
-                          id="travelDistance"
-                          value={formData.travelDistance}
-                          onChange={(e) => handleInputChange('travelDistance', e.target.value)}
-                        />
-
-                        <div className="d-flex justify-content-between">
-                          <span>0km</span>
-                          <span>25km</span>
-                          <span>50km</span>
-                          <span>75km</span>
-                          <span>100km</span>
-                        </div>
-                      </div>
-
                     </MDBCardBody>
                   </MDBCard>
                 </MDBCol>
               </MDBRow>
-            </MDBModalBody>
-            <MDBModalFooter>
-              <MDBBtn onClick={handleSubmit} disabled={!isFormComplete()}>Finaliser</MDBBtn>
-            </MDBModalFooter>
-          </MDBModalContent>
-        </MDBModalDialog>
-      </MDBModal>
-    </div>
-  }}
-  </UserAgent>
+  
+              <MDBRow className="justify-content-center align-items-center mb-4">
+                <MDBCol lg="8">
+                  <section className="text-center">
+                    <h2 style={{ fontSize: '2rem', color: 'var(--primary-color)' }}>Événements à venir</h2>
+                    <p style={{ fontSize: '1.2rem' }}>Découvrez vos activités en fonction de vos intérêts et de vos inscriptions !</p>
+                  </section>
+                </MDBCol>
+              </MDBRow>
+  
+              <MDBRow className="justify-content-center">
+                {renderInterestCards()}
+              </MDBRow>
+            </MDBContainer>
+  
+            <MDBModal open={basicModal} onClose={() => setBasicModal(false)} tabIndex='-1'>
+              <MDBModalDialog size="xl" className="vh-80">
+                <MDBModalContent>
+                  <MDBModalHeader>
+                    <MDBModalTitle>Questionnaire</MDBModalTitle>
+                    <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
+                  </MDBModalHeader>
+  
+                  <MDBModalBody>
+                    <MDBRow>
+                      <MDBCol md="10" lg="8" className="mx-auto">
+                        <MDBCard style={{ borderRadius: '15px', backgroundColor: 'rgba(255, 255, 255, 0.9)' }}>
+                          <MDBCardBody className="p-5">
+                            <h3 className="text-center mb-4">Questionnaire</h3>
+                            <div className="mb-4">
+                              <label className="form-label">Quelles activités aimez-vous ?</label>
+                              <div className="d-flex flex-wrap">
+                                {['Cinéma', 'Attractions', 'Animaux', 'Théâtre', 'Danse', 'Manga/Anime', 'Séries', 'Échecs', 'Moto', 'Lecture', 'Jeux vidéos', 'Musique', 'BD/Comics', 'Voyager', 'Musées', 'Sortir entre amis', 'Sport', 'Nourriture', 'La mode'].map((activity) => (
+                                  <MDBCheckbox
+                                    key={activity}
+                                    label={activity}
+                                    id={activity.toLowerCase()}
+                                    onChange={() => handleCheckboxChange(activity)}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+  
+                            <div className="mb-4">
+                              <label className="form-label">Notez votre état actuel :</label>
+                              <MDBRange
+                                defaultValue={10}
+                                min="1"
+                                max="10"
+                                step="1"
+                                id="note"
+                                value={formData.note}
+                                onChange={(e) => handleInputChange('note', e.target.value)}
+                              />
+                            </div>
+  
+                            <div className="mb-4">
+                              <label className="form-label">Préférez-vous les activités en petit ou en grand groupe ?</label>
+                              <div className="d-flex">
+                                <MDBRadio name="groupSize" label="Petit groupe" id="petitcomite" value="petitcomite" onChange={(e) => handleRadioChange('groupSize', e.target.value)} />
+                                <MDBRadio name="groupSize" label="Grand groupe" id="grandcomite" value="grandcomite" onChange={(e) => handleRadioChange('groupSize', e.target.value)} />
+                              </div>
+                            </div>
+  
+                            <div className="mb-4">
+                              <label className="form-label">Quel moment de la journée préférez-vous pour les sorties ?</label>
+                              <div className="d-flex">
+                                <MDBRadio name="preferredTime" label="Matin" id="morning" value="morning" onChange={(e) => handleRadioChange('preferredTime', e.target.value)} />
+                                <MDBRadio name="preferredTime" label="Après-midi" id="afternoon" value="afternoon" onChange={(e) => handleRadioChange('preferredTime', e.target.value)} />
+                                <MDBRadio name="preferredTime" label="Soir" id="evening" value="evening" onChange={(e) => handleRadioChange('preferredTime', e.target.value)} />
+                              </div>
+                            </div>
+  
+                            <div className="mb-4">
+                              <label className="form-label">Préférez-vous les activités en intérieur ou en extérieur ?</label>
+                              <div className="d-flex">
+                                <MDBRadio name="placeType" label="Intérieur" id="indoor" value="indoor" onChange={(e) => handleRadioChange('placeType', e.target.value)} />
+                                <MDBRadio name="placeType" label="Extérieur" id="outdoor" value="outdoor" onChange={(e) => handleRadioChange('placeType', e.target.value)} />
+                              </div>
+                            </div>
+  
+                            <div className="mb-4">
+                              <label className="form-label">Quel est votre budget pour les sorties ?</label>
+                              <div className="d-flex">
+                                <MDBRadio name="budget" label="Bas" id="low" value="low" onChange={(e) => handleRadioChange('budget', e.target.value)} />
+                                <MDBRadio name="budget" label="Moyen" id="medium" value="medium" onChange={(e) => handleRadioChange('budget', e.target.value)} />
+                                <MDBRadio name="budget" label="Élevé" id="high" value="high" onChange={(e) => handleRadioChange('budget', e.target.value)} />
+                              </div>
+                            </div>
+  
+                            <div className="mb-4">
+                              <label className="form-label">Donner une description pour votre profil :</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="description"
+                                value={formData.description}
+                                onChange={(e) => handleInputChange('description', e.target.value)}
+                              />
+                            </div>
+  
+                            <div className="mb-4">
+                              <label className="form-label">Quelle est la distance maximale que vous êtes prêt(e) à parcourir pour une sortie ? (en km)</label>
+                              <MDBRange
+                                defaultValue={25}
+                                min="0"
+                                max="100"
+                                step="25"
+                                id="travelDistance"
+                                value={formData.travelDistance}
+                                onChange={(e) => handleInputChange('travelDistance', e.target.value)}
+                              />
+  
+                              <div className="d-flex justify-content-between">
+                                <span>0km</span>
+                                <span>25km</span>
+                                <span>50km</span>
+                                <span>75km</span>
+                                <span>100km</span>
+                              </div>
+                            </div>
+  
+                            <MDBBtn className="mt-3 w-100" size='lg' onClick={handleSubmit}>Envoyer</MDBBtn>
+                          </MDBCardBody>
+                        </MDBCard>
+                      </MDBCol>
+                    </MDBRow>
+                  </MDBModalBody>
+                </MDBModalContent>
+              </MDBModalDialog>
+            </MDBModal>
+          </div>
+      }}
+    </UserAgent>
   );
+  
 };
 
 export default Home;

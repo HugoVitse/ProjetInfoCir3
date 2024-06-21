@@ -4,11 +4,11 @@ import {
   MDBTypography, MDBBtn, MDBInput
 } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Config from '../config.json';
 
 const Messagerie = () => {
   const navigate = useNavigate();
@@ -36,13 +36,14 @@ const Messagerie = () => {
 
   const getUserInfo = async (email) => {
     try {
-      const response = await axios.get(`http://localhost/getAllUsers`, { withCredentials: true });
+      const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`, { withCredentials: true });
+
       const usr = response.data.find(user => user.email === email);
       if (usr) {
         return {
           firstName: usr.firstName || '',
           lastName: usr.lastName || '',
-          pp: `profile_pictures/${usr.email}.jpg` || ''
+          pp: `profile_pictures/${usr.email}.png` || ''
         };
       }
       return {};
@@ -72,12 +73,13 @@ const Messagerie = () => {
       if (email) {
         try {
           setTimeout(async() => {
-            const response = await axios.get(`http://localhost/getMessage/${idEvent}`, { withCredentials: true });
+            const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getMessage/${idEvent}`, { withCredentials: true });
+            console.log(response.data)
             const chatWithUserInfo = await setChatWithUserInfo(response.data);
             setChat(chatWithUserInfo);
           }, 1500);
 
-          const responses = await axios.get(`http://localhost/getEvents`, { withCredentials: true });
+          const responses = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getEvents`, { withCredentials: true });
           const usr = responses.data.find(activite => activite.activity.title === decodeURIComponent(activityName));
           console.log(usr);
 
@@ -107,7 +109,7 @@ const Messagerie = () => {
   const sendMessage = async () => {
     if (newMessage.trim()){
       try {
-        await axios.post('http://localhost/sendMessage', {id: idEvent, message: newMessage}, { withCredentials: true });
+        await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/sendMessage`, {id: idEvent, message: newMessage}, { withCredentials: true });
         const updatedMessages = [...messages, {author: email, message: newMessage }];
         setMessages(updatedMessages);
         setNewMessage('');

@@ -28,23 +28,14 @@ async function getMessage(req,res){
             var oid = new ObjectId(id)
 
             const findOneResult = await collection.findOne({_id:oid})
-            console.log(findOneResult.chat)
             if(findOneResult == null || findOneResult.chat == null){
-                res.send({
-                    participants:findOneResult.participants,
-                    chat:[]
-                })
+                res.send([])
                 return
             }
             else{
-                res.send({
-                    chat:findOneResult.chat,
-                    participants:findOneResult.participants
-                })
+                res.send(findOneResult.chat)
                 return
             }
-
-         
         }
         catch(err){
             console.log(err)
@@ -52,8 +43,6 @@ async function getMessage(req,res){
             return
         }
     }
-
-
 }
 
 module.exports = getMessage;
