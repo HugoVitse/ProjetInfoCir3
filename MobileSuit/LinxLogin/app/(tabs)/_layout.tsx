@@ -1,6 +1,4 @@
 import { Tabs } from 'expo-router';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Theme from '@/constants/Theme';

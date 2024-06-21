@@ -1,7 +1,7 @@
-import { Stack, useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
-import { View, Text, StyleSheet, Dimensions, KeyboardAvoidingView, Platform, TouchableOpacity, Animated, Keyboard } from 'react-native';
+import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
+import { View, Text, StyleSheet, Dimensions, Platform, TouchableOpacity, Animated } from 'react-native';
 import Theme from '@/constants/Theme';
-import { Avatar, Drawer, IconButton, Portal, Provider, TextInput } from 'react-native-paper';
+import { Avatar, Drawer, IconButton, TextInput } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -12,7 +12,6 @@ import { jwtDecode } from 'jwt-decode';
 import { ScreenHeight } from '@rneui/base';
 import { user } from '@/constants/user';
 import {message} from '@/constants/message';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import pusher from './pusherConfig';
 
 
@@ -71,9 +70,7 @@ export default function SettingsScreen() {
     const channel = pusher.subscribe('my-channel');
 
     channel.bind('my-event', (data:any) => {
-      console.log('Received event with data:', data);
       let tmp = [...message,data]
-      console.log(message)
       setMessage(data)
       const timer = setTimeout(() => {
         if (scrollViewRef.current) {
@@ -224,7 +221,6 @@ export default function SettingsScreen() {
     
           for(let i = 0; i<message.length;i++){
             let b = decoded.email != message[i].author
-            console.log(b)
             let user = allUsers.find((user) => user.email == message[i].author)
 
            

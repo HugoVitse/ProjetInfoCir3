@@ -1,8 +1,8 @@
 import { Avatar } from "@rneui/themed";
 import { useFocusEffect, useRouter } from "expo-router";
-import { Text, View, StyleSheet, Dimensions, SafeAreaView, Animated, Modal,Image, Platform, useColorScheme } from "react-native";
+import { Text, View, StyleSheet, SafeAreaView, Animated, Modal,Image, Platform, useColorScheme } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { IconButton, MD3Colors, Card, Button, ActivityIndicator, Dialog, Drawer, TextInput, Menu, Divider, Provider, PaperProvider, List } from "react-native-paper";
+import { IconButton, Card, Button, Dialog, Drawer, TextInput, Menu, Divider, PaperProvider, List } from "react-native-paper";
 import { useState , useEffect, useRef, useCallback } from "react";
 import axios from 'axios'
 import Config from '../../config.json'
@@ -10,19 +10,16 @@ import {evenement} from '../../constants/evenement'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Theme from "../../constants/Theme";
 import MapView, {Marker} from 'react-native-maps';
-import { PROVIDER_GOOGLE } from 'react-native-maps';
 import { ScreenHeight, ScreenWidth } from "@rneui/base";
 import { coords } from "../../constants/coord"
 import { jwtDecode } from 'jwt-decode';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
-import Carousel, { Pagination, ICarouselInstance } from 'react-native-reanimated-carousel';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useSharedValue } from "react-native-reanimated";
 import {Picker} from '@react-native-picker/picker';
 
 const HEADER_HEIGHT = 100;
-const { width } = Dimensions.get('window');
-const height = Dimensions.get('window').height;
 const drawerWidth = 75
 
 const slideData = [
@@ -63,10 +60,7 @@ export default function CatalogScreen() {
   const router = useRouter();
   const [evenements,setEvenements] = useState<evenement[]>([])
   const [evenementsRecommandes,setEvenementsRecommandes] = useState<evenement[]>([])
-  const [componentActivities,setComponentActivities] = useState<JSX.Element[]>([])
   const [jwt,setJwt] = useState<string>();
-  const [isjwt,setisjwt] = useState(-1)
-  const [islogin,setLogin] = useState(-1)
   const [isLoaded,setIsLoaded] = useState(false)
   const [markers, setMarkers] = useState<JSX.Element[]>([])
   const [active, setActive] = useState('');
@@ -170,7 +164,6 @@ export default function CatalogScreen() {
       id: recommande ? evenementsRecommandes[recommandeActualIndex]._id : evenements[actualIndex]._id
     }
     const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/EventRegister`,data, {headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-    console.log(response)
     hideDialog()
   
   }
@@ -191,10 +184,7 @@ export default function CatalogScreen() {
       nbinvities:text,
     }
 
-    console.log(data)
-
     const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/createEvenement`,data, {headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-    console.log(response)
     setModalVisible(!modalVisible)
     getActivities()
   }
@@ -202,7 +192,6 @@ export default function CatalogScreen() {
     const today = new Date();
     const jwt_cookie = await AsyncStorage.getItem("jwt")
     const decoded = jwtDecode(jwt_cookie?jwt_cookie:"")
-    console.log(decoded)
     const email = 'email'in decoded?decoded.email:""
     setJwt(typeof(email)=="string"?email:"")
     const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/evenements`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
@@ -224,7 +213,6 @@ export default function CatalogScreen() {
         tmp.push(response.data[i])
       }
     }
-    console.log(tmp)
     setEvenementsRecommandes(tmp)
   }
 
@@ -360,7 +348,6 @@ export default function CatalogScreen() {
                     // }}
                     onSnapToItem={(index) => {
                       setActualIndexImg(index)
-                      console.log('current index:', index);
                       setValue(slideData[index].src);
                     }}
                     renderItem={({ item }) => (

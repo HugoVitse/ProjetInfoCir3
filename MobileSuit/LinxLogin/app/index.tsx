@@ -132,7 +132,7 @@ const TextInputExample = () => {
 
   if(islogin == -1 || islogin == 1 || tentativeLogin){
     return(
-       <View  style={{    flex: 1,      justifyContent: 'center',}} ><ActivityIndicator animating={true} color={colorMain} size='large'></ActivityIndicator></View>
+       <View  style={{    flex: 1,      justifyContent: 'center',}} ><ActivityIndicator animating={true} color={_Theme.themeBouton.backgroundColor} size='large'></ActivityIndicator></View>
     )
   }
   else{

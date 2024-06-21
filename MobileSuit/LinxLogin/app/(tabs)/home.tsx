@@ -1,18 +1,16 @@
-import { Link, useFocusEffect, useRouter } from "expo-router";
-import {Image, Text, View, StyleSheet ,Dimensions, Platform, Animated, useColorScheme} from "react-native";
+import { useFocusEffect, useRouter } from "expo-router";
+import {Image, Text, View, StyleSheet ,Dimensions, Animated, useColorScheme} from "react-native";
 import { Avatar } from '@rneui/themed';
 import { useCallback, useEffect, useState  } from "react";
-import { Button, Dialog, IconButton, List, MD3Colors, Modal, PaperProvider, Portal, RadioButton, Snackbar, TextInput } from "react-native-paper";
+import { Button, Dialog, IconButton, Modal, PaperProvider, Portal, RadioButton, Snackbar, TextInput } from "react-native-paper";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios, { all } from 'axios'
+import axios from 'axios'
 import Config from '../../config.json'
 import { Checkbox } from 'react-native-paper';
 import { RectButton, ScrollView } from "react-native-gesture-handler";
 import { ScreenHeight, Slider ,Icon, ScreenWidth, ListItem} from "@rneui/base";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Theme from "@/constants/Theme";
-import RIcon from '@mdi/react';
-import { mdiCalendarMultipleCheck } from '@mdi/js';
 import { evenement } from "@/constants/evenement";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { jwtDecode } from "jwt-decode";
@@ -55,7 +53,6 @@ export default function HomeScreen() {
 
   const onDismissSnackBar = () => setSnack(false);
 
-  const containerStyle = {backgroundColor: 'white', padding: 20};
   const showDialog = () => setVisibleD(true);
 
   const hideDialog = () => setVisibleD(false);
@@ -128,7 +125,6 @@ export default function HomeScreen() {
       let tmp2:React.JSX.Element[] = []
       if(events.length>0){
         for(let i = 0; i<events.length;i++){
-          console.log(allUsers.data.find((user:user)=>user.email ==events[i].host))
           const date = new Date(events[i].date)
           const today = new Date()
           if(date.getDate() >= today.getDate() && date.getMonth() >= today.getMonth() && date.getFullYear() >= today.getFullYear()){
@@ -216,15 +212,7 @@ export default function HomeScreen() {
   
 
   const remplirForm = async()=>{
-    console.log(checkedState)
     const _activities = Object.keys(checkedState).filter((key:any) => checkedState[key] === true);
-    console.log(_activities)
-    console.log(checked1)
-    console.log(checked2)
-    console.log(checked3)
-    console.log(checked4)
-    console.log(value)
-    console.log(value2)
     const data  = {
       activities: _activities,
       note: Math.floor(value/100),
@@ -235,7 +223,6 @@ export default function HomeScreen() {
       description: text,
       travelDistance: 25,
     }
-    console.log(data)
     const jwt_cookie = await AsyncStorage.getItem("jwt");
     const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/fillQuestionnaire`, data,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false});
     hideModal()
@@ -246,7 +233,6 @@ export default function HomeScreen() {
   const desinscription = async() => {
     const jwt_cookie = await AsyncStorage.getItem("jwt")
     const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/ParticipantDelete`,{id:idToSoD},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-    console.log(response.data)
     hideDialog()
     const reponseEvents = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getEvents`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
     setEvents(reponseEvents.data)
@@ -254,35 +240,15 @@ export default function HomeScreen() {
 
   const supprimerEvent = async() => {
     const jwt_cookie = await AsyncStorage.getItem("jwt")
-    console.log("ok")
     const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/EventDelete`,{id:idToSoD},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-    console.log(response.data)
     hideDialog()
     const reponseEvents = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getEvents`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
     setEvents(reponseEvents.data)
 
   }
-  // (progress, dragX) => {
-  //   const trans = dragX.interpolate({
-  //     inputRange: [0, 50, 100, 101],
-  //     outputRange: [-20, 0, 0, 1],
-  //   });
-  //   return (
-  //     <RectButton style={styles.leftAction} onPress={this.close}>
-  //       <Animated.Text
-  //         style={[
-  //           styles.actionText,
-  //           {
-  //             transform: [{ translateX: trans }],
-  //           },
-  //         ]}>
-  //         Archive
-  //       </Animated.Text>
-  //     </RectButton>
-  //   );
+
 
   const renderLeftActions = (id:string,host:string) => {
-    console.log(host)
     setHost(host)
     setidToSoD(id)
     return (

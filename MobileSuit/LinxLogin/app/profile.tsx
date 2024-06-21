@@ -2,8 +2,8 @@ import * as React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useRouter, router } from "expo-router";
-import { Text, View, StyleSheet, Dimensions, TouchableOpacity, SafeAreaView, ScrollView } from "react-native";
-import { Avatar, Checkbox, Divider, List, PaperProvider, Portal, RadioButton, Searchbar } from 'react-native-paper';
+import { Text, View, StyleSheet, Dimensions, TouchableOpacity, ScrollView } from "react-native";
+import { Avatar, Checkbox, List, PaperProvider, Portal, RadioButton, Searchbar } from 'react-native-paper';
 import { useEffect, useState } from 'react';
 import { IconButton,TextInput, Modal, Button, Dialog, HelperText, ActivityIndicator } from "react-native-paper";
 import { useCameraPermissions } from 'expo-camera';
@@ -124,7 +124,6 @@ function Friends() {
     const jwt_cookie = await AsyncStorage.getItem("jwt")
     const friendListReq = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/deleteFriend`,{email:emailToDelete},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
     setFriendList(friendListReq.data)
-    console.log(friendListReq.data)
     hideDialogDelete()
   
   }
@@ -136,14 +135,12 @@ function Friends() {
     const wrap = async()=>{
       const jwt_cookie = await AsyncStorage.getItem("jwt")
       const friendListReq = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getFriendList`,{email:"",bol:true}, {headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-      console.log(friendListReq.data)
       setFriendList(friendListReq.data)
     }
     wrap()
   },[])
 
   useEffect(()=>{
-    console.log(friendList.length)
     if(friendList.length>0){
       let tmpcomp = []
       for (let i=0; i< friendList.length; i++){
@@ -200,9 +197,7 @@ function Search() {
 
   const sendFriendRequest = async(email_:string)=>{
     const jwt_cookie = await AsyncStorage.getItem("jwt")
-    console.log("ok")
     const reponse = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/friendRequests`,{email:email_},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-    console.log(reponse.data)
     setSearchQuery("")
     const allUsers = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
     setAllUsers(allUsers.data)
@@ -372,7 +367,6 @@ export default function ProfileScreen() {
   
 
   const remplirForm = async()=>{
-    console.log(checkedState)
     const _activities = Object.keys(checkedState).filter((key:any) => checkedState[key] === true);
     const data  = {
       activities: _activities,
@@ -384,7 +378,6 @@ export default function ProfileScreen() {
       description: text,
       travelDistance: value2,
     }
-    console.log(data)
     const jwt_cookie = await AsyncStorage.getItem("jwt");
     const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/fillQuestionnaire`, data,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false});
     hideModal()
@@ -405,7 +398,6 @@ export default function ProfileScreen() {
     await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/setPicture`,data,{headers:{Cookie:`jwt=${jwt_token}`},withCredentials:false})
     const jwt_decode:any = jwtDecode(jwt_token?jwt_token:"")
     const reponseColor = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getColor`,{email:jwt_decode.email},{headers:{Cookie:`jwt=${jwt_token}`},withCredentials:false})
-    console.log('ok'+reponseColor.data)
     setColorBack(reponseColor.data)
   }
 
@@ -417,8 +409,6 @@ export default function ProfileScreen() {
       aspect: [4, 3],
       quality: 0,
     });
-
-    console.log(result);
 
     
     if (!result.canceled) {
@@ -439,8 +429,6 @@ export default function ProfileScreen() {
       quality: 0,
     });
 
-    console.log(result);
-
     
     if (!result.canceled) {
       setMimeType(result.assets[0].mimeType?result.assets[0].mimeType:"")
@@ -453,12 +441,10 @@ export default function ProfileScreen() {
   const editPro = async()=>{
     setIsLoading(true)
     const jwt_cookie = await AsyncStorage.getItem("jwt")
-    console.log(jwt_cookie)
     const reponse = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/verifyPassword`,{password:password},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
     if(reponse.data == true){
       hideDialog()
     }
-    console.log(reponse.data)
     if(reponse.data){
       router.push("editProfile")
     }
@@ -471,9 +457,6 @@ export default function ProfileScreen() {
     return error != ''
   };
 
-  useEffect(()=>{
-    console.log(camVisible)
-  },[camVisible])
 
   const [visible, setVisible] = useState(false);
   const [visibleLogout, setVisibleLogout] = useState(false);
@@ -501,7 +484,6 @@ export default function ProfileScreen() {
       setInitialInfos(reponse.data)
       const jwt_decode:any = jwtDecode(jwt_cookie?jwt_cookie:"")
       const reponseColor = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getColor`,{email:jwt_decode.email},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-      console.log('ok'+reponseColor.data)
       setColorBack(reponseColor.data)
       setNewPicture(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
       setProfilFic(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${reponse.data.image}`)
@@ -529,9 +511,6 @@ export default function ProfileScreen() {
     wrap()
   },[])
 
-  useEffect(()=>{
-    console.log("ok")
-  },[value])
  
   const logout = async() =>{
     await AsyncStorage.setItem("jwt","")

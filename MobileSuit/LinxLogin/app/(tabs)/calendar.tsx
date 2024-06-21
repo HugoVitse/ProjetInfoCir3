@@ -2,12 +2,11 @@ import * as React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFocusEffect, useRouter } from "expo-router";
-import { Text, View, StyleSheet, Dimensions, SafeAreaView, TouchableOpacity,Image, useColorScheme} from "react-native";
+import { Text, View, StyleSheet, Dimensions, Image, useColorScheme} from "react-native";
 import { Avatar, Slider, Icon } from '@rneui/themed';
-import { IconButton, MD3Colors, Button, Modal, Portal, PaperProvider, ActivityIndicator  } from "react-native-paper";
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { IconButton, Button, Modal, Portal, PaperProvider, ActivityIndicator  } from "react-native-paper";
+import { useCallback, useState } from 'react';
 import RadarChart from '@/components/SpiderGraph';
-import { useSharedValue } from "react-native-reanimated";
 import {Calendar, LocaleConfig } from 'react-native-calendars';
 import Theme from '@/constants/Theme';
 import Config from '../../config.json';
@@ -64,7 +63,6 @@ function Quotidien() {
         const jwt_cookie = await AsyncStorage.getItem('jwt')
         const mood = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getMoodTracker`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
         const moodTracker = mood.data.moodTrackerData
-        console.log(mood.data.moodTrackerData)
 
         const lastQuestionnaire = moodTracker[moodTracker.length-1]
         const dateLastQuestionnaire = new Date(lastQuestionnaire.date)
@@ -133,8 +131,6 @@ function Hebdomadaire() {
         const jwt_cookie = await AsyncStorage.getItem('jwt')
         const mood = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getMoodTracker`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
         const moodTracker = mood.data.moodTrackerData
-        console.log(mood.data.moodTrackerData)
-
         const day = (today.getDay()-1+7)%7
         const days = [today.toDateString()]
         for(let i=0; i<=day;i++){
@@ -301,7 +297,6 @@ export default function CalendarScreen() {
     const jwt_cookie = await AsyncStorage.getItem('jwt')
     const mood = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getMoodTracker`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
     const moodTracker = mood.data.moodTrackerData
-    console.log(mood.data.moodTrackerData)
 
     const lastQuestionnaire = moodTracker[moodTracker.length-1]
     const dateLastQuestionnaire = new Date(lastQuestionnaire.date)
@@ -347,7 +342,6 @@ export default function CalendarScreen() {
 
   useFocusEffect(
     useCallback(()=>{
-      console.log("ok")
       setLoading(false)
       const wrap_picture = async()=>{
         const jwt_cookie = await AsyncStorage.getItem('jwt')
@@ -540,7 +534,7 @@ export default function CalendarScreen() {
         </SafeAreaProvider>
       </View>
     </PaperProvider>
-    : <ActivityIndicator animating={true} color={_Theme.themeBouton.backgroundColor} size='large'></ActivityIndicator>
+    : <View  style={{    flex: 1,      justifyContent: 'center',}} ><ActivityIndicator animating={true} color={_Theme.themeBouton.backgroundColor} size='large'></ActivityIndicator></View>
   );
 }
 

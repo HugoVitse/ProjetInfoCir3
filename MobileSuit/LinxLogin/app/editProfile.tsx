@@ -1,8 +1,8 @@
-import { Link, Stack, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, KeyboardAvoidingView, Platform,Image, Dimensions } from 'react-native';
-import {Button ,HelperText,Icon,IconButton,TextInput} from 'react-native-paper'
-import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import { View, StyleSheet, Platform,Image, Dimensions } from 'react-native';
+import {Button ,HelperText,IconButton,TextInput} from 'react-native-paper'
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import axios from 'axios'
 import Config from '../config.json'
@@ -71,7 +71,6 @@ export default function EditScreen() {
       if(reponse.status == 200){
         const jwt_full = (reponse.headers['set-cookie'])?(reponse.headers['set-cookie'])[0]:""
         const jwt = jwt_full.substring(4,jwt_full.length)
-        console.log(jwt)
         await AsyncStorage.setItem('jwt',jwt)
         setIsPasswordHasBeenChanged(1)
         router.push("/profile")

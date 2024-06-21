@@ -1,16 +1,11 @@
 import React , {useState,useEffect} from 'react';
 import {Link, useRouter} from 'expo-router'
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { ImageBackground, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, useColorScheme, View } from 'react-native';
-import { Input,Icon } from 'react-native-elements';
-import {TextInput,Button,ActivityIndicator,MD2Colors} from 'react-native-paper'
+import { ImageBackground,Platform,StyleSheet, useColorScheme, View } from 'react-native';
+import {TextInput,Button} from 'react-native-paper'
 import {Image,Text} from 'react-native'
-import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { RootStackParamList } from '@/constants/type';
-import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import AsyncStorage from '@react-native-async-storage/async-storage';;
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { setShouldAnimateExitingForTag } from 'react-native-reanimated/lib/typescript/reanimated2/core';
 import Config from '../config.json'
 import Theme from '@/constants/Theme';
 
@@ -53,17 +48,6 @@ const RegisterScreen = () => {
 
   const _Theme = Theme()
 
-  const _storeData = async (key:string,data:string) => {
-    try {
-      await AsyncStorage.setItem(
-        key,
-        data,
-      );
-    } catch (error) {
-      // Error saving data
-      console.log(error)
-    }
-  };
 
 
   const _retrieveData = async (key:string) => {
@@ -85,7 +69,6 @@ const RegisterScreen = () => {
 
   useEffect(() => {
     _retrieveData('jwt');
-    console.log(jwt)
   }, []);
 
   useEffect(()=>{
@@ -102,9 +85,7 @@ const RegisterScreen = () => {
     }
   },[isjwt])
 
-  useEffect(()=>{
-    console.log(islogin)
-  },[islogin])
+
 
   useEffect(()=>{
     setisdate(isdate+1)
@@ -140,13 +121,10 @@ const RegisterScreen = () => {
         setErr("")
         router.push("/")
   
-        //_storeData('jwt',heads?heads.substring(4,heads.length):'')
   
-        console.log(jwt)
+   
         if(jwt != ''){
-          console.log("ok")
-
-          
+                 
         }
       }
       else{

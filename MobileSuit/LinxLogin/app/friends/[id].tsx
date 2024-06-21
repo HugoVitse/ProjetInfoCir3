@@ -3,15 +3,14 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { View, Text, Dimensions, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Avatar, IconButton, List, Modal, PaperProvider, Portal, } from 'react-native-paper';
-import { Stack, router, useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
+import { router, useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import Theme from '@/constants/Theme';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
 import Config from '../../config.json'
 import { jwtDecode } from 'jwt-decode';
 import { user } from '@/constants/user';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { evenement } from "@/constants/evenement";
 
 // import { View, Text, StyleSheet, Dimensions, KeyboardAvoidingView, Platform, TouchableOpacity, Animated, Keyboard, SafeAreaView } from 'react-native';
@@ -88,7 +87,6 @@ function Informations(id: any) {
 
 
 function Evenements(id: any) {
-  console.log("evenements")
   const _Theme = Theme()
   
   const [events,setEvents] = useState<evenement[]>([])

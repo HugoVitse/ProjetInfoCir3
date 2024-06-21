@@ -1,13 +1,11 @@
-import { Stack, useFocusEffect, useRouter } from 'expo-router';
-import { View, Text, StyleSheet, Animated, Dimensions,Image, useColorScheme } from 'react-native';
+import { useFocusEffect, useRouter } from 'expo-router';
+import { View, Text, StyleSheet, Dimensions,Image, useColorScheme } from 'react-native';
 import Theme from '@/constants/Theme';
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios'
 import Config from '../config.json'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { IconButton, List } from 'react-native-paper';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { RectButton } from 'react-native-gesture-handler';
+import { IconButton } from 'react-native-paper';
 import { Button, ListItem } from '@rneui/base';
 import { Avatar } from '@rneui/themed';
 import { user } from '@/constants/user';
@@ -19,7 +17,6 @@ export default function SettingsScreen() {
   const _Theme = Theme()
   const [friendRequests, setFriendRequests] = useState([])
   const [friendRequestListComp, setFriendRequestListComp] = useState<React.JSX.Element[]>([])
-  const [email, setEmail] = useState("")
   const [dol,setTheme] = useState(useColorScheme())
   const [allUsers, setAllUsers] = useState<user[]>([])
 
@@ -53,7 +50,6 @@ export default function SettingsScreen() {
       const jwt = await AsyncStorage.getItem("jwt")
       const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt}`},withCredentials:false})
       setFriendRequests(response.data.friendRequests)
-      console.log(response.data.friendRequests)
       const allUsers = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`,{headers:{Cookie:`jwt=${jwt}`},withCredentials:false})
       setAllUsers(allUsers.data)
     }
@@ -66,7 +62,6 @@ export default function SettingsScreen() {
       let tmp = []
       for(let i=0; i<friendRequests.length;i++){
         let user = allUsers.find((user)=>{return user.email==friendRequests[i]})
-        console.log(user)
         tmp.push(
          
          

@@ -1,4 +1,3 @@
-// pusherConfig.js
 import Pusher from 'pusher-js/react-native';
 import NetInfo from '@react-native-community/netinfo';
 

@@ -2,12 +2,12 @@ import { Avatar } from "@rneui/themed";
 import { useFocusEffect, useRouter } from "expo-router";
 import { Text, View, StyleSheet, Dimensions,Modal,Image, Platform, useColorScheme } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { IconButton,MD3Colors, Card, Button, ActivityIndicator, PaperProvider, Portal ,TextInput} from "react-native-paper";
+import { IconButton, Card, Button, ActivityIndicator,TextInput} from "react-native-paper";
 import React, { useState , useEffect, useCallback } from "react";
 import axios from 'axios'
 import Config from '../../config.json'
 import {activitie} from '../../constants/activities'
-import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Theme from "../../constants/Theme";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -24,7 +24,6 @@ export default function CatalogScreen() {
   const [isjwt,setisjwt] = useState(-1)
   const [islogin,setLogin] = useState(-1)
   const [isLoaded,setIsLoaded] = useState(false)
-  const [visible, setVisible] = useState(false);
   const [actualIndex, setActualIndex] = useState(0);
   const [date, setDate] = useState(new Date());
   const [picture,setPicture] = useState("")
@@ -65,10 +64,8 @@ export default function CatalogScreen() {
       nbinvities:text,
     }
 
-    console.log(data)
 
     const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/createEvenement`,data, {headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-    console.log(response)
     setModalVisible(!modalVisible)
   }
 
@@ -104,16 +101,13 @@ export default function CatalogScreen() {
       getActivities()
   } ,[]))
 
-  useEffect(()=>{
-    console.log(modalVisible)
-  },[modalVisible])
+  
 
   useEffect(()=>{
     if(activities.length >0){
         let tmpComp = []
         for(let i=0; i< activities.length;i++){
-            console.log(i)
-            console.log(activities[i])
+     
             const newCard = <Card style={[{ width: width - 40, marginVertical: 20 },_Theme.themeCard]}>
                               <Card.Cover source={{ uri: activities[i].image }} />
                               <Card.Title titleStyle={{color:_Theme.themeText.color}} subtitleStyle={{color:_Theme.themeText.color}} title={activities[i].name} subtitle={activities[i].date}/>
