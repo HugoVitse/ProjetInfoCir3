@@ -8,6 +8,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import Config from '../config.json';
+import pusher from './pusherConfig';
 
 const Messagerie = () => {
   const navigate = useNavigate();
@@ -35,7 +37,7 @@ const Messagerie = () => {
 
   const getUserInfo = async (email) => {
     try {
-      const response = await axios.get(`http://localhost/getAllUsers`, { withCredentials: true });
+      const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`, { withCredentials: true });
       const usr = response.data.find(user => user.email === email);
       if (usr) {
         return {
@@ -66,17 +68,40 @@ const Messagerie = () => {
   
 
   useEffect(() => {
-    const fetchData = async () => {
+
+    const fetchData1 = async () => {
       retrieveCookie();
+        try {
+          const response = await axios.get(`http://localhost/getMessage/${idEvent}`, { withCredentials: true });
+          const chatWithUserInfo = await setChatWithUserInfo(response.data);
+          setChat(chatWithUserInfo);
+
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+    };
+
+    fetchData1();
+
+
+    const channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', async (data) => {
+      console.log('Received event with data:', data);
+      const chatWithUserInfo = await setChatWithUserInfo(data);
+      setChat(chatWithUserInfo);
+    });
+
+    return () => {
+      pusher.unsubscribe('my-channel');
+    };
+
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
       if (email) {
         try {
-          setTimeout(async() => {
-            const response = await axios.get(`http://localhost/getMessage/${idEvent}`, { withCredentials: true });
-            const chatWithUserInfo = await setChatWithUserInfo(response.data);
-            setChat(chatWithUserInfo);
-          }, 1500);
-
-          const responses = await axios.get(`http://localhost/getEvents`, { withCredentials: true });
+          const responses = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getEvents`, { withCredentials: true });
           const usr = responses.data.find(activite => activite.activity.title === decodeURIComponent(activityName));
           console.log(usr);
 
@@ -91,7 +116,6 @@ const Messagerie = () => {
               }
             };
           }));
-
           setUserInfo(userInfoList);
 
         } catch (error) {
@@ -101,12 +125,15 @@ const Messagerie = () => {
     };
 
     fetchData();
-  }, [email, chat]);
+  }, [email]);
+
 
   const sendMessage = async () => {
     if (newMessage.trim()){
+
       try {
-        await axios.post('http://localhost/sendMessage', {id: idEvent, message: newMessage}, { withCredentials: true });
+        console.log(newMessage);
+        await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/sendMessage`, {id: idEvent, message: newMessage}, { withCredentials: true });
         const updatedMessages = [...messages, {author: email, message: newMessage }];
         setMessages(updatedMessages);
         setNewMessage('');
@@ -128,33 +155,33 @@ const Messagerie = () => {
               <div className="message-list" style={{ marginBottom: '20px' }}>
                 {chat.map((message, index) => (
                   <MDBCardText key={index} className={`message ${message.author === email ? 'text-end' : 'text-start'}`}>
-                    <div className={`d-flex align-items-center ${message.author === email ? 'justify-content-end' : 'justify-content-start'}`}>
-                      {message.author !== email && (
-                        <a href={`/Account/${encodeURIComponent(message.author)}`}>
-                          <img
-                            src={`http://localhost/${message.pp}`}
-                            alt={`${message.fn}'s profile`}
-                            style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }}
-                          />
-                        </a>
-                      )}
-                      <div className={`message-bubble ${message.author === email ? 'bg-primary text-white' : 'bg-light text-dark'} p-2 rounded`} style={{ maxWidth: '70%' }}>
-                        <div className="message-content">
-                          <strong>{message.fn} {message.ln}</strong>
-                          <p className="mb-0">{message.message}</p>
-                        </div>
+                  <div className={`d-flex align-items-center ${message.author === email ? 'justify-content-end' : 'justify-content-start'}`}>
+                    {message.author !== email && (
+                      <a href={`/Account/${encodeURIComponent(message.author)}`}>
+                        <img
+                          src={`${Config.scheme}://${Config.urlapi}/${message.pp}`}
+                          alt={`${message.fn}'s profile`}
+                          style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }}
+                        />
+                      </a>
+                    )}
+                    <div className={`message-bubble ${message.author === email ? 'bg-primary text-white' : 'bg-light text-dark'} p-2 rounded`} style={{ maxWidth: '70%' }}>
+                      <div className="message-content">
+                        <strong>{message.fn} {message.ln}</strong>
+                        <p className="mb-0">{message.message}</p>
                       </div>
-                      {message.author === email && (
-                        <a href={`/Account/${encodeURIComponent(message.author)}`}>
-                          <img
-                            src={`http://localhost/${message.pp}`}
-                            alt={`${message.fn}'s profile`}
-                            style={{ width: '40px', height: '40px', borderRadius: '50%', marginLeft: '10px' }}
-                          />
-                        </a>
-                      )}
                     </div>
-                  </MDBCardText>
+                    {message.author === email && (
+                      <a href={`/Account/${encodeURIComponent(message.author)}`}>
+                        <img
+                          src={`${Config.scheme}://${Config.urlapi}/${message.pp}`}
+                          alt={`${message.fn}'s profile`}
+                          style={{ width: '40px', height: '40px', borderRadius: '50%', marginLeft: '10px' }}
+                        />
+                      </a>
+                    )}
+                  </div>
+                </MDBCardText>               
                 ))}
               </div>
             </MDBCardBody>
@@ -182,7 +209,7 @@ const Messagerie = () => {
                       <div className='d-flex align-items-center'>
                         <a href={`/Account/${encodeURIComponent(info.email)}`}>
                           <img
-                            src={`http://localhost/${info.userInfo.pp}`}
+                            src={`${Config.scheme}://${Config.urlapi}/${info.userInfo.pp}`}
                             alt={`${info.userInfo.firstName}'s profile`}
                             style={{ width: '45px', height: '45px', borderRadius: '50%' }}
                             className='me-3'

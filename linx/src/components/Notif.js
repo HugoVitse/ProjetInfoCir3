@@ -84,7 +84,7 @@ const Notif = ({ updateNotificationStatus }) => {
                       <div key={index} className="mb-3 d-flex align-items-center" style={{backgroundColor:'white', borderRadius:'15px', margin:'5%', padding:'2%'}}>
                         {userDetails.profileImage && (
                           <img
-                            src={`http://localhost/${userDetails.profileImage}`}
+                            src={`${Config.scheme}://${Config.urlapi}/${userDetails.profileImage}`}
                             alt={`${userDetails.firstName} ${userDetails.lastName}`}
                             style={{ width: '50px', height: '50px', borderRadius: '50%' }}
                           />
