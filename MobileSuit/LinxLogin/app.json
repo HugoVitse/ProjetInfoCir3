@@ -7,17 +7,23 @@
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "ios": {
       "supportsTablet": true,
       "config": {
         "googleMapsApiKey": "AIzaSyAOpVdDvYUvbIB_u_d6k_HVfw13_Vux0K0"
       },
-      "bundleIdentifier": "com.bwift.LinxLogin"
+      "bundleIdentifier": "com.bwift.LinxLogin",
+      "splash": {
+        "image": "./assets/images/splashL.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#ffffff",
+        "dark": {
+             "image": "./assets/images/splash.png",
+             "resizeMode": "cover",
+             "backgroundColor": "#000000"
+        }
+      }
+      
     },
     "android": {
       "adaptiveIcon": {
@@ -27,6 +33,16 @@
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyAOpVdDvYUvbIB_u_d6k_HVfw13_Vux0K0"
+        }
+      },
+      "splash": {
+        "image": "./assets/images/splashL.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#ffffff",
+        "dark": {
+             "image": "./assets/images/splash.png",
+             "resizeMode": "cover",
+             "backgroundColor": "#000000"
         }
       },
       "package": "com.bwift.LinxLogin"

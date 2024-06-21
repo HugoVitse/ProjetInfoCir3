@@ -138,12 +138,14 @@ const RegisterScreen = () => {
         const heads = reponse.headers.get("set-cookie")
         setJwt(heads?heads.substring(4,heads.length):'')
         setErr("")
+        router.push("/")
   
         //_storeData('jwt',heads?heads.substring(4,heads.length):'')
   
         console.log(jwt)
         if(jwt != ''){
           console.log("ok")
+
           
         }
       }
