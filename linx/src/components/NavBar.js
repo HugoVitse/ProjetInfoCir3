@@ -7,6 +7,8 @@ import axios from 'axios';
 import Config from '../config.json';
 import Notif from './Notif'; // Importer le composant Notif
 import { jwtDecode } from 'jwt-decode';
+import LogoLight from './../assets/images/logo.png';
+import LogoDark from './../assets/images/logoWhite.png';
 
 
 const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => {
@@ -47,14 +49,13 @@ const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => 
     <Container className="bg-theme-nuance d-flex h-100 p-3 position-relative">
       <div className={`bg-theme-nuance d-flex w-50 flex-column align-items-start p-3 h-100 ${isOpen ? 'show' : 'fade'}`} id="navbar">
         <div className="position-relative">
-          <Link to='/' className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-theme text-decoration-none">
+          <Link to='/' className="d-flex align-items-center text-theme text-decoration-none">
             <img
-              src="https://brand.riotgames.com/static/a91000434ed683358004b85c95d43ce0/8a20a/lol-logo.png"
+              src={theme === 'light' ? LogoLight : LogoDark}
               alt="Logo"
               loading="lazy"
-              style={{ width: '50px', height: '50px' }}
+              style={{ width: '46%', height: '23%' }}
             />
-            <span className="fs-4 ms-2">Linx</span>
           </Link>
         </div>
         <hr className="border-secondary w-100" />

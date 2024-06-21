@@ -67,6 +67,18 @@ const Account = () => {
             }
           }
         }
+
+         const eventsResponse = await axios.get('http://localhost/evenements', { withCredentials: true });
+  
+        const filteredEvents = eventsResponse.data.filter(event => {
+          const eventDate = new Date(event.date);
+          const today = new Date();
+          return eventDate < today &&
+                 Array.isArray(event.participants) &&
+                 event.participants.includes(emailurl);
+        });
+        setEvents(filteredEvents);
+
       } catch (error) {
         console.error('Erreur lors de la récupération des utilisateurs :', error);
       }
