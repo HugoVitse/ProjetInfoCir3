@@ -160,14 +160,6 @@
     "adresse": "Place du Général de Gaulle, Lille"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/des-fils-des-racines/3488537-1-fre-FR/Des-fils-des-racines_equipment_image_lead_child.jpg",
-    "name": "Des fils des racines",
-    "type": "Exposition",
-    "description": "La broderie comme un acte de résistance et de résilience, par Carolina SEPULVEDA",
-    "date": "Jusqu'au 21 juin 2024",
-    "adresse": "11 rue Guillaume Tell 59000 lille03 20 86 25 71"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/exposition-lille3000-textimoov!-au-tripostal/3459988-1-fre-FR/Exposition-lille3000-Textimoov!-au-Tripostal_equipment_image_lead_child.jpg",
     "name": "Exposition lille3000 Textimoov! au Tripostal",
     "type": "Exposition",
@@ -392,14 +384,6 @@
     "adresse": "avenue du 42e régiment, Lille+33 (0)359 579 400"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/portes-ouvertes-au-faubourg-des-musiques/3508447-1-fre-FR/Portes-Ouvertes-au-Faubourg-des-Musiques_equipment_image_lead_child.jpg",
-    "name": "Portes Ouvertes au Faubourg des Musiques",
-    "type": "Visite",
-    "description": "Découvrez la diversité musicale du Faubourg des Musiques",
-    "date": "Du 17 au 20 juin 2024",
-    "adresse": "15 Avenue Verhaeren 59000 Lille"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/nos-balades-de-l-ete/3516178-1-fre-FR/Nos-balades-de-l-ete_equipment_image_lead_child.jpg",
     "name": "Nos balades de l ete",
     "type": "Visite",
@@ -414,22 +398,6 @@
     "description": "à partir du 17 juin",
     "date": "Jusqu'au 01 septembre 2024",
     "adresse": "32 rue de la Monnaie, 59800 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/radio-live-vivantes/3490993-1-fre-FR/Radio-Live-Vivantes_equipment_image_lead_child.jpg",
-    "name": "Radio Live Vivantes",
-    "type": "Spectacle",
-    "description": "Depuis plus de 10 ans, \"Radio live\" porte la voix d’une jeunesse engagée à travers le monde.",
-    "date": "Du 19 au 20 juin 2024",
-    "adresse": "70 rue des Sarrazins"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/radio-live-vivantes-aurelie-charon-et-amelie-bonnin/3508570-1-fre-FR/Radio-live-Vivantes-Aurelie-Charon-et-Amelie-Bonnin_equipment_image_lead_child.jpg",
-    "name": "Radio live Vivantes Aurelie Charon et Amelie Bonnin",
-    "type": "Spectacle",
-    "description": "Depuis plus de 10 ans, Radio live porte la voix d’une jeunesse engagée à travers le monde. Ici, ce sont 4 femmes de Syrie, Bosnie, Ukraine et Isra...",
-    "date": "Du 19 au 20 juin 2024",
-    "adresse": "70 rue des sarrazins"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/rencontres-nationales-buzz-booster/3515615-1-fre-FR/Rencontres-Nationales-Buzz-Booster_equipment_image_lead_child.jpg",
@@ -448,84 +416,12 @@
     "adresse": "1 rue de Fontenoy 59000 Lille"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/to-bee-or-not-to-bee/3471211-1-fre-FR/To-bee-or-not-to-bee_equipment_image_lead_child.jpg",
-    "name": "To bee or not to bee",
-    "type": "Nature / environnement",
-    "description": "Abeilles et pollinisateurs : une coopération essentielle",
-    "date": "Le 20 juin 2024",
-    "adresse": "Parc de la Citadelle, Lille03 62 26 08 28"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/concert-orchestre-d-harmonie-junior-et-orchestre-a-vents-des-cham/3508693-1-fre-FR/Concert-Orchestre-d-Harmonie-Junior-et-Orchestre-a-Vents-des-CHAM_equipment_image_lead_child.jpg",
-    "name": "Concert Orchestre d Harmonie Junior et Orchestre a Vents des CHAM",
-    "type": "Concert",
-    "description": "\"Les héros, la pop et les héros de la pop\".",
-    "date": "Le 20 juin 2024",
-    "adresse": "50 Rue de l'Europe, 59000 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/walk-of-honour-kubra-khademi/3508611-1-fre-FR/WALK-OF-HONOUR-Kubra-Khademi_equipment_image_lead_child.jpg",
-    "name": "WALK OF HONOUR Kubra Khademi",
-    "type": "Spectacle",
-    "description": "À l’occasion de la journée mondiale des réfugié·es, Kubra Khademi invite les femmes qui le souhaitent à la rejoindre au cours d’une marche d’une j...",
-    "date": "Le 20 juin 2024",
-    "adresse": "70 rue des sarrazins"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/side-step-visite-avec-senor-karo/3508652-1-fre-FR/SIDE-STEP-Visite-avec-Senor-Karo_equipment_image_lead_child.jpg",
-    "name": "SIDE STEP Visite avec Senor Karo",
-    "type": "",
-    "description": "visite guidée de l'exposition",
-    "date": "Le 20 juin 2024",
-    "adresse": "70 rue des sarrazins"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/45-min-chrono-lille-de-place-en-place/3505463-1-fre-FR/45-min-chrono-Lille-de-place-en-place_equipment_image_lead_child.jpg",
-    "name": "45 min chrono Lille de place en place",
-    "type": "Visite",
-    "description": "Pendant la pause du midi, (re)découvrez un bâtiment ou un quartier emblématique de Lille en 45 minutes montre en main !",
-    "date": "Le 20 juin 2024",
-    "adresse": "Place Rihour"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/amenagement-participatif-du-jardin-de-la-mfm/3528459-1-fre-FR/AMENAGEMENT-PARTICIPATIF-DU-JARDIN-DE-LA-MFM_equipment_image_lead_child.jpg",
     "name": "AMENAGEMENT PARTICIPATIF DU JARDIN DE LA MFM",
     "type": "",
     "description": "Avec vous, créons un espace agréable, d'échange et de détente en plein cœur de la MFM !",
     "date": "Du 20 au 28 juin 2024",
     "adresse": "47 rue d'Arras Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/jeudi-jeux-tout-public2/3527351-1-fre-FR/Jeudi-Jeux-Tout-public_equipment_image_lead_child.jpg",
-    "name": "Jeudi Jeux Tout public",
-    "type": "Stage et atelier",
-    "description": "La ludothèque Chez Audulle vous invite à passer un temps de jeu entre amis, parents, enfants.La sélection de jeux est renouvelée régulièrement pou...",
-    "date": "Le 20 juin 2024",
-    "adresse": "97 rue Saint-Sauveur"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/drag-palace-face-a-face-chante-devant-3-oeuvres-drag-show-facon-beaux-arts/3512682-1-fre-FR/Drag-Palace-face-a-face-chante-devant-3-oeuvres-drag-show-facon-beaux-arts_equipment_image_lead_child.jpg",
-    "name": "Drag Palace visite chantee drag show facon beaux arts",
-    "type": "",
-    "description": "Avec les costumes de l’Opéra de Lille",
-    "date": "Le 20 juin 2024",
-    "adresse": "Place de la République Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/les-sept-emotions-capitales/3523492-1-fre-FR/Les-sept-emotions-capitales_equipment_image_lead_child.jpg",
-    "name": "Les sept emotions capitales",
-    "type": "Spectacle",
-    "description": "Cinq personnages vont vous faire voyager dans l’univers mystérieux des émotions.",
-    "date": "Le 20 juin 2024",
-    "adresse": "34 rue du Long Pot"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/les-oeuvres-de-ladislas-kijno-a-lille/3505504-1-fre-FR/Les-oeuvres-de-Ladislas-Kijno-a-Lille_equipment_image_lead_child.jpg",
-    "name": "Les oeuvres de Ladislas Kijno a Lille",
-    "type": "Visite",
-    "description": "Lille Grand Palais",
-    "date": "Le 21 juin 2024",
-    "adresse": "1 boulevard des cités unies"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/fete-de-la-musique-a-l-ecole-samain/3508775-1-fre-FR/Fete-de-la-Musique-a-l-Ecole-Samain_equipment_image_lead_child.jpg",
@@ -1000,7 +896,7 @@
     "adresse": "108 Quai Géry Legrand03 20 09 13 02"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/mon-profil/profil-senior/rdv-droits/3504178-1-fre-FR/rdv-droits_equipment_image_lead_child.jpg",
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/mon-profil/profil-senior/visuel-rendez-vous-des-droits/3529200-1-fre-FR/Visuel-rendez-vous-des-droits_equipment_image_lead_child.jpg",
     "name": "Rendez vous des droits",
     "type": "Rencontre / conférence / débat",
     "description": "1 Français sur 3 ne demande pas les aides auxquelles il a droit !Et vous ?",
@@ -1056,14 +952,6 @@
     "adresse": "25/27 Place Louise de Béttignies 59 000 Lille"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/afterwork-litteraire/3501047-1-fre-FR/Afterwork-litteraire_equipment_image_lead_child.jpg",
-    "name": "Afterwork litteraire",
-    "type": "Rencontre / conférence / débat",
-    "description": "Margaret Atwood : The Handmaid's Tale",
-    "date": "Le 28 juin 2024",
-    "adresse": "32 rue Edouard Delesalle 59000 Lille"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/itineraire-sonore-exposition-temporaire/3471252-1-fre-FR/Itineraire-sonore-Exposition-temporaire_equipment_image_lead_child.jpg",
     "name": "Itineraire sonore Exposition temporaire",
     "type": "Visite",
@@ -1086,6 +974,14 @@
     "description": "Marianne Mathieu, historienne de l'art",
     "date": "Le 28 juin 2024",
     "adresse": "Place de la République 59000 Lille"
+  },
+  {
+    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/afterwork-litteraire/3501047-1-fre-FR/Afterwork-litteraire_equipment_image_lead_child.jpg",
+    "name": "Afterwork litteraire",
+    "type": "Rencontre / conférence / débat",
+    "description": "Margaret Atwood : The Handmaid's Tale",
+    "date": "Le 28 juin 2024",
+    "adresse": "32 rue Edouard Delesalle 59000 Lille"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/representation-de-theatre3/3524377-1-fre-FR/Representation-de-theatre_equipment_image_lead_child.jpg",

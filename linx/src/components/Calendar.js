@@ -12,11 +12,27 @@ const MyCalendar = () => {
   const [moy, setMoy] = useState([]);
 
   function decomposerDate(dateString) {
-    var dateArray = dateString.split("-");
-    var annee = parseInt(dateArray[2], 10);
-    var mois = parseInt(dateArray[1], 10);
-    var jour = parseInt(dateArray[0], 10);
-    
+
+    var moisNoms = {
+      "Jan": 1,
+      "Feb": 2,
+      "Mar": 3,
+      "Apr": 4,
+      "May": 5,
+      "Jun": 6,
+      "Jul": 7,
+      "Aug": 8,
+      "Sep": 9,
+      "Oct": 10,
+      "Nov": 11,
+      "Dec": 12
+    };
+
+    var dateArray = dateString.split(" ");
+    var jour = parseInt(dateArray[2], 10);
+    var mois = moisNoms[dateArray[1]];
+    var annee = parseInt(dateArray[3], 10);
+
     return {
         jour: jour,
         mois: mois,
@@ -39,7 +55,7 @@ const MyCalendar = () => {
     const fetchData = async () => {
       retrieveCookie();
       try {
-        const response = await axios.get('http://localhost/infos', { withCredentials: true });
+        const response = await axios.get('http://localhost/getMoodTracker', { withCredentials: true });
 
         const yearsArray = [];
         const moyArray = [];
@@ -48,7 +64,7 @@ const MyCalendar = () => {
           yearsArray.push(data.date);
           moyArray.push(data.average);
         });
-
+        
         setYears(yearsArray);
         setMoy(moyArray);
 
@@ -58,7 +74,7 @@ const MyCalendar = () => {
     };
 
     fetchData();
-  }, [navigate, years, moy]);
+  }, [navigate]);
 
   const interpolate = (start, end, value) => {
     let k = (value - 0) / 10;
