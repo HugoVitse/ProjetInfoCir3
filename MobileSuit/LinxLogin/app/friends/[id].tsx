@@ -13,8 +13,6 @@ import { jwtDecode } from 'jwt-decode';
 import { user } from '@/constants/user';
 import { evenement } from "@/constants/evenement";
 
-// import { View, Text, StyleSheet, Dimensions, KeyboardAvoidingView, Platform, TouchableOpacity, Animated, Keyboard, SafeAreaView } from 'react-native';
-
 const Tab = createMaterialTopTabNavigator();
 
 const { width } = Dimensions.get('window')
@@ -153,7 +151,7 @@ function Friends(id: any) {
         const myEmail: any = jwtDecode(jwt?jwt:"")
         let tmpcomp = []
         for (let i=0; i< friendList.length; i++){
-          tmpcomp.push(<List.Item key={i} title={`${friendList[i].firstName} ${friendList[i].lastName}` } style={{width: width*0.8}} titleStyle={{textAlign: 'center'}} onPress={() => {friendList[i].email==myEmail.email ? router.push('profile') : router.push(`friends/${friendList[i].email}`)}}  left={() => <Avatar.Image size={80} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${friendList[i].email}.png`}} />  } />)
+          tmpcomp.push(<List.Item key={i} title={`${friendList[i].firstName} ${friendList[i].lastName}` } style={{width: width*0.8}} titleStyle={{textAlign: 'center'}} onPress={() => {friendList[i].email==myEmail.email ? router.push('profile') : router.push(`friends/${friendList[i].email}`)}}  left={() => <Avatar.Image size={80} source={{uri:`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${friendList[i].image}`}} />  } />)
         }
         setFriendListComp(tmpcomp)
       }

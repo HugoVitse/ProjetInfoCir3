@@ -1,16 +1,11 @@
 import React , {useState,useEffect} from 'react';
 import {Link, useRouter} from 'expo-router'
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, useColorScheme, View } from 'react-native';
-import { Input,Icon } from 'react-native-elements';
+import { KeyboardAvoidingView, Platform, StyleSheet, useColorScheme, View } from 'react-native';
 import {Image,Text} from 'react-native'
-import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { RootStackParamList } from '@/constants/type';
 import {TextInput,Button,ActivityIndicator, HelperText} from 'react-native-paper'
 import Config from '../config.json'
 import Theme from '@/constants/Theme';
-import axios from 'axios';
 
 const TextInputExample = () => {
   const [password, onChangePassword] = useState('');
