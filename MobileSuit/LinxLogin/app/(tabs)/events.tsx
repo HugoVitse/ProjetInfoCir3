@@ -26,17 +26,34 @@ const height = Dimensions.get('window').height;
 const drawerWidth = 75
 
 const slideData = [
+  
   {
     id: '1',
-    src:'https://mdbootstrap.com/img/new/slides/041.jpg'
+    src: 'https://media.gqmagazine.fr/photos/603e6a8da9360b0585bcbc6a/16:9/w_2560%2Cc_limit/108387402'
   },
   {
     id: '2',
-    src: 'https://mdbootstrap.com/img/new/slides/042.jpg'
+    src:  'https://www.fnacspectacles.com/magazine/fileadmin/_processed_/d/4/csm_parc-asterix-attraction_58dfd74118.jpg',
   },
   {
     id: '3',
-    src: 'https://mdbootstrap.com/img/new/slides/043.jpg'
+    src: 'https://lemagdelaconso.ouest-france.fr/images/dossiers/2023-02/mini/zoo-173704-1200-600.jpg',
+  },
+  {
+    id: '4',
+    src: 'https://media.lesechos.com/api/v1/images/view/5bd2ee868fe56f1954726719/1280x720/2203698-theatres-prives-parisiens-si-convoites-mais-si-fragiles-web-tete-0302222880640.jpg',
+  },
+  {
+    id: '5',
+    src: 'https://img.freepik.com/vecteurs-libre/silhouette-danse-salon-dessinee-main_23-2150922361.jpg?size=626&ext=jpg&ga=GA1.1.1788614524.1718409600&semt=sph',
+  },
+  {
+    id: '6',
+    src:  'https://www.shogun-japon.com/cdn/shop/articles/Type-de-manga.jpg?v=1642615082',
+  },
+  {
+    id: '7',
+    src:   'https://cdn-europe1.lanmedia.fr/var/europe1/storage/images/europe1/medias-tele/exclusif-les-series-tele-preferes-des-francais-sont-3999594/56169328-1-fre-FR/EXCLUSIF-Les-series-tele-preferes-des-Francais-sont.jpg',
   }
 ]
 

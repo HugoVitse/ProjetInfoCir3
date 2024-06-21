@@ -13,6 +13,9 @@ import { ScreenHeight } from '@rneui/base';
 import { user } from '@/constants/user';
 import {message} from '@/constants/message';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import pusher from './pusherConfig';
+
+
 const { width } = Dimensions.get('window')
 
 const HEADER_HEIGHT = 100;
@@ -27,6 +30,8 @@ type colorPseudo = {
 
 export default function SettingsScreen() {
   const { id } = useLocalSearchParams();
+
+  
 
 
   const _Theme = Theme()
@@ -48,8 +53,7 @@ export default function SettingsScreen() {
   const [int, setInt] = useState<NodeJS.Timeout>()
   const [myEmail, setMyEmail] = useState("")
   const [colorPseudos, setColorPseudos] = useState<colorPseudo[]>([])
-
-
+  
   const router = useRouter();
 
   const theme = {
@@ -62,28 +66,46 @@ export default function SettingsScreen() {
   const scrollViewRef = useRef<ScrollView>(null);
   const textInputRef = useRef(null)
 
+
+  useEffect(() => {
+    const channel = pusher.subscribe('my-channel');
+
+    channel.bind('my-event', (data:any) => {
+      console.log('Received event with data:', data);
+      let tmp = [...message,data]
+      console.log(message)
+      setMessage(data)
+      const timer = setTimeout(() => {
+        if (scrollViewRef.current) {
+          scrollViewRef.current.scrollToEnd({ animated: false });
+        }
+      }, 200)
+
+    });
+
+    return () => {
+      pusher.unsubscribe('my-channel');
+    };
+  }, []);
+
   const sendMessage = async()=>{
     if(messageToSend.length > 0){
       const jwt_cookie = await AsyncStorage.getItem("jwt")
       const reponseMessage = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/sendMessage`,{id:id,message:messageToSend},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
       setMessageToSend('')
-      wrap()
     }
     
   
   }
 
-  const wrap = async()=>{
-    const jwt_cookie = await AsyncStorage.getItem("jwt")
-    const reponseMessage = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getMessage/${id}`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-    setMessage(reponseMessage.data.chat)
-    setParticipants(reponseMessage.data.participants)
-  }
+
   useFocusEffect( useCallback(()=>{
     
-    wrap()
-
+    
     const wrapAllUsers = async()=>{
+
+
+     
       const jwt_cookie = await AsyncStorage.getItem("jwt")
       const jwt_decode:any = jwtDecode(jwt_cookie?jwt_cookie:"")
       setMyEmail(jwt_decode.email)
@@ -104,16 +126,23 @@ export default function SettingsScreen() {
       }
 
       setColorPseudos(colors)
+     
+      setMessage(reponseMessage.data.chat)
+      setParticipants(reponseMessage.data.participants)
+      const timer = setTimeout(() => {
+        if (scrollViewRef.current) {
+          scrollViewRef.current.scrollToEnd({ animated: false });
+        }
+      }, 200)
+      
     }
     wrapAllUsers()
 
-    let _int = setInterval(()=>{
-      wrap()    
-    },1000)
 
-    setInt(_int)
 
-    return ()=>{clearInterval(_int)}
+
+  
+    return ()=>{clearInterval(int)}
   },[]))
 
 
@@ -284,7 +313,7 @@ export default function SettingsScreen() {
             style={[styles.input, _Theme.themeBack2, _Theme.themeShadow]}
             textColor={_Theme.themeText.color}
             onPress={() => setIsFocused(true)}
-            onFocus={() => {setIsFocused(true), setScrollviewHeight(ScreenHeight-HEADER_HEIGHT-400)}}
+            onFocus={() => {setIsFocused(true), setScrollviewHeight(Platform.OS=='ios'?ScreenHeight-HEADER_HEIGHT-400:ScreenHeight-HEADER_HEIGHT-350)}}
             onBlur={() => {setIsFocused(false), setScrollviewHeight(ScreenHeight-HEADER_HEIGHT-100)}}
         />
         </Animated.View>
