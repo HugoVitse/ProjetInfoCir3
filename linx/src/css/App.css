@@ -6,7 +6,7 @@
   --text-color-inv: white;
   --card-bg-color: #ffffff;
   --primary-color: #89cdf5;
-  --secondary-color: #5806bde7;
+  --secondary-color: #ececece7;
   --btn-color: pink;
   --noir-nuance:#EEEEEE;
   --noir-nuance2:#ffffff;
@@ -18,9 +18,9 @@
   --bg-color-inversed: #fcfcfd;
   --text-color: white;
   --text-color-inv: black;
-  --card-bg-color: #1e1e1e;
+  --card-bg-color: #918e8e;
   --primary-color: #5806bde7;
-  --secondary-color: #89cdf5;
+  --secondary-color: #0f3292;
   --btn-color: pink;
   --noir-nuance: #212020;
   --noir-nuance2: #444444;
@@ -61,13 +61,13 @@
 
 .custom-btn-primary {
   background-color: var(--secondary-color);
-  color: var(--text-color-inv);
+  color: var(--text-color);
   border: none;
 }
 
 .custom-btn-secondary {
-  background-color: #f02f3f; /* Vert */
-  color: var(--text-color-inv);
+  background-color: #f02f3f; 
+  color: var(--text-color);
   border: none;
 }
 
@@ -298,16 +298,6 @@ body {
 
 .bg-theme-nuance2 {
   background-color: var(--noir-nuance2);
-}
-
-.react-calendar {
-  width: 350px;
-  max-width: 100%;
-  background: var(--noir-nuance2);
-  color: var(--text-color);
-  border: 1px solid #a0a096;
-  font-family: Arial, Helvetica, sans-serif;
-  line-height: 1.125em;
 }
 
 .tile-content {

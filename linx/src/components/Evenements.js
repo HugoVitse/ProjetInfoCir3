@@ -158,7 +158,7 @@ const Evenements = () => {
                 </MDBCol>
                 <MDBCol size='3' className='d-flex align-items-center justify-content-center'>
                     <MDBDropdown>
-                        <MDBDropdownToggle floating className="custom-btn-primary text-theme-inv">
+                        <MDBDropdownToggle floating className="custom-btn-primary text-theme">
                             <MDBIcon icon='plus' />
                         </MDBDropdownToggle>
                         <MDBDropdownMenu className="bg-white shadow rounded">
@@ -176,7 +176,7 @@ const Evenements = () => {
 
                 <MDBRow className='recommendations' style={{ maxHeight: 'calc(100vh - 22rem)', overflowY: 'auto'}}>
                     <h6 className='text-center mt-3 mb-2'><strong>Recommandations</strong></h6>
-                    <MDBCol className='vh-80'>
+                    <MDBCol className='vh-80 d-flex align-items-center justify-content-center'>
                         {Activitiess
                             .filter((activity) => selectedInterests.includes(activity.type))
                             .map((activity, index) => (
@@ -189,10 +189,10 @@ const Evenements = () => {
 
                 <MDBRow className='recommendations' style={{ maxHeight: 'calc(100vh - 18rem)', overflowY: 'auto' }}>
                     <h6 className='text-center mb-2'><strong>Liste</strong></h6>
-                    <MDBCol className='vh-80'>
+                    <MDBCol className='vh-80 d-flex align-items-center justify-content-center'>
                         {Activitiess
                             .map((activity, index) => (
-                                <MDBBtn className="custom-btn-primary" key={`list-${index}`} id={index} onClick={selectedBtn} style={{width:"100%",marginTop:"10px"}}>{activity.activity.title}</MDBBtn>
+                                <MDBBtn className=" custom-btn-primary" key={`list-${index}`} id={index} onClick={selectedBtn} style={{width:"75%",marginTop:"10px"}}>{activity.activity.title}</MDBBtn>
                             ))}
                     </MDBCol>
                 </MDBRow>
@@ -240,16 +240,16 @@ const Evenements = () => {
             <MDBModal open={basicModal} onClose={() => setBasicModal(false)} tabIndex='-1'>
                 <MDBModalDialog>
                     <MDBModalContent>
-                        <MDBModalHeader>
-                            <MDBModalTitle>Êtes-vous sûr ?</MDBModalTitle>
-                            <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
+                        <MDBModalHeader className='bg-theme-nuance text-theme'>
+                            <MDBModalTitle className='text-theme'>Êtes-vous sûr ?</MDBModalTitle>
+                            <MDBBtn className='btn-close' color='red' onClick={toggleOpen}></MDBBtn>
                         </MDBModalHeader>
-                        <MDBModalBody>
-                            <MDBCardText>{`Voulez-vous vraiment vous inscrire à l'activité : ${Activitiess[actualIndex] ? Activitiess[actualIndex].activity.title : ""}`}</MDBCardText>
+                        <MDBModalBody className='bg-theme-nuance2 text-theme'>
+                            <MDBCardText>{`Voulez-vous vraiment vous inscrire à l'activité : ${Activitiess[actualIndex] ? Activitiess[actualIndex].activity.title : ""}`} ?</MDBCardText>
                             {error.length > 0 ? <MDBCardText style={{ color: "#ff3333" }}>{error}</MDBCardText> : ""}
                         </MDBModalBody>
 
-                        <MDBModalFooter>
+                        <MDBModalFooter className='bg-theme-nuance'>
                             <MDBBtn color='secondary' onClick={toggleOpen}>
                                 Annuler
                             </MDBBtn>

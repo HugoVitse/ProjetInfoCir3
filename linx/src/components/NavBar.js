@@ -5,15 +5,13 @@ import Cookies from 'js-cookie';
 import { Container } from '@mui/material';
 import axios from 'axios';
 import Config from '../config.json';
-import Notif from './Notif'; // Importer le composant Notif
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 import LogoLight from './../assets/images/logo.png';
 import LogoDark from './../assets/images/logoWhite.png';
 
-
 const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => {
   const [hasNotifications, setHasNotifications] = useState(false); // État local pour suivre les notifications non lues
-  const [email, setemail] = useState('');
+  const [email, setEmail] = useState('');
 
   // Fonction pour mettre à jour l'état des notifications dans NavBar
   const updateNotificationStatus = (hasNotifications) => {
@@ -27,8 +25,8 @@ const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => 
       try {
         const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { headers: { Cookie: `jwt=${jwt}` }, withCredentials: true });
         const decodedToken = jwtDecode(jwt);
-        setemail(decodedToken.email);
-        console.log(decodedToken.email.slice(0,-11))
+        setEmail(decodedToken.email);
+        console.log(decodedToken.email.slice(0, -11));
         // Mettre à jour l'état local des notifications
         setHasNotifications(response.data.friendRequests && response.data.friendRequests.length > 0);
       } catch (error) {
@@ -60,23 +58,23 @@ const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => 
         </div>
         <hr className="border-secondary w-100" />
         <MDBListGroup className="mb-auto w-100">
-          <MDBListGroupItem tag={Link} action to="/" className="d-flex align-items-center bg-theme-nuance text-theme border-0">
+          <MDBListGroupItem tag={Link} action to="/" className="d-flex align-items-center bg-theme-nuance text-theme border-0" onClick={handleModalToggle}>
             <MDBIcon fas icon="home" className="me-3" />
             Home
           </MDBListGroupItem>
-          <MDBListGroupItem tag={Link} action to="/Evenements" className="d-flex align-items-center bg-theme-nuance text-theme border-0">
+          <MDBListGroupItem tag={Link} action to="/Evenements" className="d-flex align-items-center bg-theme-nuance text-theme border-0" onClick={handleModalToggle}>
             <MDBIcon fas icon="fas fa-calendar" className="me-3" />
             Evenements
           </MDBListGroupItem>
-          <MDBListGroupItem tag={Link} action to={`/Account/${encodeURIComponent(email)}`} className="d-flex align-items-center bg-theme-nuance text-theme border-0">
+          <MDBListGroupItem tag={Link} action to={`/Account/${encodeURIComponent(email)}`} className="d-flex align-items-center bg-theme-nuance text-theme border-0" onClick={handleModalToggle}>
             <MDBIcon fas icon="address-book" className="me-3" />
             Profil
           </MDBListGroupItem>
-          <MDBListGroupItem tag={Link} action to="/MoodTracker" className="d-flex align-items-center bg-theme-nuance text-theme border-0">
+          <MDBListGroupItem tag={Link} action to="/MoodTracker" className="d-flex align-items-center bg-theme-nuance text-theme border-0" onClick={handleModalToggle}>
             <MDBIcon fas icon="fas fa-chart-column" className="me-3" />
             Humeur
           </MDBListGroupItem>
-          <MDBListGroupItem tag={Link} action to="/Notif" className="d-flex align-items-center bg-theme-nuance text-theme border-0">
+          <MDBListGroupItem tag={Link} action to="/Notif" className="d-flex align-items-center bg-theme-nuance text-theme border-0" onClick={handleModalToggle}>
             <MDBIcon fas icon={ hasNotifications ? "fas fa-bell" : "fas fa-bell-slash"} className="me-3" />
             Notifications
           </MDBListGroupItem>

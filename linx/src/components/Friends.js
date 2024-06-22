@@ -142,14 +142,14 @@ const Friends = () => {
     const renderUserList = (userList) => {
       if (userList.length === 0) {
         return (
-          <MDBListGroupItem>
+          <MDBListGroupItem className='bg-theme-nuance text-theme'>
             Aucun utilisateur trouvé.
           </MDBListGroupItem>
         );
       }
 
       return userList.map((user) => (
-        <MDBListGroupItem key={user._id} className={friends.includes(user.email) ? 'friend-item' : ''}>
+        <MDBListGroupItem key={user._id} className={friends.includes(user.email) ? 'friend-item bg-theme-nuance text-theme' : 'bg-theme-nuance text-theme'} style={{borderRadius:'15px'}}>
           <div className="d-flex align-items-center">
             <img
               src={`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${user.email}.png`}
@@ -157,20 +157,19 @@ const Friends = () => {
               style={{ width: '50px', height: '50px', borderRadius: '50%' }}
             />
             <div className="m-3">
-              <h5>{`${user.firstName} ${user.lastName}`}</h5>
+              <h5><strong>{`${user.firstName} ${user.lastName}`}</strong></h5>
+              <p className='text-muted'>{`${user.email}`}</p>
             </div>
             {emailurl === email && (
               <>
                 {friends.includes(user.email) && (
                   <MDBBtn color="danger" onClick={() => removeFriend(user.email)} className="ms-auto">
                     <MDBIcon icon="user-minus" className="me-2" />
-                    Supprimer l'ami
                   </MDBBtn>
                 )}
                 {!friends.includes(user.email) && !sentFriendRequests.includes(user.email) && (
                   <MDBBtn color="primary" onClick={() => sendFriendRequest(user.email)} className="ms-auto">
                     <MDBIcon icon="user-plus" className="me-2" />
-                    Ajouter
                   </MDBBtn>
                 )}
                 {sentFriendRequests.includes(user.email) && !friends.includes(user.email) && (
@@ -189,22 +188,23 @@ const Friends = () => {
       <MDBContainer className="mt-5 p-4" style={{ maxWidth: '800px' }}>
         {/* Page title */}
         <div className="text-center mb-4">
-          <h1>Mes Amis</h1>
+          <h1><strong>Mes Amis</strong></h1>
         </div>
 
         {/* Search input */}
-        <MDBInputGroup className="mb-3">
-          <MDBInput
-            label="Recherche"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </MDBInputGroup>
+        <MDBInputGroup className="bg-light mb-3" style={{ borderRadius: '35px', overflow: 'hidden', border: 'none' }}>
+        <MDBInput
+          label="Recherche"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{ borderRadius: '35px', border: 'none' }}
+        />
+      </MDBInputGroup>
 
         {/* Friends list */}
         <div className="scrollable-section" style={{ maxHeight: '300px', overflowY: 'auto' }}>
           <MDBListGroup>
-            <h3 className="mb-3">Amis</h3>
+            <h3 className="mb-3"><strong>Amis</strong></h3>
             {renderUserList(searchTerm ? filteredUsers.filter(user => friends.includes(user.email)) : friendsList)}
           </MDBListGroup>
         </div>
@@ -213,7 +213,7 @@ const Friends = () => {
         {searchTerm && (
           <div className="scrollable-section" style={{ maxHeight: '300px', overflowY: 'auto', marginTop: '20px' }}>
             <MDBListGroup>
-              <h3 className="mb-3">Autres utilisateurs</h3>
+              <h3 className="mb-3"><strong>Autres utilisateurs</strong></h3>
               {renderUserList(filteredOtherUsers)}
             </MDBListGroup>
           </div>
@@ -226,10 +226,13 @@ const Friends = () => {
     <div>
       {/* Back button */}
       <div style={{ position: 'fixed', top: '10px', right: '10px' }}>
-        <MDBBtn color="primary" onClick={() => navigate(`/Account/${encodeURIComponent(emailurl)}`)}>
-          <MDBIcon icon="arrow-left" className="me-2" />
-          Retour au profil
-        </MDBBtn>
+      <MDBBtn
+        color="primary"
+        onClick={() => navigate(`/Account/${encodeURIComponent(email)}`)}
+        style={{ width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      >
+        <MDBIcon icon="arrow-left" />
+      </MDBBtn>
       </div>
 
       {renderUsers()}

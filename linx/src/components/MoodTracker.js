@@ -346,7 +346,7 @@ const MoodTracker = () => {
             {/* Interval : temps de défilement du Carousel */}
             <MDBCarouselItem className="w-100 d-flex flex-column justify-content-center align-items-center text-theme" itemId={1}>
               <h5 className="mb-4">Calendrier</h5>
-              <div className="text-theme-inv bg-light" style={{ width: '100%', height: '70vh' }}>
+              <div className="text-theme-inv " style={{ width: '100%', height: '70vh' }}>
                 <Calendar />
               </div>
             </MDBCarouselItem>
@@ -369,37 +369,37 @@ const MoodTracker = () => {
           <MDBModal open={basicModal} toggle={() => setBasicModal(false)} tabIndex='-1' staticBackdrop>
             <MDBModalDialog centered>
               <MDBModalContent>
-                <MDBModalHeader>
+                <MDBModalHeader className='bg-theme-nuance text-theme'>
                   <h5 className="modal-title" id="exampleModalLabel">Le rendez-vous quotidien !</h5>
                   <MDBBtn className="btn-close" color="none" onClick={() => setBasicModal(false)}></MDBBtn>
                 </MDBModalHeader>
-                <MDBModalBody>
+                <MDBModalBody className='bg-theme-nuance2 text-theme'>
                   <div style={{ padding: '20px' }}>
-                    <h3 className="text-center mb-4">Suivi quotidien de l'humeur</h3>
+                    <h3 className="text-center mb-4"><strong>Suivi quotidien de l'humeur</strong></h3>
 
                     <div className="mb-3">
-                      <label htmlFor="sleepLevel" className="form-label">Avez-vous bien dormi ? (note sur 10)</label>
+                      <label htmlFor="sleepLevel" className="form-label text-theme"><strong>Avez-vous bien dormi ?</strong> (note sur 10)</label>
                       <input type="range" className="form-range" id="sleepLevel" name="sleepLevel" min="0" max="10" value={formData.sleepLevel} onChange={(e) => handleSliderChange(e.target.value, 'sleepLevel')} />
                     </div>
                     <div className="mb-3">
-                      <label htmlFor="sportLevel" className="form-label">Avez-vous fait du sport aujourd'hui ? (note sur 10)</label>
+                      <label htmlFor="sportLevel" className="form-label text-theme"><strong>Avez-vous fait du sport aujourd'hui ?</strong> (note sur 10)</label>
                       <input type="range" className="form-range" id="sportLevel" name="sportLevel" min="0" max="10" value={formData.sportLevel} onChange={(e) => handleSliderChange(e.target.value, 'sportLevel')} />
                     </div>
                     <div className="mb-3">
-                      <label htmlFor="socialLevel" className="form-label">Notez vos interactions avec des personnes. (note sur 10)</label>
+                      <label htmlFor="socialLevel" className="form-label text-theme"><strong>Notez vos interactions avec des personnes.</strong> (note sur 10)</label>
                       <input type="range" className="form-range" id="socialLevel" name="socialLevel" min="0" max="10" value={formData.socialLevel} onChange={(e) => handleSliderChange(e.target.value, 'socialLevel')} />
                     </div>
                     <div className="mb-3">
-                      <label htmlFor="moralLevel" className="form-label">Vous êtes-vous senti anxieux, heureux, ou autre ? (note sur 10)</label>
+                      <label htmlFor="moralLevel" className="form-label text-theme"><strong>Vous êtes-vous senti anxieux, heureux, ou autre ?</strong> (note sur 10)</label>
                       <input type="range" className="form-range" id="moralLevel" name="moralLevel" min="0" max="10" value={formData.moralLevel} onChange={(e) => handleSliderChange(e.target.value, 'moralLevel')} />
                     </div>
                     <div className="mb-3">
-                      <label htmlFor="eatLevel" className="form-label">Avez-vous bien mangé aujourd'hui ?</label>
+                      <label htmlFor="eatLevel" className="form-label text-theme"><strong>Avez-vous bien mangé aujourd'hui ?</strong></label>
                       <input type="range" className="form-range" id="eatLevel" name="eatLevel" min="0" max="10" value={formData.eatLevel} onChange={(e) => handleSliderChange(e.target.value, 'eatLevel')} />
                     </div>
                   </div>
                 </MDBModalBody>
-                <MDBModalFooter>
+                <MDBModalFooter className='bg-theme-nuance text-theme'>
                   <MDBBtn color="primary" onClick={handleSubmit}>Envoyez vos réponses</MDBBtn>
                 </MDBModalFooter>
               </MDBModalContent>

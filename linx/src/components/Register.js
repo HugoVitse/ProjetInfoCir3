@@ -65,8 +65,8 @@ const Register = () => {
 
           <MDBCol size="12" md="6" className="d-flex align-items-center justify-content-center">
        <MDBCard className="shadow-3 w-100 m-0 h-100">
-        <MDBCardBody className="p-5 d-flex flex-column justify-content-center">
-          <h4 className="text-center mb-4" style={{ color: '#563d7c' }}>
+        <MDBCardBody className="p-5 d-flex flex-column justify-content-center bg-theme-nuance text-theme">
+          <h4 className="text-center mb-4">
             <strong>Inscription</strong> à Linx
           </h4>
           <form onSubmit={handleSubmit}>
@@ -79,6 +79,7 @@ const Register = () => {
                       value={formData.firstName}
                       onChange={handleChange}
                       required
+                      className='bg-light'
                       style={{ borderBottom: '2px solid #563d7c', borderRadius: '0', boxShadow: 'none' }}
                     />
                   </MDBCol>
@@ -89,19 +90,19 @@ const Register = () => {
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleChange}
+                      className='bg-light'
                       required
                       style={{ borderBottom: '2px solid #563d7c', borderRadius: '0', boxShadow: 'none' }}
                     />
                   </MDBCol>
                 </MDBRow>
                 <MDBInput
-                  label="Date of Birth"
                   type="date"
                   name="dateOfBirth"
                   value={formData.dateOfBirth}
                   onChange={handleChange}
                   required
-                  className="mb-4"
+                  className="mb-4 bg-light"
                   style={{ borderBottom: '2px solid #563d7c', borderRadius: '0', boxShadow: 'none' }}
                 />
                 <MDBInput
@@ -111,7 +112,7 @@ const Register = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="mb-4"
+                  className="mb-4 bg-light"
                   style={{ borderBottom: '2px solid #563d7c', borderRadius: '0', boxShadow: 'none' }}
                 />
                 <MDBInput
@@ -121,7 +122,7 @@ const Register = () => {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className="mb-4"
+                  className="mb-4 bg-light"
                   style={{ borderBottom: '2px solid #563d7c', borderRadius: '0', boxShadow: 'none' }}
                 />
                 <MDBInput
@@ -131,7 +132,7 @@ const Register = () => {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
-                  className="mb-4"
+                  className="mb-4 bg-light"
                   style={{ borderBottom: '2px solid #563d7c', borderRadius: '0', boxShadow: 'none' }}
                 />
                 <MDBBtn
@@ -146,7 +147,7 @@ const Register = () => {
                 
               </form>
           <div className="text-center mt-3">
-            <Link to="/Login" style={{ color: '#563d7c' }}><strong>Connectez-vous</strong></Link>
+            <Link to="/Login" className='text-theme'><strong>Connectez-vous</strong></Link>
           </div>
         </MDBCardBody>
       </MDBCard>

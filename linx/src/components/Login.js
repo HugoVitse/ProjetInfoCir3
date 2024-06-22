@@ -108,8 +108,8 @@ const Login = () => {
           </MDBCol>
           <MDBCol size="12" md="6" className="d-flex align-items-center justify-content-center">
       <MDBCard className="shadow-3 w-100 m-0 h-100">
-        <MDBCardBody className="p-5 d-flex flex-column justify-content-center">
-          <h4 className="text-center mb-4" style={{ color: '#563d7c' }}>
+        <MDBCardBody className="p-5 d-flex flex-column justify-content-center bg-theme-nuance text-theme">
+          <h4 className="text-center mb-4">
             <strong>Connexion</strong> à votre compte
           </h4>
           <form onSubmit={handleSubmit}>
@@ -122,7 +122,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="form-control"
+                className="form-control bg-light"
                 style={{
                   borderBottom: '2px solid #563d7c',
                   borderRadius: '0',
@@ -138,7 +138,7 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="form-control"
+                className="form-control bg-light"
                 style={{
                   borderBottom: '2px solid #563d7c',
                   borderRadius: '0',
@@ -156,7 +156,7 @@ const Login = () => {
             <Link to="/forgot-password" style={{ color: '#563d7c' }}>Mot de passe oublié ?</Link>
           </div>
           <div className="text-center mt-3">
-            <Link to="/Register" style={{ color: '#563d7c' }}><strong>Inscrivez-vous</strong></Link>
+            <Link to="/Register" className='text-theme'><strong>Inscrivez-vous</strong></Link>
           </div>
         </MDBCardBody>
       </MDBCard>
