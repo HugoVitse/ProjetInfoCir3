@@ -121,10 +121,10 @@ export default function EditScreen() {
     >
       <View style={[styles.inner, _Theme.themeBack2]}>
 
-        <Image
-            source={require('../assets/images/edit.png')}
-            style={styles.image}
-          />
+      <Image
+        source={_Theme.imgEditProfil}
+        style={styles.image}
+      />
       <TextInput
           value={prenom}
           outlineColor={_Theme.themeBouton.color}

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFocusEffect, useRouter } from "expo-router";
-import { Text, View, StyleSheet, Dimensions, Image, useColorScheme} from "react-native";
+import { Text, View, StyleSheet, Dimensions, Image } from "react-native";
 import { Avatar, Slider, Icon } from '@rneui/themed';
 import { IconButton, Button, Modal, Portal, PaperProvider, ActivityIndicator  } from "react-native-paper";
 import { useCallback, useState } from 'react';
@@ -285,7 +285,6 @@ export default function CalendarScreen() {
   const [alreadyFill,setalreadyFill] = useState(false)
   const [picutre,setPicture] = useState('')
   const [notif,setNotif] = useState(false)
-  const [dol,setTheme] = useState(useColorScheme())
   var todayDate = new Date();
   todayDate.toString();
 
@@ -366,10 +365,10 @@ export default function CalendarScreen() {
           <IconButton
             icon={notif?"bell-badge":"bell"}
             iconColor={_Theme.themeIcon.color}
-            onPress={() => router.push("/../settings")}
-            style={styles.settings}
+            onPress={() => router.push("/../notifications")}
+            style={styles.notifications}
           />
-          <Image style={styles.logo} source={dol==='light'?require("../../assets/images/logo.png"):require("../../assets/images/logoWhite.png")}/>
+          <Image style={styles.logo} source={_Theme.Logo}/>
           <Avatar
             size={48}
             rounded
@@ -534,7 +533,7 @@ export default function CalendarScreen() {
         </SafeAreaProvider>
       </View>
     </PaperProvider>
-    : <View  style={{    flex: 1,      justifyContent: 'center',}} ><ActivityIndicator animating={true} color={_Theme.themeBouton.backgroundColor} size='large'></ActivityIndicator></View>
+    : <View  style={[{    flex: 1,      justifyContent: 'center',},_Theme.themeBack2]} ><ActivityIndicator  style={_Theme.themeBack2} animating={true} color={_Theme.themeBouton.backgroundColor} size='large'></ActivityIndicator></View>
   );
 }
 
@@ -565,7 +564,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  settings: {
+  notifications: {
     position: 'absolute', 
     bottom: 5, 
     left: 10,

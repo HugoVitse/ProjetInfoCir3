@@ -173,6 +173,10 @@ function Friends(id: any) {
 export default function FriendScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [profilePic, setProfilFic] = useState("");
+  const [colorBack,setColorBack] = useState("")
+  const [realColor, setRealColor] = useState("")
+  const [textColor, setTextColor] = useState('#FFFFFF')
+  const [iconColor, setIconColor] = useState('#FFFFFF')
 
   const _Theme = Theme()
 
@@ -198,6 +202,8 @@ export default function FriendScreen() {
     const wrap = async()=>{
       const jwt_cookie = await AsyncStorage.getItem("jwt")
       const friendInfosReq = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getFriendInfos`, {email:id}, {headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      const reponseColor = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getColor`,{email:id,bol:false},{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
+      setColorBack(reponseColor.data)
       setProfilFic(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${friendInfosReq.data.image}`)
       setFriendInfos(friendInfosReq.data)
       const reponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
@@ -216,12 +222,37 @@ export default function FriendScreen() {
     setAllUsers(allUsers.data)
   }
 
+  useEffect(()=>{
+    setRealColor(hextoRgb(colorBack,0.5))
+    setTextColor(isColorLight(colorBack) ? 'black' : 'white')
+    setIconColor(isColorLight(colorBack) ? '#171717' : '#efefef')
+  },[colorBack])
+
+  function hextoRgb(color:string,opacity:number){
+    let hex = color;
+    let r = parseInt(hex[1]+hex[2], 16);
+    let g = parseInt(hex[3]+hex[4], 16);
+    let b = parseInt(hex[5]+hex[6], 16);
+    return `rgba(${r},${g},${b},${opacity})`
+  }
+
+  function getBrightness (color: string) {
+    const r = parseInt(color.substring(1, 3), 16);
+    const g = parseInt(color.substring(3, 5), 16);
+    const b = parseInt(color.substring(5, 7), 16);
+    return (r * 0.299 + g * 0.587 + b * 0.114) / 255;
+  };
+  
+  function isColorLight (color: string) {
+    return getBrightness(color) > 0.5;
+  };
+
   return (
     <PaperProvider>
-      <View style={[styles.header,_Theme.themeBack,_Theme.themeShadow]}>
+      <View style={[styles.header, {backgroundColor:realColor,shadowColor:realColor,shadowOpacity:0.7, shadowRadius:40}]}>
         <IconButton
             icon="arrow-left"
-            iconColor={_Theme.themeIcon.color}
+            iconColor={iconColor}
             onPress={() => router.push('profile')}
             style={styles.buttonBack}
         />
@@ -229,7 +260,7 @@ export default function FriendScreen() {
           ? <></>
           : <IconButton 
             icon="account-plus"  
-            iconColor={_Theme.themeIcon.color} 
+            iconColor={iconColor} 
             onPress={()=>{sendFriendRequest()}} 
             style={styles.buttonFriendRequest} 
           />
@@ -239,7 +270,7 @@ export default function FriendScreen() {
           <Avatar.Image size={80} source={{uri:profilePic}} />
         </TouchableOpacity>
       
-        <Text style={[styles.headerText, _Theme.themeText]}>{`${friendInfos.firstName} ${friendInfos.lastName}`}</Text>
+        <Text style={[styles.headerText, {color: textColor}]}>{`${friendInfos.firstName} ${friendInfos.lastName}`}</Text>
       </View>
       <SafeAreaProvider>
         <Tab.Navigator
@@ -247,7 +278,7 @@ export default function FriendScreen() {
             tabBarActiveTintColor: _Theme.themeText.color,
             tabBarLabelStyle: { fontSize: 12 },
             tabBarStyle: { backgroundColor: _Theme.themeBack.backgroundColor },
-            tabBarIndicatorStyle: {backgroundColor: _Theme.themeBouton.backgroundColor}
+            tabBarIndicatorStyle: {backgroundColor: colorBack}
           }}
         >
           <Tab.Screen name="Informations" component={Informations} initialParams={{id: id}} />

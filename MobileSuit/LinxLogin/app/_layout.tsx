@@ -38,7 +38,7 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }}/>
         <Stack.Screen name="profile" options={{ headerShown: false }}/>
         <Stack.Screen name="editProfile" options={{ title: "Modifier le profil" }}/>
-        <Stack.Screen name="settings" options={{ headerShown:false }}/>
+        <Stack.Screen name="notifications" options={{ headerShown:false }}/>
         <Stack.Screen name="+not-found" />
       </Stack>
     </GestureHandlerRootView>

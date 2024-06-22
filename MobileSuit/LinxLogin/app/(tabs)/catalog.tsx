@@ -1,6 +1,6 @@
 import { Avatar } from "@rneui/themed";
 import { useFocusEffect, useRouter } from "expo-router";
-import { Text, View, StyleSheet, Dimensions,Modal,Image, Platform, useColorScheme } from "react-native";
+import { Text, View, StyleSheet, Dimensions,Modal,Image, Platform } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, Card, Button, ActivityIndicator,TextInput} from "react-native-paper";
 import React, { useState , useEffect, useCallback } from "react";
@@ -32,7 +32,6 @@ export default function CatalogScreen() {
   const [type, setType] = useState();
   const [notif,setNotif] = useState(false)
   const [showAndroid, setshowAndroid] = useState(false)
-  const [dol,setTheme] = useState(useColorScheme())
 
 
   const onChange = (event:any, selectedDate:any) => {
@@ -211,10 +210,10 @@ export default function CatalogScreen() {
         <IconButton
           icon={notif?"bell-badge":"bell"}
           iconColor={_Theme.themeIcon.color}
-          onPress={() => router.push("/../settings")}
-          style={styles.settings}
+          onPress={() => router.push("/../notifications")}
+          style={styles.notifications}
         />
-        <Image style={styles.logo} source={dol==='light'?require("../../assets/images/logo.png"):require("../../assets/images/logoWhite.png")}/>
+        <Image style={styles.logo} source={_Theme.Logo}/>
         <Avatar
           size={48}
           rounded
@@ -271,7 +270,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center',
   },
-  settings: {
+  notifications: {
     position: 'absolute', 
     bottom: 10, 
     left: 10,

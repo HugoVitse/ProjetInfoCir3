@@ -1,6 +1,6 @@
 import React , {useState,useEffect} from 'react';
 import {Link, useRouter} from 'expo-router'
-import { KeyboardAvoidingView, Platform, StyleSheet, useColorScheme, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 import {Image,Text} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TextInput,Button,ActivityIndicator, HelperText} from 'react-native-paper'
@@ -13,7 +13,6 @@ const TextInputExample = () => {
   const [jwt,setJwt] = useState('');
   const [isjwt,setisjwt] = useState(-1)
   const [tentativeLogin,setTentativeLogin] = useState(false)
-  const [dol,setTheme] = useState(useColorScheme())
 
   const [islogin,setLogin] = useState(-1)
 
@@ -73,10 +72,6 @@ const TextInputExample = () => {
   },[jwt])
 
   useEffect(()=>{
-    console.log(dol)
-  },[dol])
-
-  useEffect(()=>{
     if(isjwt==0){
       setLogin(0)
     }
@@ -127,7 +122,7 @@ const TextInputExample = () => {
 
   if(islogin == -1 || islogin == 1 || tentativeLogin){
     return(
-       <View  style={{    flex: 1,      justifyContent: 'center',}} ><ActivityIndicator animating={true} color={_Theme.themeBouton.backgroundColor} size='large'></ActivityIndicator></View>
+       <View  style={[{    flex: 1,      justifyContent: 'center',}, _Theme.themeBack2]} ><ActivityIndicator style={_Theme.themeBack2} animating={true} color={_Theme.themeBouton.backgroundColor} size='large'></ActivityIndicator></View>
     )
   }
   else{
@@ -141,7 +136,7 @@ const TextInputExample = () => {
 
 
         <Image
-          source={dol==='light'?require("../assets/images/logo.png"):require("../assets/images/logoWhite.png")}
+          source={_Theme.Logo}
           style={styles.image}
         />
         

@@ -1,6 +1,6 @@
 import React , {useState,useEffect} from 'react';
 import {Link, useRouter} from 'expo-router'
-import { ImageBackground,Platform,StyleSheet, useColorScheme, View } from 'react-native';
+import { ImageBackground,Platform,StyleSheet, View } from 'react-native';
 import {TextInput,Button} from 'react-native-paper'
 import {Image,Text} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';;
@@ -35,7 +35,6 @@ const RegisterScreen = () => {
   const [confirmPass, onChangeconfirmPass] = useState('');
   const [nom, onChangeNom] = useState('');
   const [prenom, onChangePrenom] = useState('');
-  const [dol,setTheme] = useState(useColorScheme())
 
 
 
@@ -91,7 +90,7 @@ const RegisterScreen = () => {
     setisdate(isdate+1)
   },[date])
 
-  const image = dol==='light'?require("../assets/images/back.png"):require("../assets/images/backsombre.png")
+  const image = _Theme.Logo
   const register = async() => {
     const url = `${Config.scheme}://${Config.urlapi}:${Config.portapi}/register`;
     const data = {
@@ -147,7 +146,7 @@ const RegisterScreen = () => {
        
 
         <Image
-          source={dol==='light'?require("../assets/images/logo.png"):require("../assets/images/logoWhite.png")}
+          source={_Theme.Logo}
           style={styles.image}
         />
       

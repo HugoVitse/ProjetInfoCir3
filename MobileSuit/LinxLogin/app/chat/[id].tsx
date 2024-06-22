@@ -1,5 +1,5 @@
 import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
-import { View, Text, StyleSheet, Dimensions, Platform, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Platform, TouchableOpacity, Animated, Image } from 'react-native';
 import Theme from '@/constants/Theme';
 import { Avatar, Drawer, IconButton, TextInput } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -27,7 +27,7 @@ type colorPseudo = {
 
 
 
-export default function SettingsScreen() {
+export default function ChatScreen() {
   const { id } = useLocalSearchParams();
 
   
@@ -52,6 +52,7 @@ export default function SettingsScreen() {
   const [int, setInt] = useState<NodeJS.Timeout>()
   const [myEmail, setMyEmail] = useState("")
   const [colorPseudos, setColorPseudos] = useState<colorPseudo[]>([])
+  const [titre, setTitre] = useState("")
   
   const router = useRouter();
 
@@ -108,9 +109,8 @@ export default function SettingsScreen() {
       setMyEmail(jwt_decode.email)
       const reponseUsers = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`, {headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
       setAllUsers(reponseUsers.data)
-
       const reponseMessage = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getMessage/${id}`,{headers:{Cookie:`jwt=${jwt_cookie}`},withCredentials:false})
-
+      setTitre(reponseMessage.data.titre)
       const part = reponseMessage.data.participants
       let colors = []
 
@@ -182,7 +182,7 @@ export default function SettingsScreen() {
       if (scrollViewRef.current) {
         scrollViewRef.current.scrollToEnd({ animated: false });
       }
-    }, 200)
+    }, 100)
     setIsFocused(false)
   }, [isFocused]);
 
@@ -226,8 +226,6 @@ export default function SettingsScreen() {
            
             let color = colorPseudos.find((color) => color.user == message[i].author)?.color
            
-        
-            // const colors = await ImageColors.getColors(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/profile_pictures/${message[i].author}.png`)
             
             let tmp;
     
@@ -267,6 +265,7 @@ export default function SettingsScreen() {
           onPress={() => {router.push("..")}}
           style={styles.back}
         />
+        <Text style={[styles.titre, _Theme.themeText]}>{titre}</Text>
         <IconButton
           icon={"account-multiple"}
           iconColor={_Theme.themeIcon.color}
@@ -284,16 +283,25 @@ export default function SettingsScreen() {
     >
     
 
-      <View style={{height:scrollviewHeight,top:HEADER_HEIGHT-100}}>
-        <ScrollView
+      {Platform.OS=='ios'
+        ?<View style={{height:scrollviewHeight,top:HEADER_HEIGHT-100}}>
+          <ScrollView
+            style={{width: width, flexDirection: 'column'}}
+            ref={scrollViewRef}
+            contentContainerStyle={{ paddingBottom: 20}}
+          >
+            {messageComponent}
+            
+          </ScrollView>
+        </View>
+        :<ScrollView
           style={{width: width, flexDirection: 'column'}}
           ref={scrollViewRef}
           contentContainerStyle={{ paddingBottom: 20}}
         >
           {messageComponent}
-          
         </ScrollView>
-      </View>
+      }
   
       <View style={[styles.writeMessage, _Theme.themeBack, _Theme.themeShadow,{}]}>
         <Animated.View style={{width:inputWidth}}>
@@ -309,8 +317,8 @@ export default function SettingsScreen() {
             style={[styles.input, _Theme.themeBack2, _Theme.themeShadow]}
             textColor={_Theme.themeText.color}
             onPress={() => setIsFocused(true)}
-            onFocus={() => {setIsFocused(true), setScrollviewHeight(Platform.OS=='ios'?ScreenHeight-HEADER_HEIGHT-400:ScreenHeight-HEADER_HEIGHT-350)}}
-            onBlur={() => {setIsFocused(false), setScrollviewHeight(ScreenHeight-HEADER_HEIGHT-100)}}
+            onFocus={() => {setIsFocused(true), setScrollviewHeight(Platform.OS=='ios'?ScreenHeight-HEADER_HEIGHT-400:0)}}
+            onBlur={() => {setIsFocused(false), setScrollviewHeight(Platform.OS=='ios'?ScreenHeight-HEADER_HEIGHT-100:0)}}
         />
         </Animated.View>
         <View style={{display:messageToSend.length > 0 ? 'flex' : 'none'}}>
@@ -428,6 +436,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     zIndex: 1,
   }, 
+  titre: {
+    top:10,
+    textAlign: 'center',
+    fontSize: 22,
+    fontWeight: 'bold',
+    width: width - 100
+  },
   back: {
     position: 'absolute', 
     bottom: 10, 

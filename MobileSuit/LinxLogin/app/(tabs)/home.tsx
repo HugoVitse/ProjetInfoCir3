@@ -1,5 +1,5 @@
 import { useFocusEffect, useRouter } from "expo-router";
-import {Image, Text, View, StyleSheet ,Dimensions, Animated, useColorScheme} from "react-native";
+import {Image, Text, View, StyleSheet ,Dimensions, Animated } from "react-native";
 import { Avatar } from '@rneui/themed';
 import { useCallback, useEffect, useState  } from "react";
 import { Button, Dialog, IconButton, Modal, PaperProvider, Portal, RadioButton, Snackbar, TextInput } from "react-native-paper";
@@ -43,7 +43,6 @@ export default function HomeScreen() {
   const [expandedPast, setExpandedPast] = useState(false);
   const [picture, setPicture] = useState("")
   const [notif,setNotif] = useState(false)
-  const [dol,setTheme] = useState(useColorScheme())
   const [idToSoD,setidToSoD] = useState("")
   const [me, setMe] = useState("")
   //snackbar
@@ -278,10 +277,10 @@ export default function HomeScreen() {
         <IconButton
           icon={notif?"bell-badge":"bell"}
           iconColor={_Theme.themeIcon.color}
-          onPress={() => router.push("/../settings")}
-          style={styles.settings}
+          onPress={() => router.push("/../notifications")}
+          style={styles.notifications}
         />
-        <Image style={styles.logo} source={dol==='light'?require("../../assets/images/logo.png"):require("../../assets/images/logoWhite.png")}/>
+        <Image style={styles.logo} source={_Theme.Logo}/>
 
         <Avatar
           size={48}
@@ -589,7 +588,7 @@ const styles = StyleSheet.create({
     top:40,
     height: 115,
   },
-  settings: {
+  notifications: {
     position: 'absolute', 
     bottom: 10, 
     left: 10,

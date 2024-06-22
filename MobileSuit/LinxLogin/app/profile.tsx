@@ -7,7 +7,6 @@ import { Avatar, Checkbox, List, PaperProvider, Portal, RadioButton, Searchbar }
 import { useEffect, useState } from 'react';
 import { IconButton,TextInput, Modal, Button, Dialog, HelperText, ActivityIndicator } from "react-native-paper";
 import { useCameraPermissions } from 'expo-camera';
-import { CameraType } from "expo-camera/build/legacy/Camera.types";
 import axios from 'axios'
 import Config from '../config.json'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -17,31 +16,12 @@ import * as FileSystem from 'expo-file-system';
 import Theme from "@/constants/Theme";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Icon, ScreenHeight, Slider } from "@rneui/base";
-import { useSharedValue } from "react-native-reanimated";
 import { jwtDecode } from "jwt-decode";
 
 const HEADER_HEIGHT = 200;
 const { width } = Dimensions.get('window');
 
 const Tab = createMaterialTopTabNavigator();
-
-type _item = {
-  id: string;
-  title: string;
-}
-
-const slideData = [
-  {
-    id: '1',
-    title: "friendList",
-  },
-  {
-    id: '2',
-    title: 'searchFriend',
-  }
-]
-
-
 
 function Informations(id: any) {
 
@@ -277,9 +257,7 @@ export default function ProfileScreen() {
   const router = useRouter();
   const [visibleQ, setVisibleQ] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [facing, setFacing] = useState(CameraType.back);
   const [permission, requestPermission] = useCameraPermissions();
-  const [camVisible, setCamVisible] = useState(false);
   const [password, onChangePassword] = useState('');
   const [error, setError] = useState('')
   const [isLoading,setIsLoading] = useState(false)
@@ -293,12 +271,12 @@ export default function ProfileScreen() {
   const [checked2, setChecked2] = useState('first');
   const [checked3, setChecked3] = useState('first');
   const [checked4, setChecked4] = useState('first');
-  const [valueC, setValueC] = useState(slideData[0].title);
-  const progress = useSharedValue<number>(0);
   const [text,setText] = useState("")
   const [disabledValid, setDisabledValid] = useState(true)
   const [mimeType,setMimeType] = useState("")
   const [realColor, setRealColor] = useState("")
+  const [textColor, setTextColor] = useState('#FFFFFF')
+  const [iconColor, setIconColor] = useState('#FFFFFF')
   const [initialInfos, setInitialInfos] = useState<user>({
     firstName:"",
     lastName:"",
@@ -397,7 +375,7 @@ export default function ProfileScreen() {
     
     await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/setPicture`,data,{headers:{Cookie:`jwt=${jwt_token}`},withCredentials:false})
     const jwt_decode:any = jwtDecode(jwt_token?jwt_token:"")
-    const reponseColor = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getColor`,{email:jwt_decode.email},{headers:{Cookie:`jwt=${jwt_token}`},withCredentials:false})
+    const reponseColor = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getColor`,{email:jwt_decode.email,bol:true},{headers:{Cookie:`jwt=${jwt_token}`},withCredentials:false})
     setColorBack(reponseColor.data)
   }
 
@@ -475,6 +453,8 @@ export default function ProfileScreen() {
   };
   useEffect(()=>{
     setRealColor(hextoRgb(colorBack,0.5))
+    setTextColor(isColorLight(colorBack) ? 'black' : 'white')
+    setIconColor(isColorLight(colorBack) ? '#171717' : '#efefef')
   },[colorBack])
 
   useEffect(()=>{
@@ -518,22 +498,16 @@ export default function ProfileScreen() {
   }
 
   if (!permission) {
-    // Camera permissions are still loading.
     return <View />;
   }
 
   if (!permission.granted) {
-    // Camera permissions are not granted yet.
     return (
-      <View style={styles.container}>
-        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
-        <Button onPress={requestPermission}>grant permission</Button>
+      <View style={[styles.container, _Theme.themeBack2]}>
+        <Text style={[{ textAlign: 'center' }, _Theme.themeText]}>Nous avons besoin de votre permission pour utiliser la caméra</Text>
+        <Button textColor={_Theme.themeBouton2.color} onPress={requestPermission}>Donner la permission</Button>
       </View>
     );
-  }
-  
-  function toggleCameraFacing() {
-    setFacing(current => (current === CameraType.back ? CameraType.front : CameraType.back));
   }
 
   function hextoRgb(color:string,opacity:number){
@@ -544,11 +518,20 @@ export default function ProfileScreen() {
     return `rgba(${r},${g},${b},${opacity})`
   }
 
-
+  function getBrightness (color: string) {
+    const r = parseInt(color.substring(1, 3), 16);
+    const g = parseInt(color.substring(3, 5), 16);
+    const b = parseInt(color.substring(5, 7), 16);
+    return (r * 0.299 + g * 0.587 + b * 0.114) / 255;
+  };
+  
+  function isColorLight (color: string) {
+    return getBrightness(color) > 0.5;
+  };
 
 
   
-  if(isLoading)return(<View  style={{    flex: 1,      justifyContent: 'center',}} ><ActivityIndicator animating={true} color={colorMain} size='large'></ActivityIndicator></View>)
+  if(isLoading)return(<View  style={[{    flex: 1,      justifyContent: 'center',}, _Theme.themeBack2]} ><ActivityIndicator style={_Theme.themeBack2} animating={true} color={_Theme.themeBouton.backgroundColor} size='large'></ActivityIndicator></View>)
   return (
     
     <PaperProvider>
@@ -556,7 +539,7 @@ export default function ProfileScreen() {
         <View style={[styles.header, {backgroundColor:realColor,shadowColor:realColor,shadowOpacity:0.7, shadowRadius:40}]}>
           <IconButton
             icon="arrow-left"
-            iconColor={_Theme.themeIcon.color}
+            iconColor={iconColor}
             onPress={() => router.push('home')}
             style={styles.buttonBack}
           />
@@ -566,22 +549,22 @@ export default function ProfileScreen() {
           
           
           
-          <Text style={[styles.headerText, _Theme.themeText]}>{`${initialInfos.firstName} ${initialInfos.lastName}`}</Text>
+          <Text style={[styles.headerText, {color: textColor}]}>{`${initialInfos.firstName} ${initialInfos.lastName}`}</Text>
           <IconButton
             icon="logout"
-            iconColor={_Theme.themeIcon.color}
+            iconColor={iconColor}
             onPress={showDialogLogout}
             style={styles.logout}
           />
           <IconButton
             icon="account-edit"
-            iconColor={_Theme.themeIcon.color}
+            iconColor={iconColor}
             onPress={showDialog}
             style={styles.edit}
           />
           <IconButton
             icon="form-select"
-            iconColor={_Theme.themeIcon.color}
+            iconColor={iconColor}
             onPress={() => showModal()}
             style={styles.form}
           />
@@ -933,7 +916,6 @@ const styles = StyleSheet.create({
   },
   headerText: {
     top: 24,
-    color: 'black',
     fontSize: 20,
   },
   inputContainer: {
@@ -985,11 +967,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-  },
-  camera: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   button: {
     flex: 1,

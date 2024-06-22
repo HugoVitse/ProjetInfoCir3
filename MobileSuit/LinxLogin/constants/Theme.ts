@@ -19,7 +19,9 @@ export default function Theme() {
         themeCard: colorScheme === 'light' ? styles1.lightThemeCard : styles1.darkThemeCard,
         themeBackMessage: colorScheme === 'light' ? styles1.lightThemeBackMessage : styles1.darkThemeBackMessage,
         themeBackMyMessage: colorScheme === 'light' ? styles1.lightThemeBackMyMessage : styles1.darkThemeBackMyMessage,
-        themeSearchBar: colorScheme === 'light' ? styles1.lightThemeSearchBar : styles1.darkThemeSearchBar
+        themeSearchBar: colorScheme === 'light' ? styles1.lightThemeSearchBar : styles1.darkThemeSearchBar,
+        imgEditProfil: colorScheme === 'light' ? require('../assets/images/edit.png') : require('../assets/images/editW.png'),
+        Logo: colorScheme === 'light' ? require("../assets/images/logo.png"):require("../assets/images/logoWhite.png")
     }
 
     return Theme

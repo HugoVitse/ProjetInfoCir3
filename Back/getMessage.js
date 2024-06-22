@@ -32,14 +32,16 @@ async function getMessage(req,res){
             if(findOneResult == null || findOneResult.chat == null){
                 res.send({
                     participants:findOneResult.participants,
-                    chat:[]
+                    chat:[],
+                    titre:findOneResult.activity.title
                 })
                 return
             }
             else{
                 res.send({
                     chat:findOneResult.chat,
-                    participants:findOneResult.participants
+                    participants:findOneResult.participants,
+                    titre:findOneResult.activity.title
                 })
                 return
             }

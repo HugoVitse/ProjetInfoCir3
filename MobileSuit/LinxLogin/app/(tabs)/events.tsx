@@ -1,6 +1,6 @@
 import { Avatar } from "@rneui/themed";
 import { useFocusEffect, useRouter } from "expo-router";
-import { Text, View, StyleSheet, SafeAreaView, Animated, Modal,Image, Platform, useColorScheme } from "react-native";
+import { Text, View, StyleSheet, SafeAreaView, Animated, Modal,Image, Platform } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, Card, Button, Dialog, Drawer, TextInput, Menu, Divider, PaperProvider, List } from "react-native-paper";
 import { useState , useEffect, useRef, useCallback } from "react";
@@ -85,7 +85,6 @@ export default function CatalogScreen() {
   const [text, setText] = useState("");
   const [showAndroid, setshowAndroid] = useState(false)
   const [notif,setNotif] = useState(false)
-  const [dol,setTheme] = useState(useColorScheme())
 
   const googlekey = "AIzaSyAOpVdDvYUvbIB_u_d6k_HVfw13_Vux0K0"
 
@@ -434,8 +433,8 @@ export default function CatalogScreen() {
         <IconButton
           icon={notif?"bell-badge":"bell"}
           iconColor={_Theme.themeIcon.color}
-          onPress={() => router.push("/../settings")}
-          style={styles.settings}
+          onPress={() => router.push("/../notifications")}
+          style={styles.notifications}
         />
         <IconButton
           icon={drawerDeployed?"menu-open":"menu"}
@@ -447,7 +446,7 @@ export default function CatalogScreen() {
         
    
         
-        <Image style={styles.logo} source={dol==='light'?require("../../assets/images/logo.png"):require("../../assets/images/logoWhite.png")}/>
+        <Image style={styles.logo} source={_Theme.Logo}/>
         <Avatar
           size={48}
           rounded
@@ -720,7 +719,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 20,
   },
-  settings: {
+  notifications: {
     position: 'absolute', 
     bottom: 10, 
     left: 10,

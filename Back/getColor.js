@@ -27,12 +27,15 @@ async function getColor(req,res){
             const token =  req.cookies.jwt
             const decoded = jwt.verify(token, config_serv.secretJWT);
             const email = decoded.email     
+            
+            const bol = req.body.bol
+            const emailBody = req.body.email
         
             const database = connect_db.client.db(config.dbName);
             const collection = database.collection(config.users);
         
         
-            const findOneResult = await collection.findOne({'email': req.body.email});
+            const findOneResult = await collection.findOne({'email':  bol?email:emailBody});
 
             ColorThief.getColor(findOneResult.image)
                 .then(color => { console.log(color);res.send(rgbToHex(color));return;console.log(color) })

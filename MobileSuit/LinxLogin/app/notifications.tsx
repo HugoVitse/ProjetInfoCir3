@@ -1,5 +1,5 @@
 import { useFocusEffect, useRouter } from 'expo-router';
-import { View, Text, StyleSheet, Dimensions,Image, useColorScheme } from 'react-native';
+import { View, Text, StyleSheet, Dimensions,Image } from 'react-native';
 import Theme from '@/constants/Theme';
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios'
@@ -13,11 +13,10 @@ import { user } from '@/constants/user';
 const HEADER_HEIGHT = 100
 
 
-export default function SettingsScreen() {
+export default function NotificationsScreen() {
   const _Theme = Theme()
   const [friendRequests, setFriendRequests] = useState([])
   const [friendRequestListComp, setFriendRequestListComp] = useState<React.JSX.Element[]>([])
-  const [dol,setTheme] = useState(useColorScheme())
   const [allUsers, setAllUsers] = useState<user[]>([])
 
   const router = useRouter()
@@ -113,7 +112,7 @@ export default function SettingsScreen() {
           onPress={() => {router.push("..")}}
           style={styles.back}
         />
-        <Image style={styles.logo} source={dol==='light'?require("../assets/images/logo.png"):require("../assets/images/logoWhite.png")}/>
+        <Image style={styles.logo} source={_Theme.Logo}/>
 
         
       </View>
