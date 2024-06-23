@@ -127,6 +127,7 @@ export default function HomeScreen() {
           const date = new Date(events[i].date)
           const today = new Date()
           if(date.getDate() >= today.getDate() && date.getMonth() >= today.getMonth() && date.getFullYear() >= today.getFullYear()){
+            try{
             tmp.push(
               <Swipeable  dragOffsetFromLeftEdge={0}  renderLeftActions={(progress:any, dragX:any,event:any)=>{return renderLeftActions(events[i]._id,events[i].host)}}>
 
@@ -146,6 +147,11 @@ export default function HomeScreen() {
               </ListItem>
               </Swipeable>
             )
+            }
+            catch(e){
+              console.log("err")
+              console.log(events[i].host)
+            }
           }
           else{
 
@@ -599,4 +605,3 @@ const styles = StyleSheet.create({
     left: 50,
   }
 });
-

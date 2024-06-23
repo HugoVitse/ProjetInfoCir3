@@ -60,4 +60,3 @@ async function getColor(req,res){
 
 module.exports = getColor
 
-

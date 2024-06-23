@@ -1,18 +1,23 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { MDBContainer, MDBRow, MDBListGroup, MDBCol, MDBCard, MDBCardBody, MDBBtn, MDBListGroupItem, MDBInput, MDBCardText, MDBCardImage, MDBTypography } from 'mdb-react-ui-kit';
+import React, { useState, useEffect, useRef } from 'react';
+import { MDBContainer, MDBRow, MDBListGroupItem, MDBCol, MDBCard, MDBCardBody, MDBBtn, MDBInput, MDBCardText, MDBCardImage, MDBTypography } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
-import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import Config from '../config.json';
+import { UserAgent } from "react-useragent";
+import MobileDownload from './MobileDownload';
 
 const Account = () => {
+  const { emailurl } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [age, setAge] = useState(0);
   const [description, setDescription] = useState('');
   const [selectedInterests, setSelectedInterests] = useState([]);
+  const [initialInterests, setInitialInterests] = useState([]);
   const [friends, setFriends] = useState([]);
   const [profileImage, setProfileImage] = useState(null);
   const [email, setEmail] = useState('');
@@ -20,54 +25,84 @@ const Account = () => {
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
+  const [users, setUsers] = useState([]);
+  const [color, setColor] = useState("")
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
+
     const retrieveCookie = () => {
-      const token = Cookies.get("jwt");
       try {
-        jwtDecode(token);
+        const jwt = Cookies.get("jwt");
+        const decodedToken = jwtDecode(jwt);
+        setEmail(decodedToken.email);
       } catch {
-        navigate("/Login");
+        navigate('/Login');
       }
     };
 
-    const fetchData = async () => {
+    const fetchUsers = async () => {
       retrieveCookie();
       try {
-        const response = await axios.get('http://localhost/infos', { withCredentials: true });
-        console.log('Data received from API:', response.data);
-        setEmail(response.data.email || '');
-        setFirstName(response.data.firstName || '');
-        setLastName(response.data.lastName || '');
-        setDescription(response.data.description || '');
-        setSelectedInterests(response.data.activities || []);
-        setProfileImage(response.data.image || null);
-        setFriends(response.data.friends || []);
-        if (response.data.dateOfBirth) {
-          const calculatedAge = calculateAge(new Date(response.data.dateOfBirth));
-          setAge(calculatedAge);
+        const jwt = Cookies.get("jwt");
+        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`, { withCredentials: true });
+        const response1 = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getColor`, {email:"",bol:true},{ withCredentials: true });
+        setColor(response1.data)
+        if (emailurl.length > 0 && response.data.length > 0) {
+          const foundUser = response.data.find(user => user.email === emailurl);
+          if (!foundUser) {
+            navigate('/');
+          } else {
+            setUsers(foundUser);
+            setFirstName(foundUser.firstName || '');
+            setLastName(foundUser.lastName || '');
+            setDescription(foundUser.description || '');
+            setSelectedInterests(foundUser.activities || []);
+            setInitialInterests(foundUser.activities || []);
+            setProfileImage(foundUser.image || null);
+            setFriends(foundUser.friends || []);
+
+            if (foundUser.dateOfBirth) {
+              const calculatedAge = calculateAge(new Date(foundUser.dateOfBirth));
+              setAge(calculatedAge);
+            }
+          }
         }
+
+        const eventsResponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/evenements`, { withCredentials: true });
+
+  
+        const filteredEvents = eventsResponse.data.filter(event => {
+          const eventDate = new Date(event.date);
+          const today = new Date();
+          return eventDate < today &&
+                 Array.isArray(event.participants) &&
+                 event.participants.includes(emailurl);
+        });
+        setEvents(filteredEvents);
+
       } catch (error) {
-        console.error(error);
+        console.error('Erreur lors de la récupération des utilisateurs :', error);
       }
     };
-    fetchData();
-  }, [navigate]);
 
-  const calculateAge = (dateOfBirth) => {
-    const today = new Date();
-    const birthDate = new Date(dateOfBirth);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    return age;
-  };
+    fetchUsers();
+    }, [navigate]);
 
-  const handleEditProfile = () => {
-    setIsEditing(true);
-  };
+    const calculateAge = (dateOfBirth) => {
+      const today = new Date();
+      const birthDate = new Date(dateOfBirth);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
+    };
+
+    const handleEditProfile = () => {
+      setIsEditing(true);
+    };
 
   const handleDescriptionChange = (e) => {
     if (e.target.value.length <= 200) {
@@ -79,7 +114,7 @@ const Account = () => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
-    if (file && file.type === 'image/png') {
+    if (file && file.type === 'image/jpeg') {  // Accept only JPEG images
       reader.onloadend = () => {
         setProfileImage(reader.result);
         setErrorMessage('');
@@ -87,31 +122,40 @@ const Account = () => {
       };
       reader.readAsDataURL(file);
     } else {
-      setErrorMessage('Veuillez sélectionner un fichier PNG.');
+      setErrorMessage('Veuillez sélectionner un fichier JPG.');
     }
   };
 
   const handleSubmit = async () => {
     try {
       if (pp) {
-        await axios.post('http://localhost/updateInfoWeb', { picture: pp, firstName: firstName, lastName: lastName, selectedInterests: selectedInterests, description: description}, { withCredentials: true });
+        await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/updateInfoWeb`, { picture: pp, firstName, lastName, selectedInterests, description }, { withCredentials: true });
+
       } else {
-        await axios.post('http://localhost/updateInfoWeb', {picture:"", firstName: firstName, lastName: lastName, selectedInterests: selectedInterests, description: description}, { withCredentials: true });
+        await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/updateInfoWeb`, { picture: pp, firstName, lastName, selectedInterests, description }, { withCredentials: true });
       }
-      console.log(pp, firstName, lastName, selectedInterests, description)
+      setInitialInterests(selectedInterests);
     } catch (error) {
       console.error('Error:', error);
     }
   };
-  
 
   const handleSaveProfile = () => {
     const filteredInterests = selectedInterests.filter(interest => interest.trim() !== '');
     setSelectedInterests(filteredInterests);
     setIsEditing(false);
     handleSubmit();
-    window.location.reload();
-    console.log(filteredInterests);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setFirstName(users.firstName || '');
+    setLastName(users.lastName || '');
+    setDescription(users.description || '');
+    setSelectedInterests(initialInterests || []);
+    setProfileImage(users.image || null);
+    setPp('');
+    setErrorMessage('');
   };
 
   const handleAddInterest = (interest) => {
@@ -128,123 +172,176 @@ const Account = () => {
     'Moto', 'Lecture', 'Jeux vidéos', 'Musique', 'BD/Comics', 'Voyager', 'Musées', 'Sortir entre amis',
     'Sport', 'Nourriture', 'La mode'
   ];
-
+  
+  const InterestsComponent = ({ interestsList, selectedInterests, isEditing, handleAddInterest, handleRemoveInterest }) => {
+    const interestsPerRow = 4;
+    const boxWidth = 100 / interestsPerRow - 2 * 10; // Adjusting for margins
+  
+    return (
+      <MDBListGroupItem className="font-italic" style={{ padding: '20px', backgroundColor: 'bg-theme-nuance', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+        <strong style={{ fontSize: '1.2em', color: 'text-theme' }}>Centres d'intérêts : </strong>
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '10px' }}>
+          {interestsList.map(interest => {
+            const isSelected = selectedInterests.includes(interest);
+  
+            if (isEditing || isSelected) {
+              return (
+                <div
+                  key={interest}
+                  className="interest-item bg-theme-nuance2"
+                  style={{
+                    flex: `1 1 calc(${boxWidth}% - 20px)`,
+                    margin: '10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '10px',
+                    borderRadius: '10px',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                    transition: 'transform 0.2s',
+                    cursor: isEditing ? 'pointer' : 'default'
+                  }}
+                  onClick={() => isEditing ? isSelected ? handleRemoveInterest(interest) : handleAddInterest(interest) : null}
+                >
+                  {isEditing ? (
+                    <>
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        readOnly
+                        style={{ marginRight: '10px' }}
+                      />
+                      <label>{interest}</label>
+                    </>
+                  ) : (
+                    <span style={{ fontWeight: 'bold', color: 'text-theme' }}>{interest}</span>
+                  )}
+                </div>
+              );
+            } else {
+              return null;
+            }
+          })}
+        </div>
+        <style jsx>{`
+          .interest-item:hover {
+            transform: ${isEditing ? 'scale(1.05)' : 'none'};
+          }
+        `}</style>
+      </MDBListGroupItem>
+    );
+  };
+  
+  
   return (
+    <UserAgent>
+    {({ ua }) => {
+      return ua.mobile ? <MobileDownload /> :
+      
     <div className="bg-theme text-theme">
       <MDBContainer className="py-5 h-100">
         <MDBRow className="justify-content-center align-items-center h-100">
           <MDBCol lg="9" xl="7">
             <MDBCard className='bg-theme text-theme'>
-              <div className="bg-theme-inv text-theme-inv rounded-top text-white d-flex flex-row" style={{ height: '200px' }}>
-                <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
-                  <label htmlFor="profile-image">
+              <div className="text-light rounded-top text-white d-flex flex-row" style={{ height: '200px', backgroundColor: color, textShadow: 'black 4px 0 10px'}}>
+              <div className="ms-4 mt-4 d-flex flex-column" style={{ width: '150px' }}>
+                <label htmlFor="profile-image">
+                  <div style={{ width: '150px', height: '150px', marginBottom:'20px' }}>
                     <MDBCardImage 
-                      src={isEditing ? profileImage : "http://localhost/"+profileImage || "https://via.placeholder.com/150"}                      
-                      alt="Generic placeholder image" 
-                      className=" mb-2 img-thumbnail" 
+                      src={isEditing ? profileImage : profileImage ? `${Config.scheme}://${Config.urlapi}/${profileImage}` : "https://via.placeholder.com/150"}
+
+                      alt="Profile"
+                      className="mb-1 img-thumbnail"
+                      style={{ width: '150px', height: '150px', objectFit: 'cover', zIndex: '1' }} 
                       fluid 
-                      style={{ width: '150px', height: '150px', objectFit: 'contain', zIndex: '1' }} 
                     />
-                  </label>
+                  </div>
+                </label>
+                {isEditing && (
                   <input
                     id="profile-image"
                     ref={inputRef}
                     type="file"
-                    accept="image/png"
+                    accept="image/jpeg"
                     style={{ display: 'none' }}
                     onChange={handleImageChange}
                   />
-                  {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                  {isEditing ? (
-                    <MDBBtn className='mt-4' color="black" onClick={handleSaveProfile} style={{ overflow: 'visible' }}>Save</MDBBtn>
-                  ) : (
-                    <MDBBtn className='mt-4' color="black" onClick={handleEditProfile} style={{ overflow: 'visible' }}>Edit Profile</MDBBtn>
-                  )}
+                )}
+                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                {emailurl === email && (isEditing ? (
+                  <div className="mt-4 d-flex">
+                    <MDBBtn color="black" onClick={handleSaveProfile} style={{ overflow: 'visible', marginRight: '10px' }}>Sauvegarder</MDBBtn>
+                    <MDBBtn color="danger" onClick={handleCancelEdit} style={{ overflow: 'visible' }}>Annuler</MDBBtn>
+                  </div>
+                ) : (
+                  <MDBBtn className='mt-4' color="black" onClick={handleEditProfile} style={{ overflow: 'visible' }}>Modifier</MDBBtn>
+                ))}
                 </div>
-
+  
                 {/* Partie Nom/Prénom/Âge */}
-                <div className="ms-3" style={{ marginTop: '140px' }}>
+                <div className="ms-4" style={{ marginTop: '120px' }}>
                   <MDBTypography tag="h5">
-                    {isEditing ? <MDBInput className="mb-2" label="LastName" type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} style={{ marginTop: '-20px', color: 'white' }} /> : lastName} {' '}
-                    {isEditing ? <MDBInput label="FirstName" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} style={{ color: 'white' }} /> : firstName}
+                  {isEditing ? <MDBInput label="LastName" type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} style={{ marginTop: '-40px', color: 'white', marginBottom:'10px' }} /> : lastName} {' '}
+                  {isEditing ? <MDBInput label="FirstName" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} style={{ color: 'white' }} /> : firstName}
                   </MDBTypography>
-
+  
                   <MDBCardText>
                     {age} ans
                   </MDBCardText>
                 </div>
               </div>
               {/* Fin */}
-              
-              <div className="p-4 ">
+  
+              <div className="p-1 ">
                 <div className="d-flex justify-content-end text-center py-1">
                   <div>
-                    <MDBCardText className="mb-1 h5">253</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">Events</MDBCardText>
+                  <Link to={`/EventsPerso/${encodeURIComponent(emailurl)}`} className='text-theme'>
+                      <MDBCardText className="mb-1 h5"><strong>{events.length}</strong></MDBCardText>
+                      <MDBCardText className="small text-muted mb-0"><strong>Events</strong></MDBCardText>
+                    </Link>
                   </div>
-                  <div className="px-3">
-                    <Link to="/Friends" style={{ color: '#563d7c' }}>
-                      <MDBCardText className="mb-1 h5">{friends.length}</MDBCardText>
-                      <MDBCardText className="small text-muted mb-0">Amis</MDBCardText>
+                  <div className=" px-3" style={{color:'red'}}>
+                  <Link to={`/Friends/${encodeURIComponent(emailurl)}`} className='text-theme'>
+                      <MDBCardText className="mb-1 h5"><strong>{friends.length}</strong></MDBCardText>
+                      <MDBCardText className="small text-muted mb-0"><strong>Amis</strong></MDBCardText>
                     </Link>
                   </div>
                 </div>
               </div>
-
+  
               <MDBCardBody className="p-4">
                 {/* Case à propos de moi */}
-                <div className="mb-4 bg-theme text-theme">
-                  <p className="lead fw-normal">À propos de moi</p>
-                  <div className="p-2 bg-theme text-theme">
+                <div className="mb-4 bg-theme-nuance text-theme text-center" style={{borderRadius:'25px'}}>
+                  <p className="lead fw-normal"><strong>À propos de moi</strong></p>
+                  <div className="p-2 bg-theme-nuance text-theme" style={{borderRadius:'25px'}}>
+                    <hr className='barreHr'/>
                     <MDBCardText className="font-italic">
                       <strong>Description :</strong><br />
                       {isEditing ? <MDBInput type="textarea" value={description} onChange={handleDescriptionChange} /> : description}
                     </MDBCardText>
-
+                    <hr className='barreHr'/>
+  
                     {/* Centres d'intérêts */}
-                    <MDBListGroupItem className="font-italic">
-                      <strong>Centres d'intérêts : </strong> <br />
-                      {interestsList.map(interest => (
-                        <li key={interest} style={{ display: 'flex', marginLeft: '35%', alignItems: 'center' }}>
-                          {isEditing ? (
-                            <div>
-                              <input
-                                type="checkbox"
-                                checked={selectedInterests.includes(interest)}
-                                onChange={() => selectedInterests.includes(interest) ? handleRemoveInterest(interest) : handleAddInterest(interest)}
-                              />
-                              <label>{interest}</label>
-                            </div>
-                          ) : (
-                            selectedInterests.includes(interest) && <span>{interest}</span>
-                          )}
-                        </li>
-                      ))}
-                    </MDBListGroupItem>
+                    <InterestsComponent
+                      interestsList={interestsList}
+                      selectedInterests={selectedInterests}
+                      isEditing={isEditing}
+                      handleAddInterest={handleAddInterest}
+                      handleRemoveInterest={handleRemoveInterest}
+                    />
+        
                     {/* Fin centres d'intérêts */}
                   </div>
                 </div>
-                <MDBCard className="mb-4 shadow-3 bg-theme">
-                  <MDBCardBody>
-                    <h2 className="text-center mb-4">Historique des activités</h2>
-                    <MDBListGroup flush className="mb-4">
-                      {/* Exemple d'élément d'historique des activités */}
-                      <MDBListGroupItem className='bg-theme text-theme'>
-                        <h5 className="fw-bold">Nom de l'activité</h5>
-                        <p>Description de l'activité réalisée.</p>
-                        <p className="text-muted">Date: 01/01/2024</p>
-                      </MDBListGroupItem>
-                      {/* Vous pouvez répéter cet élément pour chaque activité dans l'historique */}
-                    </MDBListGroup>
-                  </MDBCardBody>
-                </MDBCard>
               </MDBCardBody>
             </MDBCard>
           </MDBCol>
         </MDBRow>
       </MDBContainer>
     </div>
+    }}
+    </UserAgent>
   );
-}
-
-export default Account;
+  };
+  
+  export default Account;  

@@ -4,11 +4,14 @@ import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import {
     MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBCardText, MDBRow, MDBCol, MDBBtn, 
-    MDBInput, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon,
+    MDBInput, MDBInputGroup, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon,
     MDBContainer
 } from 'mdb-react-ui-kit';
 import axios from 'axios';
 import Config from '../config.json';
+import MobileDownload from './MobileDownload';
+import { UserAgent } from "react-useragent";
+
 
 const Catalogue = () => {
     const [showPopup, setShowPopup] = useState(false);
@@ -51,7 +54,6 @@ const Catalogue = () => {
         }
         try {
             const decodedToken = jwtDecode(token);
-            console.log(decodedToken);
             return true;
         } catch {
             navigate("/Login");
@@ -99,15 +101,21 @@ const Catalogue = () => {
         setSortCriteria(criteria);
     };
 
+
     return (
-        <MDBContainer className="mt-4 mb-4 bg-theme" style={{marginLeft:'-24'}}>
-            <MDBInput
-                label="Rechercher une activité"
-                type="text"
+    <UserAgent>
+    {({ ua }) => {
+      return ua.mobile ? <MobileDownload /> :
+      
+        <MDBContainer className="mt-4 mb-4" style={{marginLeft:'-24'}}>
+            <MDBInputGroup className="mb-3" style={{ borderRadius: '35px', overflow: 'hidden', border: 'none' }}>
+                <MDBInput
+                label="Recherche"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="m-4 custom-input"
-            />
+                style={{ borderRadius: '35px', border: 'none' }}
+                />
+            </MDBInputGroup>
 
             <MDBRow className="mb-4">
                 <MDBCol size="4">
@@ -179,7 +187,7 @@ const Catalogue = () => {
                             position='top'
                             style={{ maxWidth: '100%' }}
                         />
-                        <MDBCardBody>
+                        <MDBCardBody className='text-theme'>
                             <MDBCardTitle>{selectedCard.title}</MDBCardTitle>
                             <MDBCardText style={{ overflowWrap: 'break-word', wordWrap: 'break-word', wordBreak: 'break-word' }}>
                                 {selectedCard.description}
@@ -196,6 +204,8 @@ const Catalogue = () => {
                 </div>
             )}
         </MDBContainer>
+     }}
+    </UserAgent>
     );
 };
 

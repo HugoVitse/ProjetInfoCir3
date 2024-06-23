@@ -6,8 +6,10 @@
   --text-color-inv: white;
   --card-bg-color: #ffffff;
   --primary-color: #89cdf5;
-  --secondary-color: #5806bde7;
+  --secondary-color: #ececece7;
   --btn-color: pink;
+  --noir-nuance:#EEEEEE;
+  --noir-nuance2:#ffffff;
 }
 
 /* Dark Theme */
@@ -16,10 +18,12 @@
   --bg-color-inversed: #fcfcfd;
   --text-color: white;
   --text-color-inv: black;
-  --card-bg-color: #1e1e1e;
+  --card-bg-color: #918e8e;
   --primary-color: #5806bde7;
-  --secondary-color: #89cdf5;
+  --secondary-color: #0f3292;
   --btn-color: pink;
+  --noir-nuance: #212020;
+  --noir-nuance2: #444444;
 }
 
 
@@ -40,6 +44,12 @@
   color: var(--text-color-inv)!important;
 }
 
+.barreHr{
+  border-color: var(--text-color);
+  margin-bottom: '3rem';
+  border-bottom: '5px solid';
+}
+
 .custom-btn {
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
@@ -51,13 +61,13 @@
 
 .custom-btn-primary {
   background-color: var(--secondary-color);
-  color: var(--text-color-inv);
+  color: var(--text-color);
   border: none;
 }
 
 .custom-btn-secondary {
-  background-color: #f02f3f; /* Vert */
-  color: var(--text-color-inv);
+  background-color: #f02f3f; 
+  color: var(--text-color);
   border: none;
 }
 
@@ -180,7 +190,8 @@ body {
   top: 0;
   left: 0;
   bottom: 0;
-  width: 35%;
+  right:0;
+  width: 30%;
   animation: slideInLeft 0.5s forwards;
 }
 
@@ -204,10 +215,6 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
-}
-
-.custom-card:hover {
-  transform: translateY(-10px);
 }
 
 .custom-card-body {
@@ -267,3 +274,53 @@ body {
   display: none;
 }
 
+.user-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.user-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.user-info {
+  flex-grow: 1;
+}
+
+.bg-theme-nuance {
+  background-color: var(--noir-nuance);
+}
+
+.bg-theme-nuance2 {
+  background-color: var(--noir-nuance2);
+}
+
+.tile-content {
+  color: white !important;
+  text-align: center;
+  margin: auto;
+  padding: 2px;
+  border-radius: 50%;
+  width: 80%;
+  height: 80%;
+  animation: pulse 1s infinite;
+}
+
+.carousel-custom {
+  height: 300px; /* Ajustez la hauteur selon vos besoins */
+}
+
+.carousel-item-custom {
+  height: 100%;
+}
+
+.carousel-image-custom {
+  height: 100%;
+  width: 100%;
+  object-fit: cover; /* Pour que l'image s'ajuste bien aux dimensions sans déformer */
+}

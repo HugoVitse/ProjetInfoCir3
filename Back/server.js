@@ -7,7 +7,7 @@ const path = require('path')
 const app = express()
 app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());
-var whitelist = ['https://localhost:3000',undefined /** other domains if any */ ]
+var whitelist = ['http://localhost:3000',undefined /** other domains if any */ ]
 var corsOptions = {
   credentials: true,
   origin: function(origin, callback) {

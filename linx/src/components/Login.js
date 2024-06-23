@@ -5,6 +5,10 @@ import { MDBContainer, MDBCol, MDBInput, MDBBtn, MDBCard, MDBCardBody, MDBRow, M
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
+import Config from '../config.json';
+import MobileDownload from './MobileDownload';
+import { UserAgent } from "react-useragent";
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -16,11 +20,9 @@ const Login = () => {
 
   const retrieveCookie = () => {
     const token = Cookies.get("jwt");
-    console.log(token);
     try {
       const decodedToken = jwtDecode(token);
       navigate("/");
-      console.log(decodedToken);
     } catch (error) {
       console.error(error);
     }
@@ -41,14 +43,11 @@ const Login = () => {
     setLoading(true); // Set loading state
 
     try {
-      const response = await axios.post('http://localhost/login', { email, password }, { withCredentials: true });
-      console.log(response.data);
-      console.log(response.status);
+      const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/login`, { email, password }, { withCredentials: true });
       if (response.status === 200) {
         // Redirection vers la page d'accueil
-        window.location.href = '/'; // Redirection vers la page d'accueil
+         window.location.href = '/'; // Redirection vers la page d'accueil
       } else {
-        console.log(response.status);
         setError('Invalid email or password');
       }
     } catch (error) {
@@ -60,6 +59,10 @@ const Login = () => {
   };
 
   return (
+    <UserAgent>
+    {({ ua }) => {
+      return ua.mobile ? <MobileDownload /> :
+      
     <MDBContainer fluid className="bg-theme d-flex align-items-center justify-content-center vh-100">
       <MDBCard className="w-100 w-md-75" style={{ maxHeight: '90%' }}>
         <MDBRow className="g-0 h-100">
@@ -107,8 +110,8 @@ const Login = () => {
           </MDBCol>
           <MDBCol size="12" md="6" className="d-flex align-items-center justify-content-center">
       <MDBCard className="shadow-3 w-100 m-0 h-100">
-        <MDBCardBody className="p-5 d-flex flex-column justify-content-center">
-          <h4 className="text-center mb-4" style={{ color: '#563d7c' }}>
+        <MDBCardBody className="p-5 d-flex flex-column justify-content-center bg-theme-nuance text-theme">
+          <h4 className="text-center mb-4">
             <strong>Connexion</strong> à votre compte
           </h4>
           <form onSubmit={handleSubmit}>
@@ -121,7 +124,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="form-control"
+                className="form-control bg-light"
                 style={{
                   borderBottom: '2px solid #563d7c',
                   borderRadius: '0',
@@ -137,7 +140,7 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="form-control"
+                className="form-control bg-light"
                 style={{
                   borderBottom: '2px solid #563d7c',
                   borderRadius: '0',
@@ -155,7 +158,7 @@ const Login = () => {
             <Link to="/forgot-password" style={{ color: '#563d7c' }}>Mot de passe oublié ?</Link>
           </div>
           <div className="text-center mt-3">
-            <Link to="/Register" style={{ color: '#563d7c' }}><strong>Inscrivez-vous</strong></Link>
+            <Link to="/Register" className='text-theme'><strong>Inscrivez-vous</strong></Link>
           </div>
         </MDBCardBody>
       </MDBCard>
@@ -163,6 +166,8 @@ const Login = () => {
         </MDBRow>
       </MDBCard>
     </MDBContainer>
+    }}
+    </UserAgent>
   );
 }
 

@@ -395,6 +395,7 @@ export default function ProfileScreen() {
       setMimeType(result.assets[0].mimeType?result.assets[0].mimeType:"")
       const base64 = await FileSystem.readAsStringAsync(result.assets[0].uri, { encoding: 'base64' });
       setNewPicture(`data:image/png;base64,${base64}`);
+      setNewPicture(`data:image/png;base64,${base64}`);
       setDisabledValid(false)
     }
   };
@@ -411,6 +412,7 @@ export default function ProfileScreen() {
     if (!result.canceled) {
       setMimeType(result.assets[0].mimeType?result.assets[0].mimeType:"")
       const base64 = await FileSystem.readAsStringAsync(result.assets[0].uri, { encoding: 'base64' });
+      setNewPicture(`data:image/png;base64,${base64}`);
       setNewPicture(`data:image/png;base64,${base64}`);
       setDisabledValid(false)
     }
@@ -603,6 +605,9 @@ export default function ProfileScreen() {
               Prendre une photo
             </Button> 
 
+            <Button buttonColor={_Theme.themeBouton.backgroundColor} textColor={_Theme.themeBouton.color} icon="account-check" mode='contained-tonal' onPress={pickImage} style={{marginTop:10,width:width-40}}>
+              Choisir une photo de la galerie
+            </Button> 
             <Button buttonColor={_Theme.themeBouton.backgroundColor} textColor={_Theme.themeBouton.color} icon="account-check" mode='contained-tonal' onPress={pickImage} style={{marginTop:10,width:width-40}}>
               Choisir une photo de la galerie
             </Button> 
@@ -942,7 +947,7 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 4,
+    zIndex: 4
   },
   input: {
     margin:10,

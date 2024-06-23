@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardText,
+  MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardText, MDBIcon,
   MDBTypography, MDBRadio, MDBRange, MDBModalFooter, MDBBtn, MDBModalTitle,
   MDBCheckbox, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalBody,MDBBadge
 } from 'mdb-react-ui-kit';
@@ -8,8 +8,11 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
-import { Link } from 'react-router-dom';
+import { UserAgent } from "react-useragent";
+import { useNavigate, Link } from "react-router-dom";
+import MobileDownload from './MobileDownload';
+import Config from '../config.json'
+
 
 const Home = () => {
   const [basicModal, setBasicModal] = useState(false);
@@ -18,11 +21,14 @@ const Home = () => {
   const [email, setemail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [selectedInterests, setSelectedInterests] = useState([]);
+  const [selectedUnInterests, setSelectedUnInterests] = useState([]);
   const [events, setEvents] = useState([]);
   const navigate = useNavigate();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [pp, setPp] = useState('');
+  const [id, setid] = useState('');
+  const [userAgent, setUserAgent] = useState('');
   const [formData, setFormData] = useState({
     activities: [],
     note: 5,
@@ -33,6 +39,12 @@ const Home = () => {
     description: '',
     travelDistance: 25,
   });
+
+  const interestsList = [
+    'Cinéma', 'Attractions', 'Animaux', 'Théâtre', 'Danse', 'Manga/Anime', 'Séries', 'Échecs',
+    'Moto', 'Lecture', 'Jeux vidéos', 'Musique', 'BD/Comics', 'Voyager', 'Musées', 'Sortir entre amis',
+    'Sport', 'Nourriture', 'La mode'
+  ];
 
   const handleCheckboxChange = (activity) => {
     setFormData((prevData) => ({
@@ -48,7 +60,8 @@ const Home = () => {
     setError('');
     setLoading(true);
     try {
-      await axios.post('http://localhost/fillquestionnaire', formData, { withCredentials: true });
+      await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/fillquestionnaire`, formData, { withCredentials: true });
+
       toggleOpen();
     } catch (error) {
       console.error('Error:', error);
@@ -76,7 +89,6 @@ const Home = () => {
     const token = Cookies.get("jwt");
     try {
       const decodedToken = jwtDecode(token);
-      console.log(decodedToken);
     } catch {
       navigate("/Login");
     }
@@ -86,17 +98,19 @@ const Home = () => {
     const fnc = async () => {
       retrieveCookie();
       try {
-        const response = await axios.get('http://localhost/infos', { withCredentials: true });
+        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { withCredentials: true });
         setFirstName(response.data.firstName || '');
         setLastName(response.data.lastName || '');
         setSelectedInterests(response.data.activities || []);
+        setSelectedUnInterests(interestsList.filter((interest)=>!response.data.activities.includes(interest)) || []);
         setemail(response.data.email || '')
         setPp(response.data.image || '');
         if (response.data.firstLogin) {
           toggleOpen();
         }
 
-        const eventsResponse = await axios.get('http://localhost/evenements', { withCredentials: true });
+        const eventsResponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/evenements`, { withCredentials: true });
+
         setEvents(eventsResponse.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -109,146 +123,228 @@ const Home = () => {
     return (Object.values(formData).every(value => value !== '' && value !== undefined)&&
     formData.activities.length > 0);
   }
+  
+  useEffect(() => {
+    const fnc1 = async () => {
+      DeleteEvent(id);
+      DeleteParticipant(id);
+    };
+    fnc1();
+  }, []);
+  
+  const DeleteEvent = (id) => {
+    setid(id); 
+    handleEventDelete(id);
+  };
+
+  const DeleteParticipant = (id) => {
+    setid(id); 
+    handleParticipantDelete(id);
+  };
+  
+  const handleParticipantDelete = async (id) => {
+    setError('');
+    setLoading(true);
+    try {
+      await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/ParticipantDelete`, { withCredentials: true });
+
+      window.location.reload();
+    } catch (error) {
+      console.error('Error:', error);
+      setError('An error occurred. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEventDelete = async (id) => {
+    setError('');
+    setLoading(true);
+    try {
+      await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/EventDelete`, {id: id}, { withCredentials: true });
+
+      window.location.reload();
+    } catch (error) {
+      console.error('Error:', error);
+      setError('An error occurred. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const interestEmojis = {
+    Cinéma: '🎬',
+    Attractions: '🎡',
+    Animaux: '🐾',
+    Théâtre: '🎭',
+    Danse: '💃',
+    
+    'Manga/Anime': '📚',
+    Séries: '📺',
+    Échecs: '♟️',
+    Moto: '🏍️',
+    Lecture: '📖',
+    'Jeux vidéos': '🎮',
+    Musique: '🎵',
+    'BD/Comics': '📚',
+    Voyager: '✈️',
+    Musées: '🏛️',
+    'Sortir entre amis': '👫',
+    Sport: '🏅',
+    Nourriture: '🍔',
+    'La mode': '👗'
+  };
 
   const renderInterestCards = () => {
     return selectedInterests.map((interest, index) => (
       <MDBCol md="6" className="mb-4" key={index}>
-        <MDBCard className="text-theme custom-card border border-primary">
-          <MDBCardBody className="p-4 custom-card bg-light">
-            <MDBTypography tag="h4" className="text-primary font-weight-bold">
-              {interest}
-            </MDBTypography>
-            <hr/>
+        <MDBCard className="text-theme border border-primary">
+          <MDBCardBody className="p-4 bg-theme-nuance2 text-theme">
+            <div className="d-flex align-items-center mb-3">
+              <span role="img" aria-label={interest} style={{ fontSize: '2rem', marginRight: '10px' }}>
+                {interestEmojis[interest]}
+              </span>
+              <MDBTypography tag="h4" className="text-theme font-weight-bold">
+                {interest}
+              </MDBTypography>
+            </div>
+            <hr className='barreHr' /> 
             {events
-                .filter(event => event.type === interest && new Date(event.date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0) &&
+              .filter(event => event.type === interest && new Date(event.date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0) &&
                 Array.isArray(event.participants) && event.participants.some(participants => participants === email))
               .map((event, index) => (
-                <Link to={`/event/${event.activity.title}/${event._id}`} key={index} className="text-decoration-none"> {/* Assurez-vous que "/event/${event.id}" est l'URL appropriée */}
-                  <MDBCardText className="fw-bold mb-2"> 
-                    <MDBBadge color="secondary" className="mr-2">Event</MDBBadge>
-                    : {event.activity.title}
-                  </MDBCardText>
-                </Link>
+                <div key={index} className="d-flex justify-content-between align-items-center mb-2">
+                  <Link to={`/event/${event.activity.title}/${event._id}`} className="text-decoration-none">
+                    <MDBCardText className="fw-bold">
+                      <MDBBadge color="secondary" className="mr-2">Event</MDBBadge>
+                      : {event.activity.title}
+                    </MDBCardText>
+                  </Link>
+                  {event.host === email 
+                    ? <button onClick={() => DeleteEvent(event._id)} className="btn btn-danger">Supprimer</button> 
+                    : <button onClick={() => DeleteParticipant(event._id)} className="btn btn-danger">Se désinscrire</button>}
+                </div>
               ))}
           </MDBCardBody>
         </MDBCard>
       </MDBCol>
     ));
-  };
+  }; 
 
-  const renderHistorique = () => {
-    return (
-      <MDBCol md="6" className="mb-4">
-        <MDBCard className="text-theme custom-card border border-primary">
-          <MDBCardBody className="p-4 custom-card bg-light">
-            <MDBTypography tag="h4" className="text-primary font-weight-bold">
-              Historique des Événements 
-            </MDBTypography>
-            <hr />
-            <MDBCardText className="fw-bold mb-2">
-              {events
-                .filter(event => new Date(event.date).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) &&
+  const renderUnInterestCards = () => {
+    return selectedUnInterests.map((interest, index) => (
+      <MDBCol md="6" className="mb-4" key={index}>
+        <MDBCard className="text-theme border border-primary">
+          <MDBCardBody className="p-4 bg-theme-nuance2 text-theme">
+            <div className="d-flex align-items-center mb-3">
+              <span role="img" aria-label={interest} style={{ fontSize: '2rem', marginRight: '10px' }}>
+                {interestEmojis[interest]}
+              </span>
+              <MDBTypography tag="h4" className="text-theme font-weight-bold">
+                {interest}
+              </MDBTypography>
+            </div>
+            <hr className='barreHr' /> 
+            {events
+              .filter(event => event.type === interest && new Date(event.date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0) &&
                 Array.isArray(event.participants) && event.participants.some(participants => participants === email))
-                .map((event, index) => (
-                  <div key={index}>
-                    <MDBBadge color="secondary" className="mr-2">Event</MDBBadge>
-                    : {event.activity.title}
-  
-                  </div>
-                ))}
-            </MDBCardText>
+              .map((event, index) => (
+                <div key={index} className="d-flex justify-content-between align-items-center mb-2">
+                  <Link to={`/event/${event.activity.title}/${event._id}`} className="text-decoration-none">
+                    <MDBCardText className="fw-bold">
+                      <MDBBadge color="secondary" className="mr-2">Event</MDBBadge>
+                      : {event.activity.title}
+                    </MDBCardText>
+                  </Link>
+                  {event.host === email 
+                    ? <button onClick={() => DeleteEvent(event._id)} className="btn btn-danger">Supprimer</button> 
+                    : <button onClick={() => DeleteParticipant(event._id)} className="btn btn-danger">Se désinscrire</button>}
+                </div>
+              ))}
           </MDBCardBody>
         </MDBCard>
       </MDBCol>
-    );
-  };  
+    ));
+  }; 
   
 
   return (
-    <div className="flex-grow-1 vh-100">
-      <MDBContainer fluid className="py-3 vh-100 bg-theme" style={{ height: '100%' }}>
-      <MDBRow className="justify-content-center align-items-center h-100">
-        <MDBCol lg="9" xl="7" className='w-100'>
-        <header style={{
-            position: 'relative',
-            backgroundImage: 'url(https://78.media.tumblr.com/f254105ae6672e6252d171badfe14299/tumblr_mhiz6jgJ7N1rag9fdo1_500.gif)', // Replace with your own GIF URL
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            height: '50vh',
-            width: '100%',
-            color: 'white',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            textAlign: 'center',
-            padding: '20px',
-            borderRadius: '15px'
-          }}>
-            <div style={{
-              position: 'absolute',
-              bottom: '10px',
-              right: '10px',
-              textAlign: 'right'
-            }}>
-              <h1 style={{ fontSize: '3rem', marginBottom: '10px' }}><strong>ÇA VA CHAUFFER</strong></h1>
-              <p style={{ fontSize: '1.5rem', marginBottom: '20px' }}>Nos modèles pour tout changer cet été.</p>
-            </div>
-          </header>
+    <UserAgent>
+      {({ ua }) => {
+        return ua.mobile ? <MobileDownload /> :
+        
+          <div className="vh-100 d-flex flex-column">
+            <MDBContainer fluid className="py-3" style={{ overflowY: 'auto' }}>
+              <MDBRow className="justify-content-center align-items-center">
+                <MDBCol lg="8" className="mb-4">
+                  <header style={{
+                    backgroundImage: 'url(https://i.gifer.com/5Jau.gif)',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    height: '40vh',
+                    borderRadius: '15px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    color: 'white',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    boxShadow: '0 10px 10px 5px #aaaaaa'
+                  }}>
+                    <div>
+                      <h1>Bienvenue sur Linx, {firstName} {lastName}.</h1>
+                      <h2>Le lieu parfait pour se faire des amis !</h2>
+                    </div>
+                  </header>
+                </MDBCol>
+                <MDBCol lg="8" className="mb-4 ">
+                  <MDBCard className="text-theme border border-primary">
+                    <MDBCardBody className="p-4 bg-theme-nuance">
+                      <MDBTypography tag="h4" className="text-theme font-weight-bold">
+                        <strong>Vos intérêts sélectionnés</strong>
+                      </MDBTypography>
+                      <hr />
+                      <MDBRow>
+                        {renderInterestCards()}
+                      </MDBRow>
+              
+                    </MDBCardBody>
+                  </MDBCard>
+                  <MDBCard className="mt-5 text-theme border border-primary">
+                    <MDBCardBody className="p-4 bg-theme-nuance">
+                      <MDBTypography tag="h4" className="text-theme font-weight-bold">
+                        <strong>Autres intérêts</strong>
+                      </MDBTypography>
+                      <hr />
+                      <MDBRow>
+                        {renderUnInterestCards()}
+                      </MDBRow>
+              
+                    </MDBCardBody>
+                  </MDBCard>
+                </MDBCol>
+              </MDBRow>
+            </MDBContainer>
 
-          <MDBCard className="mb-4 custom-card">
-            <MDBCardBody className="p-4 text-white custom-card" style={{ background: 'linear-gradient(135deg, #3494E6, #EC6EAD)', borderRadius: '15px' }}>
-              <div className="d-flex align-items-center justify-content-between mb-3">
-                <div>
-                  <h2 className="fw-bold mb-1" style={{ fontSize: '1.5rem', color: 'white' }}>
-                    Bienvenue sur Linx
-                  </h2>
-                  <p className="mb-0" style={{ fontSize: '1.1rem' }}>
-                    Bonjour {firstName} {lastName} !
-                  </p>
-                </div>
-                <div>
-                  <img src= {"http://localhost/"+pp} alt="Avatar" style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover' }} />
-                </div>
-              </div>
-            </MDBCardBody>
-          </MDBCard>
-
-          <section style={{ marginTop: '20px', marginBottom: '20px' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '2rem', color: 'var(--primary-color)' }}>
-              Événements à venir
-            </h2>
-            <p style={{ textAlign: 'center', fontSize: '1.2rem' }}>
-              Découvrez vos activités en fonction de vos intérêts et de vos inscriptions !
-            </p>
-          </section>
-
-          <MDBRow className="mt-4">
-            {renderInterestCards()}
-            {renderHistorique()}
-          </MDBRow>
-        </MDBCol>
-      </MDBRow>
-    </MDBContainer>
-
-
-      {/* Pop-up Questionnaire !!! */}
+            {/* Pop-up Questionnaire !!! */}
       <MDBModal open={basicModal} onClose={() => setBasicModal(false)} tabIndex='-1'>
         <MDBModalDialog size="xl" className="vh-80">
           <MDBModalContent>
-            <MDBModalHeader>
-              <MDBModalTitle>Questionnaire</MDBModalTitle>
+            <MDBModalHeader className='bg-theme-nuance'>
+              <MDBModalTitle><strong>Questionnaire</strong></MDBModalTitle>
               <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
             </MDBModalHeader>
 
-            <MDBModalBody>
+            <MDBModalBody className='bg-theme'>
               <MDBRow className="w-100">
                 <MDBCol md="10" lg="8" className="mx-auto">
                   <MDBCard>
-                    <MDBCardBody className="p-5">
-                      <h3 className="text-center mb-4">Questionnaire</h3>
+                    <MDBCardBody className="p-5 bg-theme-nuance2 text-theme">
+                      <h3 className="text-center mb-4"><strong>Questionnaire</strong></h3>
+                      <hr className='barreHr'/>
                       <div className="mb-4">
-                        <label className="form-label">Quelles activités aimez-vous ?</label>
+                        <label className="form-label text-theme"><strong>Quelles activités aimez-vous ?</strong></label>
                         {['Cinéma', 'Attractions', 'Animaux', 'Théâtre', 'Danse', 'Manga/Anime', 'Séries', 'Échecs', 'Moto', 'Lecture', 'Jeux vidéos', 'Musique', 'BD/Comics', 'Voyager', 'Musées', 'Sortir entre amis', 'Sport', 'Nourriture', 'La mode'].map((activity) => (
                           <MDBCheckbox
                             key={activity}
@@ -260,7 +356,7 @@ const Home = () => {
                       </div>
 
                       <div className="mb-4">
-                        <label className="form-label">Notez votre état actuel :</label>
+                        <label className="form-label text-theme"><strong>Notez votre état actuel :</strong></label>
                         <MDBRange
                           defaultValue={10}
                           min="1"
@@ -273,33 +369,33 @@ const Home = () => {
                       </div>
 
                       <div className="mb-4">
-                        <label className="form-label">Préférez-vous les activités en petit ou en grand groupe ?</label>
+                        <label className="form-label text-theme"><strong>Préférez-vous les activités en petit ou en grand groupe ?</strong></label>
                         <MDBRadio name="groupSize" label="Petit groupe" id="petitcomite" value="petitcomite" onChange={(e) => handleRadioChange('groupSize', e.target.value)} />
                         <MDBRadio name="groupSize" label="Grand groupe" id="grandcomite" value="grandcomite" onChange={(e) => handleRadioChange('groupSize', e.target.value)} />
                       </div>
 
                       <div className="mb-4">
-                        <label className="form-label">Quel moment de la journée préférez-vous pour les sorties ?</label>
+                        <label className="form-label text-theme"><strong>Quel moment de la journée préférez-vous pour les sorties ?</strong></label>
                         <MDBRadio name="preferredTime" label="Matin" id="morning" value="morning" onChange={(e) => handleRadioChange('preferredTime', e.target.value)} />
                         <MDBRadio name="preferredTime" label="Après-midi" id="afternoon" value="afternoon" onChange={(e) => handleRadioChange('preferredTime', e.target.value)} />
                         <MDBRadio name="preferredTime" label="Soir" id="evening" value="evening" onChange={(e) => handleRadioChange('preferredTime', e.target.value)} />
                       </div>
 
                       <div className="mb-4">
-                        <label className="form-label">Préférez-vous les activités en intérieur ou en extérieur ?</label>
+                        <label className="form-label text-theme"><strong>Préférez-vous les activités en intérieur ou en extérieur ?</strong></label>
                         <MDBRadio name="placeType" label="Intérieur" id="indoor" value="indoor" onChange={(e) => handleRadioChange('placeType', e.target.value)} />
                         <MDBRadio name="placeType" label="Extérieur" id="outdoor" value="outdoor" onChange={(e) => handleRadioChange('placeType', e.target.value)} />
                       </div>
 
                       <div className="mb-4">
-                        <label className="form-label">Quel est votre budget pour les sorties ?</label>
+                        <label className="form-label text-theme"><strong>Quel est votre budget pour les sorties ?</strong></label>
                         <MDBRadio name="budget" label="Bas" id="low" value="low" onChange={(e) => handleRadioChange('budget', e.target.value)} />
                         <MDBRadio name="budget" label="Moyen" id="medium" value="medium" onChange={(e) => handleRadioChange('budget', e.target.value)} />
                         <MDBRadio name="budget" label="Élevé" id="high" value="high" onChange={(e) => handleRadioChange('budget', e.target.value)} />
                       </div>
 
                       <div className="mb-4">
-                        <label className="form-label">Donner une description pour votre profile :</label>
+                        <label className="form-label text-theme"><strong>Donner une description pour votre profile :</strong></label>
                         <input
                           type="text"
                           className="form-control"
@@ -310,7 +406,7 @@ const Home = () => {
                       </div>
 
                       <div className="mb-4">
-                        <label className="form-label">Quelle est la distance maximale que vous êtes prêt(e) à parcourir pour une sortie ? (en km)</label>
+                        <label className="form-label text-theme"><strong>Quelle est la distance maximale que vous êtes prêt(e) à parcourir pour une sortie ? (en km)</strong></label>
                         <MDBRange
                           defaultValue={25}
                           min="0"
@@ -335,13 +431,15 @@ const Home = () => {
                 </MDBCol>
               </MDBRow>
             </MDBModalBody>
-            <MDBModalFooter>
+            <MDBModalFooter className='bg-theme-nuance'>
               <MDBBtn onClick={handleSubmit} disabled={!isFormComplete()}>Finaliser</MDBBtn>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>
-    </div>
+          </div>;
+      }}
+    </UserAgent>
   );
 };
 

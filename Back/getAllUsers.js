@@ -27,8 +27,10 @@ async function getAllUsers(req,res){
                 email: 1,
                 friends:1,
                 friendRequests:1,
+                description:1,
+                dateOfBirth:1,
+                activities:1,
                 image:1
-
               };
         
         

@@ -1,94 +1,122 @@
 import React, { useState, useEffect } from 'react';
-import { MDBContainer, MDBListGroup, MDBInputGroup, MDBListGroupItem, MDBInput, MDBBtn } from 'mdb-react-ui-kit';
+import { MDBContainer, MDBListGroup, MDBInputGroup, MDBListGroupItem, MDBInput, MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import Config from '../config.json';
+import MobileDownload from './MobileDownload';
+import { UserAgent } from "react-useragent";
+
+
 
 const Friends = () => {
-  const [lastName, setLastName] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [age, setAge] = useState(0);
-  const [description, setDescription] = useState('');
+  const { emailurl } = useParams();
   const [friends, setFriends] = useState([]);
-  const [profileImage, setProfileImage] = useState(null);
+  const [friendsList, setFriendsList] = useState([]);
   const [email, setEmail] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [users, setUsers] = useState([]);
+  const [sentFriendRequests, setSentFriendRequests] = useState([]);
   const navigate = useNavigate();
+
+  
 
   useEffect(() => {
     const retrieveCookie = () => {
-      const token = Cookies.get('jwt');
       try {
-        const decoded = jwtDecode(token);
-        setEmail(decoded.email);
+        const jwt = Cookies.get('jwt');
+        const decodedToken = jwtDecode(jwt);
+        setEmail(decodedToken.email);
       } catch {
         navigate('/Login');
       }
     };
 
-    const fetchData = async () => {
-      retrieveCookie();
-      try {
-        const response = await axios.get('http://localhost/infos', { withCredentials: true });
-        setFirstName(response.data.firstName || '');
-        setLastName(response.data.lastName || '');
-        setDescription(response.data.description || '');
-        setProfileImage(response.data.image || null);
-        setFriends(response.data.friends || []);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost/getAllUsers', { withCredentials: true });
+        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getAllUsers`, { withCredentials: true });
         setUsers(response.data || []);
+
+        const use = response.data.filter(user => user.email === emailurl);        
+        const friend = [];
+
+        // Vérifiez que use[0] est bien un objet
+        if (use[0] && typeof use[0] === 'object') {
+          // Accédez à la propriété friends
+          const friends = use[0].friends;
+
+          if (Array.isArray(friends)) {
+            friends.forEach(friendEmail => {
+              if (friendEmail !== emailurl) {
+                friend.push(friendEmail);
+              }
+            });
+          }
+        }
+        setFriends(friend);
+
       } catch (error) {
         console.error('Erreur lors de la récupération des utilisateurs :', error);
       }
     };
 
-    fetchData();
+    retrieveCookie();
     fetchUsers();
-  }, [navigate]);
 
-  const addFriend = async (email) => {
+
+  }, [friends, navigate]);
+
+  const sendFriendRequest = async (friendEmail) => {
     try {
-      const response = await axios.post('http://localhost/addFriend', { email }, { withCredentials: true });
+      const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/friendRequests`, { email: friendEmail }, { withCredentials: true });
       if (response.status === 200) {
-        // Mettre à jour localement la liste des amis si l'ajout côté serveur réussit
-        setFriends(prevFriends => [...prevFriends, email]);
+        setSentFriendRequests(prevRequests => [...prevRequests, friendEmail]);
       }
     } catch (error) {
-      console.error('Erreur lors de l\'ajout de l\'ami :', error);
+      console.error('Erreur lors de l\'envoi de la demande d\'ami :', error);
+    }
+  };
+
+  const removeFriend = async (friendEmail) => {
+    try {
+      const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/deleteFriend`, { email: friendEmail }, { withCredentials: true });
+      if (response.status === 200) {
+        setFriends(prevFriends => prevFriends.filter(email => email !== friendEmail));
+        console.log("Suppression réussie")
+      }
+    } catch (error) {
+      console.error('Erreur lors de la suppression de l\'ami :', error);
     }
   };
 
   const renderUsers = () => {
-    // Filtrer les amis et les autres utilisateurs
     let friendsList = [];
     let otherUsersList = [];
 
     users.forEach(user => {
-      if (user.email === email) {
-        return; // Ne pas afficher l'utilisateur connecté lui-même
+      if (user.email === emailurl) {
+        return;
       }
 
       if (friends.includes(user.email)) {
         friendsList.push(user);
       } else {
-        otherUsersList.push(user);
+        const _usr = users.find((usr)=>usr.email==user.email)
+        
+        if(Object.keys(_usr).includes('friendRequests')){
+          if(!_usr.friendRequests.includes(emailurl) ){
+            otherUsersList.push(user);
+          }
+        }
+      
       }
     });
 
-    // Filtrer les utilisateurs en fonction du terme de recherche
     const filteredUsers = users.filter(user => {
-      if (user.email === email) {
-        return false; // Ne pas afficher l'utilisateur connecté lui-même
+      if (user.email === emailurl) {
+        return false;
       }
       return (
         user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -97,32 +125,61 @@ const Friends = () => {
       );
     });
 
-    // Fonction pour rendre une liste d'utilisateurs
+
+
+    const filteredOtherUsers = otherUsersList.filter(user => {
+      if (user.email === emailurl) {
+        return false;
+      }
+      return (
+        user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    });
+
+
+    
+
     const renderUserList = (userList) => {
       if (userList.length === 0) {
         return (
-          <MDBListGroupItem>
+          <MDBListGroupItem className='bg-theme-nuance text-theme'>
             Aucun utilisateur trouvé.
           </MDBListGroupItem>
         );
       }
 
       return userList.map((user) => (
-        <MDBListGroupItem key={user._id}>
+        <MDBListGroupItem key={user._id} className={friends.includes(user.email) ? 'friend-item bg-theme-nuance text-theme' : 'bg-theme-nuance text-theme'} style={{borderRadius:'15px'}}>
           <div className="d-flex align-items-center">
             <img
-              src={`http://localhost/${user.profileImage}`}
+              src={`${Config.scheme}://${Config.urlapi}:${Config.portapi}/${user.image}`}
               alt={`${user.firstName} ${user.lastName}`}
               style={{ width: '50px', height: '50px', borderRadius: '50%' }}
             />
-            <div className="ms-3">
-              <h5>{`${user.firstName} ${user.lastName}`}</h5>
-              {/* Ajoutez ici d'autres détails de l'utilisateur si nécessaire */}
+            <div className="m-3">
+              <h5><strong>{`${user.firstName} ${user.lastName}`}</strong></h5>
+              <p className='text-muted'>{`${user.email}`}</p>
             </div>
-            {!friends.includes(user.email) && (
-              <MDBBtn color="primary" onClick={() => addFriend(user.email)}>
-                Ajouter
-              </MDBBtn>
+            {emailurl === email && (
+              <>
+                {friends.includes(user.email) && (
+                  <MDBBtn color="danger" onClick={() => removeFriend(user.email)} className="ms-auto">
+                    <MDBIcon icon="user-minus" className="me-2" />
+                  </MDBBtn>
+                )}
+                {!friends.includes(user.email) && !sentFriendRequests.includes(user.email) && (
+                  <MDBBtn color="primary" onClick={() => sendFriendRequest(user.email)} className="ms-auto">
+                    <MDBIcon icon="user-plus" className="me-2" />
+                  </MDBBtn>
+                )}
+                {sentFriendRequests.includes(user.email) && !friends.includes(user.email) && (
+                  <MDBBtn color="secondary" disabled className="ms-auto">
+                    Demande d'ami envoyée
+                  </MDBBtn>
+                )}
+              </>
             )}
           </div>
         </MDBListGroupItem>
@@ -130,36 +187,63 @@ const Friends = () => {
     };
 
     return (
-      <MDBContainer className="mt-5">
-        <MDBInputGroup className="mb-3">
-          <MDBInput
-            label="Recherche"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </MDBInputGroup>
+      <MDBContainer className="mt-5 p-4" style={{ maxWidth: '800px' }}>
+        {/* Page title */}
+        <div className="text-center mb-4">
+          <h1><strong>Mes Amis</strong></h1>
+        </div>
 
-        <MDBListGroup>
-          {/* Section pour afficher les amis */}
-          <h3>Amis</h3>
-          {renderUserList(searchTerm ? filteredUsers.filter(user => friends.includes(user.email)) : friendsList)}
+        {/* Search input */}
+        <MDBInputGroup className="bg-light mb-3" style={{ borderRadius: '35px', overflow: 'hidden', border: 'none' }}>
+        <MDBInput
+          label="Recherche"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{ borderRadius: '35px', border: 'none' }}
+        />
+      </MDBInputGroup>
 
-          {/* Section pour afficher les autres utilisateurs */}
-          {searchTerm && (
-            <>
-              <h3>Autres utilisateurs</h3>
-              {renderUserList(filteredUsers.filter(user => !friends.includes(user.email)))}
-            </>
-          )}
-        </MDBListGroup>
+        {/* Friends list */}
+        <div className="scrollable-section" style={{ maxHeight: '300px', overflowY: 'auto' }}>
+          <MDBListGroup>
+            <h3 className="mb-3"><strong>Amis</strong></h3>
+            {renderUserList(searchTerm ? filteredUsers.filter(user => friends.includes(user.email)) : friendsList)}
+          </MDBListGroup>
+        </div>
+
+        {/* Other users list */}
+        {searchTerm && (
+          <div className="scrollable-section" style={{ maxHeight: '300px', overflowY: 'auto', marginTop: '20px' }}>
+            <MDBListGroup>
+              <h3 className="mb-3"><strong>Autres utilisateurs</strong></h3>
+              {renderUserList(filteredOtherUsers)}
+            </MDBListGroup>
+          </div>
+        )}
       </MDBContainer>
     );
   };
 
   return (
+    <UserAgent>
+    {({ ua }) => {
+      return ua.mobile ? <MobileDownload /> :
+
     <div>
+      <div style={{ position: 'fixed', top: '10px', right: '10px' }}>
+      <MDBBtn
+        color="primary"
+        onClick={() => navigate(`/Account/${encodeURIComponent(email)}`)}
+        style={{ width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      >
+        <MDBIcon icon="arrow-left" />
+      </MDBBtn>
+      </div>
+
       {renderUsers()}
     </div>
+    }}
+    </UserAgent>
   );
 };
 

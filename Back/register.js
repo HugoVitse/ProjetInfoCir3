@@ -22,7 +22,8 @@ async function register(req,res){
         "firstName":firstName,
         "lastName":lastName,
         "dateOfBirth":dateOfBirth,
-        "firstLogin":true
+        "firstLogin":true,
+        "image":"profile_pictures/default.jpg"
     }
 
     const isExist = await add_user(connect_db.client,user);
