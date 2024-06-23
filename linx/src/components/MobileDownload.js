@@ -17,11 +17,11 @@ import Config from '../config.json';
 const MobileDownload = () => {
 
   const handleDownloadAndroid = () => {
-    window.location.href = `${Config.scheme}://${Config.urlapi}:${Config.portapi}/download/Linx.apk`;
+    window.location.href = `${Config.scheme}://${Config.urlapi}:${Config.portapi}/downloads/Linx.apk`;
   };
 
   const handleDownloadIOS = () => {
-    window.location.href = `${Config.scheme}://${Config.urlapi}:${Config.portapi}/download/Linx.ipa`;
+    window.location.href = `${Config.scheme}://${Config.urlapi}:${Config.portapi}/downloads/Linx.ipa`;
   };
 
   const images = [
