@@ -80,7 +80,7 @@ const MobileDownload = () => {
                 <MDBCol size="12" className="d-flex align-items-center justify-content-center">
                   <img src={iosImage} alt="iOS" style={{ width: '40px', marginRight: '15px' }} />
                   <MDBBtn onClick={handleDownloadIOS} color="primary" className="w-100" style={{ fontSize: '1rem', padding: '10px 20px' }}>
-                    <MDBIcon fab icon="apple" className="me-2" /> Télécharger pour iOS (App Store)
+                    <MDBIcon fab icon="apple" className="me-2" /> Télécharger pour iOS (.ipa)
                   </MDBBtn>
                 </MDBCol>
               </MDBRow>
@@ -121,7 +121,7 @@ const MobileDownload = () => {
           <p style={{ margin: 0 }}>Contactez-nous: support@example.com | +33 123 456 789</p>
         </div>
         <div style={{ marginTop: '20px' }}>
-          <p style={{ margin: 0 }}>© {new Date().getFullYear()} Votre App</p>
+          <p style={{ margin: 0 }}>© {new Date().getFullYear()} Linx</p>
         </div>
       </footer>
     </MDBContainer>

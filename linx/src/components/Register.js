@@ -6,6 +6,9 @@ import {
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import axios from 'axios';
 import Config from '../config.json';
+import MobileDownload from './MobileDownload';
+import { UserAgent } from "react-useragent";
+
 
 const Register = () => {
   const navigate = useNavigate();
@@ -53,7 +56,9 @@ const Register = () => {
   useEffect(() => { }, []);
 
   return (
-
+<UserAgent>
+    {({ ua }) => {
+      return ua.mobile ? <MobileDownload /> :
   
 <MDBContainer fluid className="d-flex align-items-center justify-content-center vh-100 bg-theme">
       <MDBCard className="w-100 w-md-75" style={{ maxHeight: '90%' }}>
@@ -172,7 +177,8 @@ const Register = () => {
       </MDBModal> */}
       </MDBCard>
     </MDBContainer>
-
+    }}
+    </UserAgent>
   );
 };
 

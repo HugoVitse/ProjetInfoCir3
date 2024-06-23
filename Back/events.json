@@ -432,60 +432,12 @@
     "adresse": "4 rue des Sarrazins"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/perf-d-impro-des-enfants/3508893-1-fre-FR/Perf-d-Impro-des-Enfants_equipment_image_lead_child.jpg",
-    "name": "Perf d Impro des Enfants",
-    "type": "Spectacle",
-    "description": "Nous avons le plaisir de vous présenter une perf’ d’impro exceptionnelle réalisée par Les enfants!",
-    "date": "Le 22 juin 2024",
-    "adresse": "34 rue du Long Pot"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/match-d-impro-des-ados/3508934-1-fre-FR/Match-d-Impro-des-Ados_equipment_image_lead_child.jpg",
-    "name": "Match d Impro des Ados",
-    "type": "Spectacle",
-    "description": "Préparez vous à être éblouis par le talent, l’humour et la créativité de nos jeunes improvisateurs !",
-    "date": "Le 22 juin 2024",
-    "adresse": "34 rue du Long Pot"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/univershifte-2024/3491034-1-fre-FR/UniverShifte-2024_equipment_image_lead_child.jpg",
     "name": "UniverShifte 202",
     "type": "Rencontre / conférence / débat",
     "description": "2 jours pour mettre le cap vers un futur soutenable",
     "date": "Du 22 au 23 juin 2024",
     "adresse": "60 boulevard Vauban, 59800 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/portes-ouvertes-a-la-caserne-des-sapeurs-pompiers-de-lille-malus/3528247-1-fre-FR/Portes-ouvertes-a-la-caserne-des-sapeurs-pompiers-de-Lille-Malus_equipment_image_lead_child.jpg",
-    "name": "Portes ouvertes a la caserne des sapeurs pompiers de Lille Malus",
-    "type": "Visite",
-    "description": "Pour la première fois, la caserne des sapeurs-pompiers de Lille-Centre ouvre ses portes à tous ! Rendez-vous le samedi 22 juin, de 9h30 à 19h30.",
-    "date": "Le 22 juin 2024",
-    "adresse": "14 rue de Malus Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/decouvertes-nature-fives/3476290-1-fre-FR/Decouvertes-nature-Fives_equipment_image_lead_child.jpg",
-    "name": "Decouvertes nature Fives",
-    "type": "Nature / environnement",
-    "description": "Une animation pour partir à la découverte de la nature qui nous entoure.",
-    "date": "Le 22 juin 2024",
-    "adresse": "8 Rue Gutenberg, 59800 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/la-bibliotheque-entre-dans-la-danse/3500877-1-fre-FR/La-bibliotheque-entre-dans-la-danse_equipment_image_lead_child.jpg",
-    "name": "Entrez dans la danse",
-    "type": "Fête / festival",
-    "description": "Déambulation dansée et ateliers à la médiathèque",
-    "date": "Le 22 juin 2024",
-    "adresse": "32 rue Edouard Delesalle 59000 Lille"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/terrasse-creative-4/3511133-1-fre-FR/Terrasse-creative-4_equipment_image_lead_child.jpg",
-    "name": "Terrasse creative ",
-    "type": "Stage et atelier",
-    "description": "Une journée d’ateliers ouverts à tous pour s’essayer à la pratique artistique",
-    "date": "Le 22 juin 2024",
-    "adresse": "4 rue des Sarrazins03 20 54 71 84"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/week-end-olympique/3515768-1-fre-FR/Week-end-Olympique_equipment_image_lead_child.jpg",
@@ -496,36 +448,12 @@
     "adresse": "Place du Théâtre"
   },
   {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/journee-olympique-et-paralympique3/3496856-2-fre-FR/Journee-Olympique-et-Paralympique_equipment_image_lead_child.jpg",
-    "name": "Journee Olympique et Paralympique",
-    "type": "Événement sportif",
-    "description": "Venez nombreux participer à la Journée Olympique et Paralympique",
-    "date": "Le 22 juin 2024",
-    "adresse": "Champ de Mars - Lille"
-  },
-  {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/les-archives-departementales-du-nord-font-leurs-jeux/3510089-1-fre-FR/Les-Archives-Departementales-du-Nord-font-leurs-Jeux_equipment_image_lead_child.jpg",
     "name": "Les Archives Departementales du Nord font leurs Jeux",
     "type": "Événement sportif",
     "description": "Un week-end festif autour du sport et de l'histoire",
     "date": "Du 22 au 23 juin 2024",
     "adresse": "22, rue Saint-Bernard - Lille03 59 73 06 00"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/fiesta-montrez-vos-bobines2/3525014-1-fre-FR/Fiesta-montrez-vos-bobines_equipment_image_lead_child.jpg",
-    "name": "Fiesta montrez vos bobines",
-    "type": "",
-    "description": "En attendant Fiesta, participez à une collecte de films amateurs avec Archipop et lille3000 !",
-    "date": "Le 22 juin 2024",
-    "adresse": "32-34 rue Edouard Delesalle+33(0)3 44 22 60 55"
-  },
-  {
-    "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/creer-une-video-en-stop-motion/3500806-1-fre-FR/Creer-une-video-en-stop-motion_equipment_image_lead_child.jpg",
-    "name": "Creer une video en stop motion",
-    "type": "Stage et atelier",
-    "description": "Atelier numérique",
-    "date": "Le 22 juin 2024",
-    "adresse": "48, rue Faidherbe0320569338"
   },
   {
     "image": "https://www.lille.fr/var/www/storage/images/mediatheque/mairie-de-lille/images-openagenda/festival-crea-queer2/3515163-1-fre-FR/Festival-Crea-Queer_equipment_image_lead_child.jpg",

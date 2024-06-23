@@ -9,6 +9,9 @@ import {
 } from 'mdb-react-ui-kit';
 import axios from 'axios';
 import Config from '../config.json';
+import MobileDownload from './MobileDownload';
+import { UserAgent } from "react-useragent";
+
 
 const Catalogue = () => {
     const [showPopup, setShowPopup] = useState(false);
@@ -100,6 +103,9 @@ const Catalogue = () => {
     };
 
     return (
+        <UserAgent>
+    {({ ua }) => {
+      return ua.mobile ? <MobileDownload /> :
         <MDBContainer className="mt-4 mb-4" style={{marginLeft:'-24'}}>
             <MDBInputGroup className="mb-3" style={{ borderRadius: '35px', overflow: 'hidden', border: 'none' }}>
                 <MDBInput
@@ -197,6 +203,8 @@ const Catalogue = () => {
                 </div>
             )}
         </MDBContainer>
+    }}
+    </UserAgent>
     );
 };
 

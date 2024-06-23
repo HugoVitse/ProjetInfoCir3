@@ -5,6 +5,9 @@ import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import MobileDownload from './MobileDownload';
+import { UserAgent } from "react-useragent";
+
 
 const EventsPerso = () => {
     const { email } = useParams();
@@ -58,6 +61,9 @@ const EventsPerso = () => {
   );
 
   return (
+    <UserAgent>
+    {({ ua }) => {
+      return ua.mobile ? <MobileDownload /> :
     <MDBContainer className="mt-5">
         {/* Back button */}
       <div style={{ position: 'fixed', top: '10px', right: '10px'}}>
@@ -99,6 +105,8 @@ const EventsPerso = () => {
         </div>
       </MDBListGroup>
     </MDBContainer>
+    }}
+    </UserAgent>
   );
 };
 

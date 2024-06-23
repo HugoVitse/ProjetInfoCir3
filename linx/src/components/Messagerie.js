@@ -9,6 +9,9 @@ import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import Config from '../config.json';
+import MobileDownload from './MobileDownload';
+import { UserAgent } from "react-useragent";
+
 
 const Messagerie = () => {
   const navigate = useNavigate();
@@ -133,6 +136,9 @@ const Messagerie = () => {
   };
 
   return (
+    <UserAgent>
+    {({ ua }) => {
+      return ua.mobile ? <MobileDownload /> :
     <MDBContainer fluid className="bg-theme py-4 px-lg-5" style={{ minHeight: '100vh' }}>
       <MDBRow className="justify-content-center">
         <MDBCol md="8" lg="9">
@@ -224,6 +230,8 @@ const Messagerie = () => {
         </MDBCol>
       </MDBRow>
     </MDBContainer>
+    }}
+    </UserAgent>
   );
 };
 

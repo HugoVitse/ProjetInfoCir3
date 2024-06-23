@@ -6,6 +6,9 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import Config from '../config.json';
+import MobileDownload from './MobileDownload';
+import { UserAgent } from "react-useragent";
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -61,6 +64,9 @@ const Login = () => {
   };
 
   return (
+    <UserAgent>
+    {({ ua }) => {
+      return ua.mobile ? <MobileDownload /> :
     <MDBContainer fluid className="bg-theme d-flex align-items-center justify-content-center vh-100">
       <MDBCard className="w-100 w-md-75" style={{ maxHeight: '90%' }}>
         <MDBRow className="g-0 h-100">
@@ -164,6 +170,8 @@ const Login = () => {
         </MDBRow>
       </MDBCard>
     </MDBContainer>
+    }}
+    </UserAgent>
   );
 }
 

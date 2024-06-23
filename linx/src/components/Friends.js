@@ -6,6 +6,9 @@ import Cookies from 'js-cookie';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Config from '../config.json';
+import MobileDownload from './MobileDownload';
+import { UserAgent } from "react-useragent";
+
 
 
 const Friends = () => {
@@ -223,6 +226,9 @@ const Friends = () => {
   };
 
   return (
+    <UserAgent>
+    {({ ua }) => {
+      return ua.mobile ? <MobileDownload /> :
     <div>
       {/* Back button */}
       <div style={{ position: 'fixed', top: '10px', right: '10px' }}>
@@ -237,6 +243,8 @@ const Friends = () => {
 
       {renderUsers()}
     </div>
+    }}
+    </UserAgent>
   );
 };
 

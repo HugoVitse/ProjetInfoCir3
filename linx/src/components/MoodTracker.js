@@ -10,6 +10,9 @@ import Calendar from './Calendar';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import '../css/MoodTracker.css';
+import MobileDownload from './MobileDownload';
+import { UserAgent } from "react-useragent";
+
 
 const MoodTracker = () => {
   const [formData, setFormData] = useState({
@@ -327,6 +330,9 @@ const MoodTracker = () => {
 
 
   return (
+    <UserAgent>
+    {({ ua }) => {
+      return ua.mobile ? <MobileDownload /> :
     <div style={{ height: '100vh', maxWidth: '100%', overflowX: 'hidden', overflowY: 'hidden' }}>
     <MDBContainer fluid className="bg-theme text-theme contourpage d-flex align-items-center justify-content-center vh-100">
       <MDBCard className="w-50 h-100">
@@ -409,6 +415,8 @@ const MoodTracker = () => {
       </MDBCard>
     </MDBContainer>
     </div>
+    }}
+    </UserAgent>
   );
 };
 

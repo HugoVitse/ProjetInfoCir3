@@ -6,6 +6,8 @@ import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import Config from '../config.json';
+import { UserAgent } from "react-useragent";
+import MobileDownload from './MobileDownload';
 
 const Account = () => {
   const { emailurl } = useParams();
@@ -231,6 +233,9 @@ const Account = () => {
   
   // Composant Account principal
   return (
+    <UserAgent>
+    {({ ua }) => {
+      return ua.mobile ? <MobileDownload /> :
     <div className="bg-theme text-theme">
       <MDBContainer className="py-5 h-100">
         <MDBRow className="justify-content-center align-items-center h-100">
@@ -331,6 +336,8 @@ const Account = () => {
         </MDBRow>
       </MDBContainer>
     </div>
+    }}
+    </UserAgent>
   );
   };
   

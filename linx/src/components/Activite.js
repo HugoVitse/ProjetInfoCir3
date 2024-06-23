@@ -13,6 +13,9 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
 import { AutoComplete } from 'primereact/autocomplete';
 import Config from '../config.json'
+import MobileDownload from './MobileDownload';
+import { UserAgent } from "react-useragent";
+
 
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 
@@ -52,6 +55,18 @@ const Activite = () => {
         'https://img.freepik.com/vecteurs-libre/silhouette-danse-salon-dessinee-main_23-2150922361.jpg?size=626&ext=jpg&ga=GA1.1.1788614524.1718409600&semt=sph',
         'https://www.shogun-japon.com/cdn/shop/articles/Type-de-manga.jpg?v=1642615082',
         'https://cdn-europe1.lanmedia.fr/var/europe1/storage/images/europe1/medias-tele/exclusif-les-series-tele-preferes-des-francais-sont-3999594/56169328-1-fre-FR/EXCLUSIF-Les-series-tele-preferes-des-Francais-sont.jpg',
+        'https://lelephant-larevue.fr/wp-content/uploads/2016/04/capture-decran-2017-05-23-a-10.51.42-1024x681-1-571x380.png',
+        'https://cdn-s-www.bienpublic.com/images/D8E88A78-5313-4AB8-8815-3A427B47F2C9/NW_raw/la-yamaha-mt-10-1647535719.jpg',
+        'https://www.philomag.com/sites/default/files/styles/facebook/public/images/web-lecture-rapide-2.jpg',
+        'https://www.economie.gouv.fr/files/styles/image_contenu_article_espace/public/files/directions_services/dgccrf/imgs/fiches_pratiques/2019/Jeux-en-ligne.jpg?itok=TNOsY2Xc',
+        'https://i0.wp.com/classiques-essentiels.fr/wp-content/uploads/2020/09/background-1797456_1920-e1599774860441.jpg?resize=1038%2C576&ssl=1',
+        'https://m.media-amazon.com/images/I/81ej37YcuYL._AC_UF1000,1000_QL80_.jpg',
+        'https://www.assurancevoyage.fr/wp-content/uploads/2017/01/assurance-voyage-besoin.jpg',
+        'https://www.musees.strasbourg.eu/documents/30424/508640/MBA_2022_39.jpg/a5e7b146-97c8-5620-78aa-65797846eac0?t=1675247055686',
+        'https://media.ouest-france.fr/v1/pictures/46c8aa69988fd834a112b9ed8576ec6d-25657481.jpg?width=1260&client_id=eds&sign=9bab2a2fd53b509264917417ab54ef969f04cd7a1a386eec48aa518b28b39a8b',
+        'https://img.freepik.com/photos-gratuite/outils-sport_53876-138077.jpg',
+        'https://img.le-dictionnaire.com/nourriture-plats.jpg',
+        'https://www.thegoodarles.com/wp-content/uploads/2017/04/boutique-mode-vetement-saint-remy-de-pce-le-38-baner.jpg',
 
 
     ]
@@ -192,6 +207,9 @@ const Activite = () => {
         newAdresses()
     }
   return (
+    <UserAgent>
+    {({ ua }) => {
+      return ua.mobile ? <MobileDownload /> :
     <div className="bg-theme text-theme">
       <MDBContainer className="py-5">
         <MDBRow className="justify-content-center align-items-center">
@@ -201,7 +219,7 @@ const Activite = () => {
               <MDBCarousel className='mb-3' style={{ width: "100%" }} showControls interval={3600000}>
                 {images.map((image, index) => (
                   <MDBCarouselItem itemId={index + 1}>
-                    <img src={image} className='d-block w-100' alt='...' />
+                    <img src={image} className='d-block w-100' alt='...'   style={{ height: '300px', objectFit: 'cover', width: '100%' }} />
                   </MDBCarouselItem>
                 ))}
               </MDBCarousel>
@@ -298,6 +316,8 @@ const Activite = () => {
         </MDBRow>
       </MDBContainer>
     </div>
+    }}
+    </UserAgent>
   );
 };
 

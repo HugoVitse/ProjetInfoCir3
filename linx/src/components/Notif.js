@@ -3,6 +3,9 @@ import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBBtn } from 'mdb-
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import Config from '../config.json';
+import MobileDownload from './MobileDownload';
+import { UserAgent } from "react-useragent";
+
 
 const Notif = ({ updateNotificationStatus }) => {
   const [friendRequests, setFriendRequests] = useState([]);
@@ -67,6 +70,9 @@ const Notif = ({ updateNotificationStatus }) => {
   };
 
   return (
+    <UserAgent>
+    {({ ua }) => {
+      return ua.mobile ? <MobileDownload /> :
     <div className="bg-theme text-theme vh-100">
       <MDBContainer className="py-5">
         <MDBRow className="justify-content-center">
@@ -107,6 +113,8 @@ const Notif = ({ updateNotificationStatus }) => {
         </MDBRow>
       </MDBContainer>
     </div>
+    }}
+    </UserAgent>
   );
 };
 

@@ -310,3 +310,17 @@ body {
   height: 80%;
   animation: pulse 1s infinite;
 }
+
+.carousel-custom {
+  height: 300px; /* Ajustez la hauteur selon vos besoins */
+}
+
+.carousel-item-custom {
+  height: 100%;
+}
+
+.carousel-image-custom {
+  height: 100%;
+  width: 100%;
+  object-fit: cover; /* Pour que l'image s'ajuste bien aux dimensions sans déformer */
+}
