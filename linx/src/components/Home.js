@@ -53,7 +53,7 @@ const Home = () => {
     setError('');
     setLoading(true);
     try {
-      await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/fillquestionnaire`, { withCredentials: true });
+      await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/fillquestionnaire`, formData, { withCredentials: true });
 
       toggleOpen();
     } catch (error) {
