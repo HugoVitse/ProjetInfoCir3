@@ -23,6 +23,7 @@ async function register(req,res){
         "lastName":lastName,
         "dateOfBirth":dateOfBirth,
         "firstLogin":true,
+        "activities":[],
         "image":"profile_pictures/default.jpg"
     }
 
