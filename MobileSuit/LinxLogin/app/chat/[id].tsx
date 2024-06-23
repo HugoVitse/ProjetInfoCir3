@@ -68,7 +68,7 @@ export default function ChatScreen() {
 
 
   useEffect(() => {
-    const channel = pusher.subscribe('my-channel');
+    const channel = pusher.subscribe(typeof(id)=='string'?id:"my-channel");
 
     channel.bind('my-event', (data:any) => {
       let tmp = [...message,data]

@@ -53,12 +53,12 @@ async function sendMessage(req,res){
             else{
                 if(findOneResult.chat == null){
                     const updateResult = await collection.findOneAndUpdate({_id:oid},{$set:{chat:[{author:decoded.email,message:message}]}}, { returnDocument: 'after' })
-                    pusher.trigger("my-channel", "my-event",updateResult.chat);
+                    pusher.trigger(id, "my-event",updateResult.chat);
 
                 }
                 else{
                     const updateResult = await collection.findOneAndUpdate({_id:oid},{$push:{chat:{author:decoded.email,message:message}}}, { returnDocument: 'after' })
-                    pusher.trigger("my-channel", "my-event",updateResult.chat);
+                    pusher.trigger(id, "my-event",updateResult.chat);
 
                 }
                 
