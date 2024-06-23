@@ -92,6 +92,7 @@ async function serv(){
   console.log(path.join(__dirname, 'profile_pictures'))
 
   app.use('/profile_pictures',express.static(path.join(__dirname, 'profile_pictures')));
+  app.use('/downloads',express.static(path.join(__dirname, 'downloads')));
 
   // app.listen(80, () => {  
   //     console.log(`serever is runing at port ${port}`);

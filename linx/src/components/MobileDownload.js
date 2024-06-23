@@ -11,15 +11,17 @@ import {
   MDBCardImage,
   MDBIcon
 } from 'mdb-react-ui-kit';
+import Config from '../config.json';
+
 
 const MobileDownload = () => {
 
   const handleDownloadAndroid = () => {
-    window.location.href = '/chemin/vers/votre/app.apk';
+    window.location.href = `${Config.scheme}://${Config.urlapi}:${Config.portapi}/download/Linx.apk`;
   };
 
   const handleDownloadIOS = () => {
-    window.location.href = 'https://apps.apple.com/fr/app/votre-app/id1234567890';
+    window.location.href = `${Config.scheme}://${Config.urlapi}:${Config.portapi}/download/Linx.ipa`;
   };
 
   const images = [
