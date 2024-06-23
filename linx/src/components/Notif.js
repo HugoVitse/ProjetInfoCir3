@@ -15,7 +15,6 @@ const Notif = ({ updateNotificationStatus }) => {
     const jwt = Cookies.get("jwt");
     try {
       const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { headers: { Cookie: `jwt=${jwt}` }, withCredentials: true });
-      console.log('Data received from API:', response.data);
       setFriendRequests(response.data.friendRequests || []);
       updateNotificationStatus(response.data.friendRequests && response.data.friendRequests.length > 0);
     } catch (error) {
@@ -73,6 +72,7 @@ const Notif = ({ updateNotificationStatus }) => {
     <UserAgent>
     {({ ua }) => {
       return ua.mobile ? <MobileDownload /> :
+      
     <div className="bg-theme text-theme vh-100">
       <MDBContainer className="py-5">
         <MDBRow className="justify-content-center">

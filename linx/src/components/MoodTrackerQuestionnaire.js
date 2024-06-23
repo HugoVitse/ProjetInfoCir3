@@ -28,7 +28,6 @@ const MoodTrackerQuestionnaire = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formData); // Just for testing purposes, replace with your submission logic
   };
 
   return (

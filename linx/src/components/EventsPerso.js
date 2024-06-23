@@ -7,6 +7,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import MobileDownload from './MobileDownload';
 import { UserAgent } from "react-useragent";
+import Config from '../config.json'
+
 
 
 const EventsPerso = () => {
@@ -34,9 +36,8 @@ const EventsPerso = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const eventsResponse = await axios.get('http://localhost/evenements', { withCredentials: true });
+        const eventsResponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/evenements`, { withCredentials: true });
 
-        // Filter events based on the criteria
         const filteredEvents = eventsResponse.data.filter(event => {
           const eventDate = new Date(event.date);
           const today = new Date();
@@ -52,10 +53,9 @@ const EventsPerso = () => {
     };
 
     fetchData();
-  }, [email]); // Depend on email to refetch events when it changes
+  }, [email]);
 
 
-  // Filter events based on searchTerm
   const filteredEvents = events.filter(event =>
     event.title && event.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -64,8 +64,8 @@ const EventsPerso = () => {
     <UserAgent>
     {({ ua }) => {
       return ua.mobile ? <MobileDownload /> :
+
     <MDBContainer className="mt-5">
-        {/* Back button */}
       <div style={{ position: 'fixed', top: '10px', right: '10px'}}>
       <MDBBtn
         color="primary"

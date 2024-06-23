@@ -70,7 +70,8 @@ const Account = () => {
           }
         }
 
-         const eventsResponse = await axios.get('http://localhost/evenements', { withCredentials: true });
+        const eventsResponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/evenements`, { withCredentials: true });
+
   
         const filteredEvents = eventsResponse.data.filter(event => {
           const eventDate = new Date(event.date);
@@ -87,22 +88,22 @@ const Account = () => {
     };
 
     fetchUsers();
-  }, [navigate]);
+    }, [navigate]);
 
-  const calculateAge = (dateOfBirth) => {
-    const today = new Date();
-    const birthDate = new Date(dateOfBirth);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    return age;
-  };
+    const calculateAge = (dateOfBirth) => {
+      const today = new Date();
+      const birthDate = new Date(dateOfBirth);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
+    };
 
-  const handleEditProfile = () => {
-    setIsEditing(true);
-  };
+    const handleEditProfile = () => {
+      setIsEditing(true);
+    };
 
   const handleDescriptionChange = (e) => {
     if (e.target.value.length <= 200) {
@@ -129,9 +130,10 @@ const Account = () => {
   const handleSubmit = async () => {
     try {
       if (pp) {
-        await axios.post('http://localhost/updateInfoWeb', { picture: pp, firstName, lastName, selectedInterests, description }, { withCredentials: true });
+        await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/updateInfoWeb`, { picture: pp, firstName, lastName, selectedInterests, description }, { withCredentials: true });
+
       } else {
-        await axios.post('http://localhost/updateInfoWeb', { picture: '', firstName, lastName, selectedInterests, description }, { withCredentials: true });
+        await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/updateInfoWeb`, { picture: pp, firstName, lastName, selectedInterests, description }, { withCredentials: true });
       }
       setInitialInterests(selectedInterests);
     } catch (error) {
@@ -231,11 +233,12 @@ const Account = () => {
     );
   };
   
-  // Composant Account principal
+  
   return (
     <UserAgent>
     {({ ua }) => {
       return ua.mobile ? <MobileDownload /> :
+      
     <div className="bg-theme text-theme">
       <MDBContainer className="py-5 h-100">
         <MDBRow className="justify-content-center align-items-center h-100">
@@ -246,7 +249,8 @@ const Account = () => {
                 <label htmlFor="profile-image">
                   <div style={{ width: '150px', height: '150px', marginBottom:'20px' }}>
                     <MDBCardImage 
-                      src={isEditing ? profileImage : profileImage ? `http://localhost/${profileImage}` : "https://via.placeholder.com/150"}
+                      src={isEditing ? profileImage : profileImage ? `${Config.scheme}://${Config.urlapi}/${profileImage}` : "https://via.placeholder.com/150"}
+
                       alt="Profile"
                       className="mb-1 img-thumbnail"
                       style={{ width: '150px', height: '150px', objectFit: 'cover', zIndex: '1' }} 

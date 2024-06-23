@@ -11,6 +11,8 @@ import axios from 'axios';
 import { UserAgent } from "react-useragent";
 import { useNavigate, Link } from "react-router-dom";
 import MobileDownload from './MobileDownload';
+import Config from '../config.json'
+
 
 const Home = () => {
   const [basicModal, setBasicModal] = useState(false);
@@ -51,7 +53,8 @@ const Home = () => {
     setError('');
     setLoading(true);
     try {
-      await axios.post('http://localhost/fillquestionnaire', formData, { withCredentials: true });
+      await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/fillquestionnaire`, { withCredentials: true });
+
       toggleOpen();
     } catch (error) {
       console.error('Error:', error);
@@ -79,19 +82,16 @@ const Home = () => {
     const token = Cookies.get("jwt");
     try {
       const decodedToken = jwtDecode(token);
-      console.log(decodedToken);
     } catch {
       navigate("/Login");
     }
   };
 
   useEffect(() => {
-    const userAgent = Cookies.get("userAgent");
-    console.log("User-Agent:", userAgent || "User-Agent non trouvé");
     const fnc = async () => {
       retrieveCookie();
       try {
-        const response = await axios.get('http://localhost/infos', { withCredentials: true });
+        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { withCredentials: true });
         setFirstName(response.data.firstName || '');
         setLastName(response.data.lastName || '');
         setSelectedInterests(response.data.activities || []);
@@ -101,7 +101,8 @@ const Home = () => {
           toggleOpen();
         }
 
-        const eventsResponse = await axios.get('http://localhost/evenements', { withCredentials: true });
+        const eventsResponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/evenements`, { withCredentials: true });
+
         setEvents(eventsResponse.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -137,7 +138,8 @@ const Home = () => {
     setError('');
     setLoading(true);
     try {
-      await axios.post('http://localhost/ParticipantDelete', {id: id}, { withCredentials: true });
+      await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/ParticipantDelete`, { withCredentials: true });
+
       window.location.reload();
     } catch (error) {
       console.error('Error:', error);
@@ -150,9 +152,9 @@ const Home = () => {
   const handleEventDelete = async (id) => {
     setError('');
     setLoading(true);
-    console.log(id)
     try {
-      await axios.post('http://localhost/EventDelete', {id: id}, { withCredentials: true });
+      await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/EventDelete`, {id: id}, { withCredentials: true });
+
       window.location.reload();
     } catch (error) {
       console.error('Error:', error);
@@ -226,6 +228,7 @@ const Home = () => {
     <UserAgent>
       {({ ua }) => {
         return ua.mobile ? <MobileDownload /> :
+        
           <div className="vh-100 d-flex flex-column">
             <MDBContainer fluid className="py-3" style={{ overflowY: 'auto' }}>
               <MDBRow className="justify-content-center align-items-center">

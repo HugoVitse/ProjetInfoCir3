@@ -3,14 +3,11 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import Cookies from 'js-cookie';
-import { MDBContainer, MDBCard,MDBCardBody, MDBCardTitle, MDBCardText, MDBInput, MDBBtn, MDBCardImage, MDBRow , MDBCol, MDBTable, MDBTextArea,MDBCarousel, MDBCarouselItem} from 'mdb-react-ui-kit';
-import ReactStars from 'react-rating-stars-component';
+import { MDBContainer, MDBCard,MDBCardBody, MDBCardTitle, MDBCardText, MDBInput, MDBBtn, MDBCardImage, MDBRow , MDBCol, MDBTextArea,MDBCarousel, MDBCarouselItem} from 'mdb-react-ui-kit';
 import { useNavigate } from "react-router-dom";
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import TextField from '@mui/material/TextField';
 import { AutoComplete } from 'primereact/autocomplete';
 import Config from '../config.json'
 import MobileDownload from './MobileDownload';
@@ -25,10 +22,10 @@ const interestsList = [
     'Cinéma', 'Attractions', 'Animaux', 'Théâtre', 'Danse', 'Manga/Anime', 'Séries', 'Échecs',
     'Moto', 'Lecture', 'Jeux vidéos', 'Musique', 'BD/Comics', 'Voyager', 'Musées', 'Sortir entre amis',
     'Sport', 'Nourriture', 'La mode'
-  ];
+];
 
 const Activite = () => {
-    const location = useLocation();
+  const location = useLocation();
   const { cardTitle, cardDescription, cardImg, cardDate, adresse, custom } = location.state || {};
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState('');
@@ -47,59 +44,58 @@ const Activite = () => {
   const [message] = useState([
     { text: 'Que pensez-vous de cette activité ?', sender: 'user1@example.com', type: 'received' }
   ]);
-    const images = [
-        'https://media.gqmagazine.fr/photos/603e6a8da9360b0585bcbc6a/16:9/w_2560%2Cc_limit/108387402',
-        'https://www.fnacspectacles.com/magazine/fileadmin/_processed_/d/4/csm_parc-asterix-attraction_58dfd74118.jpg',
-        'https://lemagdelaconso.ouest-france.fr/images/dossiers/2023-02/mini/zoo-173704-1200-600.jpg',
-        'https://media.lesechos.com/api/v1/images/view/5bd2ee868fe56f1954726719/1280x720/2203698-theatres-prives-parisiens-si-convoites-mais-si-fragiles-web-tete-0302222880640.jpg',
-        'https://img.freepik.com/vecteurs-libre/silhouette-danse-salon-dessinee-main_23-2150922361.jpg?size=626&ext=jpg&ga=GA1.1.1788614524.1718409600&semt=sph',
-        'https://www.shogun-japon.com/cdn/shop/articles/Type-de-manga.jpg?v=1642615082',
-        'https://cdn-europe1.lanmedia.fr/var/europe1/storage/images/europe1/medias-tele/exclusif-les-series-tele-preferes-des-francais-sont-3999594/56169328-1-fre-FR/EXCLUSIF-Les-series-tele-preferes-des-Francais-sont.jpg',
-        'https://lelephant-larevue.fr/wp-content/uploads/2016/04/capture-decran-2017-05-23-a-10.51.42-1024x681-1-571x380.png',
-        'https://cdn-s-www.bienpublic.com/images/D8E88A78-5313-4AB8-8815-3A427B47F2C9/NW_raw/la-yamaha-mt-10-1647535719.jpg',
-        'https://www.philomag.com/sites/default/files/styles/facebook/public/images/web-lecture-rapide-2.jpg',
-        'https://www.economie.gouv.fr/files/styles/image_contenu_article_espace/public/files/directions_services/dgccrf/imgs/fiches_pratiques/2019/Jeux-en-ligne.jpg?itok=TNOsY2Xc',
-        'https://i0.wp.com/classiques-essentiels.fr/wp-content/uploads/2020/09/background-1797456_1920-e1599774860441.jpg?resize=1038%2C576&ssl=1',
-        'https://m.media-amazon.com/images/I/81ej37YcuYL._AC_UF1000,1000_QL80_.jpg',
-        'https://www.assurancevoyage.fr/wp-content/uploads/2017/01/assurance-voyage-besoin.jpg',
-        'https://www.musees.strasbourg.eu/documents/30424/508640/MBA_2022_39.jpg/a5e7b146-97c8-5620-78aa-65797846eac0?t=1675247055686',
-        'https://media.ouest-france.fr/v1/pictures/46c8aa69988fd834a112b9ed8576ec6d-25657481.jpg?width=1260&client_id=eds&sign=9bab2a2fd53b509264917417ab54ef969f04cd7a1a386eec48aa518b28b39a8b',
-        'https://img.freepik.com/photos-gratuite/outils-sport_53876-138077.jpg',
-        'https://img.le-dictionnaire.com/nourriture-plats.jpg',
-        'https://www.thegoodarles.com/wp-content/uploads/2017/04/boutique-mode-vetement-saint-remy-de-pce-le-38-baner.jpg',
 
+  const images = [
+    'https://media.gqmagazine.fr/photos/603e6a8da9360b0585bcbc6a/16:9/w_2560%2Cc_limit/108387402',
+    'https://www.fnacspectacles.com/magazine/fileadmin/_processed_/d/4/csm_parc-asterix-attraction_58dfd74118.jpg',
+    'https://lemagdelaconso.ouest-france.fr/images/dossiers/2023-02/mini/zoo-173704-1200-600.jpg',
+    'https://media.lesechos.com/api/v1/images/view/5bd2ee868fe56f1954726719/1280x720/2203698-theatres-prives-parisiens-si-convoites-mais-si-fragiles-web-tete-0302222880640.jpg',
+    'https://img.freepik.com/vecteurs-libre/silhouette-danse-salon-dessinee-main_23-2150922361.jpg?size=626&ext=jpg&ga=GA1.1.1788614524.1718409600&semt=sph',
+    'https://www.shogun-japon.com/cdn/shop/articles/Type-de-manga.jpg?v=1642615082',
+    'https://cdn-europe1.lanmedia.fr/var/europe1/storage/images/europe1/medias-tele/exclusif-les-series-tele-preferes-des-francais-sont-3999594/56169328-1-fre-FR/EXCLUSIF-Les-series-tele-preferes-des-Francais-sont.jpg',
+    'https://lelephant-larevue.fr/wp-content/uploads/2016/04/capture-decran-2017-05-23-a-10.51.42-1024x681-1-571x380.png',
+    'https://cdn-s-www.bienpublic.com/images/D8E88A78-5313-4AB8-8815-3A427B47F2C9/NW_raw/la-yamaha-mt-10-1647535719.jpg',
+    'https://www.philomag.com/sites/default/files/styles/facebook/public/images/web-lecture-rapide-2.jpg',
+    'https://www.economie.gouv.fr/files/styles/image_contenu_article_espace/public/files/directions_services/dgccrf/imgs/fiches_pratiques/2019/Jeux-en-ligne.jpg?itok=TNOsY2Xc',
+    'https://i0.wp.com/classiques-essentiels.fr/wp-content/uploads/2020/09/background-1797456_1920-e1599774860441.jpg?resize=1038%2C576&ssl=1',
+    'https://m.media-amazon.com/images/I/81ej37YcuYL._AC_UF1000,1000_QL80_.jpg',
+    'https://www.assurancevoyage.fr/wp-content/uploads/2017/01/assurance-voyage-besoin.jpg',
+    'https://www.musees.strasbourg.eu/documents/30424/508640/MBA_2022_39.jpg/a5e7b146-97c8-5620-78aa-65797846eac0?t=1675247055686',
+    'https://media.ouest-france.fr/v1/pictures/46c8aa69988fd834a112b9ed8576ec6d-25657481.jpg?width=1260&client_id=eds&sign=9bab2a2fd53b509264917417ab54ef969f04cd7a1a386eec48aa518b28b39a8b',
+    'https://img.freepik.com/photos-gratuite/outils-sport_53876-138077.jpg',
+    'https://img.le-dictionnaire.com/nourriture-plats.jpg',
+    'https://www.thegoodarles.com/wp-content/uploads/2017/04/boutique-mode-vetement-saint-remy-de-pce-le-38-baner.jpg',
 
-    ]
+  ]
 
-    useEffect(()=>{
-        setRealCustom(custom)
-        
-    },[])
+  useEffect(()=>{
+      setRealCustom(custom)
+  },[])
 
   
 
-    useEffect(()=>{
-        console.log(customTitle)
-    },[customTitle])
+  useEffect(()=>{
+      console.log(customTitle)
+  },[customTitle])
 
+  useEffect(() => {
+      const retrieveCookie = () => {
+        const token = Cookies.get("jwt");
+        try {
+          jwtDecode(token);
+        } catch {
+          navigate("/Login");
+        }
+      }
+    }, [navigate]);
+  
     useEffect(() => {
-        const retrieveCookie = () => {
-          const token = Cookies.get("jwt");
-          try {
-            jwtDecode(token);
-          } catch {
-            navigate("/Login");
-          }
-        }
-      }, [navigate]);
-    
-      useEffect(() => {
-        if (type && invites && date) {
-          setButtonDisabled(false);
-        } else {
-          setButtonDisabled(true);
-        }
-      }, [type, invites, date]);
+      if (type && invites && date) {
+        setButtonDisabled(false);
+      } else {
+        setButtonDisabled(true);
+      }
+    }, [type, invites, date]);
 
     const handleCommentChange = (e) => setComment(e.target.value);
     const handleRatingChange = (newRating) => setRating(newRating);
@@ -118,46 +114,45 @@ const Activite = () => {
           setComment('');
           setRating(0);
         }
-      };
+    };
 
     useEffect(()=>{
         console.log(date)
     },[date])
 
     const createEvent = async () => {
-        const data = {
-          activity: {
-            title: realCustom ? customTitle : cardTitle,
-            description: realCustom ? customDescription : cardDescription,
-            image: realCustom ? document.querySelector(".active img").getAttribute("src") : cardImg,
-            adresse: realCustom ? currentAdresse : adresse
-          },
-          nbinvities: invites,
-          type: type,
-          messages: message,
-          date: date.toString()
-        };
-    
-        console.log(data);
-        const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/createEvenement`, data, { withCredentials: true });
-    
-        setEventCreated(true);
-        
-        setRealCustom(false);
-        setCustomTitle("");
-        setCustomDescription("");
-        setCurrentAdresse("");
-        settype("");
-        setInvites("");
-        setDate(new dayjs(Date.now()));
-    
-        setTimeout(() => {
-          setEventCreated(false);
-          setTimeout(() => {
-            navigate("/Evenements");
-          }, 500);
-        }, 2000);
+      const data = {
+        activity: {
+          title: realCustom ? customTitle : cardTitle,
+          description: realCustom ? customDescription : cardDescription,
+          image: realCustom ? document.querySelector(".active img").getAttribute("src") : cardImg,
+          adresse: realCustom ? currentAdresse : adresse
+        },
+        nbinvities: invites,
+        type: type,
+        messages: message,
+        date: date.toString()
       };
+  
+      const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/createEvenement`, data, { withCredentials: true });
+  
+      setEventCreated(true);
+      
+      setRealCustom(false);
+      setCustomTitle("");
+      setCustomDescription("");
+      setCurrentAdresse("");
+      settype("");
+      setInvites("");
+      setDate(new dayjs(Date.now()));
+  
+      setTimeout(() => {
+        setEventCreated(false);
+        setTimeout(() => {
+          navigate("/Evenements");
+        }, 500);
+      }, 2000);
+    };
 
     const changeInput = (e) => {
         if(e.target.value > 0){
@@ -169,7 +164,6 @@ const Activite = () => {
     }
 
     const changeType = (e) => {
-        console.log(e.target.value);
         if (e.target.value.length > 0) {
           settype(e.target.value);
         } else {
@@ -178,7 +172,6 @@ const Activite = () => {
       };
 
     const newAdresses = async()=>{
-        console.log(currentAdresse)
         if(currentAdresse.length>0){
             const data = {
                 "address": {
@@ -191,28 +184,31 @@ const Activite = () => {
             setAutoAdresses([reponse.data.result.address.formattedAddress])
         }
         
-    }
+  }
 
-    const top100Films = [
-        { label: 'The Shawshank Redemption', year: 1994 },
-        { label: 'The Godfather', year: 1972 },
-        { label: 'The Godfather: Part II', year: 1974 },
-        { label: 'The Dark Knight', year: 2008 },
-        { label: '12 Angry Men', year: 1957 },
-        { label: "Schindler's List", year: 1993 },
-        { label: 'Pulp Fiction', year: 1994 }
-    ]
+  const top100Films = [
+    { label: 'The Shawshank Redemption', year: 1994 },
+    { label: 'The Godfather', year: 1972 },
+    { label: 'The Godfather: Part II', year: 1974 },
+    { label: 'The Dark Knight', year: 2008 },
+    { label: '12 Angry Men', year: 1957 },
+    { label: "Schindler's List", year: 1993 },
+    { label: 'Pulp Fiction', year: 1994 }
+  ]
 
-    const search = (event) => {
-        newAdresses()
-    }
+  const search = (event) => {
+      newAdresses()
+  }
+
   return (
     <UserAgent>
     {({ ua }) => {
       return ua.mobile ? <MobileDownload /> :
+      
     <div className="bg-theme text-theme">
       <MDBContainer className="py-5">
         <MDBRow className="justify-content-center align-items-center">
+
           <MDBCol size="6">
           <div className="carousel-container mb-3 bg-dark" style={{ padding: "20px", borderRadius: "15px", height: "100%" }}>
             {realCustom && (
@@ -228,6 +224,7 @@ const Activite = () => {
             <h4 className='text-light text-center'>Sélectionne une image !</h4>
             </div>
           </MDBCol>
+
           <MDBCol size="6">
             <MDBCard className="mb-4 bg-dark" style={{paddingTop:'15px', borderRadius:'15px'}}>
               <MDBCardBody className="bg-dark" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -262,9 +259,11 @@ const Activite = () => {
                         />
                       </div>
                     </MDBRow>
+
                     <MDBRow className='m-3 bg-light' style={{ width: "100%" }}>
                       <MDBInput value={customTitle} onChange={(e) => { setCustomTitle(e.target.value) }} label="Titre" id="form1" type="text" />
                     </MDBRow>
+
                     <MDBRow className='m-3 bg-light' style={{ width: "100%" }}>
                       <MDBTextArea style={{ width: "100%" }} value={customDescription} onChange={(e) => { setCustomDescription(e.target.value) }} label="Description" id="textAreaExample" rows="4" />
                     </MDBRow>
@@ -285,11 +284,13 @@ const Activite = () => {
                       ))}
                     </select>
                   </MDBCol>
+
                   <MDBCol size='6'>
                     <MDBCardText className="text-white text-center mb-2 ">Nombre d'invités max</MDBCardText>
                     <MDBInput value={invites} onChange={changeInput} label="Invités" id="typeNumber" type="number" className="bg-light" />
                   </MDBCol>
                 </MDBRow>
+
                 <MDBRow className="w-100" >
                   <MDBCol size='12'>
                     <MDBCardText className="text-white text-center mb-2">Date de l'évènement</MDBCardText>
@@ -300,6 +301,7 @@ const Activite = () => {
                     </div>
                   </MDBCol>
                 </MDBRow>
+
               </MDBCardBody>
             </MDBCard>
     

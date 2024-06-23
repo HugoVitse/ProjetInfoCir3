@@ -10,6 +10,7 @@ import {
 } from 'mdb-react-ui-kit';
 import axios from 'axios';
 import Config from '../config.json';
+
 import MobileDownload from './MobileDownload';
 import { UserAgent } from "react-useragent";
 
@@ -63,7 +64,6 @@ const Evenements = () => {
         try {
             const decodedToken = jwtDecode(token);
             setJwt(decodedToken);
-            console.log(decodedToken);
             return true;
         } catch {
             navigate("/Login");
@@ -76,13 +76,13 @@ const Evenements = () => {
             if (!retrieveCookie()) return;
 
             try {
-                const responses = await axios.get('http://localhost/infos', { withCredentials: true });
-                setSelectedInterests(responses.data.activities || []);
-                console.log(responses.data.activities);
+                const responses = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/infos`, { withCredentials: true });
 
-                const eventsResponse = await axios.get('http://localhost/evenements', { withCredentials: true });
+                setSelectedInterests(responses.data.activities || []);
+
+                const eventsResponse = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/evenements`, { withCredentials: true });
+
                 setActivities(eventsResponse.data.filter(activity => new Date(activity.date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0)));
-                console.log(eventsResponse.data);
 
             } catch (error) {
                 console.error('Error fetching activities', error);
@@ -158,6 +158,7 @@ const Evenements = () => {
         <UserAgent>
             {({ ua }) => {
                 return ua.mobile ? <MobileDownload /> :
+                
                         <MDBRow className='mx-0 vh-100'>
                             <MDBCol size='4' className='vh-100' style={{ borderBottom: "2px solid black" }}>
                                 <MDBRow className='bg-theme-nuance' style={{ height: "7%", borderBottom: "2px solid black", alignItems: 'center' }}>

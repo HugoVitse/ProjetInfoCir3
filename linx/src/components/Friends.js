@@ -69,7 +69,6 @@ const Friends = () => {
   }, [friends, navigate]);
 
   const sendFriendRequest = async (friendEmail) => {
-    console.log(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/friendRequests`, { email: friendEmail })
     try {
       const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/friendRequests`, { email: friendEmail }, { withCredentials: true });
       if (response.status === 200) {
@@ -229,8 +228,8 @@ const Friends = () => {
     <UserAgent>
     {({ ua }) => {
       return ua.mobile ? <MobileDownload /> :
+
     <div>
-      {/* Back button */}
       <div style={{ position: 'fixed', top: '10px', right: '10px' }}>
       <MDBBtn
         color="primary"

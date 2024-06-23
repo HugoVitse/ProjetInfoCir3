@@ -5,6 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Config from '../config.json';
 
 const MyCalendar = () => {
   const navigate = useNavigate();
@@ -55,7 +56,8 @@ const MyCalendar = () => {
     const fetchData = async () => {
       retrieveCookie();
       try {
-        const response = await axios.get('http://localhost/getMoodTracker', { withCredentials: true });
+        const response = await axios.get(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/getMoodTracker`, { withCredentials: true });
+
 
         const yearsArray = [];
         const moyArray = [];

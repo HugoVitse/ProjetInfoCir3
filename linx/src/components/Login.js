@@ -20,11 +20,9 @@ const Login = () => {
 
   const retrieveCookie = () => {
     const token = Cookies.get("jwt");
-    console.log(token);
     try {
       const decodedToken = jwtDecode(token);
       navigate("/");
-      console.log(decodedToken);
     } catch (error) {
       console.error(error);
     }
@@ -46,13 +44,10 @@ const Login = () => {
 
     try {
       const response = await axios.post(`${Config.scheme}://${Config.urlapi}:${Config.portapi}/login`, { email, password }, { withCredentials: true });
-      console.log(response.data);
-      console.log(response.status);
       if (response.status === 200) {
         // Redirection vers la page d'accueil
          window.location.href = '/'; // Redirection vers la page d'accueil
       } else {
-        console.log(response.status);
         setError('Invalid email or password');
       }
     } catch (error) {
@@ -67,6 +62,7 @@ const Login = () => {
     <UserAgent>
     {({ ua }) => {
       return ua.mobile ? <MobileDownload /> :
+      
     <MDBContainer fluid className="bg-theme d-flex align-items-center justify-content-center vh-100">
       <MDBCard className="w-100 w-md-75" style={{ maxHeight: '90%' }}>
         <MDBRow className="g-0 h-100">

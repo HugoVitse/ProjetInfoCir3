@@ -54,7 +54,6 @@ const Catalogue = () => {
         }
         try {
             const decodedToken = jwtDecode(token);
-            console.log(decodedToken);
             return true;
         } catch {
             navigate("/Login");
@@ -102,10 +101,12 @@ const Catalogue = () => {
         setSortCriteria(criteria);
     };
 
+
     return (
-        <UserAgent>
+    <UserAgent>
     {({ ua }) => {
       return ua.mobile ? <MobileDownload /> :
+      
         <MDBContainer className="mt-4 mb-4" style={{marginLeft:'-24'}}>
             <MDBInputGroup className="mb-3" style={{ borderRadius: '35px', overflow: 'hidden', border: 'none' }}>
                 <MDBInput
@@ -203,7 +204,7 @@ const Catalogue = () => {
                 </div>
             )}
         </MDBContainer>
-    }}
+     }}
     </UserAgent>
     );
 };

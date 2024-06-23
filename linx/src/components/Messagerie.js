@@ -139,6 +139,7 @@ const Messagerie = () => {
     <UserAgent>
     {({ ua }) => {
       return ua.mobile ? <MobileDownload /> :
+      
     <MDBContainer fluid className="bg-theme py-4 px-lg-5" style={{ minHeight: '100vh' }}>
       <MDBRow className="justify-content-center">
         <MDBCol md="8" lg="9">
@@ -154,7 +155,7 @@ const Messagerie = () => {
                       {message.author !== email && (
                         <a href={`/Account/${encodeURIComponent(message.author)}`}>
                           <img
-                            src={`http://localhost/${message.pp}`}
+                            src={`${Config.scheme}://${Config.urlapi}/${message.pp}`}
                             alt={`${message.fn}'s profile`}
                             className="profile-img me-2"
                           />
@@ -169,7 +170,7 @@ const Messagerie = () => {
                       {message.author === email && (
                         <a href={`/Account/${encodeURIComponent(message.author)}`}>
                           <img
-                            src={`http://localhost/${message.pp}`}
+                            src={`${Config.scheme}://${Config.urlapi}/${message.pp}`}
                             alt={`${message.fn}'s profile`}
                             className="profile-img ms-2"
                           />
@@ -211,7 +212,7 @@ const Messagerie = () => {
                     <MDBListGroupItem key={index} className='text-theme bg-theme-nuance2 d-flex justify-content-between align-items-center rounded mb-3' style={{border:'none'}}>
                       <a href={`/Account/${encodeURIComponent(info.email)}`}>
                         <img
-                          src={`http://localhost/${info.userInfo.pp}`}
+                          src={`${Config.scheme}://${Config.urlapi}/${info.userInfo.pp}`}
                           alt={`${info.userInfo.firstName}'s profile`}
                           className="profile-img me-3"
                         />
