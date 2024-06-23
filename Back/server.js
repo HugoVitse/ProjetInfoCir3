@@ -54,7 +54,7 @@ async function serv(){
 
   app.use(express.static(path.join(__dirname, '../linx/build')));
 
-  app.get(['/','/Account/*','/event/*','/MoodTracker','/Notif','/EventsPerso/*','/Friends/*','/Evenements','/Catalogue','/Activite','/Login'], function (req, res) {
+  app.get(['/','/Account/*','/event/*','/MoodTracker','/Notif','/EventsPerso/*','/Friends/*','/Events','/Catalogue','/Activite','/Login'], function (req, res) {
     res.sendFile(path.join(__dirname, '../linx/build', 'index.html'));
   });
 

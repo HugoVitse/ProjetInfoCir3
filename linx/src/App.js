@@ -76,7 +76,7 @@ function App() {
               <Route path="/Account/:emailurl" element={<Account />} />
               <Route path="/Catalogue" element={<Catalogue />} />
               <Route path="/Activite" element={<Activite />} />
-              <Route path="/Evenements" element={<Evenements />} />
+              <Route path="/Events" element={<Evenements />} />
               <Route path="/MoodTracker" element={<MoodTracker />} />
               <Route path="/Friends/:emailurl" element={<Friends />} />
               <Route path="/EventsPerso/:email" element={<EventsPerso />} />

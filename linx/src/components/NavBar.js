@@ -61,7 +61,7 @@ const NavBar = ({ isOpen, toggleTheme, theme, setTheme, handleModalToggle }) => 
             <MDBIcon fas icon="home" className="me-3" />
             Home
           </MDBListGroupItem>
-          <MDBListGroupItem tag={Link} action to="/Evenements" className="d-flex align-items-center bg-theme-nuance text-theme border-0" onClick={handleModalToggle}>
+          <MDBListGroupItem tag={Link} action to="/Events" className="d-flex align-items-center bg-theme-nuance text-theme border-0" onClick={handleModalToggle}>
             <MDBIcon fas icon="fas fa-calendar" className="me-3" />
             Evenements
           </MDBListGroupItem>
